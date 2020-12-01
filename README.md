@@ -28,6 +28,8 @@ Es wird eine Client-Server-Architektur entwickelt. Der Server wird mithilfe des 
 Verwendete Technologien
 
 - Quarkus
+- Docker
+- MySQL
 - REST
 - Angular
 - Ionic
