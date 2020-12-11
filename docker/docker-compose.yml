@@ -2,7 +2,6 @@ version: '3.5'
 
 volumes:
   mysql_data:
-    driver: local
   keycloak_data:
 
 services:
@@ -15,6 +14,7 @@ services:
         MYSQL_DATABASE: keycloak
         MYSQL_USER: keycloak
         MYSQL_PASSWORD: password
+
   keycloak:
       image: jboss/keycloak
       environment:
@@ -25,10 +25,10 @@ services:
         DB_PASSWORD: password
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: Pa55w0rd
+        KEYCLOAK_STATISTICS: all
       ports:
-        - 7777:8080
+        - 8010:8080
       volumes:
         - keycloak_data:/var/lib/keycloak/data
-
       depends_on:
         - mysql
