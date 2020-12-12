@@ -18,6 +18,7 @@ services:
   keycloak:
       image: jboss/keycloak
       environment:
+#        KEYCLOAK_IMPORT: /opt/jboss/keycloak/realm-config/realm.json
         DB_VENDOR: MYSQL
         DB_ADDR: mysql
         DB_DATABASE: keycloak
@@ -30,5 +31,6 @@ services:
         - 8010:8080
       volumes:
         - keycloak_data:/var/lib/keycloak/data
+        - ./realm:/opt/jboss/keycloak/realm-config
       depends_on:
         - mysql
