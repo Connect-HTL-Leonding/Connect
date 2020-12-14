@@ -1,0 +1,12 @@
+#docker exec -it docker_keycloak_1 /opt/jboss/keycloak/bin/standalone.sh \
+#-Djboss.socket.binding.port-offset=100 -Dkeycloak.migration.action=export \
+#-Dkeycloak.migration.provider=singleFile \
+#-Dkeycloak.migration.realmName=testrealm \
+#-Dkeycloak.migration.usersExportStrategy=REALM_FILE \
+#-Dkeycloak.migration.file=/var/lib/keycloak/my_realm.json
+
+
+#CMD docker volume create --driver local \
+#    --opt type=none \
+#    --opt device=/var/tmp \
+#    --opt o=bind keycloak_data

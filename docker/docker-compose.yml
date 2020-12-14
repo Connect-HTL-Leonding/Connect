@@ -1,8 +1,8 @@
-version: '3'
+version: '3.5'
 
 volumes:
   mysql_data:
-      driver: local
+  keycloak_data:
 
 services:
   mysql:
@@ -14,9 +14,11 @@ services:
         MYSQL_DATABASE: keycloak
         MYSQL_USER: keycloak
         MYSQL_PASSWORD: password
+
   keycloak:
-      image: quay.io/keycloak/keycloak:latest
+      image: jboss/keycloak
       environment:
+#        KEYCLOAK_IMPORT: /opt/jboss/keycloak/realm-config/realm.json
         DB_VENDOR: MYSQL
         DB_ADDR: mysql
         DB_DATABASE: keycloak
@@ -24,7 +26,11 @@ services:
         DB_PASSWORD: password
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: Pa55w0rd
+        KEYCLOAK_STATISTICS: all
       ports:
-        - 7777:8080
+        - 8010:8080
+      volumes:
+        - keycloak_data:/var/lib/keycloak/data
+        - ./realm:/opt/jboss/keycloak/realm-config
       depends_on:
         - mysql
