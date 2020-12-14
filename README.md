@@ -22,6 +22,8 @@ Bisherige „Kennenlern-Apps“ sind speziell auf bestimmte Zielgruppen ausgeleg
 
 Connect stellt dieses Basissystem zur Verfügung. Mithilfe von Filter beziehungsweise Skins kann die App dynamisch auf den Anwendungsbereich angepasst werden. 
 
+<img src="design/readme_src/mockup.png" width="30%">
+
 ### Technologien
 Es wird eine Client-Server-Architektur entwickelt. Der Server wird mithilfe des Java Framework Quarkus erstellt. Die Kommunikation zwischen Server und Client wird mit dem REST-WebService gelöst. Die Benutzerverwaltung, Authentifizierung und Rechteverwaltung wird mit dem Open Source Identity and Access Management Tool Keycloak gelöst. 
 
