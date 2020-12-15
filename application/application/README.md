@@ -1,5 +1,5 @@
 # MacOS Setup
-brew install cocoapods
+brew install cocoapods<br>
 npm run build
 <br>
 ersters mal: <br>
