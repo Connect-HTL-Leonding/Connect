@@ -1,12 +1,13 @@
 # MacOS Setup
 brew install cocoapods
 npm run build
-
-ersters mal: 
-sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+<br>
+ersters mal: <br>
+sudo xcode-select -s /Applications/Xcode.app/Contents/Developer 
+<br>
 ionic capacitor add ios
-
-andere male:
-ionic capacitor open ios
-or
+<br>
+andere male: <br>
+ionic capacitor open ios <br>
+or <br>
 ionic capacitor run ios -l --external (live reloading)
