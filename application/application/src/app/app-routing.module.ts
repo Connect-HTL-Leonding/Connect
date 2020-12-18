@@ -5,6 +5,9 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+  },{
+    path: 'skinselection',
+    loadChildren: () => import('./skinselection/skinselection.module').then( m => m.SkinselectionPageModule)
   },
   {
     path: '',
