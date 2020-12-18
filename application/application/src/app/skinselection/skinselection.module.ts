@@ -8,6 +8,8 @@ import { SkinselectionPageRoutingModule } from './skinselection-routing.module';
 
 import { SkinselectionPage } from './skinselection.page';
 
+import { SkinselectionCardComponent } from '../skinselection-card/skinselection-card.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,7 @@ import { SkinselectionPage } from './skinselection.page';
     IonicModule,
     SkinselectionPageRoutingModule
   ],
-  declarations: [SkinselectionPage]
+  declarations: [SkinselectionPage,
+    SkinselectionCardComponent]
 })
 export class SkinselectionPageModule {}
