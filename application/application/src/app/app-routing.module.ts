@@ -11,6 +11,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
+  {
+    path: 'my-skins',
+    loadChildren: () => import('./my-skins/my-skins.module').then( m => m.MySkinsPageModule)
+  },
 ];
 
 @NgModule({
