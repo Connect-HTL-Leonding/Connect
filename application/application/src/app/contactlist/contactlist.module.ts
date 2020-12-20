@@ -7,14 +7,18 @@ import { IonicModule } from '@ionic/angular';
 import { ContactlistPageRoutingModule } from './contactlist-routing.module';
 
 import { ContactlistPage } from './contactlist.page';
+import { DetailContactlistComponent } from './detail-contactlist/detail-contactlist.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ContactlistPageRoutingModule
+    ContactlistPageRoutingModule,
   ],
-  declarations: [ContactlistPage]
+  declarations: [
+    ContactlistPage,
+    DetailContactlistComponent
+  ]
 })
 export class ContactlistPageModule {}

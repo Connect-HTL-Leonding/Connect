@@ -41,6 +41,11 @@ export class AppComponent {
         title : "My-Skins",
         url   : "/my-skins",
         icon  : ""
+      },
+      {
+        title : "Contacts",
+        url : "contactlist",
+        icon : ""
       }
     ]
   }
