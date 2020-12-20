@@ -27,16 +27,84 @@
 
 @font-face {
     font-family: 'Lato'; //This is what we are going to call
-    src: url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+    font-style: 'normal';
+    font-weight: 'normal';
+    src: url('./assets/font/Lato/Lato-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Lato'; //This is what we are going to call
+    font-style: 'normal';
+    font-weight: 'bold';
+    src: url('./assets/font/Lato/Lato-Bold.ttf');
+}
+
+@font-face {
+    font-family: 'Lato'; //This is what we are going to call
+    font-style: 'italic';
+    font-weight: 'bold';
+    src: url('./assets/font/Lato/Lato-BoldItalic.ttf');
+}
+
+@font-face {
+    font-family: 'Lato'; //This is what we are going to call
+    font-style: 'italic';
+    font-weight: 'normal';
+    src: url('./assets/font/Lato/Lato-Italic.ttf');
+}
+
+@font-face {
+    font-family: 'Lato'; //This is what we are going to call
+    font-style: 'normal';
+    font-weight: '300';
+    src: url('./assets/font/Lato/Lato-Light.ttf');
+}
+
+@font-face {
+    font-family: 'Lato'; //This is what we are going to call
+    font-style: 'italic';
+    font-weight: '300';
+    src: url('./assets/font/Lato/Lato-LightItalic.ttf');
 }
 
 @font-face {
     font-family: 'Open Sans'; //This is what we are going to call
-    src: url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap');
+    font-style: 'normal';
+    font-weight: 'normal';
+    src: url('./assets/font/Open_Sans/OpenSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Open Sans Bold'; //This is what we are going to call
+    font-style: 'normal';
+    font-weight: 'bold';
+    src: url('./assets/font/Open_Sans/OpenSans-Bold.ttf');
+}
+
+/*
+@font-face {
+    font-family: 'Open Sans'; //This is what we are going to call
+    font-style: 'italic';
+    font-weight: 'bold';
+    src: url('./assets/font/Open_Sans/OpenSans-BoldItalic.ttf');
+}
+*/
+
+/*@font-face {
+    font-family: 'Open Sans'; //This is what we are going to call
+    font-style: 'italic';
+    font-weight: 'normal';
+    src: url('./assets/font/Open_Sans/OpenSans-Italic.ttf');
+}*/
+
+@font-face {
+    font-family: 'Open Sans Semi'; //This is what we are going to call
+    font-style: 'normal';
+    font-weight: 600;
+    src: url('./assets/font/Open_Sans/OpenSans-SemiBold.ttf');
 }
 
 :root {
     --dark-green: #0eb19b;
     --light-green: #06c777;
-
 }
