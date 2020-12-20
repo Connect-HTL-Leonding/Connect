@@ -40,7 +40,7 @@ export class AppComponent {
       {
         title : "My-Skins",
         url   : "/my-skins",
-        icon  : "chatboxes"
+        icon  : ""
       }
     ]
   }

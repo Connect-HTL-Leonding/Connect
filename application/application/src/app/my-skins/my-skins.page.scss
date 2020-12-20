@@ -1,0 +1,12 @@
+.list_skins {
+    display: flex;
+    flex-direction: row;
+
+    .list_item {
+        display: flex;
+    }
+
+    .list_item small-skin{
+        padding-left: 10px;
+    }
+}

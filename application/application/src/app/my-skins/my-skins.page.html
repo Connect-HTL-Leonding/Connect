@@ -1,9 +1,22 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>my-skins</ion-title>
+    <ion-title>Meine Skins</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+  <ion-searchbar [(ngModel)]="searchString"></ion-searchbar>
+
+  <div class="list_skins">
+    <div class="list_item" *ngFor="let skin of skinService.mySkins, let i=index">
+      <small-skin [skin]="skin" *ngIf="matchesFilter(skin)" (click)="changeSelection(skin)"></small-skin>
+    </div>
+  </div>
+
+  <detail-skin [skin]="currentSkin" width=""></detail-skin>
+
 
 </ion-content>

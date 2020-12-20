@@ -1,0 +1,17 @@
+.skin-small {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    .image {
+        width: 60px;
+        height: 60px;
+        border-radius: 100% 100%;
+    }
+
+    p {
+        padding: 0;
+        margin: 0;
+    }
+}

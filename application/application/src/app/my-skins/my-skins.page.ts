@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
+import {MySkinsService} from '../api/my-skins.service';
+import { Skin } from 'src/app/model/skin';
 
 @Component({
   selector: 'app-my-skins',
@@ -8,10 +10,25 @@ import { MenuController } from '@ionic/angular';
 })
 export class MySkinsPage implements OnInit {
 
-  constructor() { }
+  skinService;
+  searchString: String = "";
+  currentSkin : Skin;
+
+  constructor(ks : MySkinsService) { 
+    this.skinService = ks;
+  }
 
   ngOnInit() {
-    
+    this.currentSkin = this.skinService.mySkins[0];
+    console.log(this.currentSkin);
+  }
+
+  matchesFilter(s:Skin) {
+    return s.title.toUpperCase().indexOf(this.searchString.toUpperCase()) == 0
+  }
+
+  changeSelection(s:Skin){
+    this.currentSkin = s;
   }
 
 }

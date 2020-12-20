@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { MySkinsPageRoutingModule } from './my-skins-routing.module';
 
 import { MySkinsPage } from './my-skins.page';
+import { SmallSkinComponent } from './small-skin/small-skin.component';
+import { DetailSkinComponent } from './detail-skin/detail-skin.component';
 
 @NgModule({
   imports: [
@@ -15,6 +17,10 @@ import { MySkinsPage } from './my-skins.page';
     IonicModule,
     MySkinsPageRoutingModule
   ],
-  declarations: [MySkinsPage]
+  declarations: [
+    MySkinsPage,
+    SmallSkinComponent,
+    DetailSkinComponent
+  ]
 })
 export class MySkinsPageModule {}
