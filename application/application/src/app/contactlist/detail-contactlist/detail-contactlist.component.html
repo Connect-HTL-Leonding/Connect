@@ -1,7 +1,10 @@
+
 <div class="chat-user">
-  <img src="{{user.profilePicture}}">
-  <div id="flex">
-    <p id="username">{{user.username}}</p>
+  <ion-avatar slot="start">
+    <img src="{{user.profilePicture}}">
+  </ion-avatar>
+  <ion-label id="flex">
+    <h2 id="username">{{user.username}}</h2>
     <p>{{user.latestMessage}}</p>
-  </div>
+  </ion-label>
 </div>

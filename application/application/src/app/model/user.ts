@@ -3,7 +3,7 @@ export class User {
         public id = 0,
         public username: string,
         public profilePicture: string,
-        public latestMessage: string
+        public latestMessage: string,
 
     ) {
 
