@@ -11,13 +11,20 @@
 
 
 <ion-content id="body" [fullscreen]="true">
-  <!--
-    
-  -->
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
 </ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/profile" routerDirection="forward">
+        <ion-icon slot="end" name="cog-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/contactlist" routerDirection="forward">
+        <ion-icon slot="start" name="chatbox-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

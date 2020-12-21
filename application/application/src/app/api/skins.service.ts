@@ -45,7 +45,6 @@ export class SkinsService {
     s.niveau = 10;
     console.log(s)
     this.skins.push(s);
-    this.skins.push(s);
 
     s = new Skin();
     

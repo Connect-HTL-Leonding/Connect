@@ -40,7 +40,7 @@ export class AppComponent {
       {
         title : "My-Skins",
         url   : "/my-skins",
-        icon  : ""
+        icon  : "albums"
       },
       {
         title : "Skinselection",
@@ -48,13 +48,13 @@ export class AppComponent {
         icon  : ""
       },{
         title : "Contacts",
-        url : "contactlist",
-        icon : ""
+        url : "/contactlist",
+        icon : "people"
       },
       {
         title: "Profile",
         url: "/profile",
-        icon: ""
+        icon: "person-circle"
       }
     ]
   }
