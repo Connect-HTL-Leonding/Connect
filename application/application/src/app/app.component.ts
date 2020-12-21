@@ -46,6 +46,11 @@ export class AppComponent {
         title : "Contacts",
         url : "contactlist",
         icon : ""
+      },
+      {
+        title: "Profile",
+        url: "/profile",
+        icon: ""
       }
     ]
   }
