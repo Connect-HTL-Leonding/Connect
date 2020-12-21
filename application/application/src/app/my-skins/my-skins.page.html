@@ -11,6 +11,13 @@
   <ion-searchbar [(ngModel)]="searchString"></ion-searchbar>
 
   <div class="list_skins">
+    <div id="add_skin_container">
+      <div id="add_skin_circle">
+        <ion-icon name="add-outline"></ion-icon>
+      </div>
+      
+      <p>Skin hinzufügen</p>
+    </div>
     <div class="list_item" *ngFor="let skin of skinService.mySkins, let i=index">
       <small-skin [skin]="skin" *ngIf="matchesFilter(skin)" (click)="changeSelection(skin)"></small-skin>
     </div>

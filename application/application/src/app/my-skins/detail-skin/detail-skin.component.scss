@@ -1,0 +1,25 @@
+#ranges {
+    margin-top: 20px;
+
+    .range_container {
+        display: flex;
+        flex-direction: column;
+
+        .range_label {
+            font-size: 12px;
+        }
+
+        h2 {
+            color: #000000;
+        }
+
+        ion-range {
+            padding: 0;
+            display: flex;
+
+            ion-label {
+                width: 55px;
+            }
+        }
+    }
+}

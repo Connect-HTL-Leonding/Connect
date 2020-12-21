@@ -25,6 +25,7 @@ export class MySkinsService {
     
     s.id = 1;
     s.title = "Fußball";
+    s.image = "../assets/connect_img/fussball.png"
     s.follower = 100;
     s.following = true;
     s.age = 20;
