@@ -1,12 +1,14 @@
 .skin-small {
     display: flex;
     flex-direction: column;
-    height: 80px;
+    height: 85px;
     justify-content: center;
     align-items: center;
     .image {
-        width: 60px;
-        height: 60px;
+        min-width: 60px;
+        min-height: 60px;
+        max-width: 60px;
+        max-height: 60px;
         border-radius: 100% 100%;
     }
 
