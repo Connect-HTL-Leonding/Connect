@@ -5,10 +5,14 @@
 </ion-header>
 
 <ion-content>
+<ion-searchbar animated></ion-searchbar>
+<ion-chip>
+  <ion-label>Default</ion-label>
+</ion-chip>
 
   <ion-grid>
   <ion-row>
-    <ion-col sizeLg="6" sizeMd="6" sizeXs="6" *ngFor="let item of items; index as i;">
+    <ion-col sizeLg="6" sizeMd="6" sizeXs="6" *ngFor="let item of skinselectionService.items; index as i;">
       <app-skinselection-card [item]=item></app-skinselection-card>
     </ion-col>
   </ion-row>

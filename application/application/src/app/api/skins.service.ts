@@ -5,18 +5,18 @@ import { Skin } from '../model/skin';
 @Injectable({
   providedIn: 'root'
 })
-export class MySkinsService {
+export class SkinsService {
 
   http: HttpClient;
 
   //Array an Terminen
-  public mySkins : Array<Skin>;
+  public skins : Array<Skin>;
   message;
 
   //Konstruktor
   constructor(http: HttpClient) {
     this.http = http;
-    this.mySkins = [];
+    this.skins = [];
     this.generateSkins();
   }
 
@@ -32,7 +32,7 @@ export class MySkinsService {
     s.radius = 9;
     s.niveau = 10;
     console.log(s)
-    this.mySkins.push(s);
+    this.skins.push(s);
 
     s = new Skin();
     
@@ -44,7 +44,7 @@ export class MySkinsService {
     s.radius = 2;
     s.niveau = 10;
     console.log(s)
-    this.mySkins.push(s);
+    this.skins.push(s);
   }
 
   getSkins() {

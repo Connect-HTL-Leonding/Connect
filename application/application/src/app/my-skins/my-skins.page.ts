@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
-import {MySkinsService} from '../api/my-skins.service';
+import {SkinsService} from '../api/skins.service';
 import { Skin } from 'src/app/model/skin';
 
 @Component({
@@ -14,7 +14,7 @@ export class MySkinsPage implements OnInit {
   searchString: String = "";
   currentSkin : Skin;
 
-  constructor(ks : MySkinsService) { 
+  constructor(ks : SkinsService) { 
     this.skinService = ks;
   }
 

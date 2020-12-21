@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { MySkinsService } from './my-skins.service';
+import { SkinsService } from './skins.service';
 
-describe('MySkinsService', () => {
-  let service: MySkinsService;
+describe('SkinsService', () => {
+  let service: SkinsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(MySkinsService);
+    service = TestBed.inject(SkinsService);
   });
 
   it('should be created', () => {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SkinsService } from '../api/skins.service';
 
 @Component({
   selector: 'app-skinselection',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SkinselectionPage implements OnInit {
 
-  constructor() { }
+  skinselectionService;
 
-  items = ["../../assets/connect_img/fussball.png","../../assets/connect_img/basketball.png","../../assets/connect_img/golf.png","../../assets/connect_img/schwimmen.png"];
+  constructor(ss: SkinsService) {
+    this.skinselectionService = ss;
+   }
+
+  
 
   ngOnInit() {
   }
