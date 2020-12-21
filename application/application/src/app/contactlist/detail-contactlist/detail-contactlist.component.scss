@@ -1,3 +1,31 @@
 .chat-user {
-    width: 99%;
+    width: 99vw;
+    height: 7vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+img {
+    width: 7vh;
+    height: 7vh;
+    border-radius: 100%;
+}
+
+#flex {
+    height: 8vh;
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5px;
+    border-bottom: 1px solid #8c8c8c33;
+}
+
+#username {
+    color: var(--ion-color-primary);
+}
+
+#flex p {
+    margin: 0;
+    margin-top: 4px;
 }

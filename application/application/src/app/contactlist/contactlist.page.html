@@ -8,8 +8,10 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="chat" *ngFor="let user of contactService.chats, let i = index">
-    <detail-contact [user]="user" (click)="selectChat(user)"></detail-contact>
+<ion-content> 
+  <div id="chats">
+    <div class="chat" *ngFor="let user of contactService.chats, let i = index">
+      <app-detail-contactlist [user]="user" (click)="selectChat(user)"></app-detail-contactlist>
+    </div>
   </div>
 </ion-content>
