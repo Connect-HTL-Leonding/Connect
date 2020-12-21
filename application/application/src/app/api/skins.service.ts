@@ -45,6 +45,46 @@ export class SkinsService {
     s.niveau = 10;
     console.log(s)
     this.skins.push(s);
+    this.skins.push(s);
+
+    s = new Skin();
+    
+    s.id = 3;
+    s.title = "Basketball";
+    s.image = "../assets/connect_img/basketball.png";
+    s.follower = 40;
+    s.following = true;
+    s.age = 20;
+    s.radius = 3;
+    s.niveau = 10;
+    console.log(s)
+    this.skins.push(s);
+
+    s = new Skin();
+    
+    s.id = 4;
+    s.title = "Schwimmen";
+    s.image = "../assets/connect_img/schwimmen.png";
+    s.follower = 20;
+    s.following = true;
+    s.age = 30;
+    s.radius = 1;
+    s.niveau = 10;
+    console.log(s)
+    this.skins.push(s);
+
+    s = new Skin();
+    
+    s.id = 5;
+    s.title = "Tennis";
+    s.image = "../assets/connect_img/tennis.png";
+    s.follower = 400;
+    s.following = true;
+    s.age = 18;
+    s.radius = 2;
+    s.niveau = 10;
+    console.log(s)
+    this.skins.push(s);
   }
 
   getSkins() {
