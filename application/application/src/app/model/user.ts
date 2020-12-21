@@ -5,7 +5,6 @@ export class User {
         public profilePicture: string,
         public latestMessage: string,
         public desc: string
-
     ) {
 
     }
