@@ -26,7 +26,7 @@ export class SkinsService {
     s.id = 1;
     s.title = "Fußball";
     s.description ="Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!"
-    s.image = "../assets/connect_img/fussball.png"
+    s.image = "../assets/connect_img/square/fussball_square.png"
     s.category.push("Sport")
     s.follower = 100;
     s.following = true;
@@ -55,7 +55,7 @@ export class SkinsService {
     s.id = 3;
     s.title = "Basketball";
     s.description ="Du magst Basketball? Cool! Das ist der Basketball Skin. Komm doch vorbei!"
-    s.image = "../assets/connect_img/basketball.png";
+    s.image = "../assets/connect_img/square/basketball_square.png";
     s.category.push("Sport")
     s.follower = 40;
     s.following = true;
@@ -70,7 +70,7 @@ export class SkinsService {
     s.id = 4;
     s.title = "Schwimmen";
     s.description ="Du magst Schwimmen? Cool! Das ist der Schwimmen Skin. Komm doch vorbei!"
-    s.image = "../assets/connect_img/schwimmen.png";
+    s.image = "../assets/connect_img/square/schwimmen_square.png";
     s.category.push("Sport")
     s.follower = 20;
     s.following = true;
@@ -85,7 +85,7 @@ export class SkinsService {
     s.id = 5;
     s.title = "Tennis";
     s.description ="Du magst Tennis? Cool! Das ist der Tennis Skin. Komm doch vorbei!"
-    s.image = "../assets/connect_img/tennis.png";
+    s.image = "../assets/connect_img/square/tennis_square.png";
     s.category.push("Sport")
     s.follower = 400;
     s.following = true;
@@ -100,7 +100,7 @@ export class SkinsService {
     s.id = 6;
     s.title = "Golf";
     s.description ="Du magst Golf? Cool! Das ist der Golf Skin. Komm doch vorbei!"
-    s.image = "../assets/connect_img/golf.png";
+    s.image = "../assets/connect_img/square/golf_square.png";
     s.category.push("Sport")
     s.follower = 200;
     s.following = true;
@@ -115,7 +115,7 @@ export class SkinsService {
     s.id = 7;
     s.title = "Volleyball";
     s.description ="Du magst Volleyball? Cool! Das ist der Volleyball Skin. Komm doch vorbei!"
-    s.image = "../assets/connect_img/volleyball.png";
+    s.image = "../assets/connect_img/square/volleyball_square.png";
     s.category.push("Sport")
     s.follower = 300;
     s.following = true;
