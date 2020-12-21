@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Skin } from '../model/skin';
 
 @Component({
   selector: 'app-skinselection-card',
@@ -6,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./skinselection-card.component.scss'],
 })
 export class SkinselectionCardComponent implements OnInit {
-@Input() item :string;
+@Input() skin :Skin;
 
   constructor() { }
 
