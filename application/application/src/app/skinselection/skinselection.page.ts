@@ -9,6 +9,8 @@ export class SkinselectionPage implements OnInit {
 
   constructor() { }
 
+  items = ["../../assets/connect_img/fussball.png","../../assets/connect_img/basketball.png","../../assets/connect_img/golf.png","../../assets/connect_img/schwimmen.png"];
+
   ngOnInit() {
   }
 

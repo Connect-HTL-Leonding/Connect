@@ -43,6 +43,10 @@ export class AppComponent {
         icon  : ""
       },
       {
+        title : "Skinselection",
+        url   : "/skinselection",
+        icon  : ""
+      },{
         title : "Contacts",
         url : "contactlist",
         icon : ""
