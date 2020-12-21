@@ -5,5 +5,15 @@
 </ion-header>
 
 <ion-content>
-<app-skinselection-card></app-skinselection-card>
+
+  <ion-grid>
+  <ion-row>
+    <ion-col sizeLg="6" sizeMd="6" sizeXs="6" *ngFor="let item of items; index as i;">
+      <app-skinselection-card [item]=item></app-skinselection-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+ 
+
 </ion-content>
