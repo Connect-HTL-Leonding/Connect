@@ -1,6 +1,12 @@
 <ion-header>
   <!--<ion-toolbar>
   </ion-toolbar> -->
+  <ion-toolbar>
+    <ion-title>Profile</ion-title>
+  <ion-buttons slot="start">
+    <ion-back-button defaultHref="home"></ion-back-button>
+  </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -13,16 +19,26 @@
       <h2 id="name">{{user.username}}</h2>
 
       <div class="descBox">
-       <p>{{user.desc}}</p>
+        <p>{{user.desc}}</p>
       </div>
 
       <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;">Anpassen</ion-button>
 
-      <div style="color: var(--ion-color-secondary)" class="photo-slider-con">
+      <div class="photo-slider-con">
         <p style="left:0;">Über mich</p>
-        <div style="display: flex;flex-flow: row nowrap; height: 100%; width: 100%;margin-top: -15px;">
-        <ion-card style="height: 75%; width: 33%"></ion-card>
-        <ion-card style="height: 75%; width: 33%"></ion-card>
+        <div style="display: flex;flex-flow: row nowrap; height: 100%; width: 100%;margin-top: -20px;">
+          <ion-slides style="width: 200vw;">
+            <ion-slide>
+              <ion-card></ion-card>
+              <ion-card></ion-card>
+              <ion-card></ion-card>
+            </ion-slide>
+            <ion-slide>
+              <ion-card></ion-card>
+              <ion-card></ion-card>
+              <ion-card></ion-card>
+            </ion-slide>
+          </ion-slides>
         </div>
       </div>
 
@@ -32,22 +48,22 @@
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-icon color="secondary"  name="logo-instagram"></ion-icon>
+              <ion-icon color="secondary" name="logo-instagram"></ion-icon>
               Der Max
             </ion-col>
             <ion-col>
-              <ion-icon color="secondary"  name="logo-linkedin"></ion-icon>
+              <ion-icon color="secondary" name="logo-linkedin"></ion-icon>
               MaxMusterLinkedIn
             </ion-col>
           </ion-row>
           <ion-row>
             <ion-col>
-              <ion-icon color="secondary"  name="logo-facebook"></ion-icon>
+              <ion-icon color="secondary" name="logo-facebook"></ion-icon>
               MaxMuster
             </ion-col>
             <ion-col>
               <ion-icon color="secondary" name="logo-twitter"></ion-icon>
-             DerMaxTwitter
+              DerMaxTwitter
             </ion-col>
           </ion-row>
 

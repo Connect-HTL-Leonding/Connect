@@ -38,19 +38,19 @@ body {
 .descBox {
     margin-top: 1vh;
     height: 17%;
-    width: 90%;
-    padding: 5px 2px 5px 2px;
+    width: 95%;
+    padding: 5px 2px 5px 10px;
     border-radius: 30px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     color:grey;
 }
 
 .photo-slider-con {
-    margin: 0;
+    margin: -3vh;
     width:100%;
     height: 40%;
     padding: 2.5% 5% 5% 2.5%;
-    color: var(--ion-color-primary);
+    color: var(--ion-color-secondary)
 }
 
 .social-media-con {
@@ -61,11 +61,22 @@ body {
 }
 
 ion-grid {
-    margin-top: -10px;
+    margin-top: -15px;
     text-decoration: underline;
 }
 
 
 ion-row {
     margin:3px;
+}
+
+ion-card {
+    height: 75%; width: 40vw; background-color: red;
+    margin:0% 2% 2% 2%;
+    background-image: url("../../assets/connect_img/volleyball.png");
+    background-size: cover;
+}
+
+ion-toolbar {
+    background-color:  var(--ion-color-secondary);
 }
