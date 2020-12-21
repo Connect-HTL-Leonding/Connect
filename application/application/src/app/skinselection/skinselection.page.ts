@@ -8,10 +8,10 @@ import { SkinsService } from '../api/skins.service';
 })
 export class SkinselectionPage implements OnInit {
 
-  skinselectionService;
+  skinsService;
 
   constructor(ss: SkinsService) {
-    this.skinselectionService = ss;
+    this.skinsService = ss;
    }
 
   
