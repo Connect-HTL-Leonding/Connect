@@ -1,11 +1,17 @@
 <ion-header>
-  <ion-toolbar id="toolbar">
-    <ion-icon name="chevron-back-outline"></ion-icon>
-    <ion-title>Skin Kontakte</ion-title>
-    <ion-icon name="settings-outline"></ion-icon>
+  <ion-toolbar>
+    <div id="toolbar">
+      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-title>Skin Kontakte</ion-title>
+      <ion-icon name="settings-outline"></ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  
+<ion-content> 
+  <div id="chats">
+    <div class="chat" *ngFor="let user of contactService.chats, let i = index">
+      <app-detail-contactlist [user]="user" (click)="selectChat(user)"></app-detail-contactlist>
+    </div>
+  </div>
 </ion-content>

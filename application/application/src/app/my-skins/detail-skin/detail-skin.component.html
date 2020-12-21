@@ -8,23 +8,22 @@
   <ion-card-content>
     {{skin.description}}
 
-    <ion-list>
-      <ion-item>
-        <span>Suchradius</span>
+    <div id="ranges">
+      <div class="range_container">
+        <h2>Suchradius</h2>
         <ion-range [(ngModel)]="skin.radius" min="1" max="10" step="1" pin color="secondary" id="suchradius">
-          <ion-label slot="start">1km</ion-label>
-          <ion-label slot="end">10km</ion-label>
+          <ion-label class="range_label" slot="start">1km</ion-label>
+          <ion-label class="range_label" slot="end">10km</ion-label>
         </ion-range>
-      </ion-item>
-
-      <ion-item>
-        <span>Alter</span>
+      </div>
+      <div class="range_container">
+        <h2>Alter</h2>
         <ion-range [(ngModel)]="skin.age" min="16" max="60" pin color="secondary" id="suchradius">
-          <ion-label slot="start">16 Jahre</ion-label>
-          <ion-label slot="end">60 Jahre</ion-label>
+          <ion-label class="range_label" slot="start">16 Jahre</ion-label>
+          <ion-label class="range_label" slot="end">60 Jahre</ion-label>
         </ion-range>
-      </ion-item>
-
+      </div>
+    </div>
       <!--
 <ion-item>
         <span>Niveau</span>
@@ -35,7 +34,6 @@
       </ion-item>
       -->
 
-    </ion-list>
 
   </ion-card-content>
 </ion-card>

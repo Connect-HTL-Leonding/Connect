@@ -46,6 +46,15 @@ export class AppComponent {
         title : "Skinselection",
         url   : "/skinselection",
         icon  : ""
+      },{
+        title : "Contacts",
+        url : "contactlist",
+        icon : ""
+      },
+      {
+        title: "Profile",
+        url: "/profile",
+        icon: ""
       }
     ]
   }

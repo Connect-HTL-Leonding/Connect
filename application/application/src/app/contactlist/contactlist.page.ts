@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {ContactlistService} from '../api/contactlist.service'
+import { User } from '../model/user'
 
 @Component({
   selector: 'app-contactlist',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactlistPage implements OnInit {
 
-  constructor() { }
+  contactService
+  
+  constructor(cs : ContactlistService) { 
+    this.contactService = cs;
+  }
 
   ngOnInit() {
+  }
+
+  selectChat(u:User) {
+    console.log(u);
   }
 
 }

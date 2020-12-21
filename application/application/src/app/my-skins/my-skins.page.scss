@@ -11,3 +11,34 @@
     }
 }
 
+#add_skin_container {
+    display: flex;
+    flex-direction: column;
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    padding-left: 10px;
+
+    #add_skin_circle {
+        width: 60px;
+        height: 60px;
+        border-radius: 100% 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f2f2f2;
+
+        ion-icon {
+            font-size: 24px;
+            color: var(--ion-color-primary);
+            --ionicon-stroke-width: 70px;
+        }
+    }
+
+    p {
+        padding: 0;
+        margin: 0;
+        color: var(--ion-color-secondary);
+        font-family: 'Open Sans Semi';
+    }
+}

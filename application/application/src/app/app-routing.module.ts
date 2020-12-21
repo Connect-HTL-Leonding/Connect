@@ -22,6 +22,10 @@ const routes: Routes = [
     path: 'my-skins',
     loadChildren: () => import('./my-skins/my-skins.module').then( m => m.MySkinsPageModule)
   },
+  {
+    path: 'contactlist',
+    loadChildren: () => import('./contactlist/contactlist.module').then(m => m.ContactlistPageModule)
+  }
 ];
 
 

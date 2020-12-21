@@ -1,12 +1,17 @@
 <ion-header>
-  <ion-toolbar>
-  </ion-toolbar>
+  <!--<ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content>
-
-<div class="mid">
-  <img class="round" width="150" height="150" src="../../assets/normalguy.jpg">
-</div>
+  <div class="wrapper">
+    <div style="height: 25%; width: 100%; background-color:var(--ion-color-primary)"></div>
+    <div class="container">
+      <div class="mid">
+        <img class="round" width="150" height="150" src="../../assets/normalguy.jpg">
+      </div>
+      <h2 id="name">{{user.username}}</h2>
+    </div>
+  </div>
 
 </ion-content>
