@@ -19,7 +19,7 @@ export class MySkinsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.currentSkin = this.skinService.mySkins[0];
+    this.currentSkin = this.skinService.skins[0];
     console.log(this.currentSkin);
   }
 
