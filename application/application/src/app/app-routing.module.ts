@@ -10,11 +10,6 @@ const routes: Routes = [
     loadChildren: () => import('./skinselection/skinselection.module').then( m => m.SkinselectionPageModule)
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
@@ -25,6 +20,11 @@ const routes: Routes = [
   {
     path: 'contactlist',
     loadChildren: () => import('./contactlist/contactlist.module').then(m => m.ContactlistPageModule)
+  },
+  {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
   }
 ];
 

@@ -15,7 +15,6 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
   ) {
-    this.sideMenu();
     this.initializeApp();
   }
 
@@ -28,34 +27,5 @@ export class AppComponent {
     });
   }
 
-  sideMenu()
-  {
-    this.navigate =
-    [
-      {
-        title : "Home",
-        url   : "/home",
-        icon  : "home"
-      },
-      {
-        title : "My-Skins",
-        url   : "/my-skins",
-        icon  : "albums"
-      },
-      {
-        title : "Skinselection",
-        url   : "/skinselection",
-        icon  : ""
-      },{
-        title : "Contacts",
-        url : "/contactlist",
-        icon : "people"
-      },
-      {
-        title: "Profile",
-        url: "/profile",
-        icon: "person-circle"
-      }
-    ]
-  }
+  
 }

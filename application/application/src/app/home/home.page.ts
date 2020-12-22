@@ -8,20 +8,44 @@ import { MenuController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(private menu : MenuController) {}
+  navigate:any
 
-  openFirst() {
-    this.menu.enable(true, 'first');
-    this.menu.open('first');
+  constructor(private menu : MenuController) {
+    this.sideMenu();
   }
 
-  openEnd() {
-    this.menu.open('end');
-  }
 
-  openCustom() {
-    this.menu.enable(true, 'custom');
-    this.menu.open('custom');
+  sideMenu()
+  {
+    this.navigate =
+    [
+      {
+        title : "Home",
+        url   : "/home",
+        icon  : "home"
+      },
+      {
+        title : "My-Skins",
+        url   : "/my-skins",
+        icon  : "albums"
+      },
+      {
+        title : "Skinselection",
+        url   : "/skinselection",
+        icon  : ""
+      },{
+        title : "Contacts",
+        url : "/contactlist",
+        icon : "people"
+      },
+      {
+        title: "Profile",
+        url: "/profile",
+        icon: "person-circle"
+      }
+    ]
+
+    console.log(this.navigate);
   }
 
 }

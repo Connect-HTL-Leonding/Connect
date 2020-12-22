@@ -1,4 +1,5 @@
 <ion-app>
+  <!--
   <ion-menu side="start" menuId="first" contentId="content1">
     <ion-header>
       <ion-toolbar>
@@ -17,4 +18,28 @@
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="content1"></ion-router-outlet>
+-->
+
+  <ion-tabs>
+    <ion-tab-bar slot="bottom">
+  
+      <ion-tab-button tab="profile">
+        <ion-icon name="cog"></ion-icon>
+        <ion-label>Profile</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="home">
+        <ion-icon name="home"></ion-icon>
+        <ion-label>Home</ion-label>
+      </ion-tab-button>
+  
+      <ion-tab-button tab="contactlist">
+        <ion-icon name="chatbox"></ion-icon>
+        <ion-label>Chat</ion-label>
+        <ion-badge>2</ion-badge>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
+  
 </ion-app>
+
