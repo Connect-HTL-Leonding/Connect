@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Skin } from '../model/skin';
+import { Category } from '../model/category';
+import { CategoryService } from './category.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +13,14 @@ export class SkinsService {
 
   //Array an Terminen
   public skins : Array<Skin>;
+  categoryService: CategoryService
   message;
 
   //Konstruktor
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, cs: CategoryService) {
     this.http = http;
     this.skins = [];
+    this.categoryService = cs;
     this.generateSkins();
   }
 
@@ -27,7 +31,8 @@ export class SkinsService {
     s.title = "Fußball";
     s.description ="Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/fussball_square.png"
-    s.category.push("Sport")
+    s.categories.push(this.categoryService.findCategory("All"))
+    s.categories.push(this.categoryService.findCategory("Sport"))
     s.follower = 100;
     s.following = true;
     s.age = 20;
@@ -41,7 +46,8 @@ export class SkinsService {
     s.id = 2;
     s.title = "Ausgehen";
     s.description ="Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!"
-    s.category.push("Freizeit")
+    s.categories.push(this.categoryService.findCategory("All"))
+    s.categories.push(this.categoryService.findCategory("Freizeit"))
     s.follower = 50;
     s.following = true;
     s.age = 18;
@@ -56,7 +62,8 @@ export class SkinsService {
     s.title = "Basketball";
     s.description ="Du magst Basketball? Cool! Das ist der Basketball Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/basketball_square.png";
-    s.category.push("Sport")
+    s.categories.push(this.categoryService.findCategory("All"))
+    s.categories.push(this.categoryService.findCategory("Sport"))
     s.follower = 40;
     s.following = true;
     s.age = 20;
@@ -71,7 +78,8 @@ export class SkinsService {
     s.title = "Schwimmen";
     s.description ="Du magst Schwimmen? Cool! Das ist der Schwimmen Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/schwimmen_square.png";
-    s.category.push("Sport")
+    s.categories.push(this.categoryService.findCategory("All"))
+    s.categories.push(this.categoryService.findCategory("Sport"))
     s.follower = 20;
     s.following = true;
     s.age = 30;
@@ -86,7 +94,8 @@ export class SkinsService {
     s.title = "Tennis";
     s.description ="Du magst Tennis? Cool! Das ist der Tennis Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/tennis_square.png";
-    s.category.push("Sport")
+    s.categories.push(this.categoryService.findCategory("All"))
+    s.categories.push(this.categoryService.findCategory("Sport"))
     s.follower = 400;
     s.following = true;
     s.age = 18;
@@ -101,7 +110,8 @@ export class SkinsService {
     s.title = "Golf";
     s.description ="Du magst Golf? Cool! Das ist der Golf Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/golf_square.png";
-    s.category.push("Sport")
+    s.categories.push(this.categoryService.findCategory("All"))
+    s.categories.push(this.categoryService.findCategory("Sport"))
     s.follower = 200;
     s.following = true;
     s.age = 17;
@@ -116,7 +126,8 @@ export class SkinsService {
     s.title = "Volleyball";
     s.description ="Du magst Volleyball? Cool! Das ist der Volleyball Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/volleyball_square.png";
-    s.category.push("Sport")
+    s.categories.push(this.categoryService.findCategory("All"))
+    s.categories.push(this.categoryService.findCategory("Sport"))
     s.follower = 300;
     s.following = true;
     s.age = 28;

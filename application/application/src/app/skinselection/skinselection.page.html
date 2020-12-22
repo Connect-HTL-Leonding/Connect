@@ -9,14 +9,21 @@
 
 <ion-content>
 <ion-searchbar animated></ion-searchbar>
-<ion-chip>
-  <ion-label>Sport</ion-label>
+
+
+
+<ng-container *ngFor="let category of categoryService.categories; index as i;">
+<ion-chip (click)="setCurrCat(category)">
+  <ion-label>{{category.title}}</ion-label>
 </ion-chip>
+</ng-container>
 
   <ion-grid>
   <ion-row>
     <ng-container *ngFor="let skin of skinsService.skins; index as i;">
-    <ion-col sizeLg="6" sizeMd="6" sizeXs="6"  *ngIf="skin.category.indexOf('Sport') !== -1">
+    
+    <ion-col sizeLg="6" sizeMd="6" sizeXs="6"  *ngIf="skin.categories.indexOf(currCat) !== -1">
+    
       <app-skinselection-card [skin]=skin></app-skinselection-card>
     </ion-col>
   </ng-container>
