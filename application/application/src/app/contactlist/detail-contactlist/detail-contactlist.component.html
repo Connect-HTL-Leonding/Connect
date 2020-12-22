@@ -3,8 +3,13 @@
   <ion-avatar slot="start">
     <img src="{{user.profilePicture}}">
   </ion-avatar>
-  <ion-label id="flex">
-    <h2 id="username">{{user.username}}</h2>
-    <p>{{user.latestMessage}}</p>
+  <ion-label id="chat-flex">
+    <div id="flex">
+      <h2 id="username">{{user.username}}</h2>
+      <p id="{{user.unread}}Message">{{user.latestMessage}}</p>
+    </div>
+    <div id="messages-flex">
+      <p id="{{user.unread}}">{{user.unreadMessages}}</p>
+    </div>
   </ion-label>
 </div>

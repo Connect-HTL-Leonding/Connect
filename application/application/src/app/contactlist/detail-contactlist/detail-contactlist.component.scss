@@ -17,3 +17,34 @@
 #username {
     color: var(--ion-color-primary);
 }
+
+#chat-flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70%;
+}
+
+#true {
+    background-color: var(--ion-color-secondary);
+    border-radius: 100%;
+    height: 2vh;
+    width: 2vh;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+}
+
+#false {
+    visibility: hidden;
+}
+
+#messages-flex {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 1.5vh;
+}
+
+#trueMessage {
+    font-weight: bold; 
+}
