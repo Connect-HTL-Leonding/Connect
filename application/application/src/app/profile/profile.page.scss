@@ -46,11 +46,11 @@ body {
 }
 
 .photo-slider-con {
-    margin: -3vh;
+    margin: -2vh;
     width:100%;
     height: 40%;
     padding: 2.5% 5% 5% 2.5%;
-    color: var(--ion-color-secondary)
+    color: var(--ion-color-secondary);
 }
 
 .social-media-con {
@@ -65,13 +65,15 @@ ion-grid {
     text-decoration: underline;
 }
 
-
 ion-row {
     margin:3px;
 }
 
+
+
+
 ion-card {
-    height: 75%; width: 40vw; background-color: red;
+    height: 75%; width: 33%;
     margin:0% 2% 2% 2%;
     background-image: url("../../assets/connect_img/volleyball.png");
     background-size: cover;
