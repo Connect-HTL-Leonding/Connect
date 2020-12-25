@@ -14,6 +14,7 @@ export class SkinselectionPage implements OnInit {
   categoryService: CategoryService;
 
   currCat: Category;
+  searchString = "";
 
   constructor(ss: SkinsService, cs: CategoryService) {
     this.skinsService = ss;
