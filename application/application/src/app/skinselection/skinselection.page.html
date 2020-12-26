@@ -12,7 +12,7 @@
 
 
 
-<ng-container *ngFor="let category of categoryService.categories; index as i;" no-bounce>
+<ng-container *ngFor="let category of categoryService.categories; index as i;">
 <ion-chip (click)="setCurrCat(category)">
   <ion-label>{{category.title}}</ion-label>
 </ion-chip>
@@ -22,7 +22,7 @@
   <ion-row>
     <ng-container *ngFor="let skin of skinsService.skins; index as i;">
     
-    <ion-col sizeLg="6" sizeMd="6" sizeXs="6"  *ngIf="skin.categories.indexOf(currCat) !== -1 && (skin.title.toUpperCase().startsWith(searchString.toUpperCase()) || searchString === '')">
+    <ion-col sizeLg="6" sizeMd="6" sizeXs="6"  *ngIf="skin.categories.indexOf(currCat) !== -1 && (skin.title.toUpperCase().startsWith(searchString.toUpperCase().trim()) || searchString.trim() === '')">
     
       <app-skinselection-card [skin]=skin></app-skinselection-card>
     </ion-col>
