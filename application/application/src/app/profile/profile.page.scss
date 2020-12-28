@@ -31,14 +31,14 @@ body {
 #name {
     text-align: center;
     position: relative;
-    margin-top: 2vh;
+    margin-top: 30px;
     font-weight: 800;
     color:var(--ion-color-primary)
 }
 
 .descBox {
     margin-top: 1vh;
-    height: 20vh;
+    height: 17vh;
     width: 95%;
     padding: 5px 2px 5px 10px;
     border-radius: 30px;
@@ -50,7 +50,7 @@ body {
 .photo-slider-con {
     margin: -2vh;
     width:100%;
-    height: 40%;
+    height: 50%;
     padding: 2.5% 5% 5% 2.5%;
     color: var(--ion-color-secondary);
 }
@@ -67,9 +67,7 @@ ion-grid {
     text-decoration: underline;
 }
 
-ion-row {
-    margin:3px;
-}
+
 
 ion-card {
     height: 75%; width: 33%;
