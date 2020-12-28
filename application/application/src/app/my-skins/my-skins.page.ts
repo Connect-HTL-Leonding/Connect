@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, ModalController } from '@ionic/angular';
 import {SkinsService} from '../api/skins.service';
 import { Skin } from 'src/app/model/skin';
+import { SkinselectionPage} from '../skinselection/skinselection.page'
 
 @Component({
   selector: 'app-my-skins',
@@ -14,7 +15,7 @@ export class MySkinsPage implements OnInit {
   searchString: String = "";
   currentSkin : Skin;
 
-  constructor(ks : SkinsService) { 
+  constructor(ks : SkinsService, public modalController : ModalController) { 
     this.skinService = ks;
   }
 
@@ -29,6 +30,13 @@ export class MySkinsPage implements OnInit {
 
   changeSelection(s:Skin){
     this.currentSkin = s;
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: SkinselectionPage
+    });
+    return await modal.present();
   }
 
 }

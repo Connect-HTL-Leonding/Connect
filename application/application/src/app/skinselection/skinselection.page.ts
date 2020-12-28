@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { CategoryService } from '../api/category.service';
 import { SkinsService } from '../api/skins.service';
 import { Category } from '../model/category';
@@ -16,24 +17,26 @@ export class SkinselectionPage implements OnInit {
   currCat: Category;
   searchString = "";
 
-  constructor(ss: SkinsService, cs: CategoryService) {
+  constructor(ss: SkinsService, cs: CategoryService, public modalCtrl: ModalController) {
     this.skinsService = ss;
     this.categoryService = cs;
-    
-   
-   this.setCurrCat(this.categoryService.findCategory("All"));
-   
-   }
 
-  
 
-  ngOnInit() {
-    
+    this.setCurrCat(this.categoryService.findCategory("All"));
+
   }
 
-  setCurrCat(c: Category){
-    console.log("Cat: "+c)
-      this.currCat = c;
+  ngOnInit() {
+    console.log(this.skinsService)
+  }
+
+  setCurrCat(c: Category) {
+    console.log("Cat: " + c)
+    this.currCat = c;
+  }
+
+  dismissModal() {
+    this.modalCtrl.dismiss();
   }
 
 }

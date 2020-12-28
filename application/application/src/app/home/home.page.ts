@@ -29,6 +29,7 @@ export class HomePage {
   navigate: any;
   map: any;
 
+  //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
   constructor(private menu: MenuController, private geolocation: Geolocation) {
@@ -44,9 +45,10 @@ export class HomePage {
 
   ionViewDidEnter() {
     this.loadMap();
+    console.log("jfsaldfjkd");
   }
 
-  loadMap() {
+  async loadMap() {
 
     // This code is necessary for browser
     /*
@@ -66,9 +68,19 @@ export class HomePage {
         center: location,
         zoom: 18,
         disableDefaultUI: true
-      };  
+      };
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
+
+      var marker = new google.maps.Marker({
+        position: location,
+        title: "YOU",
+        //icon: "../../assets/normalguy.jpg"
+      });
+
+      // To add the marker to the map, call setMap();
+      marker.setMap(this.map);
+
     }).catch((error) => {
       console.log('Error getting location', error);
     });
