@@ -33,6 +33,7 @@ export class MySkinsPage implements OnInit {
   }
 
   async presentModal() {
+    console.log("lsafkdjslkf")
     const modal = await this.modalController.create({
       component: SkinselectionPage
     });
