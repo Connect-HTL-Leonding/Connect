@@ -20,8 +20,6 @@ export class MySkinsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.skinService.getSkins();
-
     //async
     this.skinService.getSkins().subscribe(
       data => {

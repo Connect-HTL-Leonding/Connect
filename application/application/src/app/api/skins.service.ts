@@ -17,6 +17,12 @@ export class SkinsService {
   categoryService: CategoryService
   message;
 
+  api = "http://localhost:3000";
+
+  //jan
+  //api = "http://192.168.1.26:3000";
+
+
   //Konstruktor
   constructor(http: HttpClient, cs: CategoryService) {
     this.http = http;
@@ -139,7 +145,7 @@ export class SkinsService {
   }
 
   getSkins(){
-    return this.http.get<Skin[]>('http://localhost:3000/skin')
+    return this.http.get<Skin[]>(this.api +'/skin')
   }
 
   deleteSkin(index: number) {

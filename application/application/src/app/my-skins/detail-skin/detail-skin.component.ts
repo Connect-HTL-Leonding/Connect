@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { SkinsService } from 'src/app/api/skins.service';
 import { Skin } from 'src/app/model/skin';
 
@@ -13,6 +13,15 @@ export class DetailSkinComponent implements OnInit {
   
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.skin)
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    // only run when property "data" changed
+    if (changes['skin']) {
+        
+    }
+}
 
 }
