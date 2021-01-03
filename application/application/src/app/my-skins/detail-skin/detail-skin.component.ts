@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { SkinsService } from 'src/app/api/skins.service';
 import { Skin } from 'src/app/model/skin';
 
 @Component({

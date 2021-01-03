@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
-import {SkinsService} from '../api/skins.service';
+import { SkinsService } from '../api/skins.service';
 import { Skin } from 'src/app/model/skin';
-import { SkinselectionPage} from '../skinselection/skinselection.page'
+import { SkinselectionPage } from '../skinselection/skinselection.page'
 
 @Component({
   selector: 'app-my-skins',
@@ -13,22 +13,36 @@ export class MySkinsPage implements OnInit {
 
   skinService;
   searchString: String = "";
-  currentSkin : Skin;
+  currentSkin: Skin;
 
-  constructor(ks : SkinsService, public modalController : ModalController) { 
+  constructor(ks: SkinsService, public modalController: ModalController) {
     this.skinService = ks;
   }
 
   ngOnInit() {
-    this.currentSkin = this.skinService.skins[0];
-    console.log(this.currentSkin);
+    this.skinService.getSkins();
+
+    //async
+    this.skinService.getSkins().subscribe(
+      data => {
+        this.skinService.skins = data;
+        this.currentSkin = this.skinService.skins[0];
+        console.log(this.skinService);
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
+    //this.currentSkin = this.skinService.skins[0];
+    //console.log(this.currentSkin);
+    console.log(this.skinService);
   }
 
-  matchesFilter(s:Skin) {
+  matchesFilter(s: Skin) {
     return s.title.toUpperCase().indexOf(this.searchString.toUpperCase()) == 0
   }
 
-  changeSelection(s:Skin){
+  changeSelection(s: Skin) {
     this.currentSkin = s;
   }
 

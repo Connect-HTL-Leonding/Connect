@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Skin } from '../model/skin';
 import { Category } from '../model/category';
 import { CategoryService } from './category.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class SkinsService {
   http: HttpClient;
 
   //Array an Terminen
-  public skins : Array<Skin>;
+  public skins: Array<Skin>;
   categoryService: CategoryService
   message;
 
@@ -21,15 +22,15 @@ export class SkinsService {
     this.http = http;
     this.skins = [];
     this.categoryService = cs;
-    this.generateSkins();
+    //this.generateSkins();
   }
 
-  generateSkins(){
+  generateSkins() {
     var s = new Skin();
-    
+
     s.id = 1;
     s.title = "Fußball";
-    s.description ="Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!"
+    s.description = "Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/fussball_square.png"
     s.categories.push(this.categoryService.findCategory("All"))
     s.categories.push(this.categoryService.findCategory("Sport"))
@@ -42,10 +43,10 @@ export class SkinsService {
     this.skins.push(s);
 
     s = new Skin();
-    
+
     s.id = 2;
     s.title = "Ausgehen";
-    s.description ="Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!"
+    s.description = "Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!"
     s.categories.push(this.categoryService.findCategory("All"))
     s.categories.push(this.categoryService.findCategory("Freizeit"))
     s.follower = 50;
@@ -57,10 +58,10 @@ export class SkinsService {
     this.skins.push(s);
 
     s = new Skin();
-    
+
     s.id = 3;
     s.title = "Basketball";
-    s.description ="Du magst Basketball? Cool! Das ist der Basketball Skin. Komm doch vorbei!"
+    s.description = "Du magst Basketball? Cool! Das ist der Basketball Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/basketball_square.png";
     s.categories.push(this.categoryService.findCategory("All"))
     s.categories.push(this.categoryService.findCategory("Sport"))
@@ -73,10 +74,10 @@ export class SkinsService {
     this.skins.push(s);
 
     s = new Skin();
-    
+
     s.id = 4;
     s.title = "Schwimmen";
-    s.description ="Du magst Schwimmen? Cool! Das ist der Schwimmen Skin. Komm doch vorbei!"
+    s.description = "Du magst Schwimmen? Cool! Das ist der Schwimmen Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/schwimmen_square.png";
     s.categories.push(this.categoryService.findCategory("All"))
     s.categories.push(this.categoryService.findCategory("Sport"))
@@ -89,10 +90,10 @@ export class SkinsService {
     this.skins.push(s);
 
     s = new Skin();
-    
+
     s.id = 5;
     s.title = "Tennis";
-    s.description ="Du magst Tennis? Cool! Das ist der Tennis Skin. Komm doch vorbei!"
+    s.description = "Du magst Tennis? Cool! Das ist der Tennis Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/tennis_square.png";
     s.categories.push(this.categoryService.findCategory("All"))
     s.categories.push(this.categoryService.findCategory("Sport"))
@@ -105,10 +106,10 @@ export class SkinsService {
     this.skins.push(s);
 
     s = new Skin();
-    
+
     s.id = 6;
     s.title = "Golf";
-    s.description ="Du magst Golf? Cool! Das ist der Golf Skin. Komm doch vorbei!"
+    s.description = "Du magst Golf? Cool! Das ist der Golf Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/golf_square.png";
     s.categories.push(this.categoryService.findCategory("All"))
     s.categories.push(this.categoryService.findCategory("Sport"))
@@ -121,10 +122,10 @@ export class SkinsService {
     this.skins.push(s);
 
     s = new Skin();
-    
+
     s.id = 7;
     s.title = "Volleyball";
-    s.description ="Du magst Volleyball? Cool! Das ist der Volleyball Skin. Komm doch vorbei!"
+    s.description = "Du magst Volleyball? Cool! Das ist der Volleyball Skin. Komm doch vorbei!"
     s.image = "../assets/connect_img/square/volleyball_square.png";
     s.categories.push(this.categoryService.findCategory("All"))
     s.categories.push(this.categoryService.findCategory("Sport"))
@@ -137,8 +138,8 @@ export class SkinsService {
     this.skins.push(s);
   }
 
-  getSkins() {
-    
+  getSkins(){
+    return this.http.get<Skin[]>('http://localhost:3000/skin')
   }
 
   deleteSkin(index: number) {

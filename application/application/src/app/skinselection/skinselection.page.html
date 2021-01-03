@@ -22,7 +22,8 @@
   <ion-row>
     <ng-container *ngFor="let skin of skinsService.skins; index as i;">
     
-    <ion-col sizeLg="6" sizeMd="6" sizeXs="6"  *ngIf="skin.categories.indexOf(currCat) !== -1 && (skin.title.toUpperCase().startsWith(searchString.toUpperCase().trim()) || searchString.trim() === '')">
+    <ion-col sizeLg="6" sizeMd="6" sizeXs="6" *ngIf="check(skin)">
+      <!-- -->
     
       <app-skinselection-card [skin]=skin></app-skinselection-card>
     </ion-col>

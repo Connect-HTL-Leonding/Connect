@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CategoryService } from '../api/category.service';
 import { SkinsService } from '../api/skins.service';
@@ -26,8 +26,37 @@ export class SkinselectionPage implements OnInit {
 
   }
 
+  check(skin) {
+    var index = -1;
+
+    //important
+    var cat_title = this.currCat.title
+
+    var filteredObj = skin.categories.find(function (item, i) {
+      if (item.title === cat_title) {
+        index = i;
+        return i;
+      }
+    });
+
+    if (index !== -1 && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   ngOnInit() {
-    console.log(this.skinsService)
+    console.log(this.skinsService);
+    this.skinsService.getSkins().subscribe(
+      data => {
+        this.skinsService.skins = data;
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
+
   }
 
   setCurrCat(c: Category) {
