@@ -1,18 +1,17 @@
-
 <ion-card class="skinselection-card">
-  
-    <ion-img src={{skin.image}}></ion-img>
-  
-   
+
+  <ion-img [src]="skin.image" alt="not loading"></ion-img>
+
+
 
   <ion-card-content>
-   
+
     <ion-card-title>{{skin.title}}</ion-card-title>
     <p class="skinselection-description">
-     {{skin.description}}
+      {{skin.description}}
     </p>
 
-    <button class="skinselection-add-button" >+</button>
+    <button class="skinselection-add-button">+</button>
   </ion-card-content>
 
 </ion-card>

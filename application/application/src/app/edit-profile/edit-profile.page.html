@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Profile</ion-title>
+    <ion-title>Edit your profile</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home"></ion-back-button>
     </ion-buttons>
@@ -20,24 +20,35 @@
         <p>{{user.desc}}</p>
       </div>
 
-      <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']">Anpassen</ion-button>
+      <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;"
+        [routerLink]="['../edit-profile']">Anpassen</ion-button>
 
       <div class="photo-slider-con">
         <p style="left:0;">Über mich</p>
         <div style="display: flex;flex-flow: row nowrap; height: 100%; width: 100%;margin-top: -20px;">
           <ion-slides [options]="slideOpts" pager="false" style="width: 100%;">
             <ion-slide>
-              <ion-card></ion-card>
-              <ion-card></ion-card>   
-              <ion-card></ion-card>
+            <ion-card (click)="addPhotoToGallery()">
+              <ion-icon id="plusIcon" name="add-circle-outline"></ion-icon>
+            </ion-card>
+            <ion-card>
+              <img class="photo" src="../../assets/connect_img/basketball.png">
+            </ion-card>
+            <ion-card>
+              <img class="photo" src="../../assets/connect_img/basketball.png">
+            </ion-card>
             </ion-slide>
             <ion-slide>
-              <ion-card></ion-card>
-              <ion-card></ion-card>   
-              <ion-card></ion-card>
+              <ion-card>
+                <img class="photo" src="../../assets/connect_img/basketball.png">
+              </ion-card>
+              <ion-card>
+                <img class="photo" src="../../assets/connect_img/basketball.png">
+              </ion-card>
+              <ion-card>
+                <img class="photo" src="../../assets/connect_img/basketball.png">
+              </ion-card>
             </ion-slide>
-           
-            
           </ion-slides>
         </div>
       </div>
