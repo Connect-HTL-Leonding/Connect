@@ -1,0 +1,63 @@
+{
+  "skin": [{
+      "id": 1,
+      "title": "Fußball",
+      "description": "Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!",
+      "image": "../assets/connect_img/square/fussball_square.png",
+      "categories": [{
+          "id": 1,
+          "title": "All"
+        },
+        {
+          "id": 2,
+          "title": "Sport"
+        }
+      ],
+      "follower": 100,
+      "following": true,
+      "age": 20,
+      "radius": 10,
+      "nivau": 10
+    },
+    {
+      "id": 2,
+      "title": "Ausgehen",
+      "description": "Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!",
+      "categories": [{
+          "id": 1,
+          "title": "All"
+        },
+        {
+          "id": 2,
+          "title": "Freizeit"
+        }
+      ],
+      "follower": 50,
+      "following": true,
+      "age": 18,
+      "radius": 2,
+      "nivau": 10
+    }
+  ],
+  "categories": [{
+      "id": 1,
+      "title": "All"
+    },
+    {
+      "id": 2,
+      "title": "Sport"
+    },
+    {
+      "id": 3,
+      "title": "Freizeit"
+    }
+  ],
+  "comments": [{
+    "id": 1,
+    "body": "some comment",
+    "postId": 1
+  }],
+  "profile": {
+    "name": "typicode"
+  }
+}
