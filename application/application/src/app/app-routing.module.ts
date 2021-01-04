@@ -31,14 +31,22 @@ const routes: Routes = [
     loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
   },
   {
+
     path: 'edit-profile-details',
     loadChildren: () => import('./edit-profile-details/edit-profile-details.module').then( m => m.EditProfileDetailsPageModule)
   },
+  {
+  path: 'chat',
+    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  }
+  
+
 
 ];
 
 
 
+    
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
