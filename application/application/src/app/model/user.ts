@@ -4,7 +4,7 @@ export class User {
         public username: string,
         public profilePicture: string,
         public latestMessage: string,
-        public desc: string
+        public desc: string,
     ) {
 
     }

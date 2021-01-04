@@ -25,10 +25,15 @@ const routes: Routes = [
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
-  },  {
+  },
+  {
     path: 'edit-profile',
     loadChildren: () => import('./edit-profile/edit-profile.module').then( m => m.EditProfilePageModule)
-  }
+  },
+  {
+    path: 'edit-profile-details',
+    loadChildren: () => import('./edit-profile-details/edit-profile-details.module').then( m => m.EditProfileDetailsPageModule)
+  },
 
 ];
 
