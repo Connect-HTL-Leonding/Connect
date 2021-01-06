@@ -9,19 +9,44 @@
 
 <ion-content>
   <div class="wrapper">
-    <div style="height: 20vh; width: 100vw; background-color:var(--ion-color-primary)"></div>
+    <div style="height: 19vh; width: 100%; background-color:var(--ion-color-primary)"></div>
     <div class="container">
       <div class="mid">
         <img class="round" width="150vw" height="150vh" src="../../assets/normalguy.jpg">
       </div>
-      <h2 id="name">{{user.username}}</h2>
 
-      <div class="descBox">
-        <p>{{user.desc}}</p>
+      <div class="edit-container">
+        <label>Benutzername</label>
+        <p contenteditable="true">{{user.username}}</p>
       </div>
 
-      <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;"
-      [routerLink]="['../edit-profile-details']">Anpassen</ion-button>
+      <div style="overflow:scroll;"  class="edit-container">
+        <label>Beschreibung</label>
+        <p contenteditable="true">{{user.desc}}</p>
+      </div>
+
+      <div style="margin-top:20px;" class="con">
+        <p>Andere Details bearbeiten</p>
+        <ion-icon class="icon" name="chevron-forward-outline"></ion-icon>
+      </div>
+
+      <div class="con">
+      <p>Benachrichtigungen</p>
+      </div>
+
+      <div style="color:grey;" class="con">
+        <p>Nachrichten</p>
+        <ion-toggle [(ngModel)]="nachrichten"></ion-toggle>
+      </div>
+
+      <div style="color:grey;" class="con">
+        <p>Connects</p>
+        <ion-toggle [(ngModel)]="connects"></ion-toggle>
+      </div>
+      
+
+    <!--<ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;"
+    [routerLink]="['../edit-profile-details']">Anpassen</ion-button>-->
 
       <div class="photo-slider-con">
         <p style="left:0;">Über mich</p>
@@ -29,7 +54,7 @@
           <ion-slides [options]="slideOpts" pager="false" style="width: 100%;">
             <ion-slide>
             <ion-card (click)="addPhotoToGallery()">
-              <ion-icon id="plusIcon" name="add-circle-outline"></ion-icon>
+              <ion-icon style="color: var(--ion-color-secondary)" class="icon" name="add-circle-outline"></ion-icon>
             </ion-card>
             <ion-card  *ngFor="let photo of photoService.photos; index as position">
               <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
@@ -42,33 +67,7 @@
       </div>
 
 
-      <div class="social-media-con">
-        <p style="color: var(--ion-color-secondary);">Social Media</p>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-instagram"></ion-icon>
-              Der Max
-            </ion-col>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-linkedin"></ion-icon>
-              MaxMusterLinkedIn
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-facebook"></ion-icon>
-              MaxMuster
-            </ion-col>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-twitter"></ion-icon>
-              DerMaxTwitter
-            </ion-col>
-          </ion-row>
-
-
-        </ion-grid>
-      </div>
+     
 
 
 

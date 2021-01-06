@@ -10,6 +10,9 @@ import {PhotoService} from "../api/photo.service";
 export class EditProfilePage implements OnInit {
 
   user: User
+  nachrichten : boolean = false;
+  connects : boolean = false;
+
 
   constructor(ps: ProfileService, public photoService: PhotoService) {
     this.user = ps.user[0];
@@ -25,6 +28,7 @@ export class EditProfilePage implements OnInit {
   addPhotoToGallery() {
     this.photoService.addNewToGallery();
   }
+
 
   ngOnInit() {
   }
