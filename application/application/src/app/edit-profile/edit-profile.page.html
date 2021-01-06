@@ -31,24 +31,12 @@
             <ion-card (click)="addPhotoToGallery()">
               <ion-icon id="plusIcon" name="add-circle-outline"></ion-icon>
             </ion-card>
-            <ion-card>
-              <img class="photo" src="../../assets/connect_img/basketball.png">
+            <ion-card  *ngFor="let photo of photoService.photos; index as position">
+              <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
             </ion-card>
-            <ion-card>
-              <img class="photo" src="../../assets/connect_img/basketball.png">
-            </ion-card>
+            
             </ion-slide>
-            <ion-slide>
-              <ion-card>
-                <img class="photo" src="../../assets/connect_img/basketball.png">
-              </ion-card>
-              <ion-card>
-                <img class="photo" src="../../assets/connect_img/basketball.png">
-              </ion-card>
-              <ion-card>
-                <img class="photo" src="../../assets/connect_img/basketball.png">
-              </ion-card>
-            </ion-slide>
+            
           </ion-slides>
         </div>
       </div>
