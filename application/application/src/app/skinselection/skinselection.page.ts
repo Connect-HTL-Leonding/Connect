@@ -68,4 +68,8 @@ export class SkinselectionPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
+  updateSkin(skin){
+    this.skinsService.updateSkin(skin);
+  }
+
 }

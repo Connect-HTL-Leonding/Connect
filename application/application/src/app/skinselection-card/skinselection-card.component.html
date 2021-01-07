@@ -11,7 +11,7 @@
       {{skin.description}}
     </p>
 
-    <div id="add_skin_circle">
+    <div id="add_skin_circle" *ngIf="!skin.following" (click)="updateSkin()">
       <ion-icon name="add-outline"></ion-icon>
     </div>
   </ion-card-content>

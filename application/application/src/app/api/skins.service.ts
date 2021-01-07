@@ -17,10 +17,10 @@ export class SkinsService {
   categoryService: CategoryService
   message;
 
-  api = "http://localhost:3000";
+  //api = "http://localhost:3000";
 
   //jan
-  //api = "http://192.168.1.26:3000";
+  api = "http://192.168.1.26:3000";
 
 
   //Konstruktor
@@ -148,9 +148,17 @@ export class SkinsService {
     return this.http.get<Skin[]>(this.api +'/skin')
   }
 
+  updateSkin(s:Skin){
+    let body = JSON.stringify(s);
+    console.log(body);
+
+    this.http.put( this.api + '/skin/' + s.id, body, {'headers': {'Content-Type': 'application/json'}}).subscribe(data => {
+      this.message = data; 
+      this.getSkins();
+    });
+  }
+
   deleteSkin(index: number) {
   }
 
-  updateSkin(t: Skin) {
-  }
 }

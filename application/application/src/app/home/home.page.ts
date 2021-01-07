@@ -50,6 +50,8 @@ export class HomePage {
 
   async loadMap() {
 
+    console.log("jasljfds");
+
     // This code is necessary for browser
     /*
     Environment.setEnv({
@@ -128,6 +130,11 @@ export class HomePage {
           title: "Profile",
           url: "/profile",
           icon: "person-circle"
+        },
+        {
+          title: "Profile-Details",
+          url: "/edit-profile-details",
+          icon: ""
         }
       ]
 

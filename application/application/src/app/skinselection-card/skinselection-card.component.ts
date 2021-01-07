@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Skin } from '../model/skin';
 
 @Component({
@@ -7,10 +7,16 @@ import { Skin } from '../model/skin';
   styleUrls: ['./skinselection-card.component.scss'],
 })
 export class SkinselectionCardComponent implements OnInit {
-@Input() skin :Skin;
+  @Input() skin: Skin;
+  @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  updateSkin() {
+    this.skin.following = true;
+    this.updated.emit();
+  }
 
 }
