@@ -1,10 +1,12 @@
 {
-  "skin": [{
+  "skin": [
+    {
       "id": 1,
       "title": "Fußball",
       "description": "Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!",
       "image": "../assets/connect_img/square/fussball_square.png",
-      "categories": [{
+      "categories": [
+        {
           "id": 1,
           "title": "All"
         },
@@ -23,7 +25,8 @@
       "id": 2,
       "title": "Ausgehen",
       "description": "Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!",
-      "categories": [{
+      "categories": [
+        {
           "id": 1,
           "title": "All"
         },
@@ -37,12 +40,14 @@
       "age": 18,
       "radius": 2,
       "nivau": 10
-    },{
+    },
+    {
       "id": 3,
       "title": "Basketball",
       "description": "Du magst Basketball? Cool! Das ist der Basketball Skin. Komm doch vorbei!",
       "image": "../assets/connect_img/square/basketball_square.png",
-      "categories": [{
+      "categories": [
+        {
           "id": 1,
           "title": "All"
         },
@@ -56,12 +61,14 @@
       "age": 20,
       "radius": 10,
       "nivau": 10
-    },{
+    },
+    {
       "id": 4,
       "title": "Schwimmen",
       "description": "Du magst Schwimmen? Cool! Das ist der Schwimmen Skin. Komm doch vorbei!",
       "image": "../assets/connect_img/square/schwimmen_square.png",
-      "categories": [{
+      "categories": [
+        {
           "id": 1,
           "title": "All"
         },
@@ -75,12 +82,14 @@
       "age": 20,
       "radius": 10,
       "nivau": 10
-    },{
+    },
+    {
       "id": 5,
       "title": "Tennis",
       "description": "Du magst Tennis? Cool! Das ist der Tennis Skin. Komm doch vorbei!",
       "image": "../assets/connect_img/square/tennis_square.png",
-      "categories": [{
+      "categories": [
+        {
           "id": 1,
           "title": "All"
         },
@@ -94,12 +103,14 @@
       "age": 20,
       "radius": 10,
       "nivau": 10
-    },{
+    },
+    {
       "id": 6,
       "title": "Golf",
       "description": "Du magst Golf? Cool! Das ist der Golf Skin. Komm doch vorbei!",
       "image": "../assets/connect_img/square/golf_square.png",
-      "categories": [{
+      "categories": [
+        {
           "id": 1,
           "title": "All"
         },
@@ -113,12 +124,14 @@
       "age": 20,
       "radius": 10,
       "nivau": 10
-    },{
+    },
+    {
       "id": 7,
       "title": "Volleyball",
       "description": "Du magst Volleyball? Cool! Das ist der Volleyball Skin. Komm doch vorbei!",
       "image": "../assets/connect_img/square/volleyball_square.png",
-      "categories": [{
+      "categories": [
+        {
           "id": 1,
           "title": "All"
         },
@@ -134,7 +147,8 @@
       "nivau": 10
     }
   ],
-  "categories": [{
+  "categories": [
+    {
       "id": 1,
       "title": "All"
     },
@@ -147,11 +161,13 @@
       "title": "Freizeit"
     }
   ],
-  "comments": [{
-    "id": 1,
-    "body": "some comment",
-    "postId": 1
-  }],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
   "profile": {
     "name": "typicode"
   }
