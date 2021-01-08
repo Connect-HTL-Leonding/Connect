@@ -50,7 +50,7 @@ export class HomePage {
 
   async loadMap() {
 
-    console.log("jasljfds");
+    console.log(this.geolocation);
 
     // This code is necessary for browser
     /*
