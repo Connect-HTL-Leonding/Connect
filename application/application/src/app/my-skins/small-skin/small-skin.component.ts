@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { Skin } from 'src/app/model/skin';
 
 @Component({
@@ -9,6 +9,7 @@ import { Skin } from 'src/app/model/skin';
 export class SmallSkinComponent implements OnInit {
 
   @Input() skin: Skin;
+  @Input() current: Skin;
 
   constructor() { }
 

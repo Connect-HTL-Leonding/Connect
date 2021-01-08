@@ -11,56 +11,82 @@ import { SkinselectionPage } from '../skinselection/skinselection.page'
 })
 export class MySkinsPage implements OnInit {
 
+  //Service
   skinService;
+
+  //Suchbegriff
   searchString: String = "";
+
+  //Ausgewählter Skin
   currentSkin: Skin;
 
+  //Konstruktor
   constructor(ks: SkinsService, public modalController: ModalController) {
     this.skinService = ks;
   }
 
   ngOnInit() {
-    //async
+    //async Skin loading
     this.skinService.getSkins().subscribe(
       data => {
         this.skinService.skins = data;
-        /*
-        var i = 0;
-        while(!this.skinService.skins[i].following){
-          i++;
-        }
-        this.currentSkin = this.skinService.skins[i];
-        */
-        console.log(this.skinService);
+        //Skin wird selektiert
+        this.selectSkin();
+
+        //console.log(this.skinService);
       },
       error1 => {
         console.log('Error');
       }
     )
-    //this.currentSkin = this.skinService.skins[0];
-    //console.log(this.currentSkin);
-    console.log(this.skinService);
   }
 
+  //check
   matchesFilter(s: Skin) {
     return s.title.toUpperCase().indexOf(this.searchString.toUpperCase()) == 0
   }
 
+  //ausgewählter Skin änder bei klick
   changeSelection(s: Skin) {
     this.currentSkin = s;
   }
 
+  //ausgewählter Skin ändern - dynamisch
+  selectSkin() {
+    this.skinService.skins.some(element => {
+      if (element.following) {
+        this.currentSkin = element;
+        return true;
+      }
+    });
+  }
+
+  //Modal öffnen
   async presentModal() {
-    console.log("lsafkdjslkf")
+    console.log("Modal openeing")
     const modal = await this.modalController.create({
-      component: SkinselectionPage
+      component: SkinselectionPage,
+    });
+    //Event bei Modal schließen
+    modal.onDidDismiss().then(() => {
+      this.ngOnInit();
     });
     return await modal.present();
   }
 
-  deleteupdateSkin(s : Skin){
-    this.skinService.updateSkin(s);
-
+  //Event bei Skin entfernen
+  deleteupdateSkin(s: Skin) {
+    this.skinService.updateSkin(s).subscribe(data => {
+      //nach unpdate erneutes getAll
+      this.skinService.getSkins().subscribe(
+        data => {
+          this.skinService.skins = data;
+          this.selectSkin();
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
+    });;
   }
-
 }

@@ -12,21 +12,21 @@ export class DetailSkinComponent implements OnInit {
   @Input() skin: Skin;
   @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
 
-
   constructor() { }
 
   ngOnInit() {
-    console.log(this.skin)
+    //console.log(this.skin)
   }
 
+  /*
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "data" changed
     if (changes['skin']) {
-
     }
-
   }
+  */
 
+  //Event wenn Skin löschen
   removeSkin() {
     this.skin.following = false;
     this.updated.emit();

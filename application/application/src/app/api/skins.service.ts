@@ -31,6 +31,7 @@ export class SkinsService {
     //this.generateSkins();
   }
 
+  //Only for Test
   generateSkins() {
     var s = new Skin();
 
@@ -144,28 +145,20 @@ export class SkinsService {
     this.skins.push(s);
   }
 
+  //getAll
   getSkins(){
     return this.http.get<Skin[]>(this.api +'/skin')
   }
 
+  //update
   updateSkin(s:Skin){
     let body = JSON.stringify(s);
     console.log(body);
-
-    this.http.put( this.api + '/skin/' + s.id, body, {'headers': {'Content-Type': 'application/json'}}).subscribe(data => {
-      this.message = data; 
-      this.getSkins().subscribe(
-        data => {
-          this.skins = data;
-        },
-        error1 => {
-          console.log('Error');
-        }
-      )
-    });
+    return this.http.put( this.api + '/skin/' + s.id, body, {'headers': {'Content-Type': 'application/json'}});
 
   }
 
+  //delete
   deleteSkin(index: number) {
   }
 
