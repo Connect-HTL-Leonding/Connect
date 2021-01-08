@@ -16,6 +16,7 @@ export class PhotoService {
   public profilePicture: Photo;
   private PHOTO_STORAGE: string = "photos";
 
+  constructor() { }
 
   public async addNewToGallery() {
     // Take a photo
@@ -33,12 +34,20 @@ export class PhotoService {
   }
 
   public async loadPfp() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    return image.webPath;
     
   }
+  
+ 
 
 
 
-  constructor() { }
+
 }
 
 export interface Photo {
