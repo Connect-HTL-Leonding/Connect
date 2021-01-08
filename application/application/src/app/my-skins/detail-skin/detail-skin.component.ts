@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { SkinsService } from 'src/app/api/skins.service';
 import { Skin } from 'src/app/model/skin';
 
@@ -9,8 +9,10 @@ import { Skin } from 'src/app/model/skin';
 })
 export class DetailSkinComponent implements OnInit {
 
-  @Input() skin : Skin;
-  
+  @Input() skin: Skin;
+  @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
+
+
   constructor() { }
 
   ngOnInit() {
@@ -20,8 +22,14 @@ export class DetailSkinComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "data" changed
     if (changes['skin']) {
-        
+
     }
-}
+
+  }
+
+  removeSkin() {
+    this.skin.following = false;
+    this.updated.emit();
+  }
 
 }

@@ -154,8 +154,16 @@ export class SkinsService {
 
     this.http.put( this.api + '/skin/' + s.id, body, {'headers': {'Content-Type': 'application/json'}}).subscribe(data => {
       this.message = data; 
-      this.getSkins();
+      this.getSkins().subscribe(
+        data => {
+          this.skins = data;
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
     });
+
   }
 
   deleteSkin(index: number) {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { MenuController, ModalController } from '@ionic/angular';
 import { SkinsService } from '../api/skins.service';
 import { Skin } from 'src/app/model/skin';
@@ -24,7 +24,13 @@ export class MySkinsPage implements OnInit {
     this.skinService.getSkins().subscribe(
       data => {
         this.skinService.skins = data;
-        this.currentSkin = this.skinService.skins[0];
+        /*
+        var i = 0;
+        while(!this.skinService.skins[i].following){
+          i++;
+        }
+        this.currentSkin = this.skinService.skins[i];
+        */
         console.log(this.skinService);
       },
       error1 => {
@@ -50,6 +56,11 @@ export class MySkinsPage implements OnInit {
       component: SkinselectionPage
     });
     return await modal.present();
+  }
+
+  deleteupdateSkin(s : Skin){
+    this.skinService.updateSkin(s);
+
   }
 
 }

@@ -3,6 +3,8 @@ import { MenuController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+
+import { MapStyle} from './mapStyle';
 /*
 import {
   GoogleMaps,
@@ -50,7 +52,7 @@ export class HomePage {
 
   async loadMap() {
 
-    console.log("jasljfds");
+    console.log(this.geolocation);
 
     // This code is necessary for browser
     /*
@@ -66,10 +68,13 @@ export class HomePage {
       console.log(resp.coords.latitude + " " + resp.coords.longitude)
       const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
 
+console.log(MapStyle)
+
       const mapOptions = {
         center: location,
         zoom: 18,
-        disableDefaultUI: true
+        disableDefaultUI: true,
+        styles: MapStyle
       };
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
