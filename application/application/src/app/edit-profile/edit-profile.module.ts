@@ -7,6 +7,11 @@ import { IonicModule } from '@ionic/angular';
 import { EditProfilePageRoutingModule } from './edit-profile-routing.module';
 
 import { EditProfilePage } from './edit-profile.page';
+import { Camera } from '@ionic-native/camera';
+import { CameraOptions } from '@ionic-native/camera';
+
+
+
 
 @NgModule({
   imports: [
@@ -16,5 +21,6 @@ import { EditProfilePage } from './edit-profile.page';
     EditProfilePageRoutingModule
   ],
   declarations: [EditProfilePage]
+ 
 })
 export class EditProfilePageModule {}

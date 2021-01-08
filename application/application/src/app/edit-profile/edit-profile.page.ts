@@ -29,6 +29,10 @@ export class EditProfilePage implements OnInit {
     this.photoService.addNewToGallery();
   }
 
+  loadFromStorage() {
+      this.photoService.loadPfp();
+  }
+
 
   ngOnInit() {
   }
