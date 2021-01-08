@@ -7,7 +7,11 @@ body {
 .mid {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     margin-top: -10vh;
+    height: auto;
+    position: relative;
+    align-items: center;
 }
 
 .round {
@@ -99,7 +103,7 @@ ion-toolbar {
     margin-top: 10px;
     height: auto;
     width: 90%;
-    padding: 20px 2px 2px 10px;
+    padding: 20px 3px 2px 10px;
     border-radius: 15px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     color:grey;
@@ -120,4 +124,7 @@ ion-toolbar {
       color: var(--ion-color-secondary);
   }
 
-
+.changePfpText {
+    color:blue;
+    cursor: pointer;
+}
