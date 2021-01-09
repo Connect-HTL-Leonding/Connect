@@ -22,6 +22,8 @@ export class SkinsService {
   //jan
   api = "http://192.168.1.26:3000";
 
+  
+
 
   //Konstruktor
   constructor(http: HttpClient, cs: CategoryService) {
@@ -31,6 +33,7 @@ export class SkinsService {
     //this.generateSkins();
   }
 
+  //Only for Test
   generateSkins() {
     var s = new Skin();
 
@@ -144,20 +147,20 @@ export class SkinsService {
     this.skins.push(s);
   }
 
+  //getAll
   getSkins(){
     return this.http.get<Skin[]>(this.api +'/skin')
   }
 
+  //update
   updateSkin(s:Skin){
     let body = JSON.stringify(s);
     console.log(body);
+    return this.http.put( this.api + '/skin/' + s.id, body, {'headers': {'Content-Type': 'application/json'}});
 
-    this.http.put( this.api + '/skin/' + s.id, body, {'headers': {'Content-Type': 'application/json'}}).subscribe(data => {
-      this.message = data; 
-      this.getSkins();
-    });
   }
 
+  //delete
   deleteSkin(index: number) {
   }
 

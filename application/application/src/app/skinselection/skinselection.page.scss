@@ -1,0 +1,15 @@
+.category{
+    width: 20vw;
+    background: white;
+    border: 1px solid grey;
+    color: grey;
+    justify-content: center;
+}
+
+.currentCategory{
+    width: 20vw;
+    background: var(--dark-green);
+    border: 1px solid grey;
+    color: white;
+    justify-content: center;
+}

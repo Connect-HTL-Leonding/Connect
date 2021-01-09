@@ -25,6 +25,7 @@
       "id": 2,
       "title": "Ausgehen",
       "description": "Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!",
+      "image": "../assets/connect_img/square/ausgehen_square.png",
       "categories": [
         {
           "id": 1,

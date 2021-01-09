@@ -8,7 +8,11 @@ import { EditProfilePageRoutingModule } from './edit-profile-routing.module';
 
 import { EditProfilePage } from './edit-profile.page';
 
+
+
+
 @NgModule({
+
   imports: [
     CommonModule,
     FormsModule,
@@ -16,5 +20,6 @@ import { EditProfilePage } from './edit-profile.page';
     EditProfilePageRoutingModule
   ],
   declarations: [EditProfilePage]
+ 
 })
 export class EditProfilePageModule {}

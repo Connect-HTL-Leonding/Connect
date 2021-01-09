@@ -12,8 +12,9 @@
 
 
 
+
 <ng-container *ngFor="let category of categoryService.categories; index as i;">
-<ion-chip (click)="setCurrCat(category)">
+<ion-chip [ngClass]="currCat.title == category.title ? 'currentCategory': 'category'" (click)="setCurrCat(category)">
   <ion-label>{{category.title}}</ion-label>
 </ion-chip>
 </ng-container>
