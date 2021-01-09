@@ -14,9 +14,22 @@ body {
     align-items: center;
 }
 
-.round {
-    border-radius: 90px;
+.pfp {
+    object-fit: cover;
+    height: 100%;
+    width: auto !important;
+    border-radius: 100%;
+
 }
+
+
+.round {
+    width: 50%;
+    height: 60%;
+    border-radius: 100%;
+  }
+
+
 
 .container {
     display: flex;
@@ -91,7 +104,6 @@ ion-toolbar {
   }
 
   .photo {
-
     object-fit: cover;
     height: 100%;
     width: auto !important;
@@ -127,4 +139,10 @@ ion-toolbar {
 .changePfpText {
     color:blue;
     cursor: pointer;
+}
+
+ion-item {
+    border-radius: 90px;
+    height: 150px;
+    width: 150px;
 }

@@ -17,7 +17,7 @@ export class EditProfilePage implements OnInit {
   nachrichten : boolean = false;
   connects : boolean = false;
   imgURL;
-
+ image = new Image();
 
   constructor(ps: ProfileService, public photoService: PhotoService, 
     //private camera: Camera
@@ -38,7 +38,10 @@ export class EditProfilePage implements OnInit {
   }
 
   loadFromStorage() {
-     this.imgURL =  this.photoService.loadPfp();
+     this.photoService.loadPfp();
+     console.log("d");
+     this.imgURL = this.photoService.imgURL
+     console.log(this.imgURL)
       /*this.camera.getPicture({
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.DATA_URL

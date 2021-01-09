@@ -15,6 +15,7 @@ export class PhotoService {
   public photos: Photo[] = [];
   public profilePicture: Photo;
   private PHOTO_STORAGE: string = "photos";
+  public imgURL;
 
   constructor() { }
 
@@ -39,15 +40,11 @@ export class PhotoService {
       allowEditing: true,
       resultType: CameraResultType.Uri
     });
-    return image.webPath;
+    
+    this.imgURL = image.webPath
     
   }
   
- 
-
-
-
-
 }
 
 export interface Photo {
