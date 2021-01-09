@@ -18,17 +18,23 @@ export class DetailSkinComponent implements OnInit {
     //console.log(this.skin)
   }
 
-  /*
+  
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "data" changed
     if (changes['skin']) {
+      console.log("fjldsj")
     }
   }
-  */
+  
 
   //Event wenn Skin löschen
   removeSkin() {
     this.skin.following = false;
+    this.updated.emit();
+  }
+
+  change(e){
+    console.log(this.skin)
     this.updated.emit();
   }
 

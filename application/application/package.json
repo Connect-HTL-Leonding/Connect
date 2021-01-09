@@ -20,7 +20,7 @@
     "@angular/platform-browser-dynamic": "~10.0.0",
     "@angular/router": "~10.0.0",
     "@capacitor/android": "^2.4.4",
-    "@capacitor/core": "2.4.4",
+    "@capacitor/core": "^2.4.4",
     "@capacitor/ios": "^2.4.4",
     "@ionic-native/camera": "^4.20.0",
     "@ionic-native/core": "^5.22.0-beta-1",
