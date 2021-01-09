@@ -2,7 +2,14 @@
   <ion-toolbar>
     <div id="toolbar">
       <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
-      <ion-title>{{username}}</ion-title>
+      <div id="profile">
+      <ion-avatar>
+        <img id="profilepicture" src="{{profilePicture}}">
+      </ion-avatar>
+      <ion-label>
+          {{username}}
+      </ion-label>
+    </div>
       <ion-icon name="settings-outline"></ion-icon>
     </div>
   </ion-toolbar>

@@ -11,7 +11,8 @@ import { ChatService } from '../api/chat.service';
 })
 export class ChatPage implements OnInit {
 
-  public username = "test";
+  public username;
+  public profilePicture;
   contactlist;
 
   constructor(public modalController:ModalController, cl:ContactlistService) {
@@ -20,6 +21,7 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     this.username = this.contactlist.selectedUser.username;
+    this.profilePicture = this.contactlist.selectedUser.profilePicture;
   }
 
   dismissModal() {

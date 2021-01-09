@@ -5,3 +5,18 @@
     align-items: center;
     justify-content: space-between;
 }
+#profilepicture {
+    height: 4vh;
+    width: 4vh;
+    margin-top: 15%;
+    margin-left: 15%;
+}
+ion-label {
+    font-weight: bold;
+}
+#profile {
+    display: flex;
+    height: 100%;
+    width: 50%;
+    align-items: center;
+}

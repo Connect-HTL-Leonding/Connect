@@ -17,8 +17,8 @@
       ],
       "follower": 100,
       "following": true,
-      "age": 20,
-      "radius": 10,
+      "age": 40,
+      "radius": 1,
       "nivau": 10
     },
     {
@@ -170,60 +170,82 @@
     }
   ],
   "profile": [
-      {
-        "id": 1,
-        "username": "Max Mustermann",
-        "profilepicture": "../normalguy.jpg",
-        "desc": "Hallo! Mein Name ist Max Mustermannund ich bin 23 Jahre alt. Zu meinen Stärken zählt meine Teamfähigkeit.",
-        "instagram": "DerMax",
-        "facebook": "MaxMuster",
-        "twitter": "DerMaxTwittert",
-        "LinkedIn": "MaxMusterLinkedIn",
-        "gender": "M",
-        "questions": {
-          "q1": "Ich bin sehr intelligent",
-          "q2": "Ich liebe Hunde",
-          "q3": "Tanzen, singen"
-        },
-        "password": "maxPass123",
-        "email": "max.muster@mail.com"    
-      }
+    {
+      "id": 1,
+      "username": "Max Mustermann",
+      "profilepicture": "../normalguy.jpg",
+      "desc": "Hallo! Mein Name ist Max Mustermannund ich bin 23 Jahre alt. Zu meinen Stärken zählt meine Teamfähigkeit.",
+      "instagram": "DerMax",
+      "facebook": "MaxMuster",
+      "twitter": "DerMaxTwittert",
+      "LinkedIn": "MaxMusterLinkedIn",
+      "gender": "M",
+      "questions": {
+        "q1": "Ich bin sehr intelligent",
+        "q2": "Ich liebe Hunde",
+        "q3": "Tanzen, singen"
+      },
+      "password": "maxPass123",
+      "email": "max.muster@mail.com"
+    }
   ],
   "chats": [
     {
       "id": 0,
-      "username": "Jan", 
-      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "yes ... modern problems",
+      "username": "Jan",
+      "profilePicture": "../assets/connect_img/square/fussball_square.png",
+      "latestMessage": "yes ... modern problems",
       "unreadMessages": 1
     },
     {
       "id": 1,
-      "username": "Ben", 
-      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "hm okeee",
+      "username": "Ben",
+      "profilePicture": "../assets/connect_img/square/ausgehen_square.png",
+      "latestMessage": "hm okeee",
       "unreadMessages": 0
     },
     {
       "id": 2,
-      "username": "Tristan", 
-      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "oh :eyes:",
+      "username": "Tristan",
+      "profilePicture": "../assets/connect_img/square/basketball_square.png",
+      "latestMessage": "oh :eyes:",
       "unreadMessages": 0
     },
     {
       "id": 3,
-      "username": "Ibo", 
-      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "apex",
+      "username": "Ibo",
+      "profilePicture": "../assets/connect_img/square/schwimmen_square.png",
+      "latestMessage": "apex",
       "unreadMessages": 0
     },
     {
       "id": 4,
-      "username": "Rafi", 
-      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "funny meme",
+      "username": "Rafi",
+      "profilePicture": "../assets/connect_img/square/volleyball_square.png",
+      "latestMessage": "funny meme",
       "unreadMessages": 0
+    }
+  ],
+  "messages": [
+    {
+      "id": 0,
+      "msg": "wassup",
+      "sentBy": "you"
+    },
+    {
+      "id": 1,
+      "msg": "working 24/7",
+      "sentBy": "Jan"
+    },
+    {
+      "id": 2,
+      "msg": "crazy ... me too ):",
+      "sentBy": "you"
+    },
+    {
+      "id": 3,
+      "msg": "yes ... modern problems (:",
+      "sentBy": "Jan"
     }
   ]
 }
