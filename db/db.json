@@ -192,35 +192,35 @@
     {
       "id": 0,
       "username": "Jan", 
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
+      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
       "latestmessage": "yes ... modern problems",
       "unreadMessages": 1
     },
     {
       "id": 1,
       "username": "Ben", 
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
+      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
       "latestmessage": "hm okeee",
       "unreadMessages": 0
     },
     {
       "id": 2,
       "username": "Tristan", 
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
+      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
       "latestmessage": "oh :eyes:",
       "unreadMessages": 0
     },
     {
       "id": 3,
       "username": "Ibo", 
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
+      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
       "latestmessage": "apex",
       "unreadMessages": 0
     },
     {
       "id": 4,
       "username": "Rafi", 
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
+      "profilePicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
       "latestmessage": "funny meme",
       "unreadMessages": 0
     }

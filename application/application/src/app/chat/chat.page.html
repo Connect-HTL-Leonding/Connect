@@ -1,6 +1,10 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>chat</ion-title>
+    <div id="toolbar">
+      <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
+      <ion-title>{{username}}</ion-title>
+      <ion-icon name="settings-outline"></ion-icon>
+    </div>
   </ion-toolbar>
 </ion-header>
 
