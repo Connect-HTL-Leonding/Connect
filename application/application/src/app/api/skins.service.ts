@@ -22,6 +22,8 @@ export class SkinsService {
   //jan
   api = "http://192.168.1.26:3000";
 
+  
+
 
   //Konstruktor
   constructor(http: HttpClient, cs: CategoryService) {
