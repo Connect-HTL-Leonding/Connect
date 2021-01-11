@@ -14,14 +14,17 @@ export class ChatPage implements OnInit {
   public username;
   public profilePicture;
   contactlist;
+  chatservice;
 
-  constructor(public modalController:ModalController, cl:ContactlistService) {
+  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService) {
     this.contactlist = cl;
+    this.chatservice = cs;
   }
 
   ngOnInit() {
     this.username = this.contactlist.selectedUser.username;
     this.profilePicture = this.contactlist.selectedUser.profilePicture;
+    this.chatservice.getData();
   }
 
   dismissModal() {
