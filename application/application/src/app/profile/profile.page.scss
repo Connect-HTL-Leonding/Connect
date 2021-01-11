@@ -7,26 +7,40 @@ body {
 .mid {
     display: flex;
     justify-content: center;
-    margin-top: -10vh;
+    flex-direction: column;
+    height: auto;
+    width: 175px;
+    align-items: center;
+    margin-top: -80px;
 }
 
-.round {
-    border-radius: 90px;
+.pfp {
+    object-fit: cover;
+    height: 100%;
+    width: auto !important;
+}
+
+.pfpBox {
+    border-radius: 200px;
+    width: 150px;
+    height: 150px;
+    overflow:hidden;
 }
 
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
+    height: auto;
     width:100%;
 }
 .wrapper {
     width:100%;
-    height: 100%;
+    height: auto;
     display: flex;
     flex-flow: column nowrap;
 }
+
 
 #name {
     text-align: center;
@@ -38,8 +52,8 @@ body {
 
 .descBox {
     margin-top: 1vh;
-    height: 17vh;
-    width: 95%;
+    height: auto;
+    width: 90%;
     padding: 5px 2px 5px 10px;
     border-radius: 30px;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
@@ -48,12 +62,12 @@ body {
 }
 
 .photo-slider-con {
-    margin: -2vh;
     width:100%;
-    height: 50%;
+    height: 30vh;
     padding: 2.5% 5% 5% 2.5%;
     color: var(--ion-color-secondary);
 }
+
 
 .social-media-con {
     height: 20%;
@@ -68,10 +82,12 @@ ion-grid {
 }
 
 
-
 ion-card {
     height: 75%; width: 33%;
-    margin:0% 2% 2% 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin:4% 2% 2% 2%;
     background-image: url("../../assets/connect_img/volleyball.png");
     background-size: cover;
 }
