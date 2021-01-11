@@ -16,5 +16,21 @@
 </ion-header>
 
 <ion-content>
-
+  <div id="messageFlex">
+    <div class="messageDiv" *ngFor="let message of chatservice.messages, let i = index">
+      <div *ngIf="message.sentBy == 'you'" class="youSent">
+        <p class="message">{{message.msg}}</p>
+      </div>
+      <div *ngIf="message.sentBy != 'you'" class="otherSent">
+        <p class="message">{{message.msg}}</p>
+      </div>
+    </div>  
+    
+  </div>
+  <div id="inputdiv">
+    <div id="input">
+      <ion-input placeholder="Nachricht..."></ion-input>
+    </div>
+    <ion-icon id="send" name="send-outline"></ion-icon>
+  </div>
 </ion-content>
