@@ -16,10 +16,10 @@
         <img class="pfp" src="../../assets/defaultpfp.jpg">
         </div>
       </div>
-      <h2 *ngIf="user" id="name">{{user.username}}</h2>
+      <h2 *ngIf="user" id="name">{{ps.user[0].username}}</h2>
 
       <div class="descBox">
-        <p *ngIf="user">{{user.desc}}</p>
+        <p *ngIf="user">{{ps.user[0].desc}}</p>
       </div>
 
       <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']">Anpassen</ion-button>

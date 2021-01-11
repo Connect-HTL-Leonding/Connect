@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from "../model/user";
 import { ProfileService } from "../api/profile.service";
-import {PhotoService} from "../api/photo.service";
+import { PhotoService } from "../api/photo.service";
 //import { Camera } from '@ionic-native/camera';
 //import { CameraOptions } from '@ionic-native/camera';
 
@@ -14,20 +14,17 @@ import {PhotoService} from "../api/photo.service";
 export class EditProfilePage implements OnInit {
 
   user: User
-  nachrichten : boolean = false;
-  connects : boolean = false;
+  nachrichten: boolean = false;
+  connects: boolean = false;
   imgURL;
 
-  constructor(public ps: ProfileService, public photoService: PhotoService, 
+  constructor(public ps: ProfileService, public photoService: PhotoService,
     //private camera: Camera
-    ) {
-    
-    
-  }
+  ) {}
 
   slideOpts = {
     //initialSlide: 0,
-   // spaceBetween: "-550",
+    // spaceBetween: "-550",
     slidesPerView: 1,
     speed: 400
   };
@@ -35,15 +32,14 @@ export class EditProfilePage implements OnInit {
   addPhotoToGallery() {
     try {
       this.photoService.addNewToGallery();
-    } catch(e) {
-      
+    } catch (e) {
+
     }
-    
   }
 
   loadFromStorage() {
-      this.photoService.loadPfp();
-      this.imgURL = this.photoService.imgURL
+    this.photoService.loadPfp();
+    this.imgURL = this.photoService.imgURL
   }
 
   ngOnInit() {

@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Edit your profile</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button defaultHref="edit-profile"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -15,16 +15,17 @@
       <h2 id="det">Details</h2>
 
       <div class="detailQuestion">
-        <b>Was macht mich aus?</b> <br><p>user.question1</p>
+        <b>Was macht mich aus?</b> <br><p>{{ps.user[0].questions.q1}}</p>
       </div>
       <div class="detailQuestion">
-        <b>Was möchte ich anderen über mich erzählen?</b> <br><p>user.question2</p>
+        <b>Was möchte ich anderen über mich erzählen?</b> <br><p>{{ps.user[0].questions.q2}}</p>
       </div>
       <div class="detailQuestion">
-        <b>Was mache ich gerne in meiner Freizeit</b> <br><p>user.question3</p>
+        <b>Was mache ich gerne in meiner Freizeit</b> <br><p>{{ps.user[0].questions.q3}}</p>
       </div>
-      <div class="detailQuestion">
-        <b>Instagram</b> <br><p>user.question4</p>
+      <!--
+              <div class="detailQuestion">
+        <b>Instagram</b> <br><p>{{ps.user[0].questions.q4}}</p>
       </div>
       <div class="detailQuestion">
         <b>Facebook</b> <br><p>user.question5</p>
@@ -36,15 +37,7 @@
         <b>LinkedIn</b> <br><p>user.question7</p>
       </div>
 
-
-  
-
-
-      
-
-
-
-
+    -->
     </div>
   </div>
 

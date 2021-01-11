@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from '../api/profile.service';
 
 @Component({
   selector: 'app-edit-profile-details',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditProfileDetailsPage implements OnInit {
 
-  constructor() { }
+  constructor(public ps: ProfileService) { }
 
   ngOnInit() {
   }
