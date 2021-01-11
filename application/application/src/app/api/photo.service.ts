@@ -14,8 +14,7 @@ export class PhotoService {
 
   public photos: Photo[] = [];
   public profilePicture: Photo;
-  private PHOTO_STORAGE: string = "photos";
-  public imgURL;
+  public imgURL = "../../assets/defaultpfp.jpg";
 
   constructor() { }
 
@@ -42,7 +41,6 @@ export class PhotoService {
     });
     
     this.imgURL = image.webPath
-    
   }
   
 }

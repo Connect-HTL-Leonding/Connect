@@ -39,9 +39,7 @@ export class EditProfilePage implements OnInit {
 
   loadFromStorage() {
      this.photoService.loadPfp();
-     console.log("d");
      this.imgURL = this.photoService.imgURL
-     console.log(this.imgURL)
       /*this.camera.getPicture({
         sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
         destinationType: this.camera.DestinationType.DATA_URL
