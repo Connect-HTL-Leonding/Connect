@@ -69,6 +69,7 @@ export class SkinselectionPage implements OnInit {
   }
 
   updateSkin(skin){
+   
     this.skinsService.updateSkin(skin).subscribe(data => {
       this.skinsService.getSkins().subscribe(
         data => {

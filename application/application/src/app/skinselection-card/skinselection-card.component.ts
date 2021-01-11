@@ -15,8 +15,10 @@ export class SkinselectionCardComponent implements OnInit {
   ngOnInit() { }
 
   updateSkin() {
+    if(!this.skin.following){
     this.skin.following = true;
     this.updated.emit();
+    }
   }
 
 }

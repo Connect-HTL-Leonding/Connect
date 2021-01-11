@@ -38,7 +38,7 @@
       ],
       "follower": 50,
       "following": true,
-      "age": 18,
+      "age": 45,
       "radius": 2,
       "nivau": 10
     },
@@ -59,7 +59,7 @@
       ],
       "follower": 100,
       "following": true,
-      "age": 20,
+      "age": 30,
       "radius": 10,
       "nivau": 10
     },
