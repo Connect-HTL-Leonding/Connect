@@ -8,28 +8,24 @@ body {
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-top: -10vh;
     height: auto;
-    position: relative;
+    width: 175px;
     align-items: center;
+    margin-top: -80px;
 }
 
 .pfp {
     object-fit: cover;
     height: 100%;
     width: auto !important;
-    border-radius: 100%;
-
 }
 
-
-.round {
-    width: 50%;
-    height: 60%;
-    border-radius: 100%;
-  }
-
-
+.pfpBox {
+    border-radius: 200px;
+    width: 150px;
+    height: 150px;
+    overflow:hidden;
+}
 
 .container {
     display: flex;

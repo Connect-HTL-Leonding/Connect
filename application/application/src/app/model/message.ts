@@ -1,5 +1,5 @@
 
-export class Chat {
+export class Message {
 
     constructor(
         public id = 0,
