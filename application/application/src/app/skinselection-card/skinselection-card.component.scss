@@ -21,7 +21,7 @@
     font-size: 60%;
 }
 
-#add_skin_circle {
+.add_skin_circle {
     max-width: 25px;
     max-height: 25px;
     min-width: 25px;
@@ -36,6 +36,26 @@ float: right;
     ion-icon {
         font-size: 19px;
         color: var(--ion-color-primary);
+        --ionicon-stroke-width: 45px;
+    }
+}
+
+.disabled_add_skin_circle {
+    opacity: 50%;
+    max-width: 25px;
+    max-height: 25px;
+    min-width: 25px;
+    min-height: 25px;
+    border-radius: 100% 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ion-color-light);
+    margin-bottom: 5%;
+float: right;
+    ion-icon {
+        font-size: 19px;
+        color: var(--ion-color-medium);
         --ionicon-stroke-width: 45px;
     }
 }
