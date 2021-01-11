@@ -25,6 +25,8 @@ export class ProfilePage implements OnInit {
 
 
   ngOnInit() {
+
+    console.log(this.ps)
     this.ps.getUser().subscribe(
       data => {
         this.ps.user = data;

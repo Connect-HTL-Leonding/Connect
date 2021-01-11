@@ -75,7 +75,7 @@ export class MySkinsPage implements OnInit {
   }
 
   //Event bei Skin entfernen
-  deleteupdateSkin(s: Skin) {
+  updateSkin(s: Skin) {
     this.skinService.updateSkin(s).subscribe(data => {
       //nach unpdate erneutes getAll
       this.skinService.getSkins().subscribe(

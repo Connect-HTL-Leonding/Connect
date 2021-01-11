@@ -22,6 +22,6 @@
     </div>
   </div>
 
-  <detail-skin *ngIf="currentSkin && currentSkin.following" [skin]="currentSkin" (updated)="deleteupdateSkin(currentSkin)"></detail-skin>
+  <detail-skin *ngIf="currentSkin && currentSkin.following" [skin]="currentSkin" (updated)="updateSkin(currentSkin)"></detail-skin>
 
 </ion-content>

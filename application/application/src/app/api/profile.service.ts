@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {User} from "../model/user";
+import { User } from "../model/user";
 
 @Injectable({
   providedIn: 'root'
@@ -8,19 +8,19 @@ import {User} from "../model/user";
 export class ProfileService {
 
   http: HttpClient
-  user : User[]
+  user: User[]
 
   api = "http://localhost:3000"
 
   constructor(http: HttpClient) {
     this.http = http
-   }
-
-   getUser(){
-    return this.http.get<User[]>(this.api +'/profile')
   }
 
-  generateUser() : void {
+  getUser() {
+    return this.http.get<User[]>(this.api + '/profile')
+  }
+/*
+  generateUser(): void {
     var u = new User()
 
     u.id = 2
@@ -40,7 +40,16 @@ export class ProfileService {
     u.password = "jensPass1234"
     u.email = "jens@gmail.com"
   }
+  */
+
+  //update
+  updateUser(u: User) {
+    let body = JSON.stringify(u);
+    console.log(body);
+    return this.http.put(this.api + '/profile/' + u.id, body, { 'headers': { 'Content-Type': 'application/json' } });
+
+  }
 
 
- 
+
 }

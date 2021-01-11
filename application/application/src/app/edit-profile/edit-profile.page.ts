@@ -42,10 +42,8 @@ export class EditProfilePage implements OnInit {
   }
 
   loadFromStorage() {
-  
       this.photoService.loadPfp();
       this.imgURL = this.photoService.imgURL
-   
   }
 
   ngOnInit() {
@@ -58,6 +56,16 @@ export class EditProfilePage implements OnInit {
         console.log('Error');
       }
     )
+  }
+
+  updateUser(u: User) {
+    u.username = document.getElementById("username").innerText;
+    u.desc = document.getElementById("desc").innerText;
+
+    this.ps.updateUser(u).subscribe(data => {
+      //nach unpdate erneutes getAll
+      this.ngOnInit();
+    });;
   }
 
 }

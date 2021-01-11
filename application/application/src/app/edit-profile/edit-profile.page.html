@@ -22,13 +22,15 @@
 
       <div class="edit-container">
         <label>Benutzername</label>
-        <p *ngIf="user" contenteditable="true">{{user.username}}</p>
+        <p *ngIf="user" id="username" contenteditable="true">{{user.username}}</p>
       </div>
 
       <div style="overflow:scroll;"  class="edit-container">
         <label>Beschreibung</label>
-        <p *ngIf="user" contenteditable="true">{{user.desc}}</p>
+        <p *ngIf="user" id="desc" contenteditable="true" >{{user.desc}}</p>
       </div>
+
+      <ion-button shape="round" color="primary" expand="block" (click)="updateUser(user)">Save</ion-button>
 
       <div [routerLink]="['../edit-profile-details']" style="margin-top:20px;" class="con">
         <p>Andere Details bearbeiten</p>
