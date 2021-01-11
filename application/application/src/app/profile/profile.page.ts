@@ -11,8 +11,8 @@ export class ProfilePage implements OnInit {
 
   user: User
 
-  constructor(ps: ProfileService) {
-    this.user = ps.user[0];
+  constructor(public ps: ProfileService) {
+  
   }
 
   slideOpts = {
@@ -25,7 +25,15 @@ export class ProfilePage implements OnInit {
 
 
   ngOnInit() {
-
+    this.ps.getUser().subscribe(
+      data => {
+        this.ps.user = data;
+        this.user = this.ps.user[0]
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
 }

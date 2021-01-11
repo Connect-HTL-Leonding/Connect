@@ -14,7 +14,7 @@
       <div class="mid" (click)="loadFromStorage()">
         
         <div class="pfpBox">
-        <ion-img class="pfp" src = {{photoService.imgURL}}></ion-img>
+        <ion-img *ngIf="user" class="pfp" src = {{photoService.imgURL}}></ion-img>
         </div>
         
         <p class="changePfpText">Profilbild ändern</p>
@@ -22,15 +22,15 @@
 
       <div class="edit-container">
         <label>Benutzername</label>
-        <p contenteditable="true">{{user.username}}</p>
+        <p *ngIf="user" contenteditable="true">{{user.username}}</p>
       </div>
 
       <div style="overflow:scroll;"  class="edit-container">
         <label>Beschreibung</label>
-        <p contenteditable="true">{{user.desc}}</p>
+        <p *ngIf="user" contenteditable="true">{{user.desc}}</p>
       </div>
 
-      <div style="margin-top:20px;" class="con">
+      <div [routerLink]="['../edit-profile-details']" style="margin-top:20px;" class="con">
         <p>Andere Details bearbeiten</p>
         <ion-icon class="icon" name="chevron-forward-outline"></ion-icon>
       </div>

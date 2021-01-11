@@ -20,27 +20,36 @@ export class PhotoService {
 
   public async addNewToGallery() {
     // Take a photo
-    const capturedPhoto = await Camera.getPhoto({
-      resultType: CameraResultType.Uri,
-      source: CameraSource.Camera,
-      quality: 100
-    });
+    try {
+      const capturedPhoto = await Camera.getPhoto({
+        resultType: CameraResultType.Uri,
+        quality: 100,
+        allowEditing: true
+      })
+      this.photos.unshift({
+        filepath: "",
+        webviewPath: capturedPhoto.webPath
+      });
+    } catch(e) {
+    }
+   
 
     // adding the captured photo to the photo array
-    this.photos.unshift({
-      filepath: "",
-      webviewPath: capturedPhoto.webPath
-    });
+   
   }
 
   public async loadPfp() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-    
-    this.imgURL = image.webPath
+    try {
+      const image = await Camera.getPhoto({
+        quality: 100,
+        allowEditing: true,
+        resultType: CameraResultType.Uri
+      })
+      
+      this.imgURL = image.webPath
+    } catch(e) {
+    }
+   
   }
   
 }

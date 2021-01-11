@@ -17,12 +17,11 @@ export class EditProfilePage implements OnInit {
   nachrichten : boolean = false;
   connects : boolean = false;
   imgURL;
- image = new Image();
 
-  constructor(ps: ProfileService, public photoService: PhotoService, 
+  constructor(public ps: ProfileService, public photoService: PhotoService, 
     //private camera: Camera
     ) {
-    this.user = ps.user[0];
+    
     
   }
 
@@ -34,23 +33,31 @@ export class EditProfilePage implements OnInit {
   };
 
   addPhotoToGallery() {
-    this.photoService.addNewToGallery();
+    try {
+      this.photoService.addNewToGallery();
+    } catch(e) {
+      
+    }
+    
   }
 
   loadFromStorage() {
-     this.photoService.loadPfp();
-     this.imgURL = this.photoService.imgURL
-      /*this.camera.getPicture({
-        sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-        destinationType: this.camera.DestinationType.DATA_URL
-      }).then((res) => {
-        this.imgURL = 'data:image/jpeg;base64' + res;
-      }).catch(e => {
-        console.log(e);
-        }) */
+  
+      this.photoService.loadPfp();
+      this.imgURL = this.photoService.imgURL
+   
   }
 
   ngOnInit() {
+    this.ps.getUser().subscribe(
+      data => {
+        this.ps.user = data;
+        this.user = this.ps.user[0]
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
 }

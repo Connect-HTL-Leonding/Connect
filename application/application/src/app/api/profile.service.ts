@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {User} from "../model/user";
 
@@ -6,14 +7,40 @@ import {User} from "../model/user";
 })
 export class ProfileService {
 
-  user = 
-  [
-    new User(0, 'Jan','http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png','f','Hallo mein Name ist Jan Donnerbauer und ich bin 17 Jahre alt. Zu meinen Stärken zählen meine Teamfähigkeit.'),
-    new User(1, 'Ben','http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png','f','f'),
-    new User(2, 'Tristan','http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png','f','f'),
-    new User(3, 'Ibo','http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png','f','f'),
-    new User(4, 'Rafi','http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png','f','f')
-  ];
+  http: HttpClient
+  user : User[]
 
-  constructor() { }
+  api = "http://localhost:3000"
+
+  constructor(http: HttpClient) {
+    this.http = http
+   }
+
+   getUser(){
+    return this.http.get<User[]>(this.api +'/profile')
+  }
+
+  generateUser() : void {
+    var u = new User()
+
+    u.id = 2
+    u.username = "Jens"
+    u.desc = "Hallo! Mein Name ist Jens Jensenbauer ich bin 23 Jahre alt. Zu meinen Stärken zählt meine Teamfähigkeit."
+    u.latestMessage = "Hey Bro"
+    u.instagram = "DerJens"
+    u.facebook = "Jensinger"
+    u.twitter = "JensAmTweeten"
+    u.linkedIn = "Jenus"
+    u.gender = "M"
+    u.questions = {
+      q1: "Ich bin sehr intelligent.",
+      q2: "Ich liebe Hunde",
+      q3: "Tanzen, singen"
+    }
+    u.password = "jensPass1234"
+    u.email = "jens@gmail.com"
+  }
+
+
+ 
 }
