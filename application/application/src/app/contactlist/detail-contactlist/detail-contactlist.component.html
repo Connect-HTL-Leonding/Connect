@@ -6,10 +6,11 @@
   <ion-label id="chat-flex">
     <div id="flex">
       <h2 id="username">{{user.username}}</h2>
-      <p id="{{user.unread}}Message">{{user.latestMessage}}</p>
+      <p *ngIf="user.unreadMessages > 0" id="unreadMessage">{{user.latestMessage}}</p>
+      <p *ngIf="user.unreadMessages == 0" id="readMessage">{{user.latestMessage}}</p>
     </div>
     <div id="messages-flex">
-      <p id="{{user.unread}}">{{user.unreadMessages}}</p>
+      <p *ngIf="user.unreadMessages > 0" id="messages">{{user.unreadMessages}}</p>
     </div>
   </ion-label>
 </div>

@@ -1,4 +1,3 @@
-META-INF/panache-archive.marker
-org/connect/service/ExampleService.class
-org/connect/model/User.class
-org/connect/service/ExampleService$User.class
+org\connect\service\ExampleService$User.class
+org\connect\service\ExampleService.class
+META-INF\panache-archive.marker

@@ -17,8 +17,8 @@
       ],
       "follower": 100,
       "following": true,
-      "age": 50,
-      "radius": 4,
+      "age": 40,
+      "radius": 1,
       "nivau": 10
     },
     {
@@ -193,37 +193,59 @@
     {
       "id": 0,
       "username": "Jan",
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "yes ... modern problems",
+      "profilePicture": "../assets/connect_img/square/fussball_square.png",
+      "latestMessage": "yes ... modern problems",
       "unreadMessages": 1
     },
     {
       "id": 1,
       "username": "Ben",
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "hm okeee",
+      "profilePicture": "../assets/connect_img/square/ausgehen_square.png",
+      "latestMessage": "hm okeee",
       "unreadMessages": 0
     },
     {
       "id": 2,
       "username": "Tristan",
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "oh :eyes:",
+      "profilePicture": "../assets/connect_img/square/basketball_square.png",
+      "latestMessage": "oh :eyes:",
       "unreadMessages": 0
     },
     {
       "id": 3,
       "username": "Ibo",
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "apex",
+      "profilePicture": "../assets/connect_img/square/schwimmen_square.png",
+      "latestMessage": "apex",
       "unreadMessages": 0
     },
     {
       "id": 4,
       "username": "Rafi",
-      "profilepicture": "http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png",
-      "latestmessage": "funny meme",
+      "profilePicture": "../assets/connect_img/square/volleyball_square.png",
+      "latestMessage": "funny meme",
       "unreadMessages": 0
+    }
+  ],
+  "messages": [
+    {
+      "id": 0,
+      "msg": "wassup",
+      "sentBy": "you"
+    },
+    {
+      "id": 1,
+      "msg": "working 24/7",
+      "sentBy": "Jan"
+    },
+    {
+      "id": 2,
+      "msg": "crazy ... me too ):",
+      "sentBy": "you"
+    },
+    {
+      "id": 3,
+      "msg": "yes ... modern problems (:",
+      "sentBy": "Jan"
     }
   ]
 }

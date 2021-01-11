@@ -1,4 +1,3 @@
-import { IonDatetime } from "@ionic/angular";
 
 export class Chat {
 
