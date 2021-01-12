@@ -18,10 +18,10 @@
       <p>Skin hinzufügen</p>
     </div>
     <div class="list_item" *ngFor="let skin of skinService.skins, let i=index">
-      <small-skin [skin]="skin" [current]="skin == currentSkin" *ngIf="skin.following && matchesFilter(skin)" (click)="changeSelection(skin)"></small-skin>
+      <small-skin [skin]="skin" [current]="skin == currentSkin" *ngIf="matchesFilter(skin)" (click)="changeSelection(skin)"></small-skin>
     </div>
   </div>
 
-  <detail-skin *ngIf="currentSkin && currentSkin.following" [skin]="currentSkin" (updated)="updateSkin(currentSkin)"></detail-skin>
+  <detail-skin *ngIf="currentSkin" [skin]="currentSkin" (updated)="updateSkin(currentSkin)"></detail-skin>
 
 </ion-content>

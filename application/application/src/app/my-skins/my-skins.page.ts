@@ -30,8 +30,12 @@ export class MySkinsPage implements OnInit {
     this.skinService.getSkins().subscribe(
       data => {
         this.skinService.skins = data;
+
+        console.log(this.skinService.skins)
         //Skin wird selektiert
         this.selectSkin();
+
+        
 
         //console.log(this.skinService);
       },
@@ -54,10 +58,8 @@ export class MySkinsPage implements OnInit {
   //ausgewählter Skin ändern - dynamisch
   selectSkin() {
     this.skinService.skins.some(element => {
-      if (element.following) {
         this.currentSkin = element;
         return true;
-      }
     });
   }
 
