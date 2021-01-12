@@ -1,12 +1,14 @@
-package org.connect.model;
+package org.connect.model.skin;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Cateory.findAll", query = "SELECT c FROM Category c")
+})
 public class Category implements Serializable {
 
     @Id

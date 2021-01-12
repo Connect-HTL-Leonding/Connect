@@ -1,9 +1,7 @@
-package org.connect.model;
+package org.connect.model.skin;
 
 import javax.persistence.*;
-import java.awt.*;
 import java.io.Serializable;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -15,7 +13,6 @@ public class MySkin extends Skin implements Serializable {
     @Id
     @GeneratedValue
     private long id;
-    private boolean following;
     private int age;
     private int radius;
     private int niveau;
@@ -24,9 +21,8 @@ public class MySkin extends Skin implements Serializable {
     public MySkin() {
     }
 
-    public MySkin(String title, String description, String image, int follower, boolean following, int age, int radius, int niveau) {
+    public MySkin(String title, String description, String image, int follower, int age, int radius, int niveau) {
         super(title, description, image, follower);
-        this.following = following;
         this.age = age;
         this.radius = radius;
         this.niveau = niveau;
@@ -38,14 +34,6 @@ public class MySkin extends Skin implements Serializable {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public boolean isFollowing() {
-        return following;
-    }
-
-    public void setFollowing(boolean following) {
-        this.following = following;
     }
 
     public int getAge() {
