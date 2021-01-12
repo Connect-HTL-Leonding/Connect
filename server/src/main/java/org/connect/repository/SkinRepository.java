@@ -10,17 +10,17 @@ import java.util.List;
 
 
 @ApplicationScoped
-public class DBRepositorySkin {
+public class SkinRepository {
 
     // Entitymanager erzeugen
     @Inject
-    private EntityManager em ;
+    protected EntityManager em ;
 
     // Initialisieren
     //@PostConstruct
     public void initDB() {
         /*
-        this.create(new Person(1,"Anton","Aigner","Austria","M"));
+        this.create(new Skin(1,"Anton","Aigner","Austria","M"));
         this.create(new Person(2,"Berta","Bauer","Bayern","F"));
         this.create(new Person(3,"Caesar","Cerny","Chile","M"));
         */

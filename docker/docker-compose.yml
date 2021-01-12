@@ -1,26 +1,37 @@
 version: '3.5'
 
-volumes:
-  mysql_data:
-  keycloak_data:
-
 services:
-  mysql:
-      image: mysql:5.7
-      volumes:
-        - mysql_data:/var/lib/mysql
-      environment:
-        MYSQL_ROOT_PASSWORD: root
-        MYSQL_DATABASE: keycloak
-        MYSQL_USER: keycloak
-        MYSQL_PASSWORD: password
+  db_keycloak:
+    image: mysql:5.7
+    volumes:
+      - mysql_keycloak:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+    ports:
+     - 3306:3306
+
+  db_connect:
+    image: mysql:5.7
+    volumes:
+    - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: connect
+      MYSQL_USER: connect
+      MYSQL_PASSWORD: password
+    ports:
+     - 3307:3306
+
 
   keycloak:
       image: jboss/keycloak
       environment:
 #        KEYCLOAK_IMPORT: /opt/jboss/keycloak/realm-config/realm.json
         DB_VENDOR: MYSQL
-        DB_ADDR: mysql
+        DB_ADDR: db_keycloak
         DB_DATABASE: keycloak
         DB_USER: keycloak
         DB_PASSWORD: password
@@ -33,4 +44,9 @@ services:
         - keycloak_data:/var/lib/keycloak/data
         - ./realm:/opt/jboss/keycloak/realm-config
       depends_on:
-        - mysql
+        - db_keycloak
+
+volumes:
+  mysql_keycloak:
+  mysql_data:
+  keycloak_data:

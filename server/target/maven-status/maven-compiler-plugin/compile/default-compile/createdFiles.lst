@@ -1,3 +1,6 @@
-org\connect\service\ExampleService$User.class
-org\connect\service\ExampleService.class
-META-INF\panache-archive.marker
+org/connect/model/Category.class
+org/connect/service/SkinService.class
+org/connect/model/MySkin.class
+META-INF/panache-archive.marker
+org/connect/repository/SkinRepository.class
+org/connect/model/Skin.class

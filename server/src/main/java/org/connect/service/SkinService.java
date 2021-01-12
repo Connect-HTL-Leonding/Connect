@@ -1,7 +1,7 @@
 package org.connect.service;
 
 import org.connect.model.Skin;
-import org.connect.repository.DBRepositorySkin;
+import org.connect.repository.SkinRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -11,18 +11,10 @@ import java.util.List;
 
 @ApplicationScoped
 @Path("/api/skin")
-public class ExampleService {
+public class SkinService {
 
     @Inject
-    DBRepositorySkin dbRepo;
-
-    @Path("message")
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "hello";
-    }
-
+    SkinRepository dbRepo;
 
     // Initialisieren der DB
     @Path("init")
