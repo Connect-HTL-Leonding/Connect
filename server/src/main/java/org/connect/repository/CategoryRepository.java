@@ -21,9 +21,7 @@ public class CategoryRepository {
     // Initialisieren
     //@PostConstruct
     public void initDB() {
-        this.create(new Category("All"));
-        this.create(new Category("Sport"));
-        this.create(new Category("Freizeit"));
+
     }
 
     // Finden einer Person über ID in der DB

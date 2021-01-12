@@ -1,5 +1,6 @@
 package org.connect.repository;
 
+import org.connect.model.skin.Category;
 import org.connect.model.skin.Skin;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,7 +15,26 @@ public class SkinRepository {
 
     // Entitymanager erzeugen
     @Inject
-    protected EntityManager em ;
+    protected EntityManager em;
+
+
+    // Initialisieren
+    //@PostConstruct
+    @Transactional
+    public void initDB() {
+
+        Skin s = new Skin("Fußball","Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png", 100);
+        Category c = new Category("All");
+        Category c1 = new Category("Sport");
+        s.getCategories().add(c);
+        s.getCategories().add(c1);
+        c.getSkins().add(s);
+        c1.getSkins().add(s);
+
+        em.persist(c);
+        em.persist(c1);
+        em.persist(s);
+    }
 
     // Finden einer Person über ID in der DB
     public Skin find(long id) {

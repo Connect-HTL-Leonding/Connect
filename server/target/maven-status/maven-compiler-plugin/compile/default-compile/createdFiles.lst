@@ -1,5 +1,9 @@
 org/connect/repository/MySkinRepository.class
 org/connect/service/SkinService.class
+org/connect/model/skin/Category.class
+org/connect/model/skin/Skin.class
 org/connect/service/MySkinService.class
 META-INF/panache-archive.marker
 org/connect/repository/SkinRepository.class
+org/connect/repository/CategoryRepository.class
+org/connect/model/skin/MySkin.class

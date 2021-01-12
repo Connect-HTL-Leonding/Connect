@@ -17,7 +17,7 @@ export class SkinsService {
   categoryService: CategoryService
   message;
 
-  api = "http://localhost:8080/api/myskin/";
+  api = "http://localhost:8080/api/skin/";
 
   //jan
   //api = "http://192.168.1.26:3000";
@@ -149,7 +149,7 @@ export class SkinsService {
 
   //getAll
   getSkins(){
-    return this.http.get<Skin[]>(this.api +'findAll')
+    return this.http.get<any[]>(this.api +'findAll')
   }
 
   //update

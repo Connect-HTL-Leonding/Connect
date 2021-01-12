@@ -5,10 +5,11 @@ import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@DiscriminatorValue("my")
 @NamedQueries({
         @NamedQuery(name = "MySkin.findAll", query = "SELECT ms FROM MySkin ms")
 })
-public class MySkin extends Skin implements Serializable {
+public class MySkin implements Serializable {
 
     @Id
     @GeneratedValue
@@ -17,12 +18,18 @@ public class MySkin extends Skin implements Serializable {
     private int radius;
     private int niveau;
 
+    @ManyToOne
+    Skin skin;
+
+    /*
+    @ManyToOne
+    User user;
+    */
 
     public MySkin() {
     }
 
-    public MySkin(String title, String description, String image, int follower, int age, int radius, int niveau) {
-        super(title, description, image, follower);
+    public MySkin(int age, int radius, int niveau) {
         this.age = age;
         this.radius = radius;
         this.niveau = niveau;
@@ -58,13 +65,5 @@ public class MySkin extends Skin implements Serializable {
 
     public void setNiveau(int niveau) {
         this.niveau = niveau;
-    }
-
-    public List<Category> getCategories() {
-        return categories;
-    }
-
-    public void setCategories(List<Category> categories) {
-        this.categories = categories;
     }
 }

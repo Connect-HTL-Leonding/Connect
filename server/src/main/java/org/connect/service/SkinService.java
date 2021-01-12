@@ -7,6 +7,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 @ApplicationScoped
@@ -16,7 +17,15 @@ public class SkinService {
     @Inject
     SkinRepository dbRepo;
 
-
+    // Initialisieren der DB
+    @Path("init")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String init() {
+        dbRepo.initDB();
+        return "DB initialized";
+    }
+    
     // Liste aller Skins senden
     @Path("findAll")
     @GET

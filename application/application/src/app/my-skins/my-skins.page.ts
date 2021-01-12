@@ -29,6 +29,8 @@ export class MySkinsPage implements OnInit {
     //async Skin loading
     this.skinService.getSkins().subscribe(
       data => {
+
+        console.log(data);
         this.skinService.skins = data;
 
         console.log(this.skinService.skins)

@@ -19,14 +19,6 @@ public class MySkinRepository {
     @Inject
     protected EntityManager em ;
 
-    // Initialisieren
-    //@PostConstruct
-    public void initDB() {
-
-        Skin s = this.create(new MySkin("Fußball","Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png",100, 40, 1, 10));
-        s.getCategories().add(em.find(Category.class, 1L));
-    }
-
     // Finden einer Person über ID in der DB
     public MySkin find(long id) {
         return em.find(MySkin.class, id);

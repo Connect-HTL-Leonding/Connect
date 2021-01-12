@@ -1,5 +1,7 @@
 package org.connect.model.skin;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -7,7 +9,7 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Cateory.findAll", query = "SELECT c FROM Category c")
+        @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
 })
 public class Category implements Serializable {
 
@@ -16,8 +18,10 @@ public class Category implements Serializable {
     private long id;
     private String title;
 
-    @ManyToMany
-    List<Skin> skins = new LinkedList<>();
+    @ManyToMany(mappedBy = "categories")
+    //Um Endlosschleife zu verhindern
+    @JsonIgnore
+    private List<Skin> skins = new LinkedList<>();
 
     public Category() {
     }
@@ -48,5 +52,14 @@ public class Category implements Serializable {
 
     public void setSkins(List<Skin> skins) {
         this.skins = skins;
+    }
+
+    @Override
+    public String toString() {
+        return "Category{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", skins=" + skins +
+                '}';
     }
 }

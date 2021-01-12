@@ -16,20 +16,14 @@ public class MySkinService {
     @Inject
     MySkinRepository dbRepo;
 
-    // Initialisieren der DB
-    @Path("init")
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String init() {
-        dbRepo.initDB();
-        return "DB initialized";
-    }
 
     // Liste aller Skins senden
     @Path("findAll")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<MySkin> findAll() {
+        List<MySkin> lms = dbRepo.findAll();
+
         return dbRepo.findAll();
     }
 
@@ -38,7 +32,9 @@ public class MySkinService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public MySkin findAll(@PathParam("id") long id) {
-        return dbRepo.find(id);
+        MySkin ms = dbRepo.find(id);
+        System.out.println(ms);
+        return ms;
     }
 
     // Ein Skin löschen
