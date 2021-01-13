@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SkinsService } from '../api/skins.service';
+import { MySkin } from '../model/myskin';
 import { Skin } from '../model/skin';
 
 @Component({
@@ -8,17 +10,36 @@ import { Skin } from '../model/skin';
 })
 export class SkinselectionCardComponent implements OnInit {
   @Input() skin: Skin;
-  @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
+  following: boolean;
+  @Output() added: EventEmitter<Skin> = new EventEmitter<Skin>();
 
-  constructor() { }
+  constructor(public s: SkinsService) { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.checkFollowing();
+  }
 
-  updateSkin() {
-    if(!this.skin.following){
-    this.skin.following = true;
-    this.updated.emit();
+  addToMySkin() {
+    if (!this.following) {
+      this.added.emit();
     }
+  }
+
+  checkFollowing() {
+    if (this.following == null) {
+      this.s.check(this.skin.id).subscribe(data => {
+        var ms: MySkin = data;
+        console.log(ms);
+        if(ms){
+          this.following = true;
+        }else {
+          this.following = false;
+        }
+      })
+    }else {
+      this.following = false;
+    }
+
   }
 
 }

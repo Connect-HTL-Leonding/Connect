@@ -3,6 +3,8 @@ import { MenuController, ModalController } from '@ionic/angular';
 import { SkinsService } from '../api/skins.service';
 import { Skin } from 'src/app/model/skin';
 import { SkinselectionPage } from '../skinselection/skinselection.page'
+import { MySkin } from '../model/myskin';
+import { MyskinsService } from '../api/myskins.service';
 
 @Component({
   selector: 'app-my-skins',
@@ -12,32 +14,32 @@ import { SkinselectionPage } from '../skinselection/skinselection.page'
 export class MySkinsPage implements OnInit {
 
   //Service
-  skinService;
+  mySkinService;
 
   //Suchbegriff
   searchString: String = "";
 
   //Ausgewählter Skin
-  currentSkin: Skin;
+  currentSkin: MySkin;
 
   //Konstruktor
-  constructor(ks: SkinsService, public modalController: ModalController) {
-    this.skinService = ks;
+  constructor(ks: MyskinsService, public modalController: ModalController) {
+    this.mySkinService = ks;
   }
 
   ngOnInit() {
     //async Skin loading
-    this.skinService.getSkins().subscribe(
+    this.mySkinService.getMySkins().subscribe(
       data => {
 
         console.log(data);
-        this.skinService.skins = data;
+        this.mySkinService.myskins = data;
 
-        console.log(this.skinService.skins)
+        console.log(this.mySkinService.myskins)
         //Skin wird selektiert
         this.selectSkin();
 
-        
+
 
         //console.log(this.skinService);
       },
@@ -48,21 +50,25 @@ export class MySkinsPage implements OnInit {
   }
 
   //check
-  matchesFilter(s: Skin) {
-    return s.title.toUpperCase().indexOf(this.searchString.toUpperCase()) == 0
+  matchesFilter(s: MySkin) {
+    return s.skin.title.toUpperCase().indexOf(this.searchString.toUpperCase()) == 0
   }
 
   //ausgewählter Skin änder bei klick
-  changeSelection(s: Skin) {
+  changeSelection(s: MySkin) {
     this.currentSkin = s;
   }
 
   //ausgewählter Skin ändern - dynamisch
   selectSkin() {
-    this.skinService.skins.some(element => {
+    if(this.mySkinService.myskins){
+      this.mySkinService.myskins.forEach(element => {
         this.currentSkin = element;
-        return true;
-    });
+      });
+    }else {
+      this.currentSkin = null;
+    }
+
   }
 
   //Modal öffnen
@@ -78,13 +84,31 @@ export class MySkinsPage implements OnInit {
     return await modal.present();
   }
 
-  //Event bei Skin entfernen
-  updateSkin(s: Skin) {
-    this.skinService.updateSkin(s).subscribe(data => {
+  //Event bei Skin updaten
+  updateSkin(s: MySkin) {
+    this.mySkinService.updateSkin(s).subscribe(data => {
       //nach unpdate erneutes getAll
-      this.skinService.getSkins().subscribe(
+      this.mySkinService.getMySkins().subscribe(
         data => {
-          this.skinService.skins = data;
+          this.mySkinService.myskins = data;
+          this.selectSkin();
+          
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
+    });;
+  }
+
+  //Event bei Skin entfernen
+  deleteSkin(s: MySkin) {
+    this.mySkinService.deleteSkin(s.id).subscribe(data => {
+      //nach unpdate erneutes getAll
+      this.mySkinService.getMySkins().subscribe(
+        data => {
+          this.mySkinService.myskins = data;
+          this.currentSkin = null;
           this.selectSkin();
         },
         error1 => {

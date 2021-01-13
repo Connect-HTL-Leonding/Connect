@@ -25,8 +25,8 @@ public class CategoryRepository {
     }
 
     // Finden einer Person über ID in der DB
-    public MySkin find(long id) {
-        return em.find(MySkin.class, id);
+    public Category find(long id) {
+        return em.find(Category.class, id);
     }
 
     // Einfügen einer neuen Person in die DB

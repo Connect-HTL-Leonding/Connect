@@ -1,5 +1,6 @@
 package org.connect.service;
 
+import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.repository.SkinRepository;
 
@@ -25,7 +26,7 @@ public class SkinService {
         dbRepo.initDB();
         return "DB initialized";
     }
-    
+
     // Liste aller Skins senden
     @Path("findAll")
     @GET
@@ -38,8 +39,15 @@ public class SkinService {
     @Path("find/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Skin findAll(@PathParam("id") long id) {
+    public Skin find(@PathParam("id") long id) {
         return dbRepo.find(id);
+    }
+
+    @Path("check/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public MySkin check(@PathParam("id") long id) {
+        return dbRepo.check(id);
     }
 
     // Ein Skin löschen

@@ -17,11 +17,11 @@
       </div>
       <p>Skin hinzufügen</p>
     </div>
-    <div class="list_item" *ngFor="let skin of skinService.skins, let i=index">
-      <small-skin [skin]="skin" [current]="skin == currentSkin" *ngIf="matchesFilter(skin)" (click)="changeSelection(skin)"></small-skin>
+    <div class="list_item" *ngFor="let myskin of mySkinService.myskins, let i=index">
+      <small-skin [myskin]="myskin" [current]="myskin == currentSkin" *ngIf="matchesFilter(myskin)" (click)="changeSelection(myskin)"></small-skin>
     </div>
   </div>
 
-  <detail-skin *ngIf="currentSkin" [skin]="currentSkin" (updated)="updateSkin(currentSkin)"></detail-skin>
+  <detail-skin *ngIf="currentSkin" [myskin]="currentSkin" (updated)="updateSkin(currentSkin)" (deleted)="deleteSkin(currentSkin)"></detail-skin>
 
 </ion-content>

@@ -11,7 +11,7 @@
       {{skin.description}}
     </p>
 
-    <div [ngClass]="skin.following ? 'disabled_add_skin_circle' : 'add_skin_circle'" (click)="updateSkin()" >
+    <div [ngClass]="following ? 'disabled_add_skin_circle' : 'add_skin_circle'" (click)="addToMySkin()" >
       <ion-icon name="add-outline"></ion-icon>
     </div>
   </ion-card-content>

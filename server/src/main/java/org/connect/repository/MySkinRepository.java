@@ -32,6 +32,7 @@ public class MySkinRepository {
     }
 
     // Lesen aller Personen
+    @Transactional
     public List<MySkin> findAll() {
         return this.em
                 .createNamedQuery("MySkin.findAll", MySkin.class)
@@ -40,10 +41,9 @@ public class MySkinRepository {
 
     // Löschen einer Person
     @Transactional
-    public MySkin delete(long id) {
+    public void delete(long id) {
         MySkin s = em.find(MySkin.class, id);
         em.remove(s);
-        return s;
     }
 
     // Ändern oder Einfügen einer Person mit id

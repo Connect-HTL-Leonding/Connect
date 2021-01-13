@@ -3,6 +3,7 @@ package org.connect.model.skin;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.stream.Collectors;
         /*
         @NamedQuery(name = "Skin.findCat", query = "SELECT c FROM Category c, Category_Skin cs, Skin s " +
                 "where s.id = cs.skins_id AND cs.category_id = c.id"),*/
-        @NamedQuery(name = "Skin.findAll", query = "SELECT s FROM Skin s")
+        @NamedQuery(name = "Skin.findAll", query = "SELECT s FROM Skin s"),
+        @NamedQuery(name = "Skin.check", query = "SELECT ms FROM MySkin ms where skin_id = :s")
 })
 public class Skin implements Serializable {
 
@@ -27,7 +29,8 @@ public class Skin implements Serializable {
     private String image;
     private int follower;
 
-    @ManyToMany()
+    //https://www.baeldung.com/hibernate-initialize-proxy-exception
+    @ManyToMany(fetch = FetchType.EAGER)
     List<Category> categories = new LinkedList<>();
 
     public Skin() {

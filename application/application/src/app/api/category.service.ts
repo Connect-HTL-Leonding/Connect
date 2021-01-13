@@ -13,11 +13,17 @@ export class CategoryService {
   public categories : Array<Category>;
   message;
 
+  //api = "http://localhost:8080/api/myskin/";
+
+  //jan
+  api = "http://192.168.1.26:8080/api/category/";
+
+
   //Konstruktor
   constructor(http: HttpClient) {
     this.http = http;
     this.categories = [];
-    this.generateCategories();
+    //this.generateCategories();
   }
 
   generateCategories(){
@@ -63,7 +69,7 @@ export class CategoryService {
   }
 
   getCategories() : Observable<any>{
-    return this.http.get<Category[]>('http://localhost:3000/categories')
+    return this.http.get<Category[]>(this.api + 'findAll')
   }
 
   deleteCategory(index: number) {

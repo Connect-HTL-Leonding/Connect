@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
 import { SkinsService } from 'src/app/api/skins.service';
+import { MySkin } from 'src/app/model/myskin';
 import { Skin } from 'src/app/model/skin';
 
 @Component({
@@ -9,8 +10,10 @@ import { Skin } from 'src/app/model/skin';
 })
 export class DetailSkinComponent implements OnInit {
 
-  @Input() skin: Skin;
+  @Input() myskin: MySkin;
   @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
+  @Output() deleted: EventEmitter<Skin> = new EventEmitter<Skin>();
+
 
   constructor() { }
 
@@ -29,12 +32,11 @@ export class DetailSkinComponent implements OnInit {
 
   //Event wenn Skin löschen
   removeSkin() {
-    this.skin.following = false;
-    this.updated.emit();
+    this.deleted.emit();
   }
 
   change(e){
-    console.log(this.skin)
+    //console.log(this.skin)
     this.updated.emit();
   }
 

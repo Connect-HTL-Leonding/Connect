@@ -18,7 +18,8 @@ public class MySkin implements Serializable {
     private int radius;
     private int niveau;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "skin_id")
     Skin skin;
 
     /*
@@ -65,5 +66,13 @@ public class MySkin implements Serializable {
 
     public void setNiveau(int niveau) {
         this.niveau = niveau;
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public void setSkin(Skin skin) {
+        this.skin = skin;
     }
 }

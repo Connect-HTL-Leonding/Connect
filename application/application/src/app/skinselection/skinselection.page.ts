@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { CategoryService } from '../api/category.service';
+import { MyskinsService } from '../api/myskins.service';
 import { SkinsService } from '../api/skins.service';
 import { Category } from '../model/category';
 
@@ -13,50 +14,60 @@ export class SkinselectionPage implements OnInit {
 
   skinsService: SkinsService;
   categoryService: CategoryService;
+  mySkinService : MyskinsService
 
   currCat: Category;
   searchString = "";
 
-  constructor(ss: SkinsService, cs: CategoryService, public modalCtrl: ModalController) {
+  constructor(ss: SkinsService, cs: CategoryService, ms: MyskinsService, public modalCtrl: ModalController) {
     this.skinsService = ss;
     this.categoryService = cs;
-
-
-    this.setCurrCat(this.categoryService.findCategory("All"));
-
+    this.mySkinService = ms;
   }
 
   check(skin) {
-    var index = -1;
+    if (this.currCat) {
+      var index = -1;
 
-    //important
-    var cat_title = this.currCat.title
+      //important
+      var cat_title = this.currCat.title
 
-    var filteredObj = skin.categories.find(function (item, i) {
-      if (item.title === cat_title) {
-        index = i;
-        return i;
+      var filteredObj = skin.categories.find(function (item, i) {
+        if (item.title === cat_title) {
+          index = i;
+          return i;
+        }
+      });
+
+      if (index !== -1 && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '')) {
+        return true;
+      } else {
+        return false;
       }
-    });
-
-    if (index !== -1 && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '')) {
-      return true;
-    } else {
-      return false;
     }
   }
 
   ngOnInit() {
     console.log(this.skinsService);
-    this.skinsService.getSkins().subscribe(
+
+    this.categoryService.getCategories().subscribe(
       data => {
-        this.skinsService.skins = data;
+        this.categoryService.categories = data;
+        this.skinsService.getSkins().subscribe(
+          data => {
+            this.skinsService.skins = data;
+            console.log(this.skinsService.skins);
+            this.setCurrCat(this.categoryService.findCategory("All"));
+          },
+          error1 => {
+            console.log('Error');
+          }
+        )
       },
       error1 => {
         console.log('Error');
       }
     )
-
   }
 
   setCurrCat(c: Category) {
@@ -68,8 +79,8 @@ export class SkinselectionPage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  updateSkin(skin){
-   
+  updateSkin(skin) {
+
     this.skinsService.updateSkin(skin).subscribe(data => {
       this.skinsService.getSkins().subscribe(
         data => {
@@ -80,6 +91,19 @@ export class SkinselectionPage implements OnInit {
         }
       )
     });;
+  }
+
+  addToMySkin(skin) {
+    this.mySkinService.addToMySkins(skin).subscribe( data => {
+      this.skinsService.getSkins().subscribe(
+        data => {
+          this.skinsService.skins = data;
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
+    })
   }
 
 }
