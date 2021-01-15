@@ -9,9 +9,11 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
+        @NamedQuery(name = Category.FINDALL, query = "SELECT c FROM Category c")
 })
 public class Category implements Serializable {
+
+    public static final String FINDALL = "Category.findAll";
 
     @Id
     @GeneratedValue

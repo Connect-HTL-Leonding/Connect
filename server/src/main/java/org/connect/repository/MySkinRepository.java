@@ -35,7 +35,7 @@ public class MySkinRepository {
     @Transactional
     public List<MySkin> findAll() {
         return this.em
-                .createNamedQuery("MySkin.findAll", MySkin.class)
+                .createNamedQuery(MySkin.FINDALL, MySkin.class)
                 .getResultList();
     }
 

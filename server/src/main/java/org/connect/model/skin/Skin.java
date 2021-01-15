@@ -15,10 +15,13 @@ import java.util.stream.Collectors;
         /*
         @NamedQuery(name = "Skin.findCat", query = "SELECT c FROM Category c, Category_Skin cs, Skin s " +
                 "where s.id = cs.skins_id AND cs.category_id = c.id"),*/
-        @NamedQuery(name = "Skin.findAll", query = "SELECT s FROM Skin s"),
-        @NamedQuery(name = "Skin.check", query = "SELECT ms FROM MySkin ms where skin_id = :s")
+        @NamedQuery(name = Skin.FINDALL, query = "SELECT s FROM Skin s"),
+        @NamedQuery(name = Skin.CHECK, query = "SELECT ms FROM MySkin ms where skin_id = :s")
 })
 public class Skin implements Serializable {
+
+    public static final String FINDALL = "Skin.findAll";
+    public static final String CHECK = "Skin.check";
 
     @Id
     @GeneratedValue

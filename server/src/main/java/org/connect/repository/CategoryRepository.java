@@ -39,7 +39,7 @@ public class CategoryRepository {
     // Lesen aller Personen
     public List<Category> findAll() {
         return this.em
-                .createNamedQuery("Category.findAll", Category.class)
+                .createNamedQuery(Category.FINDALL, Category.class)
                 .getResultList();
     }
 

@@ -7,9 +7,11 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("my")
 @NamedQueries({
-        @NamedQuery(name = "MySkin.findAll", query = "SELECT ms FROM MySkin ms")
+        @NamedQuery(name = MySkin.FINDALL, query = "SELECT ms FROM MySkin ms")
 })
 public class MySkin implements Serializable {
+
+    public static final String FINDALL = "MySkin.findAll";
 
     @Id
     @GeneratedValue

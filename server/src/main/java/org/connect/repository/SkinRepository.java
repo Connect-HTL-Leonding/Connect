@@ -57,7 +57,7 @@ public class SkinRepository {
 
 
     public MySkin check(long id) {
-        TypedQuery<MySkin> tq = this.em.createNamedQuery("Skin.check", MySkin.class);
+        TypedQuery<MySkin> tq = this.em.createNamedQuery(Skin.CHECK, MySkin.class);
         tq.setParameter("s", id);
         MySkin s = null;
         try {
@@ -84,7 +84,7 @@ public class SkinRepository {
     // Lesen aller Personen
     public List<Skin> findAll() {
         return this.em
-                .createNamedQuery("Skin.findAll", Skin.class)
+                .createNamedQuery(Skin.FINDALL, Skin.class)
                 .getResultList();
     }
 
