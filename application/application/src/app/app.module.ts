@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouteReuseStrategy } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { OAuthModule } from 'angular-oauth2-oidc';
 
 
 
@@ -26,7 +27,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     AppRoutingModule,
 
     HttpClientJsonpModule,
-    HttpClientModule
+    HttpClientModule,
+    OAuthModule.forRoot(),
   ],
   providers: [
     StatusBar,

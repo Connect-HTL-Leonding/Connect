@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Category } from '../model/category';
 import { Observable } from 'rxjs';
+import { OAuthService } from 'angular-oauth2-oidc';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +21,7 @@ export class CategoryService {
 
 
   //Konstruktor
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private oauthService: OAuthService) {
     this.http = http;
     this.categories = [];
     //this.generateCategories();
@@ -69,7 +70,11 @@ export class CategoryService {
   }
 
   getCategories() : Observable<any>{
-    return this.http.get<Category[]>(this.api + 'findAll')
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<Category[]>(this.api + 'findAll', {headers: reqHeader})
   }
 
   deleteCategory(index: number) {

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Skin } from '../model/skin';
 import { Category } from '../model/category';
 import { CategoryService } from './category.service';
 import { Observable } from 'rxjs';
 import { MySkin } from '../model/myskin';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class SkinsService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, cs: CategoryService) {
+  constructor(http: HttpClient, cs: CategoryService, private oauthService: OAuthService) {
     this.http = http;
     this.skins = [];
     this.categoryService = cs;
@@ -34,19 +35,31 @@ export class SkinsService {
 
   //getAll
   getSkins() {
-    return this.http.get<Skin[]>(this.api + 'findAll')
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<Skin[]>(this.api + 'findAll', {headers: reqHeader})
   }
 
   //check
   check(id) {
-    return this.http.get<MySkin>(this.api + 'check/' + id)
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<MySkin>(this.api + 'check/' + id, {headers: reqHeader})
   }
 
   //update
   updateSkin(s: Skin) {
     let body = JSON.stringify(s);
     console.log(body);
-    return this.http.put(this.api + 'update', body, { 'headers': { 'Content-Type': 'application/json' } });
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.put(this.api + 'update', body, {headers: reqHeader});
 
   }
 

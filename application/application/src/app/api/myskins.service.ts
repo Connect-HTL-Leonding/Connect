@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
 import { MySkin } from '../model/myskin';
 
 @Injectable({
@@ -19,21 +20,30 @@ export class MyskinsService {
   api = "http://192.168.1.26:8080/api/myskin/";
 
   //Konstruktor
-  constructor(http: HttpClient, ) {
+  constructor(http: HttpClient, private oauthService : OAuthService){
     this.http = http;
     this.myskins = [];
   }
 
   //getAll
   getMySkins(){
-    return this.http.get<MySkin[]>(this.api +'findAll')
+
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<MySkin[]>(this.api +'findAll', {headers: reqHeader})
   }
 
   //update
   updateSkin(s:MySkin){
     let body = JSON.stringify(s);
     console.log(body);
-    return this.http.put( this.api + 'update', body, {'headers': {'Content-Type': 'application/json'}});
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.put( this.api + 'update', body, {headers: reqHeader});
 
   }
 
@@ -42,12 +52,20 @@ export class MyskinsService {
     ms.skin = skin;
     console.log(ms);
     let body = JSON.stringify(ms);
-    return this.http.post( this.api + 'create', body, {'headers': {'Content-Type': 'application/json'}});
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.post( this.api + 'create', body, {headers: reqHeader});
 
   }
 
   //delete
   deleteSkin(index: number) {
-    return this.http.delete(this.api + 'delete/' + index);
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.delete(this.api + 'delete/' + index, {headers: reqHeader});
   }
 }
