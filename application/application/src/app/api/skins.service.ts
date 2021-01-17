@@ -6,6 +6,7 @@ import { CategoryService } from './category.service';
 import { Observable } from 'rxjs';
 import { MySkin } from '../model/myskin';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { api } from '../app.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,6 @@ export class SkinsService {
   public skins: Array<Skin>;
   categoryService: CategoryService
   message;
-
-  //api = "http://localhost:8080/api/skin/";
-
-  //jan
-  api = "http://192.168.1.26:8080/api/skin/";
 
 
   //Konstruktor
@@ -39,7 +35,7 @@ export class SkinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.get<Skin[]>(this.api + 'findAll', {headers: reqHeader})
+    return this.http.get<Skin[]>(api.url + 'skin/findAll', {headers: reqHeader})
   }
 
   //check
@@ -48,7 +44,7 @@ export class SkinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.get<MySkin>(this.api + 'check/' + id, {headers: reqHeader})
+    return this.http.get<MySkin>(api.url + 'skin/check/' + id, {headers: reqHeader})
   }
 
   //update
@@ -59,7 +55,7 @@ export class SkinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.put(this.api + 'update', body, {headers: reqHeader});
+    return this.http.put(api.url + 'skin/update', body, {headers: reqHeader});
 
   }
 

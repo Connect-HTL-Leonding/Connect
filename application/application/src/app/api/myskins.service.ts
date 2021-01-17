@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { api } from '../app.component';
 import { MySkin } from '../model/myskin';
 
 @Injectable({
@@ -14,10 +15,6 @@ export class MyskinsService {
   public myskins: Array<MySkin>;
   message;
 
-  //api = "http://localhost:8080/api/myskin/";
-
-  //jan
-  api = "http://192.168.1.26:8080/api/myskin/";
 
   //Konstruktor
   constructor(http: HttpClient, private oauthService : OAuthService){
@@ -32,7 +29,7 @@ export class MyskinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.get<MySkin[]>(this.api +'findAll', {headers: reqHeader})
+    return this.http.get<MySkin[]>(api.url +'myskin/findAll', {headers: reqHeader})
   }
 
   //update
@@ -43,7 +40,7 @@ export class MyskinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.put( this.api + 'update', body, {headers: reqHeader});
+    return this.http.put( api.url+ 'myskin/update', body, {headers: reqHeader});
 
   }
 
@@ -56,7 +53,7 @@ export class MyskinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.post( this.api + 'create', body, {headers: reqHeader});
+    return this.http.post( api.url + 'myskin/create', body, {headers: reqHeader});
 
   }
 
@@ -66,6 +63,6 @@ export class MyskinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.delete(this.api + 'delete/' + index, {headers: reqHeader});
+    return this.http.delete(api.url + 'myskin/delete/' + index, {headers: reqHeader});
   }
 }

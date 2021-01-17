@@ -41,3 +41,7 @@ export const authCodeFlowConfig: AuthConfig = {
   showDebugInformation: true,
   requireHttps: false
 };
+
+export const api = {
+  url: "http://192.168.1.26:8080/api/"
+}

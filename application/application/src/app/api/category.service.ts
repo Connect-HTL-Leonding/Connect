@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Category } from '../model/category';
 import { Observable } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { api } from '../app.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,11 +14,6 @@ export class CategoryService {
   //Array an Terminen
   public categories : Array<Category>;
   message;
-
-  //api = "http://localhost:8080/api/myskin/";
-
-  //jan
-  api = "http://192.168.1.26:8080/api/category/";
 
 
   //Konstruktor
@@ -74,7 +70,7 @@ export class CategoryService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.get<Category[]>(this.api + 'findAll', {headers: reqHeader})
+    return this.http.get<Category[]>(api.url+ 'category/findAll', {headers: reqHeader})
   }
 
   deleteCategory(index: number) {
