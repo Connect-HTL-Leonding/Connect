@@ -33,8 +33,8 @@ export class AppComponent {
 }
 
 export const authCodeFlowConfig: AuthConfig = {
-  issuer: 'http://192.168.1.26:8010/auth/realms/connect',
-  redirectUri: window.location.origin,
+  issuer: 'http://localhost:8010/auth/realms/connect',
+  redirectUri: 'http://localhost:8100/login',
   clientId: 'connect-client',
   //responseType: 'code',
   scope: 'roles web-origins',
@@ -43,5 +43,5 @@ export const authCodeFlowConfig: AuthConfig = {
 };
 
 export const api = {
-  url: "http://192.168.1.26:8080/api/"
+  url: "http://localhost:8080/api/"
 }
