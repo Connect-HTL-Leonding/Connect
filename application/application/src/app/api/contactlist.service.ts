@@ -11,7 +11,7 @@ export class ContactlistService {
 
   http: HttpClient;
   public chats: Array<Chat>
-  api = "http://localhost:3000";
+  api = "http://localhost:8080";
   public selectedUser:User;
 
   constructor(http: HttpClient) {
