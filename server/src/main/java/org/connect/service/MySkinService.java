@@ -3,6 +3,7 @@ package org.connect.service;
 import org.connect.model.skin.MySkin;
 import org.connect.repository.MySkinRepository;
 
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;

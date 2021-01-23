@@ -1,12 +1,18 @@
 package org.connect.model.chat;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","rooms"})
 public class User implements Serializable {
 
     @Id
@@ -20,6 +26,22 @@ public class User implements Serializable {
 
     public User() {
 
+    }
+
+    public User(String name, String email) {
+        setUsername(name);
+        setEmail(email);
+    }
+
+    @ManyToMany(mappedBy = "users")
+    private List<Room> rooms = new LinkedList<>();
+
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    public void setRooms(List<Room> rooms) {
+        this.rooms = rooms;
     }
 
     public long getId() {
