@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
+import { Observable } from 'rxjs';
+import { AuthService } from '../api/auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -8,57 +11,36 @@ import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 })
 export class LoginPage {
 
-  constructor(private oauthService: OAuthService) {}
+  http: HttpClient;
 
-  login() {
-    console.log('calling login...');
-    
-    /*
-    this.oauthService.loadDiscoveryDocument().then(() => {
-      this.oauthService.tryLogin().then(()=> {
-        if(!this.oauthService.hasValidAccessToken()){
-          this.oauthService.initImplicitFlow();
-        }else {
-          const claims = this.oauthService.getIdentityClaims();
-          console.log(claims);
-        }
-      })
-    })
-    */
-    
-    this.oauthService.initLoginFlow();
+  isAuthenticated: Observable<boolean>;
+  isDoneLoading: Observable<boolean>;
+  canActivateProtectedRoutes: Observable<boolean>;
+
+  constructor(http: HttpClient, private authService: AuthService) {
+    this.http = http;
+    this.isAuthenticated = this.authService.isAuthenticated$;
+    this.isDoneLoading = this.authService.isDoneLoading$;
+    this.canActivateProtectedRoutes = this.authService.canActivateProtectedRoutes$;
+    console.log("login page")
+    this.authService.runInitialLoginSequence();
   }
 
-  logout() {
-    
-    this.oauthService.logOut();
+  login() { this.authService.login(); }
+  logout() { this.authService.logout(); }
+  refresh() { this.authService.refresh(); }
+  reload() { window.location.reload(); }
+  clearStorage() { localStorage.clear(); }
+
+  logoutExternally() {
+    window.open(this.authService.logoutUrl);
   }
 
-  isLoggedIn() {
-    console.log(this.oauthService.hasValidIdToken())
-    //console.log(this.oauthService.hasValidIdToken())
-    //console.log(this.oauthService.checkSession())
-    //this.oauthService.loadDiscoveryDocument
-    return this.oauthService.hasValidIdToken();
+  get hasValidToken() { return this.authService.hasValidToken(); }
+  get accessToken() { return this.authService.accessToken; }
+  get refreshToken() { return this.authService.refreshToken; }
+  get identityClaims() { return this.authService.identityClaims; }
+  get idToken() { return this.authService.idToken; }
 
-    /*
-    this.oauthService.loadDiscoveryDocument().then(() => {
-      this.oauthService.tryLogin().then(()=> {
-        return this.oauthService.hasValidIdToken();
-      })
-    })
-    */
-  }
-
-  givenName() {
-    if (!this.isLoggedIn()) {
-      return '';
-    }
-    const claims: any = this.oauthService.getIdentityClaims();
-    if (!claims) {
-      return null;
-    }
-    return claims.given_name;
-  }
 
 }

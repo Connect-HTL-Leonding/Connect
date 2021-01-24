@@ -4,34 +4,36 @@ import { BrowserModule } from '@angular/platform-browser';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { OAuthModule } from 'angular-oauth2-oidc'
-import { AuthGuard } from './api/auth-guard.service';
+import { AuthGuard } from './api/auth/auth-guard.service';
+import { AuthGuardWithForcedLogin } from './api/auth/auth-guard-with-forced-login.service';
+
 
 const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
   }, {
     path: 'skinselection',
     loadChildren: () => import('./skinselection/skinselection.module').then(m => m.SkinselectionPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
   },
   {
     path: 'profile',
     loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
     path: 'my-skins',
     loadChildren: () => import('./my-skins/my-skins.module').then(m => m.MySkinsPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
     path: 'contactlist',
     loadChildren: () => import('./contactlist/contactlist.module').then(m => m.ContactlistPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
@@ -42,20 +44,20 @@ const routes: Routes = [
   {
     path: 'edit-profile',
     loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfilePageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
 
     path: 'edit-profile-details',
     loadChildren: () => import('./edit-profile-details/edit-profile-details.module').then(m => m.EditProfileDetailsPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
     path: 'chat',
     loadChildren: () => import('./chat/chat.module').then(m => m.ChatPageModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuardWithForcedLogin]
   },
   {
     path: 'login',

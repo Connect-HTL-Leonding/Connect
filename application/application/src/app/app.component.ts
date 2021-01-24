@@ -18,10 +18,10 @@ export class AppComponent {
     private oauthService: OAuthService
   ) {
     this.initializeApp();
-    this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    //this.oauthService.configure(authCodeFlowConfig);
+    //this.oauthService.loadDiscoveryDocumentAndTryLogin();
     // optional
-    this.oauthService.setupAutomaticSilentRefresh();
+    //this.oauthService.setupAutomaticSilentRefresh();
   }
 
   initializeApp() {
@@ -32,16 +32,8 @@ export class AppComponent {
   }
 }
 
-export const authCodeFlowConfig: AuthConfig = {
-  issuer: 'http://192.168.1.26:8010/auth/realms/connect',
-  redirectUri: window.location.origin,
-  clientId: 'connect-client',
-  //responseType: 'code',
-  scope: 'roles web-origins',
-  showDebugInformation: true,
-  requireHttps: false
-};
-
 export const api = {
-  url: "http://192.168.1.26:8080/api/"
+  url: "http://192.168.1.26:8080/api/",
+  short: "http://192.168.26:8080/",
+  ip: "http://192.168.1.26"
 }
