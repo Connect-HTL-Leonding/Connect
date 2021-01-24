@@ -6,6 +6,7 @@ import org.connect.model.user.User;
 import org.connect.repository.MySkinRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
