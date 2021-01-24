@@ -1,7 +1,10 @@
 package org.connect.service;
 
+import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.skin.MySkin;
+import org.connect.model.user.User;
 import org.connect.repository.MySkinRepository;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -16,15 +19,21 @@ public class MySkinService {
     @Inject
     MySkinRepository dbRepo;
 
+    @Inject
+    JsonWebToken jwt;
+
+    @Inject
+    SecurityIdentity identity;
+
 
     // Liste aller Skins senden
     @Path("findAll")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<MySkin> findAll() {
-        List<MySkin> lms = dbRepo.findAll();
+        System.out.println(identity.getPrincipal().getName());
 
-        return dbRepo.findAll();
+        return dbRepo.findAll(jwt.claim("sub"));
     }
 
     // Ein Skin senden
@@ -48,14 +57,15 @@ public class MySkinService {
     @Path("create")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public MySkin createPerson(MySkin skin) {
+    public MySkin createMySkin(MySkin skin) {
+        skin.setUser(new User(jwt));
         return dbRepo.create(skin);
     }
     // Ein Skin ändern
     @Path("update")
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    public MySkin updatePerson(MySkin skin) {
+    public MySkin updateMySkin(MySkin skin) {
         return dbRepo.update(skin);
     }
 

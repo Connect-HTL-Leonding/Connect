@@ -1,4 +1,4 @@
-package org.connect.model.skin;
+package org.connect.model.user;
 
 import io.quarkus.security.identity.SecurityIdentity;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -16,15 +16,20 @@ public class User implements Serializable {
     private String userName;
 
     //Userinfo (bigggggg)
-    private String attributes;
+    //private String attributes;
 
     public User() {
     }
 
+    public User(String id, String userName) {
+        this.id = id;
+        this.userName = userName;
+    }
+
     public User(SecurityIdentity identity) {
         this.userName = identity.getPrincipal().getName();
-        this.attributes = identity.getPrincipal().toString();
-        System.out.println(attributes);
+        //this.attributes = identity.getPrincipal().toString();
+        //System.out.println(attributes);
     }
 
     public User(JsonWebToken token) {
@@ -36,16 +41,12 @@ public class User implements Serializable {
 
         this.id = token.claim("sub").get().toString();
         this.userName = token.getName();
-        this.attributes = token.getRawToken();
+        //this.attributes = token.getRawToken();
         System.out.println(this.id);
     }
 
     public String getUserName() {
         return userName;
-    }
-
-    public String getAttributes() {
-        return attributes;
     }
 
     public String getId() {
@@ -60,7 +61,6 @@ public class User implements Serializable {
         this.userName = userName;
     }
 
-    public void setAttributes(String attributes) {
-        this.attributes = attributes;
-    }
+
+
 }
