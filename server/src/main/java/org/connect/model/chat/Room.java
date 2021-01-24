@@ -3,6 +3,7 @@ package org.connect.model.chat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.connect.model.skin.Category;
+import org.connect.model.user.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +15,7 @@ import java.util.Set;
 @Entity
 
 @NamedQueries({
-        @NamedQuery(name = Room.FINDALL, query = "SELECT r from Room r join r.users u where u.id = 1") // : (
+        @NamedQuery(name = Room.FINDALL, query = "SELECT r from Room r join r.users u where u.id = :u") // : (
 })
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","users"})
 public class Room implements Serializable {

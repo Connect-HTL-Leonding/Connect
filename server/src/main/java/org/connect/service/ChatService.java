@@ -1,9 +1,11 @@
 package org.connect.service;
 
+import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.chat.Room;
 import org.connect.model.skin.Category;
 import org.connect.repository.CategoryRepository;
 import org.connect.repository.ChatRepository;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -20,11 +22,19 @@ public class ChatService {
     @Inject
     ChatRepository dbRepo;
 
+    @Inject
+    JsonWebToken jwt;
+
+    @Inject
+    SecurityIdentity identity;
+
     @Path("findAll")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> findAll() {
-        return dbRepo.findAll();
+        System.out.println(identity.getPrincipal().getName());
+
+        return dbRepo.findAll(jwt.claim("sub"));
     }
 
 

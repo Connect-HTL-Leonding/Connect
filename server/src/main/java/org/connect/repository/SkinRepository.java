@@ -1,5 +1,6 @@
 package org.connect.repository;
 
+import org.connect.model.chat.Room;
 import org.connect.model.skin.Category;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
@@ -36,6 +37,10 @@ public class SkinRepository {
         Category c2 = new Category("Freizeit");
 
         User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
+        Room r = new Room("DM");
+        u.getRooms().add(r);
+        r.getUsers().add(u);
+
 
         MySkin ms = new MySkin(30, 5, 5);
         ms.setSkin(s);
@@ -51,6 +56,7 @@ public class SkinRepository {
         em.persist(c1);
         em.persist(c2);
         em.persist(u);
+        em.persist(r);
         em.persist(s);
         em.persist(s1);
         em.persist(ms);

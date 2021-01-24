@@ -1,14 +1,17 @@
 package org.connect.repository;
 
 import org.connect.model.chat.Room;
-import org.connect.model.chat.User;
+import org.connect.model.skin.MySkin;
+import org.connect.model.user.User;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class ChatRepository {
@@ -17,18 +20,22 @@ public class ChatRepository {
 
     @Transactional
     public void init() {
-        User u = new User("test","email");
-        Room r = new Room("DM");
-        u.getRooms().add(r);
-        r.getUsers().add(u);
-
-        em.persist(u);
-        em.persist(r);
     }
 
-    public List<Room> findAll() {
-        return this.em
-                .createNamedQuery(Room.FINDALL, Room.class)
-                .getResultList();
+    public List<Room> findAll(Optional user_id) {
+
+        TypedQuery<Room> tq = this.em.createNamedQuery(Room.FINDALL, Room.class);
+        tq.setParameter("u", user_id.get().toString());
+
+        List<Room> roomList = null;
+        try {
+            roomList = tq.getResultList();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(roomList);
+
+        return roomList;
     }
 }
