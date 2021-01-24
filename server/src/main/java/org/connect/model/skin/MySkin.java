@@ -1,5 +1,7 @@
 package org.connect.model.skin;
 
+import org.connect.model.user.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
@@ -7,7 +9,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("my")
 @NamedQueries({
-        @NamedQuery(name = MySkin.FINDALL, query = "SELECT ms FROM MySkin ms")
+        @NamedQuery(name = MySkin.FINDALL, query = "SELECT ms FROM MySkin ms where user_id = :u")
 })
 public class MySkin implements Serializable {
 
@@ -23,6 +25,10 @@ public class MySkin implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "skin_id")
     Skin skin;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    User user;
 
     /*
     @ManyToOne
@@ -76,5 +82,13 @@ public class MySkin implements Serializable {
 
     public void setSkin(Skin skin) {
         this.skin = skin;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

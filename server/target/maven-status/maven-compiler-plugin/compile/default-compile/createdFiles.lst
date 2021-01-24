@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 org\connect\model\skin\Skin.class
 META-INF\panache-archive.marker
 org\connect\repository\CategoryRepository.class
@@ -8,3 +9,17 @@ org\connect\service\MySkinService.class
 org\connect\model\skin\Category.class
 org\connect\repository\MySkinRepository.class
 org\connect\service\CategoryService.class
+=======
+org/connect/service/SkinService.class
+org/connect/model/skin/Category.class
+org/connect/model/user/User.class
+org/connect/repository/SkinRepository.class
+org/connect/service/UserService.class
+org/connect/model/skin/MySkin.class
+org/connect/repository/MySkinRepository.class
+org/connect/repository/UserRepository.class
+org/connect/model/skin/Skin.class
+org/connect/service/MySkinService.class
+META-INF/panache-archive.marker
+org/connect/repository/CategoryRepository.class
+>>>>>>> 24bfef5aa6bc6c59cb25cc6bae18b8a42162af6c

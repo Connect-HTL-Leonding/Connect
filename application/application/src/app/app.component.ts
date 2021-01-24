@@ -18,10 +18,10 @@ export class AppComponent {
     private oauthService: OAuthService
   ) {
     this.initializeApp();
-    this.oauthService.configure(authCodeFlowConfig);
-    this.oauthService.loadDiscoveryDocumentAndTryLogin();
+    //this.oauthService.configure(authCodeFlowConfig);
+    //this.oauthService.loadDiscoveryDocumentAndTryLogin();
     // optional
-    this.oauthService.setupAutomaticSilentRefresh();
+    //this.oauthService.setupAutomaticSilentRefresh();
   }
 
   initializeApp() {
@@ -32,6 +32,7 @@ export class AppComponent {
   }
 }
 
+<<<<<<< HEAD
 export const authCodeFlowConfig: AuthConfig = {
   issuer: 'http://localhost:8010/auth/realms/connect',
   redirectUri: 'http://localhost:8100/login',
@@ -44,4 +45,10 @@ export const authCodeFlowConfig: AuthConfig = {
 
 export const api = {
   url: "http://localhost:8080/api/"
+=======
+export const api = {
+  url: "http://192.168.1.26:8080/api/",
+  short: "http://192.168.26:8080/",
+  ip: "http://192.168.1.26"
+>>>>>>> 24bfef5aa6bc6c59cb25cc6bae18b8a42162af6c
 }

@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
         @NamedQuery(name = "Skin.findCat", query = "SELECT c FROM Category c, Category_Skin cs, Skin s " +
                 "where s.id = cs.skins_id AND cs.category_id = c.id"),*/
         @NamedQuery(name = Skin.FINDALL, query = "SELECT s FROM Skin s"),
-        @NamedQuery(name = Skin.CHECK, query = "SELECT ms FROM MySkin ms where skin_id = :s")
+        @NamedQuery(name = Skin.CHECK, query = "SELECT ms FROM MySkin ms where skin_id = :s and user_id = :u")
 })
 public class Skin implements Serializable {
 

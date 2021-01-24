@@ -8,8 +8,10 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @ApplicationScoped
@@ -26,17 +28,27 @@ public class MySkinRepository {
 
     // Einfügen einer neuen Person in die DB
     @Transactional
-    public MySkin create(MySkin skin) {
-        em.persist(skin);
-        return skin;
+    public MySkin create(MySkin myskin) {
+        em.persist(myskin);
+        return myskin;
     }
 
     // Lesen aller Personen
     @Transactional
-    public List<MySkin> findAll() {
-        return this.em
-                .createNamedQuery(MySkin.FINDALL, MySkin.class)
-                .getResultList();
+    public List<MySkin> findAll(Optional id) {
+        TypedQuery<MySkin> tq = this.em.createNamedQuery(MySkin.FINDALL, MySkin.class);
+        tq.setParameter("u", id.get().toString());
+
+        List<MySkin> ms = null;
+        try {
+            ms = tq.getResultList();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(ms);
+
+        return ms;
     }
 
     // Löschen einer Person

@@ -13,6 +13,7 @@ import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/co
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { OAuthModule } from 'angular-oauth2-oidc';
+import { CoreModule } from './api/auth/core.module';
 
 
 
@@ -25,6 +26,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    CoreModule.forRoot(),
 
     HttpClientJsonpModule,
     HttpClientModule,

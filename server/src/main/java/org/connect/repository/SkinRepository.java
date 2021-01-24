@@ -1,8 +1,10 @@
 package org.connect.repository;
 
+import org.connect.model.chat.Room;
 import org.connect.model.skin.Category;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
+import org.connect.model.user.User;
 import org.hibernate.query.Query;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -11,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 
 @ApplicationScoped
@@ -33,8 +36,15 @@ public class SkinRepository {
         Category c1 = new Category("Sport");
         Category c2 = new Category("Freizeit");
 
+        User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
+        Room r = new Room("DM");
+        u.getRooms().add(r);
+        r.getUsers().add(u);
+
+
         MySkin ms = new MySkin(30, 5, 5);
         ms.setSkin(s);
+        ms.setUser(u);
         s.getCategories().add(c);
         s.getCategories().add(c1);
         s1.getCategories().add(c);
@@ -45,6 +55,8 @@ public class SkinRepository {
         em.persist(c);
         em.persist(c1);
         em.persist(c2);
+        em.persist(u);
+        em.persist(r);
         em.persist(s);
         em.persist(s1);
         em.persist(ms);
@@ -56,9 +68,10 @@ public class SkinRepository {
     }
 
 
-    public MySkin check(long id) {
+    public MySkin check(long skin_id, Optional user_id) {
         TypedQuery<MySkin> tq = this.em.createNamedQuery(Skin.CHECK, MySkin.class);
-        tq.setParameter("s", id);
+        tq.setParameter("s", skin_id);
+        tq.setParameter("u", user_id.get().toString());
         MySkin s = null;
         try {
              s = tq.getSingleResult();
@@ -70,9 +83,6 @@ public class SkinRepository {
 
         return s;
     }
-
-
-
 
     // Einfügen einer neuen Person in die DB
     @Transactional

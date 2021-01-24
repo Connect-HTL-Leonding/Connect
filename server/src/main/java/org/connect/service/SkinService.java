@@ -1,8 +1,10 @@
 package org.connect.service;
 
+import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.repository.SkinRepository;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -17,6 +19,12 @@ public class SkinService {
 
     @Inject
     SkinRepository dbRepo;
+
+    @Inject
+    JsonWebToken jwt;
+
+    @Inject
+    SecurityIdentity identity;
 
     // Initialisieren der DB
     @Path("init")
@@ -47,7 +55,8 @@ public class SkinService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public MySkin check(@PathParam("id") long id) {
-        return dbRepo.check(id);
+
+        return dbRepo.check(id, jwt.claim("sub"));
     }
 
     // Ein Skin löschen
