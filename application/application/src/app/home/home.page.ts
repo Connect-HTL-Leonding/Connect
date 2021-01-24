@@ -129,7 +129,7 @@ return compositeImage;
 
    var compositeImage = this.createMarker('../../assets/normalguy.jpg','#0eb19b');
 
-console.log(compositeImage);
+
 
       const icon = {
         url: compositeImage, // image url
@@ -144,6 +144,18 @@ console.log(compositeImage);
 
       // To add the marker to the map, call setMap();
       marker.setMap(this.map);
+
+      const cityCircle = new google.maps.Circle({
+        strokeColor: "#0eb19b",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#0eb19b",
+        fillOpacity: 0.05,
+        map: this.map,
+        center: location,
+        radius: 100,
+      });
+  
 
     }).catch((error) => {
       console.log('Error getting location', error);
