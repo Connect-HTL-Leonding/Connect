@@ -50,6 +50,54 @@ export class HomePage {
     console.log("jfsaldfjkd");
   }
 
+createMarker(source, hex){
+  var canvas = document.createElement('canvas');
+  canvas.width = 35;
+  canvas.height = 62;
+var ctx = canvas.getContext('2d');
+var image1 = source;
+var image = new Image();
+var compositeImage;
+
+
+
+image.src = image1;
+
+
+ctx.drawImage(image, 2.4725 , 2.9421  , 29.6, 29.6);
+
+
+// only draw image where mask is
+ctx.globalCompositeOperation = 'destination-in';
+
+// draw our circle mask
+ctx.fillStyle = '#000';
+ctx.beginPath();
+ctx.arc(
+ 14.8+2.4725,          // x
+ 14.8+2.9421,          // y
+ 14.8,          // radius
+ 0,                  // start angle
+ 2 * Math.PI         // end angle
+);
+ctx.fill();
+
+// restore to default composite operation (is draw over current image)
+ctx.globalCompositeOperation = 'source-over';
+
+
+var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+
+ctx.fillStyle = hex;
+ctx.fill(path);
+
+compositeImage = canvas.toDataURL("image/png");
+
+canvas.remove();
+
+return compositeImage;
+}
+
   async loadMap() {
 
     console.log(this.geolocation);
@@ -79,22 +127,7 @@ export class HomePage {
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
-      var canvas = document.getElementById('canvas') as
-      HTMLCanvasElement;
-var ctx = canvas.getContext('2d');
-var image1 = '../../assets/normalguy.jpg';
-var image2 = '../../assets/defaultpfp.jpg';
-var image = new Image();
-var compositeImage;
-
-image.src = image1;
-ctx.drawImage(image, 0, 0);
-
-image = new Image();
-image.src = image2;
-ctx.drawImage(image, 0, 0);
-
-compositeImage = canvas.toDataURL("image/png");
+   var compositeImage = this.createMarker('../../assets/normalguy.jpg','#0eb19b');
 
 console.log(compositeImage);
 
