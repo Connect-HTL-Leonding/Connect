@@ -33,7 +33,7 @@ export class AppComponent {
 }
 
 export const api = {
-  url: "http://192.168.1.26:8080/api/",
-  short: "http://192.168.26:8080/",
-  ip: "http://192.168.1.26"
+  url: "http://localhost:8080/api/",
+  short: "http://localhost:8080/",
+  ip: "http://localhost"
 }
