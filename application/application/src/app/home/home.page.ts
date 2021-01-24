@@ -79,10 +79,34 @@ export class HomePage {
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
+      var canvas = document.getElementById('canvas') as
+      HTMLCanvasElement;
+var ctx = canvas.getContext('2d');
+var image1 = '../../assets/normalguy.jpg';
+var image2 = '../../assets/defaultpfp.jpg';
+var image = new Image();
+var compositeImage;
+
+image.src = image1;
+ctx.drawImage(image, 0, 0);
+
+image = new Image();
+image.src = image2;
+ctx.drawImage(image, 0, 0);
+
+compositeImage = canvas.toDataURL("image/png");
+
+console.log(compositeImage);
+
+      const icon = {
+        url: compositeImage, // image url
+        scaledSize: new google.maps.Size(50, 50), // scaled size
+      };
+
       var marker = new google.maps.Marker({
         position: location,
         title: "YOU",
-        //icon: "../../assets/normalguy.jpg"
+        icon: compositeImage
       });
 
       // To add the marker to the map, call setMap();
