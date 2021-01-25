@@ -3,6 +3,9 @@ import {ContactlistService} from '../api/contactlist.service'
 import { MenuController, ModalController } from '@ionic/angular';
 import { User } from '../model/user';
 import { ChatService } from '../api/chat.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Room } from '../model/room';
+import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
   selector: 'app-chat',
@@ -11,23 +14,46 @@ import { ChatService } from '../api/chat.service';
 })
 export class ChatPage implements OnInit {
 
+  sendText = '';
+  receiveText = '';
+  websocket : WebSocket;
+
   public username;
   public profilePicture;
   contactlist;
   chatservice;
+  wsUri;
+  oauthService;
 
-  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService) {
+  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
     this.contactlist = cl;
     this.chatservice = cs;
+    this.oauthService = os;
   }
+  
 
   ngOnInit() {
-    this.username = this.contactlist.selectedUser.username;
-    this.profilePicture = this.contactlist.selectedUser.profilePicture;
-    this.chatservice.getData();
+    this.wsUri = 'ws://localhost:8080/chat/' + this.contactlist.selectedRoom.id;
+    //this.chatservice.getData();
+    this.doConnect();
   }
 
   dismissModal() {
+    this.websocket.close();
     this.modalController.dismiss();
+  }
+
+  doSend(){
+    this.websocket.send(this.sendText);
+  }
+
+  doConnect(){
+    this.websocket = new WebSocket(this.wsUri, this.oauthService.getAccessToken());
+
+    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
+    this.websocket.onmessage = (evt) => this.receiveText += evt.data+'\n';
+    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
+    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
+
   }
 }

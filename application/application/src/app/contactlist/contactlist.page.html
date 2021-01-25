@@ -10,8 +10,8 @@
 
 <ion-content> 
   <ion-list id="chats">
-    <ion-item class="chat" *ngFor="let user of contactService.chats, let i = index" (click)="presentModal(user)">
-      <app-detail-contactlist [user]="user"></app-detail-contactlist>
+    <ion-item class="chat" *ngFor="let room of contactService.rooms, let i = index" (click)="presentModal(room)">
+      <app-detail-contactlist [room]="room"></app-detail-contactlist>
     </ion-item>
   </ion-list>
 </ion-content>

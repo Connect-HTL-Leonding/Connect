@@ -36,6 +36,7 @@ public class SkinRepository {
         Category c1 = new Category("Sport");
         Category c2 = new Category("Freizeit");
 
+
         /*
         JAN
 
@@ -43,9 +44,13 @@ public class SkinRepository {
 
          */
         User u = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
+        User u1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
+
         Room r = new Room("DM");
         u.getRooms().add(r);
+        u1.getRooms().add(r);
         r.getUsers().add(u);
+        r.getUsers().add(u1);
 
 
         MySkin ms = new MySkin(30, 5, 5);
@@ -62,6 +67,7 @@ public class SkinRepository {
         em.persist(c1);
         em.persist(c2);
         em.persist(u);
+        em.persist(u1);
         em.persist(r);
         em.persist(s);
         em.persist(s1);
