@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { User } from '../../model/user'
+import { Room } from '../../model/room'
 
 @Component({
   selector: 'app-detail-contactlist',
@@ -8,7 +8,7 @@ import { User } from '../../model/user'
 })
 export class DetailContactlistComponent implements OnInit {
 
-  @Input() user: User;
+  @Input() room: Room;
 
   constructor() { }
 

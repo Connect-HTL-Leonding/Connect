@@ -4,7 +4,6 @@ export class User {
         public username: string = "",
         public profilePicture: string = "",
         public desc: string = "",
-        public latestMessage: string = "",
         public instagram : string = "",
         public facebook: string = "",
         public twitter: string = "",
