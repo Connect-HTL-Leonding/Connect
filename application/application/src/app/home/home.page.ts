@@ -63,8 +63,8 @@ var compositeImage;
 
 image.src = image1;
 
-
 ctx.drawImage(image, 2.4725 , 2.9421  , 29.6, 29.6);
+
 
 
 // only draw image where mask is
@@ -94,6 +94,7 @@ ctx.fill(path);
 compositeImage = canvas.toDataURL("image/png");
 
 canvas.remove();
+console.log(compositeImage)
 
 return compositeImage;
 }

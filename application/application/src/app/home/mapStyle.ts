@@ -62,7 +62,7 @@ export const MapStyle =
         "elementType": "labels",
         "stylers": [
             {
-                "visibility": "off"
+                "visibility": "on"
             }
         ]
     },
@@ -92,6 +92,9 @@ export const MapStyle =
         "stylers": [
             {
                 "visibility": "simplified"
+            },
+            {
+                "color":"#06c777"
             }
         ]
     }, 
@@ -138,6 +141,9 @@ export const MapStyle =
         "stylers": [
             {
                 "color": "#bad294"
+            },
+            {
+                "visibility":"off"
             }
         ]
     },
@@ -170,13 +176,27 @@ export const MapStyle =
     },
     {
        "featureType": "poi",
-       "elementType": "label.text.stroke",
+       "elementType": "labels.text.stroke",
        "stylers": [
            {
                "visibility": "off"
+           },
+           {
+               "color":"#000000"
            }
        ]
-   },
+   },{
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
+        {
+            "visibility": "off"
+        },
+        {
+            "color":"#000000"
+        }
+    ]
+},
  
     {
         "featureType": "road.highway",
