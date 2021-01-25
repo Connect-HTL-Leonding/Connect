@@ -22,12 +22,12 @@
 
       <div class="edit-container">
         <label>Benutzername</label>
-        <p *ngIf="user" id="username" contenteditable="true">{{user.username}}</p>
+        <p *ngIf="user" id="username" contenteditable="true">{{user.given_name}}</p>
       </div>
 
       <div style="overflow:scroll;"  class="edit-container">
         <label>Beschreibung</label>
-        <p *ngIf="user" id="desc" contenteditable="true" >{{user.desc}}</p>
+        <p *ngIf="user" id="desc" contenteditable="true" >{{user.given_name}}</p>
       </div>
 
       <ion-button shape="round" color="primary" expand="block" (click)="updateUser(user)">Save</ion-button>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from "../model/user";
 import { ProfileService } from "../api/profile.service";
 import { PhotoService } from "../api/photo.service";
+import { AuthService } from '../api/auth/auth.service';
 //import { Camera } from '@ionic-native/camera';
 //import { CameraOptions } from '@ionic-native/camera';
 
@@ -13,14 +14,12 @@ import { PhotoService } from "../api/photo.service";
 })
 export class EditProfilePage implements OnInit {
 
-  user: User
+  user;
   nachrichten: boolean = false;
   connects: boolean = false;
   imgURL;
 
-  constructor(public ps: ProfileService, public photoService: PhotoService,
-    //private camera: Camera
-  ) {}
+  constructor(public ps: ProfileService, public photoService: PhotoService, private authService: AuthService) {}
 
   slideOpts = {
     //initialSlide: 0,
@@ -43,15 +42,7 @@ export class EditProfilePage implements OnInit {
   }
 
   ngOnInit() {
-    this.ps.getUser().subscribe(
-      data => {
-        this.ps.user = data;
-        this.user = this.ps.user[0]
-      },
-      error1 => {
-        console.log('Error');
-      }
-    )
+    this.user = this.authService.getUserInfo();
   }
 
   updateUser(u: User) {
