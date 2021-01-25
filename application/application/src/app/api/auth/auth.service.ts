@@ -168,7 +168,7 @@ export class AuthService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
           });
-          this.http.get<any>('http://192.168.1.26:8080/user/login', {headers: reqHeader}).subscribe(data => {
+          this.http.get<any>('http://10.0.0.52:8080/user/login', {headers: reqHeader}).subscribe(data => {
             console.log(data);
           })
         }
