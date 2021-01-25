@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { api } from 'src/app/app.component';
+import { ProfilePageModule } from 'src/app/profile/profile.module';
 
 //thx to https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards
 @Injectable({ providedIn: 'root' })
@@ -38,7 +40,7 @@ export class AuthService {
   constructor(
     private oauthService: OAuthService,
     private router: Router,
-    private http : HttpClient
+    private http: HttpClient
   ) {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
@@ -75,7 +77,7 @@ export class AuthService {
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => {
         console.log(this.oauthService.getRefreshToken());
-        this.oauthService.loadUserProfile()
+        console.log(this.getUserInfo());
       });
 
     this.oauthService.events
@@ -83,8 +85,9 @@ export class AuthService {
       .subscribe(e => this.navigateToLoginPage());
 
     this.oauthService.setupAutomaticSilentRefresh({}, 'access_token');
-    this.oauthService.timeoutFactor = 0.5; 
+    this.oauthService.timeoutFactor = 0.5;
   }
+
 
   public runInitialLoginSequence(): Promise<void> {
     if (location.hash) {
@@ -168,7 +171,11 @@ export class AuthService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
           });
+<<<<<<< HEAD
           this.http.get<any>('http://10.0.0.52:8080/user/login', {headers: reqHeader}).subscribe(data => {
+=======
+          this.http.get<any>(api.short + 'user/login', {headers: reqHeader}).subscribe(data => {
+>>>>>>> 7524ba74272f51deb3bc151866b409d2ea38f533
             console.log(data);
           })
         }
@@ -193,6 +200,10 @@ export class AuthService {
   public logout() { this.oauthService.logOut(); }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
+  public getUserInfo() {
+    return this.oauthService.getIdentityClaims();
+  }
+
 
   // These normally won't be exposed from a service like this, but
   // for debugging it makes sense.

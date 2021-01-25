@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ContactlistService} from '../api/contactlist.service'
-import { User } from '../model/user'
+import { Room } from '../model/room'
 import { MenuController, ModalController } from '@ionic/angular';
 import { ChatPage } from '../chat/chat.page';
 
@@ -18,11 +18,16 @@ export class ContactlistPage implements OnInit {
   }
 
   ngOnInit() {
-    this.contactService.getChats();
+    this.contactService.getChats().subscribe(
+      data => {
+        this.contactService.rooms = data;
+        console.log(this.contactService.rooms);
+      }
+    )
   }
 
-  async presentModal(user:User) {
-    this.contactService.selectedUser = user;
+  async presentModal(room:Room) {
+    this.contactService.selectedRoom = room;
     const modal = await this.modalController.create({
       component: ChatPage
     });

@@ -115,6 +115,7 @@ return compositeImage;
       // resp.coords.longitude
       console.log(resp.coords.latitude + " " + resp.coords.longitude)
       const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+      const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
 
       console.log(MapStyle)
 
@@ -137,15 +138,27 @@ return compositeImage;
       };
 
       var marker = new google.maps.Marker({
-        position: location,
-        title: "YOU",
+        position: location2,
+        title: "Jan",
+        map: this.map,
         icon: compositeImage
       });
 
-      // To add the marker to the map, call setMap();
-      marker.setMap(this.map);
+   
+    
 
-      const cityCircle = new google.maps.Circle({
+      const userDot = new google.maps.Circle({
+        strokeColor: "#0eb19b",
+        strokeOpacity: 1,
+        strokeWeight: 2,
+        fillColor: "#0eb19b",
+        fillOpacity: 1,
+        map: this.map,
+        center: location,
+        radius: 2 //in Meter
+      });
+
+      const radiusCircle = new google.maps.Circle({
         strokeColor: "#0eb19b",
         strokeOpacity: 0.8,
         strokeWeight: 2,
@@ -153,7 +166,7 @@ return compositeImage;
         fillOpacity: 0.05,
         map: this.map,
         center: location,
-        radius: 100,
+        radius: 100 //in Meter
       });
   
 

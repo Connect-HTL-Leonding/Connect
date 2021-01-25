@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../api/auth/auth.service';
 import { ProfileService } from "../api/profile.service";
 import { User } from "../model/user";
 
@@ -9,33 +10,21 @@ import { User } from "../model/user";
 })
 export class ProfilePage implements OnInit {
 
-  user: User
+  user;
 
-  constructor(public ps: ProfileService) {
-  
+  constructor(public ps: ProfileService, private authService: AuthService) {
+
   }
 
   slideOpts = {
     //initialSlide: 0,
-   // spaceBetween: "-550",
+    // spaceBetween: "-550",
     slidesPerView: 1,
     speed: 400
   };
 
-
-
   ngOnInit() {
-
-    console.log(this.ps)
-    this.ps.getUser().subscribe(
-      data => {
-        this.ps.user = data;
-        this.user = this.ps.user[0]
-      },
-      error1 => {
-        console.log('Error');
-      }
-    )
+    this.user = this.authService.getUserInfo();
   }
 
 }
