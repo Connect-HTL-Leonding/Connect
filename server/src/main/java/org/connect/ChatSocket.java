@@ -21,6 +21,7 @@ public class ChatSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) {
         sessions.put(username, session);
+        System.out.println(username);
         broadcast("User " + username + " joined");
     }
 
