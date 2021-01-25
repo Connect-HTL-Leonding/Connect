@@ -74,13 +74,17 @@ export class AuthService {
 
     this.oauthService.events
       .pipe(filter(e => ['token_received'].includes(e.type)))
-      .subscribe(e => this.oauthService.loadUserProfile());
+      .subscribe(e => {
+        console.log(this.oauthService.getRefreshToken());
+        this.oauthService.loadUserProfile()
+      });
 
     this.oauthService.events
       .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
       .subscribe(e => this.navigateToLoginPage());
 
-    this.oauthService.setupAutomaticSilentRefresh();
+    this.oauthService.setupAutomaticSilentRefresh({}, 'access_token');
+    this.oauthService.timeoutFactor = 0.5; 
   }
 
   public runInitialLoginSequence(): Promise<void> {
