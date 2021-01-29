@@ -34,3 +34,6 @@ nb-configuration.xml
 # patch
 *.orig
 *.rej
+
+#properties
+src/main/resources/application.properties
