@@ -1,0 +1,21 @@
+<<<<<<< Updated upstream
+=======
+org\connect\model\skin\Skin.class
+org\connect\repository\UserRepository.class
+org\connect\repository\SkinRepository.class
+org\connect\service\MySkinService.class
+org\connect\repository\ChatRepository.class
+META-INF\panache-archive.marker
+org\connect\service\UserService.class
+org\connect\model\chat\Room.class
+org\connect\repository\CategoryRepository.class
+org\connect\service\SkinService.class
+org\connect\model\skin\MySkin.class
+org\connect\model\user\User.class
+org\connect\service\ChatService.class
+org\connect\model\chat\Message.class
+org\connect\model\skin\Category.class
+org\connect\repository\MySkinRepository.class
+org\connect\ChatSocket.class
+org\connect\service\CategoryService.class
+>>>>>>> Stashed changes
