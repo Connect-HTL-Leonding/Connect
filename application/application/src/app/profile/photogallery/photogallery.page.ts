@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MenuController, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-photogallery',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PhotogalleryPage implements OnInit {
 
-  constructor() { }
+  constructor(public modalController:ModalController) { }
 
   ngOnInit() {
   }
-
+  
+  dismissModal() {
+    this.modalController.dismiss();
+  }
 }
