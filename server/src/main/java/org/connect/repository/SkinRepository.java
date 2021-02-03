@@ -37,14 +37,17 @@ public class SkinRepository {
         Category c2 = new Category("Freizeit");
 
 
-        /*
-        JAN
 
+        //JAN
         User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
+        User u1 = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
 
-         */
+
+        /*
         User u = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
         User u1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
+
+         */
 
         Room r = new Room("DM");
         u.getRooms().add(r);

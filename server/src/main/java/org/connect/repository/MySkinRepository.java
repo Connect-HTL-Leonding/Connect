@@ -53,9 +53,10 @@ public class MySkinRepository {
 
     // Löschen einer Person
     @Transactional
-    public void delete(long id) {
+    public MySkin delete(long id) {
         MySkin s = em.find(MySkin.class, id);
         em.remove(s);
+        return s;
     }
 
     // Ändern oder Einfügen einer Person mit id

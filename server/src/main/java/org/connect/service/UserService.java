@@ -7,12 +7,13 @@ import org.connect.repository.CategoryRepository;
 import org.connect.repository.UserRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.cache.NoCache;
+import org.keycloak.KeycloakPrincipal;
+import org.keycloak.representations.IDToken;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Map;
 
 @Path("user")
 public class UserService {
@@ -31,10 +32,35 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     @NoCache
     public User login() {
+
         //user-id
         System.out.println(jwt.claim("sub"));
 
         return dbRepo.create(new User(jwt));
+    }
+
+    @GET
+    @Path("customData")
+    @Produces(MediaType.APPLICATION_JSON)
+    @NoCache
+    public User getData() {
+
+        //user-id
+        System.out.println(jwt.claim("sub"));
+
+        return dbRepo.find(jwt.claim("sub"));
+    }
+
+    @PUT
+    @Path("update")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User update(User user) {
+
+        //user-id
+        System.out.println(jwt.claim("sub"));
+
+        return dbRepo.update(user);
     }
 
     /*

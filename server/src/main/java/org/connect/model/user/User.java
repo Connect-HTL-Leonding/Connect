@@ -21,12 +21,9 @@ public class User implements Serializable {
     @Id
     private String id;
     private String userName;
-    private String email;
     private LocalDateTime created;
     LocalDateTime updated;
-
-    //Userinfo (bigggggg)
-    //private String attributes;
+    private String description;
 
     @ManyToMany(mappedBy = "users")
     private List<Room> rooms = new LinkedList<>();
@@ -82,5 +79,27 @@ public class User implements Serializable {
         this.rooms = rooms;
     }
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
 
+    public void setCreated(LocalDateTime created) {
+        this.created = created;
+    }
+
+    public LocalDateTime getUpdated() {
+        return updated;
+    }
+
+    public void setUpdated(LocalDateTime updated) {
+        this.updated = updated;
+    }
+
+    public String getDesc() {
+        return description;
+    }
+
+    public void setDesc(String desc) {
+        this.description = desc;
+    }
 }

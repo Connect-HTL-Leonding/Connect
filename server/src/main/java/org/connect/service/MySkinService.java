@@ -50,8 +50,8 @@ public class MySkinService {
     // Ein Skin löschen
     @Path("delete/{id}")
     @DELETE
-    public void deleteSkin(@PathParam("id") long id) {
-        dbRepo.delete(id);
+    public MySkin deleteSkin(@PathParam("id") long id) {
+       return dbRepo.delete(id);
     }
 
     // Ein Skin hinzufügen
