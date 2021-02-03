@@ -4,6 +4,8 @@ import { CategoryService } from '../api/category.service';
 import { MyskinsService } from '../api/myskins.service';
 import { SkinsService } from '../api/skins.service';
 import { Category } from '../model/category';
+import { MySkin } from '../model/myskin';
+import { Skin } from '../model/skin';
 
 @Component({
   selector: 'app-skinselection',
@@ -75,8 +77,8 @@ export class SkinselectionPage implements OnInit {
     this.currCat = c;
   }
 
-  dismissModal() {
-    this.modalCtrl.dismiss();
+  dismissModal(newSkin) {
+    this.modalCtrl.dismiss(newSkin);
   }
 
   updateSkin(skin) {
@@ -95,9 +97,13 @@ export class SkinselectionPage implements OnInit {
 
   addToMySkin(skin) {
     this.mySkinService.addToMySkins(skin).subscribe( data => {
+      //console.log(data);
+      var newSkin = data as MySkin;
+      
       this.skinsService.getSkins().subscribe(
         data => {
           this.skinsService.skins = data;
+          this.dismissModal(newSkin);
         },
         error1 => {
           console.log('Error');

@@ -19,7 +19,7 @@ export class EditProfilePage implements OnInit {
   connects: boolean = false;
   imgURL;
 
-  constructor(public ps: ProfileService, public photoService: PhotoService, private authService: AuthService) {}
+  constructor(public ps: ProfileService, public photoService: PhotoService, private authService: AuthService) { }
 
   slideOpts = {
     //initialSlide: 0,
@@ -43,11 +43,31 @@ export class EditProfilePage implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getUserInfo();
+
+    this.ps.getUser().subscribe(
+      data => {
+
+        console.log(data);
+        this.ps.user = data;
+
+        console.log(this.ps.user)
+
+
+
+        //console.log(this.skinService);
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
   updateUser(u: User) {
-    u.username = document.getElementById("username").innerText;
+    //u.username = document.getElementById("username").innerText;
+    console.log(u.desc)
     u.desc = document.getElementById("desc").innerText;
+    console.log(u.desc)
+
 
     this.ps.updateUser(u).subscribe(data => {
       //nach unpdate erneutes getAll

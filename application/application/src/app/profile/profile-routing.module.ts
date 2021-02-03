@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProfilePage
+  },
+  {
+    path: 'photogallery',
+    loadChildren: () => import('./photogallery/photogallery.module').then( m => m.PhotogalleryPageModule)
   }
 ];
 

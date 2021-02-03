@@ -1,5 +1,5 @@
 import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-import { MenuController, ModalController } from '@ionic/angular';
+import { MenuController, ModalController, ToastController } from '@ionic/angular';
 import { SkinsService } from '../api/skins.service';
 import { Skin } from 'src/app/model/skin';
 import { SkinselectionPage } from '../skinselection/skinselection.page'
@@ -23,7 +23,7 @@ export class MySkinsPage implements OnInit {
   currentSkin: MySkin;
 
   //Konstruktor
-  constructor(ks: MyskinsService, public modalController: ModalController) {
+  constructor(ks: MyskinsService, public modalController: ModalController, public toastController: ToastController) {
     this.mySkinService = ks;
   }
 
@@ -61,11 +61,11 @@ export class MySkinsPage implements OnInit {
 
   //ausgewählter Skin ändern - dynamisch
   selectSkin() {
-    if(this.mySkinService.myskins){
+    if (this.mySkinService.myskins) {
       this.mySkinService.myskins.forEach(element => {
         this.currentSkin = element;
       });
-    }else {
+    } else {
       this.currentSkin = null;
     }
 
@@ -78,10 +78,46 @@ export class MySkinsPage implements OnInit {
       component: SkinselectionPage,
     });
     //Event bei Modal schließen
-    modal.onDidDismiss().then(() => {
-      this.ngOnInit();
+    modal.onDidDismiss().then((data) => {
+      if (data.data) {
+        console.log(data);
+        var newMySkin = data.data as MySkin;
+        console.log(newMySkin);
+        this.ngOnInit();
+        //this.presentToast();
+
+        this.presentToastWithOptions(newMySkin, "hinzugefügt");
+      }
+
     });
     return await modal.present();
+  }
+
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Your settings have been saved.',
+      duration: 2000
+    });
+    console.log("fjdlsjdlkdf")
+    toast.present();
+  }
+
+  async presentToastWithOptions(newMySkin: MySkin, msg) {
+    const toast = await this.toastController.create({
+      header: 'Skin ' + newMySkin.skin.title + ' ' + msg,
+      message: 'Click to Close',
+      position: 'top',
+      buttons: [
+        {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
   }
 
   //Event bei Skin updaten
@@ -92,7 +128,7 @@ export class MySkinsPage implements OnInit {
         data => {
           this.mySkinService.myskins = data;
           this.selectSkin();
-          
+
         },
         error1 => {
           console.log('Error');
@@ -105,11 +141,14 @@ export class MySkinsPage implements OnInit {
   deleteSkin(s: MySkin) {
     this.mySkinService.deleteSkin(s.id).subscribe(data => {
       //nach unpdate erneutes getAll
+      console.log(data);
+      var deletedSkin = data as MySkin;
       this.mySkinService.getMySkins().subscribe(
         data => {
           this.mySkinService.myskins = data;
           this.currentSkin = null;
           this.selectSkin();
+          this.presentToastWithOptions(deletedSkin, "gelöscht");
         },
         error1 => {
           console.log('Error');

@@ -25,6 +25,23 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getUserInfo();
+
+    this.ps.getUser().subscribe(
+      data => {
+
+        console.log(data);
+        this.ps.user = data;
+
+        console.log(this.ps.user)
+
+
+
+        //console.log(this.skinService);
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
 }

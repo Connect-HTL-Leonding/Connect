@@ -8,7 +8,7 @@ export const authConfig: AuthConfig = {
   redirectUri: window.location.origin + '/login',
   clientId: 'connect-client',
   //responseType: 'code',
-  scope: 'roles web-origins',
+  scope: 'roles profile web-origins',
   showDebugInformation: true,
   requireHttps: false,
   //responseType: 'code',

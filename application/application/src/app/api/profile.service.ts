@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { api } from '../app.component';
 import { User } from "../model/user";
 
 @Injectable({
@@ -8,16 +10,19 @@ import { User } from "../model/user";
 export class ProfileService {
 
   http: HttpClient
-  user: User[]
+  user;
 
-  api = "http://localhost:3000"
 
-  constructor(http: HttpClient) {
+  constructor(http: HttpClient, private oauthService: OAuthService) {
     this.http = http
   }
 
   getUser() {
-    return this.http.get<User[]>(this.api + '/profile')
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<User[]>(api.short + 'user/customData', {headers: reqHeader});
   }
 /*
   generateUser(): void {
@@ -46,7 +51,11 @@ export class ProfileService {
   updateUser(u: User) {
     let body = JSON.stringify(u);
     console.log(body);
-    return this.http.put(this.api + '/profile/' + u.id, body, { 'headers': { 'Content-Type': 'application/json' } });
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.put(api.short + 'user/update' , body, {headers: reqHeader});
 
   }
 
