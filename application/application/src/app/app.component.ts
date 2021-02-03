@@ -4,6 +4,8 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
+import { LoginPage } from './login/login.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +13,15 @@ import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+
+  private loginPage = false;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
-    private oauthService: OAuthService
+    private oauthService: OAuthService,
+    private router : Router
   ) {
     this.initializeApp();
     //this.oauthService.configure(authCodeFlowConfig);

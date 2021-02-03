@@ -20,8 +20,8 @@
   <ion-router-outlet id="content1"></ion-router-outlet>
 -->
 
-  <ion-tabs>
-    <ion-tab-bar slot="bottom">
+  <ion-tabs >
+    <ion-tab-bar slot="bottom" *ngIf="this.oauthService.hasValidAccessToken()">
   
       <ion-tab-button tab="profile">
         <ion-icon name="cog"></ion-icon>

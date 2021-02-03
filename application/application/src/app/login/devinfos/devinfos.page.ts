@@ -1,17 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
-import { AuthService } from '../api/auth/auth.service';
-import { DevinfosPage } from './devinfos/devinfos.page';
+import { AuthService } from 'src/app/api/auth/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-devinfos',
+  templateUrl: './devinfos.page.html',
+  styleUrls: ['./devinfos.page.scss'],
 })
-export class LoginPage {
+export class DevinfosPage {
 
   http: HttpClient;
 
@@ -39,24 +37,14 @@ export class LoginPage {
     window.open(this.authService.logoutUrl);
   }
 
+  dismissModal(newSkin) {
+    this.modalController.dismiss(newSkin);
+  }
+
   get hasValidToken() { return this.authService.hasValidToken(); }
   get accessToken() { return this.authService.accessToken; }
   get refreshToken() { return this.authService.refreshToken; }
   get identityClaims() { return this.authService.identityClaims; }
   get idToken() { return this.authService.idToken; }
-
-
-
-
-  //info modal
-  //Modal öffnen
-  async presentModal() {
-    console.log("Modal openeing")
-    const modal = await this.modalController.create({
-      component: DevinfosPage,
-    });
-    return await modal.present();
-  }
-
 
 }
