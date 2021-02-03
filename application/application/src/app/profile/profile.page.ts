@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../api/auth/auth.service';
 import { ProfileService } from "../api/profile.service";
 import { User } from "../model/user";
+import { MenuController, ModalController } from '@ionic/angular';
+import { PhotogalleryPage } from './photogallery/photogallery.page';
 
 @Component({
   selector: 'app-profile',
@@ -12,7 +14,7 @@ export class ProfilePage implements OnInit {
 
   user;
 
-  constructor(public ps: ProfileService, private authService: AuthService) {
+  constructor(public ps: ProfileService, private authService: AuthService, public modalController: ModalController) {
 
   }
 
@@ -42,6 +44,14 @@ export class ProfilePage implements OnInit {
         console.log('Error');
       }
     )
+  }
+
+  async presentModal() {
+    
+    const modal = await this.modalController.create({
+      component: PhotogalleryPage
+    });
+    return await modal.present();
   }
 
 }
