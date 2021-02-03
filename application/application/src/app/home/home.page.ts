@@ -124,7 +124,7 @@ return compositeImage;
         center: location,
         zoom: 18,
         disableDefaultUI: true,
-        styles: MapStyle
+        mapId:'2fcab7b62a0e3af9'
       };
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
@@ -165,6 +165,7 @@ return compositeImage;
         strokeWeight: 2,
         fillColor: "#0eb19b",
         fillOpacity: 0.05,
+        clickable: false,
         map: this.map,
         center: location,
         radius: 100 //in Meter
