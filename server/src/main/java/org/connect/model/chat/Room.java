@@ -25,7 +25,7 @@ public class Room implements Serializable {
     @Id
     @GeneratedValue
     private
-    long id;
+    long roomID;
     private String type;
     private LocalDateTime created;
     private LocalDateTime updated;
@@ -58,12 +58,12 @@ public class Room implements Serializable {
         this.users = users;
     }
 
-    public long getId() {
-        return id;
+    public long getRoomID() {
+        return roomID;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setRoomID(long id) {
+        this.roomID = id;
     }
 
     public String getType() {
