@@ -21,7 +21,11 @@ public class ChatSocket {
     public void onOpen(Session session, @PathParam("username") String username) {
         sessions.put(username, session);
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         System.out.println("User " + username + " joined");
+=======
+        System.out.println(username + "connected");
+>>>>>>> Stashed changes
 =======
         System.out.println(username + "connected");
 >>>>>>> Stashed changes
