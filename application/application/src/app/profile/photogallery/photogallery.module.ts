@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { IonicModule } from '@ionic/angular';
 
 import { PhotogalleryPageRoutingModule } from './photogallery-routing.module';
