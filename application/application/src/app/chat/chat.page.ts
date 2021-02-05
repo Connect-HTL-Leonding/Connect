@@ -33,7 +33,7 @@ export class ChatPage implements OnInit {
   
 
   ngOnInit() {
-    this.wsUri = 'ws://localhost:8080/chat/' + this.contactlist.selectedRoom.id;
+    this.wsUri = 'ws://0.0.0.0:8080/chat/' + this.contactlist.selectedRoom.id;
     //this.chatservice.getData();
     this.doConnect();
   }

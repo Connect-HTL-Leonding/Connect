@@ -1,5 +1,4 @@
 package org.connect;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,7 +20,11 @@ public class ChatSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) {
         sessions.put(username, session);
+<<<<<<< Updated upstream
         System.out.println("User " + username + " joined");
+=======
+        System.out.println(username + "connected");
+>>>>>>> Stashed changes
         broadcast("User " + username + " joined");
     }
 

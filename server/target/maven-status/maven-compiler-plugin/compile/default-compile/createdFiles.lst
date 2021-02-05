@@ -12,7 +12,7 @@ org\connect\model\skin\MySkin.class
 org\connect\model\user\User.class
 org\connect\service\ChatService.class
 org\connect\model\chat\Message.class
+org\connect\service\ChatService$ChatSocket.class
 org\connect\model\skin\Category.class
 org\connect\repository\MySkinRepository.class
-org\connect\ChatSocket.class
 org\connect\service\CategoryService.class
