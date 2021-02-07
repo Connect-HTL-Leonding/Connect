@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClient, HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { CoreModule } from './api/auth/core.module';
@@ -36,7 +36,8 @@ import { CoreModule } from './api/auth/core.module';
     StatusBar,
     SplashScreen,
     Geolocation,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    PhotoViewer
   ],
   bootstrap: [AppComponent]
 })

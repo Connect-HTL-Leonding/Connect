@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 org\connect\model\skin\Skin.class
 org\connect\repository\UserRepository.class
 org\connect\repository\SkinRepository.class
@@ -14,8 +12,7 @@ org\connect\model\skin\MySkin.class
 org\connect\model\user\User.class
 org\connect\service\ChatService.class
 org\connect\model\chat\Message.class
+org\connect\service\ChatService$ChatSocket.class
 org\connect\model\skin\Category.class
 org\connect\repository\MySkinRepository.class
-org\connect\ChatSocket.class
 org\connect\service\CategoryService.class
->>>>>>> 735039af975971ba178e37c02a7c4975ce9d5615
