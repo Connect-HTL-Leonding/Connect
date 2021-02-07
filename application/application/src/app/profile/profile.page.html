@@ -19,7 +19,7 @@
       <h2 *ngIf="user" id="name">{{user.given_name}}</h2>
 
       <div class="descBox">
-        <p *ngIf="this.ps.user">{{this.ps.user.desc}}</p>
+        <p *ngIf="this.ps.user">{{this.ps.user.description}}</p>
       </div>
 
       <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']">Anpassen</ion-button>
