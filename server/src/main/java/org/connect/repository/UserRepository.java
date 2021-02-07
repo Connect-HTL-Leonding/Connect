@@ -3,10 +3,12 @@ package org.connect.repository;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.model.user.User;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -19,10 +21,25 @@ public class UserRepository {
     protected EntityManager em;
 
     @Transactional
-    public User create(User user) {
+    public User create(JsonWebToken jwt) {
         //em.find(User.class, user)
-        em.merge(user);
-        return user;
+
+        TypedQuery<User> tq = this.em.createNamedQuery(User.FINDWITHID, User.class);
+        tq.setParameter("user_id", jwt.claim("sub").get().toString());
+        User u = null;
+        try {
+            u = tq.getSingleResult();
+            System.out.println(u);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        if(u == null){
+            u = new User(jwt);
+            em.persist(u);
+        }
+
+        return u;
     }
 
     // Finden einer Person über ID in der DB

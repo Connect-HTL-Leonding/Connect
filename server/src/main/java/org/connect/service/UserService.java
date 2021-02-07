@@ -36,7 +36,8 @@ public class UserService {
         //user-id
         System.out.println(jwt.claim("sub"));
 
-        return dbRepo.create(new User(jwt));
+        //return dbRepo.create(new User(jwt));
+        return dbRepo.create(jwt);
     }
 
     @GET
@@ -58,7 +59,7 @@ public class UserService {
     public User update(User user) {
 
         //user-id
-        System.out.println(jwt.claim("sub"));
+        System.out.println(user);
 
         return dbRepo.update(user);
     }

@@ -1,29 +1,40 @@
 package org.connect.model.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.chat.Room;
+import org.connect.model.skin.Skin;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","rooms"})
+@NamedQueries({
+        @NamedQuery(name = User.FINDWITHID, query = "SELECT u FROM User u where id = :user_id"),
+})
 public class User implements Serializable {
+
+    public static final String FINDWITHID = "User.findwithid";
 
     @Id
     private String id;
     private String userName;
-    private LocalDateTime created;
-    LocalDateTime updated;
+    //private LocalDateTime created;
+    //LocalDateTime updated;
     private String description;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate birthday;
+    private char gender;
+    private String fullname;
 
     @ManyToMany(mappedBy = "users")
     private List<Room> rooms = new LinkedList<>();
@@ -79,27 +90,35 @@ public class User implements Serializable {
         this.rooms = rooms;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
-    }
-
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(LocalDateTime updated) {
-        this.updated = updated;
-    }
-
-    public String getDesc() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDesc(String desc) {
-        this.description = desc;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public char getGender() {
+        return gender;
+    }
+
+    public void setGender(char gender) {
+        this.gender = gender;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 }
