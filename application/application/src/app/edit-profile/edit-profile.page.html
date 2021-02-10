@@ -108,21 +108,17 @@
       <!--<ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;"
     [routerLink]="['../edit-profile-details']">Anpassen</ion-button>-->
 
-      <div class="photo-slider-con">
-        <p style="left:0;">Über mich</p>
-        <div style="display: flex;flex-flow: row nowrap; height: 100%; width: 100%;margin-top: -20px;">
-          <ion-slides [options]="slideOpts" pager="false" style="width: 100%;">
-            <ion-slide>
+    <div class="photo-slider-con">
+      <p style="left:0;">Über mich</p>
+     
+      <div class="list_photos" no-bounce>
+            
               <ion-card (click)="addPhotoToGallery()">
                 <ion-icon style="color: var(--ion-color-secondary)" class="icon" name="add-circle-outline"></ion-icon>
               </ion-card>
               <ion-card *ngFor="let photo of photoService.photos; index as position">
                 <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
               </ion-card>
-
-            </ion-slide>
-
-          </ion-slides>
         </div>
       </div>
 
