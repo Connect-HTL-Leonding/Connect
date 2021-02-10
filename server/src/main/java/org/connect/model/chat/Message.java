@@ -1,8 +1,6 @@
 package org.connect.model.chat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -16,6 +14,9 @@ public class Message implements Serializable {
     private String message;
     private LocalDateTime created;
     private LocalDateTime updated;
+    @ManyToOne
+    @JoinColumn(name = "ROOMID", referencedColumnName = "ROOMID", nullable = false)
+    private Room room;
 
     public Message() {
 

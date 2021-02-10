@@ -193,8 +193,7 @@ export class AuthService {
     this.oauthService.initLoginFlow(targetUrl || this.router.url);
   }
 
-  public logout() { 
-    this.oauthService.logOut(); 
+  public logout() { this.oauthService.logOut(); 
   }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }

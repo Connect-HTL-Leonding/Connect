@@ -64,15 +64,15 @@ export class EditProfilePage implements OnInit {
 
   updateUser(u: User) {
     //u.username = document.getElementById("username").innerText;
-    console.log(u.desc)
-    u.desc = document.getElementById("desc").innerText;
-    console.log(u.desc)
+    //console.log(u.desc)
+    //u.desc = document.getElementById("desc").innerText;
+    console.log(u.description)
 
 
     this.ps.updateUser(u).subscribe(data => {
       //nach unpdate erneutes getAll
       this.ngOnInit();
-    });;
+    });
   }
 
 }

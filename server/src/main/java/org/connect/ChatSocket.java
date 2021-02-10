@@ -1,5 +1,4 @@
 package org.connect;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,7 +20,11 @@ public class ChatSocket {
     @OnOpen
     public void onOpen(Session session, @PathParam("username") String username) {
         sessions.put(username, session);
-        System.out.println(username);
+        System.out.println("User " + username + " joined");
+        System.out.println(username + "connected");
+
+        System.out.println(username + "connected");
+
         broadcast("User " + username + " joined");
     }
 
@@ -29,6 +32,7 @@ public class ChatSocket {
     public void onClose(Session session, @PathParam("username") String username) {
         sessions.remove(username);
         broadcast("User " + username + " left");
+        System.out.println("User " + username + " left");
     }
 
     @OnError
@@ -40,6 +44,7 @@ public class ChatSocket {
     @OnMessage
     public void onMessage(String message, @PathParam("username") String username) {
         broadcast(">> " + username + ": " + message);
+        System.out.println(message);
     }
 
     private void broadcast(String message) {

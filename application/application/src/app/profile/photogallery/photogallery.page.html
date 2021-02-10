@@ -7,5 +7,9 @@
 </ion-header>
 
 <ion-content>
-
+  <div class="images">
+    <div class="one-image" *ngFor="let image of images">
+      <img (click)="test()" src={{image}}>
+    </div>
+  </div>
 </ion-content>

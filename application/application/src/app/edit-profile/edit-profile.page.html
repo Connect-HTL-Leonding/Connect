@@ -7,30 +7,83 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen>
   <div class="wrapper">
     <div style="height: 150px; width: 100%; background-color:var(--ion-color-primary)"></div>
+    <!--
+
+    -->
     <div class="container">
       <div class="mid" (click)="loadFromStorage()">
-        
+
         <div class="pfpBox">
-        <ion-img *ngIf="user" class="pfp" src = {{photoService.imgURL}}></ion-img>
+          <ion-img *ngIf="user" class="pfp" src={{photoService.imgURL}}></ion-img>
         </div>
-        
+
         <p class="changePfpText">Profilbild ändern</p>
       </div>
 
+      
       <div class="edit-container">
-        <label>Benutzername</label>
-        <p *ngIf="user" id="username" contenteditable="true">{{user.given_name}}</p>
+        <ion-label position="stacked" color="primary">Nutzername</ion-label>
+          <ion-input>{{user.given_name}}</ion-input>
       </div>
 
-      <div style="overflow:scroll;"  class="edit-container">
+      <div style="overflow:scroll;" class="edit-container">
+        
+        <!--
         <label>Beschreibung</label>
+        
         <p *ngIf="ps.user" id="desc" contenteditable="true" >{{ps.user.desc}}</p>
+        -->
+
+        <ion-label position="stacked" color="primary">Beschreibung</ion-label>
+        <ion-input *ngIf="ps.user" placeholder="Hi my name is ..." [(ngModel)]="ps.user.description"></ion-input>
+
+
       </div>
 
-      <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Save</ion-button>
+      <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Speichern</ion-button>
+
+    
+
+      <!--
+      <ion-list id="infos" lines="full">
+        <ion-item>
+          <ion-label position="stacked">Nutzername</ion-label>
+          <ion-input>Jan Donnerbauer</ion-input>
+
+        </ion-item>
+
+        <ion-row>
+          <ion-col size="6">
+            <ion-label position="stacked">Vorname</ion-label>
+            <ion-input></ion-input>
+          </ion-col>
+          <ion-col size="6">
+            <ion-label position="stacked">Nachname</ion-label>
+            <ion-input></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col size="12">
+            <ion-label position="stacked">Geburtstag</ion-label>
+            <ion-input></ion-input>
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label position="stacked">Description</ion-label>
+          <ion-textarea></ion-textarea>
+        </ion-item>
+          
+
+      </ion-list>
+      -->
+
+
+
 
       <div [routerLink]="['../edit-profile-details']" style="margin-top:20px;" class="con">
         <p>Andere Details bearbeiten</p>
@@ -38,7 +91,7 @@
       </div>
 
       <div class="con">
-      <p>Benachrichtigungen</p>
+        <p>Benachrichtigungen</p>
       </div>
 
       <div style="color:grey;" class="con">
@@ -50,31 +103,27 @@
         <p>Connects</p>
         <ion-toggle [(ngModel)]="connects"></ion-toggle>
       </div>
-      
 
-    <!--<ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;"
+
+      <!--<ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;"
     [routerLink]="['../edit-profile-details']">Anpassen</ion-button>-->
 
-      <div class="photo-slider-con">
-        <p style="left:0;">Über mich</p>
-        <div style="display: flex;flex-flow: row nowrap; height: 100%; width: 100%;margin-top: -20px;">
-          <ion-slides [options]="slideOpts" pager="false" style="width: 100%;">
-            <ion-slide>
-            <ion-card (click)="addPhotoToGallery()">
-              <ion-icon style="color: var(--ion-color-secondary)" class="icon" name="add-circle-outline"></ion-icon>
-            </ion-card>
-            <ion-card  *ngFor="let photo of photoService.photos; index as position">
-              <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
-            </ion-card>
+    <div class="photo-slider-con">
+      <p style="left:0;">Über mich</p>
+     
+      <div class="list_photos" no-bounce>
             
-            </ion-slide>
-            
-          </ion-slides>
+              <ion-card (click)="addPhotoToGallery()">
+                <ion-icon style="color: var(--ion-color-secondary)" class="icon" name="add-circle-outline"></ion-icon>
+              </ion-card>
+              <ion-card *ngFor="let photo of photoService.photos; index as position">
+                <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
+              </ion-card>
         </div>
       </div>
 
 
-     
+
 
 
 
