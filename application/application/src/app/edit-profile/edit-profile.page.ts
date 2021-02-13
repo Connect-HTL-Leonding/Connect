@@ -42,14 +42,16 @@ export class EditProfilePage implements OnInit {
 
   ngOnInit() {
     this.user = this.authService.getUserInfo();
-  
- 
+
+
 
     this.ps.getUser().subscribe(
       data => {
 
         console.log(data);
         this.ps.user = data;
+
+        this.photoService.loadPfp();
 
         console.log(this.ps.user)
 
