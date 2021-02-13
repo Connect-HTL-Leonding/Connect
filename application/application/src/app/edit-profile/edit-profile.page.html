@@ -17,7 +17,7 @@
       <div class="mid" (click)="loadFromStorage()">
 
         <div class="pfpBox">
-          <ion-img *ngIf="user" class="pfp" src={{photoService.imgURL}}></ion-img>
+          <img *ngIf="user" class="pfp" src = {{photoService.imgURL}}>
         </div>
 
         <p class="changePfpText">Profilbild ändern</p>

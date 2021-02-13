@@ -30,19 +30,20 @@ export class EditProfilePage implements OnInit {
 
   addPhotoToGallery() {
     try {
-      this.photoService.addNewToGallery();
+      //this.photoService.addNewToGallery();
     } catch (e) {
 
     }
   }
 
   loadFromStorage() {
-    this.photoService.loadPfp();
-    this.imgURL = this.photoService.imgURL
+    this.photoService.updatePfp();
   }
 
   ngOnInit() {
     this.user = this.authService.getUserInfo();
+  
+ 
 
     this.ps.getUser().subscribe(
       data => {
