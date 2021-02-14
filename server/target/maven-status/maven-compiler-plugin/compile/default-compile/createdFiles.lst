@@ -1,0 +1,3 @@
+org\connect\service\MessageService.class
+org\connect\service\ImageService.class
+org\connect\repository\MessageRepository.class

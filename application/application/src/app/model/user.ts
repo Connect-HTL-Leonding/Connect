@@ -25,7 +25,7 @@ export class User {
    constructor(
     public id = 0,
     public username: string = "",
-    public profilePicture: string = "",
+    public profilePicture = "",
     public description: string = "",
     public gender: string = "",
     public email: string = "",

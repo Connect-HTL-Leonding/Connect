@@ -13,6 +13,7 @@ import org.keycloak.representations.IDToken;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.sql.Blob;
 import java.util.Map;
 
 @Path("user")
@@ -63,6 +64,7 @@ public class UserService {
 
         return dbRepo.update(user);
     }
+
 
     /*
     @GET

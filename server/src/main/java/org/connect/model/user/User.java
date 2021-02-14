@@ -10,6 +10,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.security.Principal;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -35,6 +36,8 @@ public class User implements Serializable {
     private LocalDate birthday;
     private char gender;
     private String fullname;
+    @Lob
+    private byte[] profilePicture;
 
     @ManyToMany(mappedBy = "users")
     private List<Room> rooms = new LinkedList<>();
@@ -120,5 +123,13 @@ public class User implements Serializable {
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

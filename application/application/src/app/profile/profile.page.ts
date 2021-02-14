@@ -4,6 +4,7 @@ import { ProfileService } from "../api/profile.service";
 import { User } from "../model/user";
 import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from './photogallery/photogallery.page';
+import { PhotoService } from "../api/photo.service";
 
 @Component({
   selector: 'app-profile',
@@ -13,9 +14,10 @@ import { PhotogalleryPage } from './photogallery/photogallery.page';
 export class ProfilePage implements OnInit {
 
   user;
+  
 
-  constructor(public ps: ProfileService, private authService: AuthService, public modalController: ModalController) {
-
+  constructor(public ps: ProfileService, private authService: AuthService, public modalController: ModalController, public photoService: PhotoService) {
+   
   }
 
   slideOpts = {
@@ -26,6 +28,7 @@ export class ProfilePage implements OnInit {
   };
 
   ngOnInit() {
+    this.photoService.loadPfp();
     this.user = this.authService.getUserInfo();
 
     this.ps.getUser().subscribe(

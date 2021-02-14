@@ -11,40 +11,32 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import javax.websocket.Session;
 
-@ServerEndpoint("/chat/{username}")
+@ServerEndpoint("/chat/{roomid}")
 @ApplicationScoped
 public class ChatSocket {
 
     Map<String, Session> sessions = new ConcurrentHashMap<>();
 
     @OnOpen
-    public void onOpen(Session session, @PathParam("username") String username) {
-        sessions.put(username, session);
-        System.out.println("User " + username + " joined");
-        System.out.println(username + "connected");
-
-        System.out.println(username + "connected");
-
-        broadcast("User " + username + " joined");
+    public void onOpen(Session session, @PathParam("roomid") String roomid) {
+        sessions.put(roomid, session);
     }
 
     @OnClose
-    public void onClose(Session session, @PathParam("username") String username) {
-        sessions.remove(username);
-        broadcast("User " + username + " left");
-        System.out.println("User " + username + " left");
+    public void onClose(Session session, @PathParam("roomid") String roomid) {
+        sessions.remove(roomid);
+        broadcast("User " + roomid + " left");
     }
 
     @OnError
-    public void onError(Session session, @PathParam("username") String username, Throwable throwable) {
-        sessions.remove(username);
-        broadcast("User " + username + " left on error: " + throwable);
+    public void onError(Session session, @PathParam("roomid") String roomid, Throwable throwable) {
+        sessions.remove(roomid);
+        broadcast("User " + roomid + " left on error: " + throwable);
     }
 
     @OnMessage
-    public void onMessage(String message, @PathParam("username") String username) {
-        broadcast(">> " + username + ": " + message);
-        System.out.println(message);
+    public void onMessage(String message, @PathParam("roomid") String roomid) {
+        broadcast(">> " + roomid + ": " + message);
     }
 
     private void broadcast(String message) {
