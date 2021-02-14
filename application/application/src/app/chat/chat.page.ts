@@ -41,14 +41,16 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
-    this.activeUser = this.chatservice.activeUser;
     console.log(this.wsUri);
     this.chatservice.getData().subscribe(data => {
       this.chatservice.messages = data;
-      console.log(this.chatservice.messages);
       console.log(this.chatservice.activeUser);
     });
     this.doConnect();
+  }
+
+  yousent(message:Message) : boolean {
+    return message.user.userName == this.chatservice.activeUser.userName;
   }
 
   dismissModal() {

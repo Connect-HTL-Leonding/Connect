@@ -70,10 +70,6 @@ public class SkinRepository {
         r.getUsers().add(u1);
         r1.getUsers().add(u1);
 
-        Message m = new Message("test", LocalDateTime.now(), LocalDateTime.now());
-        m.setRoom(r);
-        m.setUser(u1);
-
         MySkin ms = new MySkin(30, 5, 5);
         ms.setSkin(s);
         ms.setUser(u);
@@ -94,7 +90,6 @@ public class SkinRepository {
         em.persist(s);
         em.persist(s1);
         em.persist(ms);
-        em.persist(m);
     }
 
     // Finden einer Person über ID in der DB
