@@ -1,11 +1,20 @@
 package org.connect.model.chat;
 
+import net.bytebuddy.asm.Advice;
+import org.connect.model.skin.MySkin;
+import org.connect.model.user.User;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = Message.FINDALL, query = "SELECT ms FROM Message ms where room_id = :u")
+})
 public class Message implements Serializable {
+
+    public static final String FINDALL = "Message.findAll";
 
     @Id
     @GeneratedValue
@@ -14,12 +23,21 @@ public class Message implements Serializable {
     private String message;
     private LocalDateTime created;
     private LocalDateTime updated;
-    @ManyToOne
-    @JoinColumn(name = "ROOMID", referencedColumnName = "ROOMID", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "room_id")
     private Room room;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Message() {
 
+    }
+
+    public Message(String message, LocalDateTime created, LocalDateTime updated) {
+        this.message = message;
+        this.created = created;
+        this.updated = updated;
     }
 
     public long getId() {
@@ -52,5 +70,21 @@ public class Message implements Serializable {
 
     public void setUpdated(LocalDateTime updated) {
         this.updated = updated;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

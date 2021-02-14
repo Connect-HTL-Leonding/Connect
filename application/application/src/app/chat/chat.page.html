@@ -18,11 +18,11 @@
 <ion-content>
   <div id="messageFlex">
     <div class="messageDiv" *ngFor="let message of chatservice.messages, let i = index">
-      <div *ngIf="message.sentBy == 'you'" class="youSent">
-        <p class="message">{{message.msg}}</p>
+      <div *ngIf="yousent(message)" class="youSent">
+        <p class="message">{{message.message}}</p>
       </div>
-      <div *ngIf="message.sentBy != 'you'" class="otherSent">
-        <p class="message">{{message.msg}}</p>
+      <div *ngIf="!yousent(message)" class="otherSent">
+        <p class="message">{{message.message}}</p>
       </div>
     </div>  
     

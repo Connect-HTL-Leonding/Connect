@@ -1,1 +1,3 @@
+org/connect/repository/MessageRepository.class
 org/connect/service/ImageService.class
+org/connect/service/MessageService.class
