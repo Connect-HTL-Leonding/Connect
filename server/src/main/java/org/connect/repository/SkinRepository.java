@@ -39,10 +39,16 @@ public class SkinRepository {
         Category c1 = new Category("Sport");
         Category c2 = new Category("Freizeit");
 
+        /*
         User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
         User u1 = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
 
 
+         */
+
+
+        User u = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
+        User u1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
 
         /*
         User u = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
@@ -56,10 +62,13 @@ public class SkinRepository {
 */
 
         Room r = new Room("DM");
+        Room r1 = new Room("DM");
         u.getRooms().add(r);
         u1.getRooms().add(r);
+        u1.getRooms().add(r1);
         r.getUsers().add(u);
         r.getUsers().add(u1);
+        r1.getUsers().add(u1);
 
         Message m = new Message("test", LocalDateTime.now(), LocalDateTime.now());
         m.setRoom(r);
@@ -81,6 +90,7 @@ public class SkinRepository {
         em.persist(u);
         em.persist(u1);
         em.persist(r);
+        em.persist(r1);
         em.persist(s);
         em.persist(s1);
         em.persist(ms);
