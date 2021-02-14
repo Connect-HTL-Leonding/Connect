@@ -31,14 +31,12 @@ export class ChatService {
   }
 
   createMessage(m:Message) {
-    var message : Message = new Message();
-    message = m
-    let body = JSON.stringify(message);
+    let body = JSON.stringify(m);
     console.log(body);
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.post(api.url + 'message/create', body, {headers: reqHeader});
+    return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
   }
 }

@@ -18,6 +18,8 @@ export class ChatPage implements OnInit {
   sendText = '';
   receiveText = '';
   websocket : WebSocket;
+  receiveMessage: Message = new Message();
+  i = 0;
 
   public username;
   public profilePicture;
@@ -36,9 +38,8 @@ export class ChatPage implements OnInit {
   
 
   ngOnInit() {
-    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id;
+    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + Math.random();
     this.chatservice.getData().subscribe(data => {
-      console.log(data);
       this.chatservice.messages = data;
     });
     this.doConnect();
@@ -50,20 +51,29 @@ export class ChatPage implements OnInit {
   }
 
   doSend(){
-    this.websocket.send(this.sendText);
     this.m.message = this.sendText;
     this.m.created = new Date();
     this.m.updated = new Date();
-    this.chatservice.createMessage(this.m);
+    this.chatservice.createMessage(this.m).subscribe(data => {
+    });
+    this.websocket.send(this.sendText); 
   }
 
   doConnect(){
     this.websocket = new WebSocket(this.wsUri);
+    this.websocket.onmessage = (evt) => {
+      this.receiveText = evt.data +'\n';
+      this.chatservice.getData().subscribe(data => {
+        this.chatservice.messages = data;
+      });
+    } 
 
+    
+    /*
     this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
-    this.websocket.onmessage = (evt) => this.receiveText += evt.data+'\n';
+    
     this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
     this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
-
+    */
   }
 }

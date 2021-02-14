@@ -5,11 +5,12 @@ export class Message {
 
     constructor(
         public id = 0,
-        public created: Date = new Date(),
         public message: string = "",
+        public created: Date = new Date(),
+        
         public updated: Date = new Date(),
-        public room: Room = new Room(),
-        public user: User = new User()
+        public room: Room = null,
+        public user: User = null
         ) {
     }
 }
