@@ -30,10 +30,11 @@ public class ChatSocket {
     SecurityIdentity identity;
 
     Map<String, Session> sessions = new ConcurrentHashMap<>();
-
+    Map<Session, String> rooms = new ConcurrentHashMap<>();
     @OnOpen
     public void onOpen(Session session, @PathParam("roomid") String roomid, @PathParam("username") String username) {
         sessions.put(username, session);
+        rooms.put(session, roomid);
     }
 
     /*
@@ -57,13 +58,15 @@ public class ChatSocket {
     }
 
     private void broadcast(String message, String roomid) {
-        System.out.println(sessions.values());
         sessions.values().forEach(s -> {
-            s.getAsyncRemote().sendObject(message, result ->  {
-                if (result.getException() != null) {
-                    System.out.println("Unable to send message: " + result.getException());
-                }
-            });
+            String roomid1 = rooms.get(s);
+            if(roomid.equals(roomid1)) {
+                s.getAsyncRemote().sendObject(message, result -> {
+                    if (result.getException() != null) {
+                        System.out.println("Unable to send message: " + result.getException());
+                    }
+                });
+            }
         });
     }
 

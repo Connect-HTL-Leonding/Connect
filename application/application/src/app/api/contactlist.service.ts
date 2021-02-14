@@ -14,10 +14,19 @@ export class ContactlistService {
   http: HttpClient;
   public rooms: Array<Room>
   public selectedRoom:Room;
+  public activeUser:User;
 
   constructor(http: HttpClient, private oauthService : OAuthService) {
     this.http = http;
     this.rooms = [];
+  }
+  
+  getUser() {
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<User>(api.short + 'user/customData', {headers: reqHeader});
   }
 
   getChats() {

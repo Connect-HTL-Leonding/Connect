@@ -28,19 +28,25 @@ export class ChatPage implements OnInit {
   chatservice;
   wsUri;
   oauthService;
+  activeUser;
 
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
     this.contactlist = cl;
     this.chatservice = cs;
-    this.chatservice.selectedRoom = this.contactlist.selectedRoom
+    this.chatservice.selectedRoom = this.contactlist.selectedRoom;
+    this.chatservice.activeUser = this.contactlist.activeUser;
     this.oauthService = os;
   }
   
 
   ngOnInit() {
-    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + Math.random();
+    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
+    this.activeUser = this.chatservice.activeUser;
+    console.log(this.wsUri);
     this.chatservice.getData().subscribe(data => {
       this.chatservice.messages = data;
+      console.log(this.chatservice.messages);
+      console.log(this.chatservice.activeUser);
     });
     this.doConnect();
   }
@@ -51,12 +57,14 @@ export class ChatPage implements OnInit {
   }
 
   doSend(){
-    this.m.message = this.sendText;
-    this.m.created = new Date();
-    this.m.updated = new Date();
-    this.chatservice.createMessage(this.m).subscribe(data => {
-    });
-    this.websocket.send(this.sendText); 
+    if(this.sendText.trim().length > 0) {
+      this.m.message = this.sendText;
+      this.m.created = new Date();
+      this.m.updated = new Date();
+      this.chatservice.createMessage(this.m).subscribe(data => {
+      });
+      this.websocket.send(this.sendText); 
+    }
   }
 
   doConnect(){
