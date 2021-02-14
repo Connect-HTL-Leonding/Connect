@@ -5,6 +5,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { MapStyle} from './mapStyle';
+
 /*
 import {
   GoogleMaps,
@@ -44,6 +45,9 @@ export class HomePage {
     this.loadMap();
   }
   */
+ 
+  
+  
 
   ionViewDidEnter() {
     this.loadMap();
@@ -101,6 +105,8 @@ return compositeImage;
 
   async loadMap() {
 
+    
+
     console.log(this.geolocation);
 
     // This code is necessary for browser
@@ -110,6 +116,8 @@ return compositeImage;
       'API_KEY_FOR_BROWSER_DEBUG': 'AIzaSyBtsGRD6cmDQvehofWlUINq1SwvSK-Iq_Q'
     });
     */
+   
+
 
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
@@ -117,6 +125,8 @@ return compositeImage;
       console.log(resp.coords.latitude + " " + resp.coords.longitude)
       const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
       const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
+
+     // new ClickEventHandler(this.map, location);
 
       console.log(MapStyle)
 
@@ -131,7 +141,7 @@ return compositeImage;
 
    var compositeImage = this.createMarker('../../assets/normalguy.jpg','#0eb19b');
 
-
+      new ClickEventHandler(this.map, location);
 
       const icon = {
         url: compositeImage, // image url
@@ -231,3 +241,115 @@ return compositeImage;
   }
 
 }
+
+
+
+
+
+
+class ClickEventHandler {
+ origin;
+  map: google.maps.Map;
+  directionsService: google.maps.DirectionsService;
+  directionsRenderer: google.maps.DirectionsRenderer;
+  placesService: google.maps.places.PlacesService;
+  infowindow: google.maps.InfoWindow;
+  infowindowContent: HTMLElement;
+  constructor(map: google.maps.Map, origin:any) {
+    this.origin = origin;
+    this.map = map;
+    this.directionsService = new google.maps.DirectionsService();
+    this.directionsRenderer = new google.maps.DirectionsRenderer();
+    this.directionsRenderer.setMap(map);
+    this.placesService = new google.maps.places.PlacesService(map);
+    this.infowindow = new google.maps.InfoWindow();
+    this.infowindowContent = document.getElementById(
+      "infowindow-content"
+    ) as HTMLElement;
+    console.log(this.infowindowContent);
+    this.infowindow.setContent(this.infowindowContent);
+
+    // Listen for clicks on the map.
+    this.map.addListener("click", this.handleClick.bind(this));
+  }
+
+  handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
+    console.log("You clicked on: " + event.latLng);
+
+    // If the event has a placeId, use it.
+    if (this.isIconMouseEvent(event)) {
+      console.log("You clicked on place:" + event.placeId);
+
+      // Calling e.stop() on the event prevents the default info window from
+      // showing.
+      // If you call stop here when there is no placeId you will prevent some
+      // other map click event handlers from receiving the event.
+      event.stop();
+
+      if (event.placeId) {
+      
+        this.getPlaceInformation(event.placeId);
+      }
+    }
+  }
+
+  isIconMouseEvent(
+    e: google.maps.MapMouseEvent | google.maps.IconMouseEvent
+  ): e is google.maps.IconMouseEvent {
+    return "placeId" in e;
+  }
+
+  calculateAndDisplayRoute(placeId: string) {
+    const me = this;
+    this.directionsService.route(
+      {
+        origin: this.origin,
+        destination: { placeId: placeId },
+        travelMode: google.maps.TravelMode.WALKING,
+      },
+      (response, status) => {
+        if (status === "OK") {
+          me.directionsRenderer.setDirections(response);
+        } else {
+          window.alert("Directions request failed due to " + status);
+        }
+      }
+    );
+  }
+  
+
+  getPlaceInformation(placeId: string) {
+    const me = this;
+    this.placesService.getDetails(
+      { placeId: placeId },
+      (
+        place: google.maps.places.PlaceResult | null,
+        status: google.maps.places.PlacesServiceStatus
+      ) => {
+        if (
+          status === "OK" &&
+          place &&
+          place.geometry &&
+          place.geometry.location
+        ) {
+          me.infowindow.close();
+          me.infowindow.setPosition(place.geometry.location);
+          (me.infowindowContent.children[
+            "place-icon"
+          ] as HTMLImageElement).src = place.icon as string;
+          (me.infowindowContent.children[
+            "place-name"
+          ] as HTMLElement).textContent = place.name!;
+          (me.infowindowContent.children[
+            "place-id"
+          ] as HTMLElement).textContent = place.place_id as string;
+          (me.infowindowContent.children[
+            "place-address"
+          ] as HTMLElement).textContent = place.formatted_address as string;
+          me.infowindow.open(me.map);
+        }
+      }
+    );
+  }
+}
+
