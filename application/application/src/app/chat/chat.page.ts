@@ -5,6 +5,7 @@ import { User } from '../model/user';
 import { ChatService } from '../api/chat.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Room } from '../model/room';
+import { Message } from '../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({
@@ -20,6 +21,7 @@ export class ChatPage implements OnInit {
 
   public username;
   public profilePicture;
+  public m = new Message();
   contactlist;
   chatservice;
   wsUri;
@@ -28,13 +30,17 @@ export class ChatPage implements OnInit {
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
     this.contactlist = cl;
     this.chatservice = cs;
+    this.chatservice.selectedRoom = this.contactlist.selectedRoom
     this.oauthService = os;
   }
   
 
   ngOnInit() {
-    this.wsUri = 'ws://0.0.0.0:8080/chat/' + this.contactlist.selectedRoom.id;
-    //this.chatservice.getData();
+    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id;
+    this.chatservice.getData().subscribe(data => {
+      console.log(data);
+      this.chatservice.messages = data;
+    });
     this.doConnect();
   }
 
@@ -45,6 +51,10 @@ export class ChatPage implements OnInit {
 
   doSend(){
     this.websocket.send(this.sendText);
+    this.m.message = this.sendText;
+    this.m.created = new Date();
+    this.m.updated = new Date();
+    this.chatservice.createMessage(this.m);
   }
 
   doConnect(){
