@@ -16,7 +16,7 @@
         <img class="pfp" src={{photoService.imgURL}}>
         </div>
       </div>
-      <h2 *ngIf="user" id="name">{{user.given_name}}</h2>
+      <h2 *ngIf="ps.user" id="name">{{ps.user.userName}}</h2>
 
       <div class="descBox">
         <p *ngIf="this.ps.user">{{this.ps.user.description}}</p>
