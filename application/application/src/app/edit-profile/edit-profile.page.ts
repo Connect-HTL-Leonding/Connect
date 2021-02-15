@@ -30,7 +30,7 @@ export class EditProfilePage implements OnInit {
 
   addPhotoToGallery() {
     try {
-      //this.photoService.addNewToGallery();
+      this.photoService.addNewToGallery();
     } catch (e) {
 
     }

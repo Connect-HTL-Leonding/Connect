@@ -67,6 +67,8 @@ public class User implements Serializable {
 
         this.id = token.claim("sub").get().toString();
         this.userName = token.getName();
+        System.out.println(token.claim("name").get().toString());
+        this.fullname = token.claim("name").get().toString();
         //this.attributes = token.getRawToken();
         System.out.println(this.id);
     }

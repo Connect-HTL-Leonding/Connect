@@ -16,7 +16,7 @@
         <img class="pfp" src={{photoService.imgURL}}>
         </div>
       </div>
-      <h2 *ngIf="user" id="name">{{user.given_name}}</h2>
+      <h2 *ngIf="ps.user" id="name">{{ps.user.userName}}</h2>
 
       <div class="descBox">
         <p *ngIf="this.ps.user">{{this.ps.user.description}}</p>
@@ -36,7 +36,7 @@
               <ion-card></ion-card>
               <ion-card></ion-card>
               <ion-card></ion-card>   
-              <ion-card style="background-image: none;" id="openModal" (click)="presentModal()">Open da modal :D</ion-card>
+              <ion-card style="background-image: none; display: flex; justify-content: center; align-items: center;" id="openModal" (click)="presentModal()">View all</ion-card>
           
       </div>
      </div>
