@@ -17,3 +17,28 @@
   height: 100%;
   width: 100%;
 }
+
+#infowindow-content{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+}
+
+#place-icon{
+height: 50px;
+width: 50px;
+margin: 3%;
+color: aqua;
+}
+
+#place-name{
+  margin: 3%;
+  font-weight: 200;
+  
+}
+
+#place-address{
+  display: none;
+}

@@ -1,22 +1,3 @@
-<<<<<<< HEAD
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\SkinService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\ChatRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\User.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\CategoryService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Skin.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\UserRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Category.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ChatService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MySkinService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Message.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MySkinRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\ChatSocket.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\UserService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Room.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\CategoryRepository.java
-=======
 D:\Connect\Connect\server\src\main\java\org\connect\model\skin\Category.java
 D:\Connect\Connect\server\src\main\java\org\connect\ChatSocket.java
 D:\Connect\Connect\server\src\main\java\org\connect\model\chat\Room.java
@@ -37,4 +18,3 @@ D:\Connect\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
 D:\Connect\Connect\server\src\main\java\org\connect\model\skin\Skin.java
 D:\Connect\Connect\server\src\main\java\org\connect\service\ChatService.java
 D:\Connect\Connect\server\src\main\java\org\connect\model\chat\Message.java
->>>>>>> ac103f8b632fbb0d8058ee53324c6473c2adda9d
