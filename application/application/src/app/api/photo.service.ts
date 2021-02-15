@@ -21,11 +21,9 @@ export class PhotoService {
   public photos: Photo[] = [];
   public profilePicture: Photo;
   public imgURL;
-  public profileService;
   http : HttpClient;
 
-  constructor(ps: ProfileService, http: HttpClient, private oauthService: OAuthService, private sanitizer: DomSanitizer) {
-    this.profileService = ps;
+  constructor(private ps: ProfileService, http: HttpClient, private oauthService: OAuthService, private sanitizer: DomSanitizer) {
     this.http = http;
   }
 
@@ -105,7 +103,11 @@ export class PhotoService {
         
       });
       this.http.put(api.url + 'image/setPfp', image.base64String, { headers: reqHeader }).subscribe(data => {
-        this.loadPfp();
+        this.ps.getUser().subscribe(data => {
+          this.ps.user = data;
+          this.loadPfp();
+        })
+
       })
 
     } catch (e) {
