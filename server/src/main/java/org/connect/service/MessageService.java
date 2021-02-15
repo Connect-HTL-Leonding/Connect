@@ -36,16 +36,13 @@ public class MessageService {
         return ms;
     }
 
-    @Path("create")
+    @Path("create/{id}")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Message createMessage(Message message/*, @PathParam("id") long id*/) {
-        System.out.println("test");
-        //Room room = dbRepo.findRoom(id);
-        //System.out.println("room: " + room);
-        //message.setRoom(room);
+    public Message createMessage(Message message, @PathParam("id") long id) {
+        Room room = dbRepo.findRoom(id);
+        message.setRoom(room);
         message.setUser(new User(jwt));
-        System.out.println("msservice: " + message);
         return dbRepo.create(message);
     }
 

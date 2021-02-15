@@ -53,6 +53,13 @@ public class UserService {
         return dbRepo.find(jwt.claim("sub"));
     }
 
+    @Path("findOtherUser/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public User findOtherUser(@PathParam("id") long id){
+        return dbRepo.findOtherUser(jwt, id);
+    }
+
     @PUT
     @Path("update")
     @Produces(MediaType.APPLICATION_JSON)

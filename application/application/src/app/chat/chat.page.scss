@@ -11,6 +11,9 @@
     margin-top: 15%;
     margin-left: 15%;
 }
+ion-content {
+    overflow: hidden;
+}
 ion-label {
     font-weight: bold;
 }
@@ -21,7 +24,7 @@ ion-label {
     align-items: center;
 }
 
-#messageFlex {
+div#messageFlex {
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -47,6 +50,7 @@ ion-label {
     align-self: flex-end;
     margin-right: 15px;
     max-width: 75%;
+    padding-right: 0px;
     overflow-wrap: break-word;
 }
 
@@ -66,6 +70,7 @@ ion-label {
     flex-direction: row;
     width: 100%;
     position: sticky;
+    overflow: hidden;
     justify-content: space-around;
 }
 
@@ -78,10 +83,11 @@ ion-label {
     padding-left: 20px;
     width: 85%;
     margin-left: 5px;
-    margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 #send {
     align-self: center;
     margin-left: -15px;
+    margin-bottom: 10px;
 }

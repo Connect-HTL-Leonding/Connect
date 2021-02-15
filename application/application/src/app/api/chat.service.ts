@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Message } from '../model/message';
 import { Room } from '../model/room';
+import { User } from '../model/user';
 import { api } from '../app.component';
 import {ContactlistService} from './contactlist.service';
 import { OAuthService } from 'angular-oauth2-oidc';
@@ -14,6 +15,7 @@ export class ChatService {
   public messages: Array<Message>
   public contactlist;
   public selectedRoom: Room;
+  public activeUser: User;
   
 
   constructor(http: HttpClient, cs: ContactlistService, private oauthService : OAuthService) {
@@ -31,14 +33,11 @@ export class ChatService {
   }
 
   createMessage(m:Message) {
-    var message : Message = new Message();
-    message = m
-    let body = JSON.stringify(message);
-    console.log(body);
+    let body = JSON.stringify(m);
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.post(api.url + 'message/create', body, {headers: reqHeader});
+    return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
   }
 }
