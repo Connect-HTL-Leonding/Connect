@@ -61,6 +61,8 @@ export class PhotoService {
     })
   }
 
+  
+
   public async updatePfp() {
     try {
       var base64data;
