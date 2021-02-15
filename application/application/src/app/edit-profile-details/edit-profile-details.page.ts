@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../api/auth/auth.service';
 import { ProfileService } from '../api/profile.service';
 import { User } from '../model/user';
@@ -10,7 +11,7 @@ import { User } from '../model/user';
 })
 export class EditProfileDetailsPage implements OnInit {
 
-  constructor(public ps: ProfileService, private auth: AuthService) { }
+  constructor(public ps: ProfileService, private auth: AuthService, private router: Router) { }
 
   ngOnInit() {
     this.ps.getUser().subscribe(
@@ -28,8 +29,10 @@ export class EditProfileDetailsPage implements OnInit {
     )
   }
 
-  logout() { 
-    this.auth.logout(); 
+  logout() {
+    this.auth.logout();
+    this.router.navigate(["/login"]);
+    //window.open(this.authService.logoutUrl);
   }
 
   updateUser(u: User) {
