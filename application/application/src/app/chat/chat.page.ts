@@ -50,6 +50,8 @@ export class ChatPage implements OnInit {
   }
 
   yousent(message:Message) : boolean {
+    console.log(message);
+    console.log(this.chatservice.activeUser.userName)
     return message.user.userName == this.chatservice.activeUser.userName;
   }
 
@@ -64,8 +66,9 @@ export class ChatPage implements OnInit {
       this.m.created = new Date();
       this.m.updated = new Date();
       this.chatservice.createMessage(this.m).subscribe(data => {
+        this.websocket.send(this.sendText); 
+        this.sendText = "";
       });
-      this.websocket.send(this.sendText); 
     }
   }
 

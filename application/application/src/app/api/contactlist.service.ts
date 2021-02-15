@@ -29,6 +29,14 @@ export class ContactlistService {
     return this.http.get<User>(api.short + 'user/customData', {headers: reqHeader});
   }
 
+  getOtherUser(roomid) {
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<User>(api.short + 'user/findOtherUser/' + roomid, {headers: reqHeader})
+  }
+
   getChats() {
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',

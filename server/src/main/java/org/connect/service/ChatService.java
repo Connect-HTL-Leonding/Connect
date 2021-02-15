@@ -38,6 +38,8 @@ public class ChatService {
     }
 
 
+
+
     @Path("init")
     @GET
     @Produces(MediaType.TEXT_PLAIN)

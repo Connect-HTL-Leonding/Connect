@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ContactlistService } from 'src/app/api/contactlist.service';
+import { User } from 'src/app/model/user';
 import { Room } from '../../model/room'
 
 @Component({
@@ -9,9 +11,21 @@ import { Room } from '../../model/room'
 export class DetailContactlistComponent implements OnInit {
 
   @Input() room: Room;
+  public contactlist;
+  public user: User;
 
-  constructor() { }
+  constructor(public cs: ContactlistService) {
+    this.contactlist = cs;
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.contactlist.getOtherUser(this.room.id).subscribe(data => {
+      this.user = data;
+    })
+  }
+
+  userExists(user:User) {
+    return user != null;
+  }
 
 }

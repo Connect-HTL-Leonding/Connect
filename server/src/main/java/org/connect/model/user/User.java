@@ -21,10 +21,12 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","rooms"})
 @NamedQueries({
         @NamedQuery(name = User.FINDWITHID, query = "SELECT u FROM User u where id = :user_id"),
+        @NamedQuery(name = User.FINDOTHERUSER, query = "SELECT u FROM User u join u.rooms where room_id = :roomid AND u.id NOT LIKE :user_id")
 })
 public class User implements Serializable {
 
     public static final String FINDWITHID = "User.findwithid";
+    public static final String FINDOTHERUSER = "User.findotheruser";
 
     @Id
     private String id;
