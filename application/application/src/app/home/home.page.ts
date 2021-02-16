@@ -5,6 +5,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { MapStyle } from './mapStyle';
+import { User } from '../model/user';
 
 /*
 import {
@@ -54,12 +55,12 @@ export class HomePage {
     console.log("jfsaldfjkd");
   }
 
-  createUserMarker(source, origin) {
+  createUserMarker(user: User, origin) {
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
     var ctx = canvas.getContext('2d');
-    var image1 = source;
+    var image1 = user.profilePicture;
     var image = new Image();
     var compositeImage;
 
@@ -103,7 +104,7 @@ ctx.fill(path);
 
 var marker = new google.maps.Marker({
   position: origin,
-  title: "Jan",
+  title: user.userName,
   map: this.map,
   icon: compositeImage
 });
@@ -204,7 +205,7 @@ var marker = new google.maps.Marker({
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
-   this.createUserMarker('../../assets/normalguy.jpg',location2);
+   this.createUserMarker(new User(),location2);
    this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
       new ClickEventHandler(this.map, location);
