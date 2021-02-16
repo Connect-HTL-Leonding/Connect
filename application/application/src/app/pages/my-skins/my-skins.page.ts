@@ -1,10 +1,10 @@
 import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
 import { MenuController, ModalController, ToastController } from '@ionic/angular';
-import { SkinsService } from '../api/skins.service';
+import { SkinsService } from '../../api/skins.service';
 import { Skin } from 'src/app/model/skin';
 import { SkinselectionPage } from '../skinselection/skinselection.page'
-import { MySkin } from '../model/myskin';
-import { MyskinsService } from '../api/myskins.service';
+import { MySkin } from '../../model/myskin';
+import { MyskinsService } from '../../api/myskins.service';
 
 @Component({
   selector: 'app-my-skins',

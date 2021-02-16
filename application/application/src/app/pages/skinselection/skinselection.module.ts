@@ -8,7 +8,7 @@ import { SkinselectionPageRoutingModule } from './skinselection-routing.module';
 
 import { SkinselectionPage } from './skinselection.page';
 
-import { SkinselectionCardComponent } from '../skinselection-card/skinselection-card.component';
+import { SkinselectionCardComponent } from './skinselection-card/skinselection-card.component';
 
 @NgModule({
   imports: [

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../api/auth/auth.service';
-import { ProfileService } from '../api/profile.service';
-import { User } from '../model/user';
+import { AuthService } from '../../../../api/auth/auth.service';
+import { ProfileService } from '../../../../api/profile.service';
+import { User } from '../../../../model/user';
 
 @Component({
   selector: 'app-edit-profile-details',

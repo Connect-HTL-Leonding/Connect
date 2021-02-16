@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ContactlistService} from '../api/contactlist.service'
-import { Room } from '../model/room'
+import {ContactlistService} from '../../api/contactlist.service'
+import { Room } from '../../model/room'
 import { MenuController, ModalController } from '@ionic/angular';
 import { ChatPage } from '../chat/chat.page';
 

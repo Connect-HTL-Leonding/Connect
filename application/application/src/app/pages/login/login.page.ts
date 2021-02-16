@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { Observable } from 'rxjs';
-import { AuthService } from '../api/auth/auth.service';
+import { AuthService } from '../../api/auth/auth.service';
 import { DevinfosPage } from './devinfos/devinfos.page';
 
 @Component({

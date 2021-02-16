@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { LoginPage } from './login/login.page';
+import { LoginPage } from './pages/login/login.page';
 import { Router } from '@angular/router';
 
 @Component({
