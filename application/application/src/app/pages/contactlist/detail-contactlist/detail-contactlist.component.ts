@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ContactlistService } from 'src/app/api/contactlist.service';
 import { User } from 'src/app/model/user';
-import { Room } from '../../model/room'
+import { Room } from '../../../model/room'
 
 @Component({
   selector: 'app-detail-contactlist',

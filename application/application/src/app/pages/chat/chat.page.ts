@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {ContactlistService} from '../api/contactlist.service'
+import {ContactlistService} from '../../api/contactlist.service'
 import { MenuController, ModalController } from '@ionic/angular';
-import { User } from '../model/user';
-import { ChatService } from '../api/chat.service';
+import { User } from '../../model/user';
+import { ChatService } from '../../api/chat.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Room } from '../model/room';
-import { Message } from '../model/message';
+import { Room } from '../../model/room';
+import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
 
 @Component({

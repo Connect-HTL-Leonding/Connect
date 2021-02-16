@@ -1,11 +1,11 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { CategoryService } from '../api/category.service';
-import { MyskinsService } from '../api/myskins.service';
-import { SkinsService } from '../api/skins.service';
-import { Category } from '../model/category';
-import { MySkin } from '../model/myskin';
-import { Skin } from '../model/skin';
+import { CategoryService } from '../../api/category.service';
+import { MyskinsService } from '../../api/myskins.service';
+import { SkinsService } from '../../api/skins.service';
+import { Category } from '../../model/category';
+import { MySkin } from '../../model/myskin';
+import { Skin } from '../../model/skin';
 
 @Component({
   selector: 'app-skinselection',
