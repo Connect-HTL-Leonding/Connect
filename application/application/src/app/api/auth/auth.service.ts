@@ -5,7 +5,7 @@ import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
 import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { api } from 'src/app/app.component';
-import { ProfilePageModule } from 'src/app/profile/profile.module';
+import { ProfilePageModule } from 'src/app/pages/profile/profile.module';
 
 //thx to https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards
 @Injectable({ providedIn: 'root' })

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SkinsService } from '../api/skins.service';
-import { MySkin } from '../model/myskin';
-import { Skin } from '../model/skin';
+import { SkinsService } from '../../../api/skins.service';
+import { MySkin } from '../../../model/myskin';
+import { Skin } from '../../../model/skin';
 
 @Component({
   selector: 'app-skinselection-card',
