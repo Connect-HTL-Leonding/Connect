@@ -28,16 +28,21 @@ public class User implements Serializable {
     public static final String FINDWITHID = "User.findwithid";
     public static final String FINDOTHERUSER = "User.findotheruser";
 
+    //Attribute
     @Id
     private String id;
     private String userName;
+    private String firstname;
+    private String lastname;
+
+    private char gender;
+
     //private LocalDateTime created;
     //LocalDateTime updated;
     private String description;
+    private String email;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    private char gender;
-    private String fullname;
     @Lob
     private byte[] profilePicture;
 
@@ -47,10 +52,6 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String id, String userName) {
-        this.id = id;
-        this.userName = userName;
-    }
 
     public User(SecurityIdentity identity) {
         this.userName = identity.getPrincipal().getName();
@@ -59,16 +60,13 @@ public class User implements Serializable {
     }
 
     public User(JsonWebToken token) {
-        /*
-        if(token.claim("sub").isPresent()){
-            this.id =
-        }
-        */
-
         this.id = token.claim("sub").get().toString();
         this.userName = token.getName();
         System.out.println(token.claim("name").get().toString());
-        this.fullname = token.claim("name").get().toString();
+        this.firstname = token.claim("given_name").get().toString();
+        this.lastname = token.claim("family_name").get().toString();
+        this.email = token.claim("email").get().toString();
+        this.gender = 'a';
         //this.attributes = token.getRawToken();
         System.out.println(this.id);
     }
@@ -121,12 +119,28 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public byte[] getProfilePicture() {

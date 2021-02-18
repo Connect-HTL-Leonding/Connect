@@ -41,7 +41,8 @@ public class SkinRepository {
 
 
         User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
-        User u1 = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
+       // User u1 = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
+        User u1 = em.find(User.class, "85d71aa5-aae8-48c1-8145-9cb3163d41bd");
 
 
 
