@@ -9,12 +9,23 @@
 
 <ion-content>
   <ion-list lines="full">
+
     <ion-list-header>
-      Das bist du
+      Deine Daten
     </ion-list-header>
+
     <ion-item>
-      <ion-label slot="start">Full name</ion-label>
-      <ion-input *ngIf="ps.user" placeholder="Max Mustermann" [(ngModel)]="ps.user.fullname"></ion-input>
+      <ion-label slot="start">Vorname</ion-label>
+      <ion-input *ngIf="ps.user" placeholder="Max" [(ngModel)]="ps.user.firstname"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label slot="start">Nachname</ion-label>
+      <ion-input *ngIf="ps.user" placeholder="Mustermann" [(ngModel)]="ps.user.lastname"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label slot="start">Email</ion-label>
+      <ion-input *ngIf="ps.user" type="email" [(ngModel)]="ps.user.email"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -22,13 +33,6 @@
       <ion-input *ngIf="ps.user" type="date" [(ngModel)]="ps.user.birthday"></ion-input>
     </ion-item>
 
-    <!--
-    <ion-item-divider>
-      <ion-label>
-        Basic Item Divider
-      </ion-label>
-    </ion-item-divider>
-    -->
 
 
     <ion-item>
@@ -42,6 +46,35 @@
     </ion-item>
 
     <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Speichern</ion-button>
+
+    <ion-item-divider>
+      <ion-label>Passwort</ion-label>
+
+    </ion-item-divider>
+
+    <form class="form" [formGroup]="passwort" (ngSubmit)="updatePasswort()">
+
+      <ion-item>
+        <ion-label position="stacked">Aktuelles Passwort</ion-label>
+        <ion-input *ngIf="ps.user"  formControlName="password" type="password" id="password"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="stacked">Neues Passwort</ion-label>
+        <ion-input *ngIf="ps.user" type="password" formControlName="newPassword" id="newPassword"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label position="stacked">Neues Passwort wiederholen</ion-label>
+        <ion-input *ngIf="ps.user" type="password" formControlName="confirmation" id="confirm"></ion-input>
+      </ion-item>
+      <ion-button shape="round" color="warning" expand="block" type="submit">Passwort ändern</ion-button>
+
+  </form>
+
+
+
+
     <ion-button shape="round" color="danger" expand="block" (click)="logout()">Ausloggen</ion-button>
 
     <!--

@@ -26,7 +26,7 @@
       
       <div class="edit-container">
         <ion-label position="stacked" color="primary">Nutzername</ion-label>
-          <ion-input *ngIf="ps.user" [(ngModel)]="ps.user.userName"></ion-input>
+          <ion-input *ngIf="ps.user" disabled [(ngModel)]="ps.user.userName"></ion-input>
       </div>
 
       <div style="overflow:scroll;" class="edit-container">
@@ -123,13 +123,6 @@
               
         </div>
       </div>
-
-
-
-
-
-
-
     </div>
   </div>
 

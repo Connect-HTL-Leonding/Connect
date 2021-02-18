@@ -77,7 +77,6 @@ export class EditProfilePage implements OnInit {
     //u.desc = document.getElementById("desc").innerText;
     console.log(u.description)
 
-
     this.ps.updateUser(u).subscribe(data => {
       //nach unpdate erneutes getAll
       this.ngOnInit();
