@@ -9,6 +9,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Image } from '../model/image';
 
 
 const { Camera, Filesystem, Storage } = Plugins;
@@ -29,15 +30,25 @@ export class PhotoService {
 
   public async addNewToGallery() {
     // Take a photo
+
     try {
       const capturedPhoto = await Camera.getPhoto({
-        resultType: CameraResultType.Uri,
+        resultType: CameraResultType.Base64,
         quality: 100,
         allowEditing: true
       })
+
+      let body = capturedPhoto.base64String;
+      const reqHeader = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+      });
+      this.http.post(api.url + 'image/saveImage', body, {headers: reqHeader}).subscribe(data=> {
+      });
+      
       this.photos.unshift({
         filepath: "",
-        webviewPath: capturedPhoto.webPath
+        webviewPath: "data:image/png;base64," + capturedPhoto.base64String
       });
     } catch (e) {
     }
@@ -59,6 +70,32 @@ export class PhotoService {
       
       this.imgURL = "data:image/png;base64," +  data;
     })
+  }
+
+
+  public loadGalleryImages() {
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    this.http.get(api.url + 'image/getImages',{headers: reqHeader}).subscribe(data => {
+      this.photos = [];
+      var URLs : any = []
+      URLs = data;
+      console.log(URLs);
+      console.log(this.photos);
+     for(var i = 0;i<=URLs.length; i++) {
+      if(URLs[i]!=null) {
+        this.photos.unshift({
+          filepath: "",
+          webviewPath: "data:image/png;base64," + URLs[i]
+        }) 
+       
+      } else {
+       
+      }
+    } 
+    }) 
   }
 
   

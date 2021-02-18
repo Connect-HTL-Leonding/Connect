@@ -21,6 +21,8 @@ export class EditProfilePage implements OnInit {
 
   constructor(public ps: ProfileService, public photoService: PhotoService, private authService: AuthService) { }
 
+ 
+
   slideOpts = {
     //initialSlide: 0,
     // spaceBetween: "-550",
@@ -40,6 +42,7 @@ export class EditProfilePage implements OnInit {
     this.photoService.updatePfp();
   }
 
+
   ngOnInit() {
     this.user = this.authService.getUserInfo();
 
@@ -52,6 +55,8 @@ export class EditProfilePage implements OnInit {
         this.ps.user = data;
 
         this.photoService.loadPfp();
+        this.photoService.loadGalleryImages();
+        console.log("Images loaded.")
 
         console.log(this.ps.user)
 
@@ -64,6 +69,7 @@ export class EditProfilePage implements OnInit {
       }
     )
   }
+
 
   updateUser(u: User) {
     //u.username = document.getElementById("username").innerText;

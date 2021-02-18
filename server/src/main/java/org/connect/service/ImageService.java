@@ -2,8 +2,10 @@ package org.connect.service;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import io.quarkus.security.identity.SecurityIdentity;
+import org.connect.model.image.Image;
 import org.connect.model.user.User;
 import org.connect.repository.CategoryRepository;
+import org.connect.repository.ImageRepository;
 import org.connect.repository.UserRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.resteasy.annotations.cache.NoCache;
@@ -12,6 +14,7 @@ import org.keycloak.representations.IDToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.TypedQuery;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -38,21 +41,24 @@ public class ImageService {
     SecurityIdentity identity;
 
     @Inject
-    UserRepository dbRepo;
+    UserRepository uRepo;
+
+    @Inject
+    ImageRepository iRepo;
 
     @PUT
     @Path("setPfp")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void saveImageToDatabase(String string) throws Exception {
+    public void saveImageToDatabase(String base64string) throws Exception {
         try {
-            profilePicture = Base64.getEncoder().encode(string.getBytes());
+            profilePicture = Base64.getEncoder().encode(base64string.getBytes());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
       User u = getUser();
        u.setProfilePicture(profilePicture);
-       dbRepo.update(u);
+       uRepo.update(u);
 
     }
 
@@ -62,9 +68,6 @@ public class ImageService {
     public String getPfp() throws UnsupportedEncodingException {
         System.out.println("-------------");
         User u = getUser();
-        System.out.println(u.getUserName());
-        System.out.println(u.getProfilePicture());
-        System.out.println(u.getDescription());
         if( u.getProfilePicture() != null) {
             return new String( Base64.getDecoder().decode(new String(u.getProfilePicture()).getBytes("UTF-8")));
         } else {
@@ -73,8 +76,26 @@ public class ImageService {
 
     }
 
+    @POST
+    @Path("saveImage")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void saveImage(String base64string) throws UnsupportedEncodingException {
+       byte[] stringToByteArray = Base64.getEncoder().encode(base64string.getBytes());
+        Image i = new Image(getUser().getId(),stringToByteArray);
+        iRepo.create(i);
+    }
+
+    @GET
+    @Path("getImages")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String[] getImages() {
+
+        String[] imgURLs = iRepo.getImgURLs(jwt);
+        return imgURLs;
+    }
+
     public User getUser () {
-       return dbRepo.find(jwt.claim("sub"));
+       return uRepo.find(jwt.claim("sub"));
     }
 
 
