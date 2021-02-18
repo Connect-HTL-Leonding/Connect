@@ -52,6 +52,10 @@ public class User implements Serializable {
     public User() {
     }
 
+    public User(String id, String userName) {
+        this.id = id;
+        this.userName = userName;
+    }
 
     public User(SecurityIdentity identity) {
         this.userName = identity.getPrincipal().getName();
