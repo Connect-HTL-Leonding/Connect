@@ -38,6 +38,7 @@ export class AppComponent {
   }
 }
 
+//Zentrale Variablen
 export const api = {
   url: "http://localhost:8080/api/",
   short: "http://localhost:8080/",
