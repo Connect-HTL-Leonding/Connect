@@ -25,6 +25,7 @@ import java.net.URL;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Base64;
+import java.util.List;
 import java.util.Map;
 
 @ApplicationScoped
@@ -85,14 +86,26 @@ public class ImageService {
         iRepo.create(i);
     }
 
-    @GET
+    /*@GET
     @Path("getImages")
     @Produces(MediaType.APPLICATION_JSON)
     public String[] getImages() {
 
         String[] imgURLs = iRepo.getImgURLs(jwt);
         return imgURLs;
+    } */
+
+     @GET
+    @Path("getImages")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Image> getImages() {
+
+        List<Image> images = iRepo.getImgURLs(jwt);
+         System.out.println(images);
+        return images;
     }
+
+
 
     public User getUser () {
        return uRepo.find(jwt.claim("sub"));

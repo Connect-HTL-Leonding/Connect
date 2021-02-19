@@ -24,7 +24,7 @@ public class ImageRepository {
         return i;
     }
 
-    public String[] getImgURLs(JsonWebToken jwt) {
+    /*public String[] getImgURLs(JsonWebToken jwt) {
         String[] URLs = new String[4];
         TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID,Image.class);
         tq.setParameter("user_id", jwt.claim("sub").get().toString());
@@ -32,8 +32,7 @@ public class ImageRepository {
         try {
             int counter = 0;
             images = tq.getResultList();
-            for (Image i:
-                images ) {
+            for (Image i: images ) {
                 String URL = new String( Base64.getDecoder().decode(new String(i.getImg()).getBytes("UTF-8")));
                 URLs[counter] = URL;
                 counter++;
@@ -43,6 +42,18 @@ public class ImageRepository {
             System.out.println(e.getMessage());
         }
         return URLs;
+    } */
+
+     public List<Image> getImgURLs(JsonWebToken jwt) {
+        TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID,Image.class);
+        tq.setParameter("user_id", jwt.claim("sub").get().toString());
+        List<Image> images = null;
+        try {
+            images = tq.getResultList();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return images;
     }
 
 }

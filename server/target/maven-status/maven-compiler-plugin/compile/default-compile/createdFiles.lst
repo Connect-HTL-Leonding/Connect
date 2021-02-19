@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 org\connect\model\image\Image.class
 org\connect\repository\MessageRepository.class
 org\connect\service\MessageService.class
 org\connect\service\ImageService.class
 org\connect\repository\ImageRepository.class
-=======
->>>>>>> 0f4bdbadaa58ad07c402782ff54f5504fb218fbe

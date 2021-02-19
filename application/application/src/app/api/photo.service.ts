@@ -48,7 +48,8 @@ export class PhotoService {
       
       this.photos.unshift({
         filepath: "",
-        webviewPath: "data:image/png;base64," + capturedPhoto.base64String
+        webviewPath: "data:image/png;base64," + capturedPhoto.base64String,
+        id: ""
       });
     } catch (e) {
     }
@@ -57,6 +58,7 @@ export class PhotoService {
 
   }
 
+ 
   public loadPfp() {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -80,10 +82,8 @@ export class PhotoService {
     });
     this.http.get(api.url + 'image/getImages',{headers: reqHeader}).subscribe(data => {
       this.photos = [];
-      var URLs : any = []
+     /* var URLs : any = []
       URLs = data;
-      console.log(URLs);
-      console.log(this.photos);
      for(var i = 0;i<=URLs.length; i++) {
       if(URLs[i]!=null) {
         this.photos.unshift({
@@ -94,9 +94,26 @@ export class PhotoService {
       } else {
        
       }
-    } 
+    } */
+
+    var images : any = [];
+    images = data;
+    for(var i = 0;i<=images.length; i++) {
+      if(images[i]!=null) {
+        this.photos.unshift({
+          filepath: "",
+          webviewPath: "data:image/png;base64," + atob(atob(images[i].img)),
+          id: images.Id
+        }) 
+       
+      } else {
+       
+      }
+    }
     }) 
   }
+
+
 
   
 
@@ -163,4 +180,5 @@ export class PhotoService {
 export interface Photo {
   filepath: string;
   webviewPath: string;
+  id : string
 }
