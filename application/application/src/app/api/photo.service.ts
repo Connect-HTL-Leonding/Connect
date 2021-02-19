@@ -45,6 +45,10 @@ export class PhotoService {
       });
       this.http.post(api.url + 'image/saveImage', body, {headers: reqHeader}).subscribe(data=> {
       });
+
+      if(this.photos.length = 4) {
+        this.photos.splice(-1,1);
+      }
       
       this.photos.unshift({
         filepath: "",

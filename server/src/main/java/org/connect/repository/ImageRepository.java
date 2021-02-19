@@ -48,12 +48,16 @@ public class ImageRepository {
         TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID,Image.class);
         tq.setParameter("user_id", jwt.claim("sub").get().toString());
         List<Image> images = null;
+        List<Image> tail = null;
         try {
             images = tq.getResultList();
+            System.out.println(images);
+            tail = images.subList(Math.max(images.size() - 4, 0), images.size());
+            System.out.println(tail);
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        return images;
+        return tail;
     }
 
 }

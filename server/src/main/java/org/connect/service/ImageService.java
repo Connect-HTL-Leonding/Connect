@@ -99,9 +99,7 @@ public class ImageService {
     @Path("getImages")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Image> getImages() {
-
         List<Image> images = iRepo.getImgURLs(jwt);
-         System.out.println(images);
         return images;
     }
 
