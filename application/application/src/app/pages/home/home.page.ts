@@ -5,7 +5,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { MapStyle } from './mapStyle';
-import { User } from '../model/user';
+import { User } from '../../model/user';
 
 /*
 import {
@@ -60,7 +60,7 @@ export class HomePage {
     canvas.width = 35;
     canvas.height = 62;
     var ctx = canvas.getContext('2d');
-    var image1 = user.profilePicture;
+    var image1 = "data:image/png;base64," +user.profilePicture;
     var image = new Image();
     var compositeImage;
 

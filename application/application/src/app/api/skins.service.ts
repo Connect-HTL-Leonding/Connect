@@ -15,7 +15,7 @@ export class SkinsService {
 
   http: HttpClient;
 
-  //Array an Terminen
+  //Array an Skins
   public skins: Array<Skin>;
   categoryService: CategoryService
   message;
