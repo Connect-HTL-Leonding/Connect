@@ -65,6 +65,12 @@ public class UserRepository {
         return em.find(User.class, id.get().toString());
     }
 
+    // Finden einer Person über ID in der DB
+    @Transactional
+    public User findUser(String id) {
+        return em.find(User.class, id);
+    }
+
     // Ändern oder Einfügen einer Person mit id
     @Transactional
     public User update(User user) {
