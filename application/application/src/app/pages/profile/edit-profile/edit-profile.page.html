@@ -26,7 +26,7 @@
       
       <div class="edit-container">
         <ion-label position="stacked" color="primary">Nutzername</ion-label>
-          <ion-input *ngIf="ps.user" [(ngModel)]="ps.user.userName"></ion-input>
+          <ion-input *ngIf="ps.user" disabled [(ngModel)]="ps.user.userName"></ion-input>
       </div>
 
       <div style="overflow:scroll;" class="edit-container">
@@ -118,16 +118,9 @@
               </ion-card>
               <ion-card *ngFor="let photo of photoService.photos; index as position">
                 <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
-              </ion-card>
+              </ion-card>              
         </div>
       </div>
-
-
-
-
-
-
-
     </div>
   </div>
 

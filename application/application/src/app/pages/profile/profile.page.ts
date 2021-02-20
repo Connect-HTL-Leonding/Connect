@@ -29,6 +29,7 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.photoService.loadPfp();
+    this.photoService.loadGalleryImages();
     this.user = this.authService.getUserInfo();
 
     this.ps.getUser().subscribe(

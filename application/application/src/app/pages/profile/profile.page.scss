@@ -110,15 +110,21 @@ ion-card {
     justify-content: center;
     align-items: center;
     margin:8px;
-    background-image: url("../../../assets/connect_img/volleyball.png");
     background-size: cover;
     
-    #openModal {
-        background-image: none;
-    }
-
+ 
 }
+
+
 
 ion-toolbar {
     background-color:  var(--ion-color-secondary);
 }
+
+.photo {
+    object-fit: cover;
+    height: 100%;
+    width: auto !important;
+    border: 0;
+    padding: 0;
+  }

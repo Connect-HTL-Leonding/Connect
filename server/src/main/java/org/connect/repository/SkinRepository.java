@@ -41,12 +41,18 @@ public class SkinRepository {
         Category c2 = new Category("Freizeit");
 
 
+
         User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
         User u1 = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
+       
+
+
+
 
 
         User u2 = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
         User u3 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
+
 
         User u4 = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
         User u5 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
@@ -56,6 +62,7 @@ public class SkinRepository {
         Friendship f2 = new Friendship(u4,u5,s,LocalDateTime.now(),"cool");
         Friendship f3 = new Friendship(u3,u5,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(u1,u5,s1,LocalDateTime.now(),"cool");
+
 
 
 

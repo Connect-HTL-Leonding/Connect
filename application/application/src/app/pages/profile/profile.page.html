@@ -26,19 +26,19 @@
 
      <div class="photo-slider-con">
         <p style="left:0;">Über mich</p>
-       
+
         <div class="list_photos" no-bounce>
-      
             
-              <ion-card></ion-card>
-              <ion-card></ion-card>   
-              <ion-card></ion-card>
-              <ion-card></ion-card>
-              <ion-card></ion-card>
-              <ion-card></ion-card>   
-              <ion-card style="background-image: none; display: flex; justify-content: center; align-items: center;" id="openModal" (click)="presentModal()">View all</ion-card>
+      
+          <ion-card *ngFor="let photo of photoService.photos; index as position">
+            <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
+          </ion-card>
           
-      </div>
+          <ion-card style=" display: flex; justify-content: center; align-items: center;" id="openModal" (click)="presentModal()">View all</ion-card>
+          
+        </div>
+       
+      
      </div>
    
 

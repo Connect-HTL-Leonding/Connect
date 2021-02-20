@@ -24,11 +24,13 @@ export class ChatPage implements OnInit {
   public username;
   public profilePicture;
   public m = new Message();
+  public otherUser;
   contactlist;
   chatservice;
   wsUri;
   oauthService;
   activeUser;
+  
 
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
     this.contactlist = cl;
@@ -41,18 +43,23 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
-    console.log(this.wsUri);
     this.chatservice.getData().subscribe(data => {
       this.chatservice.messages = data;
-      console.log(this.chatservice.activeUser);
     });
+    this.otherUser = this.getRoomName();
     this.doConnect();
   }
 
   yousent(message:Message) : boolean {
-    console.log(message);
-    console.log(this.chatservice.activeUser.userName)
     return message.user.userName == this.chatservice.activeUser.userName;
+  }
+  
+
+  getRoomName() {
+    this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
+      this.otherUser = data;
+      return this.otherUser;
+    })
   }
 
   dismissModal() {

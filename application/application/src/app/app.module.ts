@@ -15,6 +15,8 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { CoreModule } from './api/auth/core.module';
 
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -31,6 +33,9 @@ import { CoreModule } from './api/auth/core.module';
     HttpClientJsonpModule,
     HttpClientModule,
     OAuthModule.forRoot(),
+
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     StatusBar,
