@@ -1,14 +1,8 @@
-<<<<<<< HEAD
 org\connect\repository\FriendshipRepository.class
-org\connect\repository\MessageRepository.class
-org\connect\service\MessageService.class
-org\connect\service\ImageService.class
-org\connect\service\FriendshipService.class
-org\connect\model\user\Friendship.class
-=======
 org\connect\model\image\Image.class
 org\connect\repository\MessageRepository.class
 org\connect\service\MessageService.class
 org\connect\service\ImageService.class
 org\connect\repository\ImageRepository.class
->>>>>>> 114bd9bd0fd621b296b0997237c189a4bf1046cb
+org\connect\service\FriendshipService.class
+org\connect\model\user\Friendship.class
