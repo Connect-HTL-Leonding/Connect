@@ -110,6 +110,10 @@ ion-toolbar {
     padding: 0;
   }
 
+  #openModal {
+    display: flex; justify-content: center; align-items: center;
+  }
+
   .edit-container {
     margin-top: 10px;
     height: auto;

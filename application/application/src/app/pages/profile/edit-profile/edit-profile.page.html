@@ -116,9 +116,14 @@
               <ion-card (click)="addPhotoToGallery()">
                 <ion-icon style="color: var(--ion-color-secondary)" class="icon" name="add-circle-outline"></ion-icon>
               </ion-card>
+              
               <ion-card *ngFor="let photo of photoService.photos; index as position">
                 <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
-              </ion-card>              
+              </ion-card> 
+            
+              
+           
+              <ion-card id="openModal" (click)="presentModal()">View all</ion-card>             
         </div>
       </div>
     </div>

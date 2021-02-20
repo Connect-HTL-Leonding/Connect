@@ -95,11 +95,19 @@ public class ImageService {
         return imgURLs;
     } */
 
-     @GET
+    @GET
     @Path("getImages")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Image> getImages() {
         List<Image> images = iRepo.getImgURLs(jwt);
+        return images;
+    }
+
+    @GET
+    @Path("getAllImages")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Image> getAllImages() {
+        List<Image> images = iRepo.getALlImagesURLs(jwt);
         return images;
     }
 

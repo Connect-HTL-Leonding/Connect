@@ -20,6 +20,7 @@ const { Camera, Filesystem, Storage } = Plugins;
 export class PhotoService {
 
   public photos: Photo[] = [];
+  public galleryPhotos: Photo[] = [];
   public profilePicture: Photo;
   public imgURL;
   http : HttpClient;
@@ -51,7 +52,6 @@ export class PhotoService {
       }
       
       this.photos.unshift({
-        filepath: "",
         webviewPath: "data:image/png;base64," + capturedPhoto.base64String,
         id: ""
       });
@@ -77,32 +77,41 @@ export class PhotoService {
 
 
   public loadGalleryImages() {
+    
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
     this.http.get(api.url + 'image/getImages',{headers: reqHeader}).subscribe(data => {
       this.photos = [];
-     /* var URLs : any = []
-      URLs = data;
-     for(var i = 0;i<=URLs.length; i++) {
-      if(URLs[i]!=null) {
+      var images : any = [];
+    images = data;
+    for(var i = 0;i<=images.length; i++) {
+      if(images[i]!=null) {
         this.photos.unshift({
-          filepath: "",
-          webviewPath: "data:image/png;base64," + URLs[i]
+          webviewPath: "data:image/png;base64," + atob(atob(images[i].img)),
+          id: images[i].Id
         }) 
        
       } else {
        
       }
-    } */
+    }
+    }) 
+  }
 
-    var images : any = [];
+  public loadAllGalleryImages()  : Photo[] {
+    this.galleryPhotos = [];
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    this.http.get(api.url + 'image/getAllImages',{headers: reqHeader}).subscribe(data => {
+      var images : any = [];
     images = data;
     for(var i = 0;i<=images.length; i++) {
       if(images[i]!=null) {
-        this.photos.unshift({
-          filepath: "",
+        this.galleryPhotos.unshift({
           webviewPath: "data:image/png;base64," + atob(atob(images[i].img)),
           id: images.Id
         }) 
@@ -111,7 +120,9 @@ export class PhotoService {
        
       }
     }
+   
     }) 
+    return this.galleryPhotos;
   }
 
 
@@ -179,7 +190,6 @@ export class PhotoService {
 
 
 export interface Photo {
-  filepath: string;
   webviewPath: string;
   id : string
 }

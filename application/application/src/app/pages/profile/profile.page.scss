@@ -128,3 +128,18 @@ ion-toolbar {
     border: 0;
     padding: 0;
   }
+
+  #openModal {
+    display: flex; justify-content: center; align-items: center;
+  }
+
+
+  .noImgs {
+    color: grey;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+  }

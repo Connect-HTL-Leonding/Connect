@@ -60,4 +60,18 @@ public class ImageRepository {
         return tail;
     }
 
+    public List<Image> getALlImagesURLs(JsonWebToken jwt) {
+        TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID,Image.class);
+        tq.setParameter("user_id", jwt.claim("sub").get().toString());
+        List<Image> images = null;
+        try {
+            images = tq.getResultList();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return images;
+    }
+
+
+
 }
