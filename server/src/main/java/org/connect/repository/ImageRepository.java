@@ -1,6 +1,7 @@
 package org.connect.repository;
 
 import org.connect.model.image.Image;
+import org.connect.model.skin.MySkin;
 import org.connect.model.user.User;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
@@ -70,6 +71,13 @@ public class ImageRepository {
             System.out.println(e.getMessage());
         }
         return images;
+    }
+
+    @Transactional
+    public Image delete(long id) {
+        Image i = em.find(Image.class, id);
+        em.remove(i);
+        return i;
     }
 
 

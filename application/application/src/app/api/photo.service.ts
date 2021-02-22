@@ -96,6 +96,10 @@ export class PhotoService {
       } else {
        
       }
+      console.log(images);
+      //for(let photo of this.photos) {
+        //console.log(photo.id);
+      //}
     }
     }) 
   }
@@ -113,8 +117,8 @@ export class PhotoService {
       if(images[i]!=null) {
         this.galleryPhotos.unshift({
           webviewPath: "data:image/png;base64," + atob(atob(images[i].img)),
-          id: images.Id
-        }) 
+          id: images[i].Id
+         }) 
        
       } else {
        

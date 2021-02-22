@@ -3,6 +3,7 @@ package org.connect.service;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.image.Image;
+import org.connect.model.skin.MySkin;
 import org.connect.model.user.User;
 import org.connect.repository.CategoryRepository;
 import org.connect.repository.ImageRepository;
@@ -108,6 +109,12 @@ public class ImageService {
     public List<Image> getAllImages() {
         List<Image> images = iRepo.getALlImagesURLs(jwt);
         return images;
+    }
+
+    @Path("delete/{id}")
+    @DELETE
+    public Image deleteSkin(@PathParam("id") long id) {
+        return iRepo.delete(id);
     }
 
 
