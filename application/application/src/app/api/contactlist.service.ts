@@ -37,6 +37,17 @@ export class ContactlistService {
     return this.http.get<User>(api.short + 'user/findOtherUser/' + roomid, {headers: reqHeader})
   }
 
+  getOtherPfp(roomid) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.oauthService.getAccessToken(),
+      }),
+      responseType: 'text' as const
+    };
+    return this.http.get(api.short + 'user/getOtherPfp/' + roomid, httpOptions)
+  }
+
   getChats() {
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',

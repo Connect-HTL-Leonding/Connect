@@ -72,9 +72,11 @@ public class SkinRepository {
         u.getRooms().add(r);
         u1.getRooms().add(r);
         u1.getRooms().add(r1);
+        u2.getRooms().add(r1);
         r.getUsers().add(u);
         r.getUsers().add(u1);
         r1.getUsers().add(u1);
+        r1.getUsers().add(u2);
 
         MySkin ms = new MySkin(30, 5, 5);
         ms.setSkin(s);

@@ -21,6 +21,9 @@ export class DetailContactlistComponent implements OnInit {
   ngOnInit() {
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
       this.user = data;
+      this.contactlist.getOtherPfp(this.room.id).subscribe(data => {
+        this.user.profilePicture = "data:image/png;base64," + data;
+      });
     })
   }
 

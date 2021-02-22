@@ -67,7 +67,6 @@ public class ImageService {
     @Path("getPfp")
     @Produces(MediaType.TEXT_PLAIN)
     public String getPfp() throws UnsupportedEncodingException {
-        System.out.println("-------------");
         User u = getUser();
         if( u.getProfilePicture() != null) {
             return new String( Base64.getDecoder().decode(new String(u.getProfilePicture()).getBytes("UTF-8")));

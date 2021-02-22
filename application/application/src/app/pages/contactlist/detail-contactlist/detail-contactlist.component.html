@@ -1,14 +1,14 @@
 
 
 <div *ngIf="userExists(user)" class="chat-user">
-  <!--
+  
   <ion-avatar slot="start">
     <img src="{{user.profilePicture}}">
   </ion-avatar>
-  -->
+  
   <ion-label id="chat-flex">
     <div id="flex">
-      <h2 id="username">{{user.userName}}</h2>
+      <h2 *ngIf="user" id="username">{{user.userName}}</h2>
     </div>
   </ion-label>
 

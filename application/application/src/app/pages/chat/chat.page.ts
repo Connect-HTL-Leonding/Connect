@@ -47,6 +47,7 @@ export class ChatPage implements OnInit {
       this.chatservice.messages = data;
     });
     this.otherUser = this.getRoomName();
+    
     this.doConnect();
   }
 
@@ -58,6 +59,9 @@ export class ChatPage implements OnInit {
   getRoomName() {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
       this.otherUser = data;
+      this.contactlist.getOtherPfp(this.contactlist.selectedRoom.id).subscribe(data => {
+        this.otherUser.profilePicture = "data:image/png;base64," + data;
+      });
       return this.otherUser;
     })
   }

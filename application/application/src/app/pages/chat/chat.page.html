@@ -4,9 +4,9 @@
       <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
       <div id="profile">
       <ion-avatar>
-        <img id="profilepicture" src="{{profilePicture}}">
+        <img *ngIf="otherUser" id="profilepicture" src="{{otherUser.profilePicture}}">
       </ion-avatar>
-      <ion-label>
+      <ion-label *ngIf="otherUser">
           {{otherUser.userName}}
       </ion-label>
     </div>
