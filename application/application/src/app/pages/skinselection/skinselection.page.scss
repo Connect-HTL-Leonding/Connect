@@ -1,7 +1,7 @@
 .category {
     width: 20vw;
-    background: white;
-    border: 1px solid grey;
+   
+   
     color: grey;
     justify-content: center;
 }
@@ -9,8 +9,8 @@
 .currentCategory {
     width: 20vw;
     background: var(--dark-green);
-    border: 1px solid grey;
-    color: white;
+    
+  
     justify-content: center;
 }
 
@@ -21,7 +21,7 @@
     z-index: 999;
     top: 0;
     position: sticky;
-    background: white;
+   
     width: 100%;
     padding-bottom: 3%;
     box-shadow: 0 4px 5px -5px grey;
