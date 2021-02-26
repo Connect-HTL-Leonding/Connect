@@ -1,0 +1,431 @@
+swagger: "2.0"
+info:
+  title: "Swagger Connect"
+  version: "1.0.0"
+  description: "Swagger for Connect"
+tags: 
+- name: "skin"
+  description: "Operations for Skin"
+- name: "myskin"
+  description: "Operations for mySkin"
+- name: "category"
+  description: "Operations for Category"
+- name: "room"
+  description: "Operations for Room"
+paths:
+  /myskin/findAll:
+    get:
+      tags: 
+      - "myskin"
+      summary: "Get all Skins"
+      description: "Shows every Skin there is to the user"
+      operationId: "findAll"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Skin"
+  /myskin/find/{id}:
+    get: 
+      tags: 
+      - "myskin"
+      summary: "Find Skin by ID"
+      description: "Returns a single Skin"
+      operationId: "find"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Skin'
+        "400":
+          description: "Invalid ID"
+        "404":
+          description: "Skin not found"
+  /myskin:
+    post:
+      tags: 
+      - "myskin"
+      summary: "creates a skin"
+      description: "creates a skin in the database"
+      operationId: "create"
+      produces: 
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Skin that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Skin"
+      responses:
+        "405":
+          description: "Invalid input"
+  /myskin/delete/{id}:
+    delete:
+      tags:
+      - "myskin"
+      summary: "Deletes a skin"
+      description: "Deletes a skin from the database"
+      operationId: "deleteSkin"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Skin id to delete"
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Skin not found"
+  /myskin/update:
+    post:
+      tags:
+      - "myskin"
+      summary: "Updates a skin"
+      description: "Updates a skin from the database"
+      operationId: "updateSkin"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "404":
+          description: "Skin not found"
+  /skin:
+    post:
+      tags: 
+      - "skin"
+      summary: "creates a skin"
+      description: "creates a skin in the database"
+      operationId: "creatE"
+      produces: 
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Skin that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Skin"
+      responses:
+        "405":
+          description: "Invalid input"
+  /skin/init:
+    put:
+      tags: 
+      - "skin"
+      summary: "Init DB"
+      description: "Initializing the Database"
+      operationId: "init"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Skin" 
+  /skin/findAll:
+    get:
+      tags: 
+      - "skin"
+      summary: "Find Skins"
+      description: "Find all skins of the database"
+      operationId: "findall"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Skin"
+  /skin/delete/{id}:
+    delete:
+      tags: 
+      - "skin"
+      summary: "Deletes Skin"
+      description: "Deletes a skin from the database"
+      operationId: "deleteskin"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Skin id to delete"
+        type: "integer"
+        format: "int64"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Skin"
+  /skin/update:
+    post:
+      tags:
+      - "skin"
+      summary: "Updates a skin"
+      description: "Updates a skin from the database"
+      operationId: "updateskin"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "404":
+          description: "Skin not found"
+  /category/findAll:
+    get:
+      tags: 
+      - "category"
+      summary: "Find Categories"
+      description: "Find all categories of the database"
+      operationId: "fIndAll"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Category"
+  /category/find/{id}:            
+    get: 
+      tags: 
+      - "category"
+      summary: "Find Category by ID"
+      description: "Returns a single Category"
+      operationId: "findCategory"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Category'
+        "400":
+          description: "Invalid ID"
+        "404":
+          description: "Category not found not found"
+  /category/delete/{id}:
+    delete:
+      tags: 
+      - "category"
+      summary: "Deletes Category"
+      description: "Deletes a category from the database"
+      operationId: "deleteCategory"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        description: "Category id to delete"
+        type: "integer"
+        format: "int64"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Category"
+  /category/update:
+    post:
+      tags:
+      - "category"
+      summary: "Updates a category"
+      description: "Updates a category from the database"
+      operationId: "updateCategory"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "404":
+          description: "Category not found"
+  /chat/findAll:
+    get:
+      tags: 
+      - "room"
+      summary: "Get all Rooms"
+      description: "Shows every Room there is to the user"
+      operationId: "findAllc"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Room"
+    
+      
+definitions:
+  Skin:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: "0"
+        format: "int64"
+      title:
+        type: "string"
+        example: "Fußball"
+      description:
+        type: "string"
+        example: "Du liebst Fußball? Wir auch. Triff dich zu Matches oder sieh dir gemeinsam Spiele an.Werde Teil der Community! "
+      image: 
+        type: "string"
+        example: "./img/ball.png"
+        description: "path to the image"
+      follower: 
+        type: "integer"
+        example: "5591"
+        format: "int64"
+    xml:
+      name: "Skin"
+  Category:
+    properties:
+      id:
+        type: "number"
+        example: "1"
+        format: "int64"
+      title:
+        type: "string"
+        example: "Sport"
+    xml:
+      name: "Category"
+  Room:
+    type: "object"
+    properties:
+      roomID:
+        type: "number"
+        example: "4"
+        format: "int64"
+      type:
+        type: "string"
+        example: "direct message"
+      created:
+        type: "object"
+        example: "26.02.2021"
+        format: "dd.mm.yyyy"
+      updated:
+        type: "object"
+        example: "26.02.2021"
+        format: "dd.mm.yyyy"
+  Message:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: "38101"
+        format: "int64"
+      message:
+        type: "string"
+        example: "Bruh whats up?"
+      created:
+        type: "object"
+        example: "26.02.2021"
+        format: "dd.mm.yyyy"
+      updated:
+        type: "object"
+        example: "26.02.2021"
+        format: "dd.mm.yyyy"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: "6342785"
+        format: "int64"
+      userName:
+        type: "string"
+        example: "HanslingerHans"
+      description:
+        type: "string"
+        example: "Ich spiele gerne Fußball"
+      birthday:
+        type: "object"
+        example: "1993-07-13"
+        format: "yyyy-MM-dd"
+      gender:
+        type: "string"
+        example: "M"
+      fullname:
+        type: "string"
+        example: "Hans-Hermann Hanslinger"
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
