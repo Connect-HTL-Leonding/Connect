@@ -3,7 +3,7 @@
 <div *ngIf="userExists(user)" class="chat-user">
   
   <ion-avatar slot="start">
-    <img src="{{user.profilePicture}}">
+    <img *ngIf="user.custom" src="{{user.custom.profilePicture}}">
   </ion-avatar>
   
   <ion-label id="chat-flex">

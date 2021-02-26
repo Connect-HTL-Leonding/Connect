@@ -55,7 +55,7 @@ export class EditProfilePage implements OnInit {
       data => {
 
         console.log(data);
-        this.ps.user = data;
+        this.ps.user.custom = data;
 
         this.photoService.loadPfp();
         this.photoService.loadGalleryImages();
@@ -78,9 +78,9 @@ export class EditProfilePage implements OnInit {
     //u.username = document.getElementById("username").innerText;
     //console.log(u.desc)
     //u.desc = document.getElementById("desc").innerText;
-    console.log(u.description)
+    console.log(u.custom.description)
 
-    this.ps.updateUser(u).subscribe(data => {
+    this.ps.updateUser(u.custom).subscribe(data => {
       //nach unpdate erneutes getAll
       this.ngOnInit();
     });
