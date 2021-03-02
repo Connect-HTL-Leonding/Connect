@@ -1,9 +1,12 @@
 package org.connect.repository;
 
+import net.bytebuddy.asm.Advice;
+import org.connect.model.chat.Message;
 import org.connect.model.chat.Room;
 import org.connect.model.skin.Category;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
+import org.connect.model.user.Friendship;
 import org.connect.model.user.User;
 import org.hibernate.query.Query;
 
@@ -12,6 +15,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,31 +40,59 @@ public class SkinRepository {
         Category c1 = new Category("Sport");
         Category c2 = new Category("Freizeit");
 
+
         User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
         User u1 = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
 
 
+        User u2 = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
+        User u3 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
 
-        /*
-        User u = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
-        User u1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
-=======
-        User u = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
-        User u1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
->>>>>>> Stashed changes
+        User u4 = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
+        User u5 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
 
-         */
+        User u6 = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
 
-        /*
-        User u = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
-        User u1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
-*/
+        Friendship f = new Friendship(u,u1,s,LocalDateTime.now(),"cool");
+        Friendship f1 = new Friendship(u2,u3,s,LocalDateTime.now(),"cool");
+        Friendship f2 = new Friendship(u4,u5,s,LocalDateTime.now(),"cool");
+        Friendship f3 = new Friendship(u3,u5,s1,LocalDateTime.now(),"cool");
+        Friendship f4 = new Friendship(u1,u5,s1,LocalDateTime.now(),"cool");
+
+
+
+
 
         Room r = new Room("DM");
+        Room r1 = new Room("DM");
+        Room r2 = new Room("DM");
+        Room r3 = new Room("DM");
+
         u.getRooms().add(r);
-        u1.getRooms().add(r);
         r.getUsers().add(u);
+
+        u1.getRooms().add(r);
+        u1.getRooms().add(r1);
         r.getUsers().add(u1);
+        r1.getUsers().add(u1);
+
+
+        u2.getRooms().add(r2);
+        u2.getRooms().add(r3);
+        r2.getUsers().add(u2);
+        r3.getUsers().add(u2);
+
+        u3.getRooms().add(r2);
+        r2.getUsers().add(u3);
+
+        u6.getRooms().add(r1);
+        u6.getRooms().add(r3);
+        r1.getUsers().add(u6);
+        r3.getUsers().add(u6);
+
+
+
+
 
 
         MySkin ms = new MySkin(30, 5, 5);
@@ -79,9 +111,15 @@ public class SkinRepository {
         em.persist(u);
         em.persist(u1);
         em.persist(r);
+        em.persist(r1);
         em.persist(s);
         em.persist(s1);
         em.persist(ms);
+        em.persist(f);
+        em.persist(f1);
+        em.persist(f2);
+        em.persist(f3);
+        em.persist(f4);
     }
 
     // Finden einer Person über ID in der DB

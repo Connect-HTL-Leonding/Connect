@@ -5,9 +5,9 @@ export class Room {
 
     constructor(
         public id = 0,
-        public type: string,
-        public created: Date,
-        public updated: Date
+        public type: string = "",
+        public created: Date = new Date(),
+        public updated: Date = new Date()
         //public time: IonDatetime
     ) {}
 }

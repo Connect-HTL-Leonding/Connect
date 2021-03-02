@@ -1,0 +1,25 @@
+
+
+<div *ngIf="userExists(user)" class="chat-user">
+  
+  <ion-avatar slot="start">
+    <img src="{{user.profilePicture}}">
+  </ion-avatar>
+  
+  <ion-label id="chat-flex">
+    <div id="flex">
+      <h2 *ngIf="user" id="username">{{user.userName}}</h2>
+    </div>
+  </ion-label>
+
+  
+</div>
+
+<!--
+        <p *ngIf="user.unreadMessages > 0" id="unreadMessage">{{user.latestMessage}}</p>
+      <p *ngIf="user.unreadMessages == 0" id="readMessage">{{user.latestMessage}}</p>
+    
+    <div id="messages-flex">
+      <p *ngIf="user.unreadMessages > 0" id="messages">{{user.unreadMessages}}</p>
+    </div>
+-->

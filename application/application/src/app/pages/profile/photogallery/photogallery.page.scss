@@ -1,0 +1,11 @@
+   .images {
+       width: 100%;
+       display:flex;
+       flex-flow: row wrap;
+   }
+
+    .one-image {
+        margin: 2px;
+        width: 48vw;
+        height: 180px;
+    }

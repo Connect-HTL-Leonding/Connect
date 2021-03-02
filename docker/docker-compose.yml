@@ -42,7 +42,8 @@ services:
         - 8010:8080
       volumes:
         - keycloak_data:/var/lib/keycloak/data
-        - ./realm:/opt/jboss/keycloak/realm-config
+#        - ./realm:/opt/jboss/keycloak/realm-config
+        - ./realm/profile.properties:/opt/jboss/keycloak/standalone/configuration/profile.properties
       depends_on:
         - db_keycloak
 

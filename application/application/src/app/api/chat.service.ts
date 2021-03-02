@@ -1,27 +1,43 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Message } from '../model/message';
+import { Room } from '../model/room';
+import { User } from '../model/user';
 import { api } from '../app.component';
 import {ContactlistService} from './contactlist.service';
+import { OAuthService } from 'angular-oauth2-oidc';
 @Injectable({
   providedIn: 'root'
 })
 export class ChatService {
 
-  http: HttpClient;
+  public http: HttpClient;
   public messages: Array<Message>
-  contactlist;
+  public contactlist;
+  public selectedRoom: Room;
+  public activeUser: User;
+  
 
-  constructor(http: HttpClient, cs: ContactlistService) {
+  constructor(http: HttpClient, cs: ContactlistService, private oauthService : OAuthService) {
     this.http = http;
     this.messages = [];
     this.contactlist = cs;
   }
 
   getData() {
-    return this.http.get<Message[]>(api.url +'/messages' + this.contactlist.selectedRoom.id).subscribe(data => {
-      this.messages = data;
-      console.log(this.messages);
-    })
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<Message[]>(api.url +'message/findAll/' + this.selectedRoom.id, {headers: reqHeader});
+  }
+
+  createMessage(m:Message) {
+    let body = JSON.stringify(m);
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
   }
 }

@@ -10,6 +10,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.security.Principal;
+import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -20,21 +21,30 @@ import java.util.List;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","rooms"})
 @NamedQueries({
         @NamedQuery(name = User.FINDWITHID, query = "SELECT u FROM User u where id = :user_id"),
+        @NamedQuery(name = User.FINDOTHERUSER, query = "SELECT u FROM User u join u.rooms where room_id = :roomid AND u.id NOT LIKE :user_id")
 })
 public class User implements Serializable {
 
     public static final String FINDWITHID = "User.findwithid";
+    public static final String FINDOTHERUSER = "User.findotheruser";
 
+    //Attribute
     @Id
     private String id;
     private String userName;
+    private String firstname;
+    private String lastname;
+
+    private char gender;
+
     //private LocalDateTime created;
     //LocalDateTime updated;
     private String description;
+    private String email;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    private char gender;
-    private String fullname;
+    @Lob
+    private byte[] profilePicture;
 
     @ManyToMany(mappedBy = "users")
     private List<Room> rooms = new LinkedList<>();
@@ -54,14 +64,13 @@ public class User implements Serializable {
     }
 
     public User(JsonWebToken token) {
-        /*
-        if(token.claim("sub").isPresent()){
-            this.id =
-        }
-        */
-
         this.id = token.claim("sub").get().toString();
         this.userName = token.getName();
+        System.out.println(token.claim("name").get().toString());
+        this.firstname = token.claim("given_name").get().toString();
+        this.lastname = token.claim("family_name").get().toString();
+        this.email = token.claim("email").get().toString();
+        this.gender = 'a';
         //this.attributes = token.getRawToken();
         System.out.println(this.id);
     }
@@ -114,11 +123,35 @@ public class User implements Serializable {
         this.gender = gender;
     }
 
-    public String getFullname() {
-        return fullname;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public void setFullname(String fullname) {
-        this.fullname = fullname;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public byte[] getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(byte[] profilePicture) {
+        this.profilePicture = profilePicture;
     }
 }

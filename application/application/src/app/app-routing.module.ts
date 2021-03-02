@@ -11,28 +11,28 @@ import { AuthGuardWithForcedLogin } from './api/auth/auth-guard-with-forced-logi
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AuthGuardWithForcedLogin]
   }, {
     path: 'skinselection',
-    loadChildren: () => import('./skinselection/skinselection.module').then(m => m.SkinselectionPageModule),
+    loadChildren: () => import('./pages/skinselection/skinselection.module').then(m => m.SkinselectionPageModule),
     canActivate: [AuthGuardWithForcedLogin]
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then(m => m.ProfilePageModule),
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
     canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
     path: 'my-skins',
-    loadChildren: () => import('./my-skins/my-skins.module').then(m => m.MySkinsPageModule),
+    loadChildren: () => import('./pages/my-skins/my-skins.module').then(m => m.MySkinsPageModule),
     canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
     path: 'contactlist',
-    loadChildren: () => import('./contactlist/contactlist.module').then(m => m.ContactlistPageModule),
+    loadChildren: () => import('./pages/contactlist/contactlist.module').then(m => m.ContactlistPageModule),
     canActivate: [AuthGuardWithForcedLogin]
 
   },
@@ -43,25 +43,25 @@ const routes: Routes = [
   },
   {
     path: 'edit-profile',
-    loadChildren: () => import('./edit-profile/edit-profile.module').then(m => m.EditProfilePageModule),
+    loadChildren: () => import('./pages/profile/edit-profile/edit-profile.module').then(m => m.EditProfilePageModule),
     canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
 
     path: 'edit-profile-details',
-    loadChildren: () => import('./edit-profile-details/edit-profile-details.module').then(m => m.EditProfileDetailsPageModule),
+    loadChildren: () => import('./pages/profile/edit-profile/edit-profile-details/edit-profile-details.module').then(m => m.EditProfileDetailsPageModule),
     canActivate: [AuthGuardWithForcedLogin]
 
   },
   {
     path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then(m => m.ChatPageModule),
+    loadChildren: () => import('./pages/chat/chat.module').then(m => m.ChatPageModule),
     canActivate: [AuthGuardWithForcedLogin]
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then(m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   }
 
 

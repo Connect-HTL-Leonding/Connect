@@ -1,0 +1,44 @@
+#connect {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  z-index: 11;
+
+  
+}
+
+#map {
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--ion-color-tertiary);
+}
+
+#map_canvas{
+  height: 100%;
+  width: 100%;
+}
+
+#infowindow-content{
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  
+}
+
+#place-icon{
+height: 50px;
+width: 50px;
+margin: 3%;
+color: aqua;
+}
+
+#place-name{
+  margin: 3%;
+  font-weight: 200;
+  
+}
+
+#place-address{
+  display: none;
+}

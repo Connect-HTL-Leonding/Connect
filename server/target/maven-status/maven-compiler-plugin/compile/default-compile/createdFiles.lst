@@ -1,0 +1,8 @@
+org\connect\repository\FriendshipRepository.class
+org\connect\model\image\Image.class
+org\connect\repository\MessageRepository.class
+org\connect\service\MessageService.class
+org\connect\service\ImageService.class
+org\connect\repository\ImageRepository.class
+org\connect\service\FriendshipService.class
+org\connect\model\user\Friendship.class

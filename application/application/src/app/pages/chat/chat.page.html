@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <div id="toolbar">
+      <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
+      <div id="profile">
+      <ion-avatar>
+        <img *ngIf="otherUser" id="profilepicture" src="{{otherUser.profilePicture}}">
+      </ion-avatar>
+      <ion-label *ngIf="otherUser">
+          {{otherUser.userName}}
+      </ion-label>
+    </div>
+      <ion-icon name="settings-outline"></ion-icon>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div id="messageFlex">
+    <div class="messageDiv" *ngFor="let message of chatservice.messages, let i = index">
+      <div *ngIf="yousent(message)" class="youSent">
+        <p class="message">{{message.message}}</p>
+      </div>
+      <div *ngIf="!yousent(message)" class="otherSent">
+        <p class="message">{{message.message}}</p>
+      </div>
+    </div>  
+  </div>
+</ion-content>
+  
+<ion-footer>
+  <div id="inputdiv">
+    <div id="input">
+      <ion-input placeholder="Nachricht..." [(ngModel)]="sendText"></ion-input>
+    </div>
+    <ion-icon id="send" name="send-outline" (click)="doSend()"></ion-icon>
+  </div>
+</ion-footer>
+

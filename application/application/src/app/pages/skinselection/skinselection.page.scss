@@ -1,0 +1,28 @@
+.category {
+    width: 20vw;
+   
+   
+    color: grey;
+    justify-content: center;
+}
+
+.currentCategory {
+    width: 20vw;
+    background: var(--dark-green);
+    
+  
+    justify-content: center;
+}
+
+
+
+
+.top-elements {
+    z-index: 999;
+    top: 0;
+    position: sticky;
+   
+    width: 100%;
+    padding-bottom: 3%;
+    box-shadow: 0 4px 5px -5px grey;
+}

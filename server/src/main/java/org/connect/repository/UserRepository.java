@@ -42,10 +42,33 @@ public class UserRepository {
         return u;
     }
 
+    @Transactional
+    public User findOtherUser(JsonWebToken jwt, long id) {
+        TypedQuery<User> tq = this.em.createNamedQuery(User.FINDOTHERUSER, User.class);
+        tq.setParameter("roomid", id);
+        tq.setParameter("user_id", jwt.claim("sub").get().toString());
+
+        User u = null;
+        try {
+            u = tq.getSingleResult();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(u);
+        return u;
+    }
+
     // Finden einer Person über ID in der DB
     @Transactional
     public User find(Optional id) {
         return em.find(User.class, id.get().toString());
+    }
+
+    // Finden einer Person über ID in der DB
+    @Transactional
+    public User findUser(String id) {
+        return em.find(User.class, id);
     }
 
     // Ändern oder Einfügen einer Person mit id
