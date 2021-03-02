@@ -12,22 +12,35 @@ export class DetailContactlistComponent implements OnInit {
 
   @Input() room: Room;
   public contactlist;
-  public user: User;
+  public user: User = new User();
 
   constructor(public cs: ContactlistService) {
     this.contactlist = cs;
   }
 
   ngOnInit() {
+
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
-      this.user = data;
+      console.log(this.user)
+      this.user.custom = data;
+      console.log(this.user)
+      this.contactlist.getKeyUser(this.user.custom).subscribe(data => {
+        this.user.id = data["id"];
+        this.user.userName = data["username"];
+        this.user.firstname = data["firstName"];
+        this.user.lastname = data["lastName"];
+        this.user.email = data["email"];
+        console.log(data)
+      })
+      console.log(this.user)
       this.contactlist.getOtherPfp(this.room.id).subscribe(data => {
-        this.user.profilePicture = "data:image/png;base64," + data;
+        this.user.custom.profilePicture = "data:image/png;base64," + data;
       });
     })
+
   }
 
-  userExists(user:User) {
+  userExists(user: User) {
     return user != null;
   }
 

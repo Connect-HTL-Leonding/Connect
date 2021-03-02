@@ -36,7 +36,7 @@ export class ProfilePage implements OnInit {
       data => {
 
         console.log(data);
-        this.ps.user = data;
+        this.ps.user.custom = data;
 
         console.log(this.ps.user)
 

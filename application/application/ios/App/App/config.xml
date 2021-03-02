@@ -6,6 +6,10 @@
     <param name="ios-package" value="CDVLocation"/>
   </feature>
 
+  <feature name="PhotoViewer">
+    <param name="ios-package" value="PhotoViewer"/>
+  </feature>
+
   <feature name="Camera">
     <param name="ios-package" value="CDVCamera"/>
   </feature>

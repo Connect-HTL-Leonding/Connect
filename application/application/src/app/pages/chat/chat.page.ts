@@ -24,7 +24,7 @@ export class ChatPage implements OnInit {
   public username;
   public profilePicture;
   public m = new Message();
-  public otherUser;
+  public otherUser : User = new User();
   contactlist;
   chatservice;
   wsUri;
@@ -46,23 +46,30 @@ export class ChatPage implements OnInit {
     this.chatservice.getData().subscribe(data => {
       this.chatservice.messages = data;
     });
-    this.otherUser = this.getRoomName();
+    this.getRoomName();
     
     this.doConnect();
   }
 
   yousent(message:Message) : boolean {
-    return message.user.userName == this.chatservice.activeUser.userName;
+    return message.user.id == this.chatservice.activeUser.custom.id;
   }
   
 
   getRoomName() {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
-      this.otherUser = data;
+      this.otherUser.custom = data;
+      this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
+        this.otherUser.id = data["id"];
+        this.otherUser.userName = data["username"];
+        this.otherUser.firstname = data["firstName"];
+        this.otherUser.lastname = data["lastName"];
+        this.otherUser.email = data["email"];
+        console.log(data)
+      })
       this.contactlist.getOtherPfp(this.contactlist.selectedRoom.id).subscribe(data => {
-        this.otherUser.profilePicture = "data:image/png;base64," + data;
+        this.otherUser.custom.profilePicture = "data:image/png;base64," + data;
       });
-      return this.otherUser;
     })
   }
 
