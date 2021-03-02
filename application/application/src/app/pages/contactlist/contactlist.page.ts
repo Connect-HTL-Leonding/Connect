@@ -3,6 +3,8 @@ import {ContactlistService} from '../../api/contactlist.service'
 import { Room } from '../../model/room'
 import { MenuController, ModalController } from '@ionic/angular';
 import { ChatPage } from '../chat/chat.page';
+import {ChatService} from '../../api/chat.service'
+import { Message } from 'src/app/model/message';
 
 @Component({
   selector: 'app-contactlist',
@@ -12,9 +14,12 @@ import { ChatPage } from '../chat/chat.page';
 export class ContactlistPage implements OnInit {
 
   contactService
+  chatService;
+  latestMessage : Message;
   
-  constructor(cs : ContactlistService, public modalController: ModalController) { 
+  constructor(cs : ContactlistService, public modalController: ModalController, chatService : ChatService ) { 
     this.contactService = cs;
+    this.chatService = chatService;
   }
 
   ngOnInit() {
@@ -35,6 +40,12 @@ export class ContactlistPage implements OnInit {
       component: ChatPage
     });
     return await modal.present();
+  }
+
+  getLatestMessage(room:Room) {
+    this.chatService.getLatestMessage(room).subscribe(data => {
+      console.log(data);
+    });
   }
 
 }
