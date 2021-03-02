@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   title: "Swagger Connect"
   version: "1.0.0"
-  description: "Swagger for Connect"
+  description: "Swagger.io for Connect"
 tags: 
 - name: "skin"
   description: "Operations for Skin"
@@ -295,6 +295,206 @@ paths:
             type: "array"
             items: 
               $ref: "#/definitions/Room"
+  /chat/init:
+    put:
+      tags:
+      - "chat"
+      summary: "init Chat"
+      description: "Initiates some testdata for Chat"
+      operationId: "initc"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+  /friendship/create:
+    post:
+      tags: 
+      - "friendship"
+      summary: "creates a friendship"
+      description: "creates a friendship in the database"
+      operationId: "createfs"
+      produces: 
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Friendship that needs to be added to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/Friendship"
+      responses:
+        "405":
+          description: "Invalid input"
+  /friendship/findAll:
+    get:
+      tags: 
+      - "friendship"
+      summary: "Get all friendships"
+      description: "Shows every friendship there is to the user"
+      operationId: "findAllffs"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses: 
+        "200":
+          description: 200 "OK"
+          schema:
+            type: "array"
+            items: 
+              $ref: "#/definitions/Friendship" 
+  /friendship/find/{id}:
+    get: 
+      tags: 
+      - "friendship"
+      summary: "Find Friendship by ID"
+      description: "Returns a single Friendship"
+      operationId: "findfs"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Skin'
+        "400":
+          description: "Invalid ID"
+        "404":
+          description: "Friendship not found"
+  /friendship/findFriendshipsOfUser/{userId}:
+    get: 
+      tags: 
+      - "friendship"
+      summary: "Find Friendships of a User"
+      description: "Returns all Friendships of a User"
+      operationId: "findfsOU"
+      parameters: 
+      - name: "userId"
+        in: "path"
+        required: true
+        type: "integer"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Friendship'
+        "400":
+          description: "Invalid userID"
+        "404":
+          description: "No Friendships found"
+  /image/setPfp:
+    put:
+      tags: 
+      - "image"
+      summary: "sets the pfp"
+      description: "Sets the profilepicture for the user"
+      operationId: "setPfp"
+      produces: 
+      - "application/xml"
+      - "application/json"
+      responses:
+        "405":
+          description: "Invalid input"
+  /image/getPfp:
+    get: 
+      tags: 
+      - "image"
+      summary: "Return Pfp"
+      description: "Returns the profilepicture of the user"
+      operationId: "getPfp"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Image'
+        "404":
+          description: "No profilepicture found"
+  /image/saveImage:
+    post:
+      tags: 
+      - "image"
+      summary: "saves an image"
+      description: "saves an image in the database"
+      operationId: "saveImage"
+      produces: 
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "succesful operation"
+  /image/getImages:
+    get: 
+      tags: 
+      - "image"
+      summary: "Finds an image of a User"
+      description: "Returns a Image of a User"
+      operationId: "getImages"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Image'
+        "404":
+          description: "No Images found"
+  /image/getAllImages:
+    get: 
+      tags: 
+      - "image"
+      summary: "Find all images"
+      description: "Returns all images"
+      operationId: "getAllImages"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Image'
+        "404":
+          description: "No Images found"
+  /image/delete/{id}:
+    delete: 
+      tags: 
+      - "image"
+      summary: "Find Friendships of a User"
+      description: "Returns all Friendships of a User"
+      operationId: "deleteImage"
+      parameters: 
+      - name: "id"
+        in: "path"
+        required: true
+        type: "integer"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: '#/definitions/Image'
+        "400":
+          description: "Invalid id"
+        "404":
+          description: "No User found"
+
     
       
 definitions:
@@ -391,6 +591,44 @@ definitions:
       fullname:
         type: "string"
         example: "Hans-Hermann Hanslinger"
+  Friendship:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: "187"
+        format: "int64"
+      user1_id:
+        type: "object"
+        example: "user1"
+      user2_id:
+        type: "object"
+        example: "user2"
+      created:
+        type: "object"
+        example: "2012-09-12"
+        format: "yyyy-MM-dd"
+      status:
+        type: "string"
+        example: "friends"
+  Image:
+    type: "object"
+    properties:
+      id:
+        type: "number"
+        example: "3278"
+        format: "int64"
+      img:
+        type: "string"
+        example: "29 4b 19 0d e6 76 96 0e 43 37 2d df 24 d2 57 0b e5 29 51 d2 35 76 ec 95 73 34 0e ba b3 d2 04 81 be d6 9d d7 5a 5b f6 45 b1 85 82 8a 65 70 fc 1d 82 57 90 cd 3b af 76 f4 3c ea 31 6a df f8 44 34 dd 1b 04 65 f3 57 25 39 e0 89 9b 88 70 4a 52 53 61 8d 14 df 8e 0d 83 b6 e8 39 62 49 89 bc c4 24 7b 1f e3 52 31 c4 c9 6a 21 13 42 35 9e 0a 7d 1b 15 91 50 ed 0a 6f c6 bb 31 98 e2 2f 76 22 80 13 1d 08 a4 5e 7c 35 c3 9a dc 7e a1 46 9c 62 34 f5 7f 08 d7 9a 5d bc 56 30 36 56 8b 4b 1b cf 00 c6 97 5c ea ac 67 07 d1 85 a1 1f 5a e0 22 9e b2 62 81 2f 0d 84 2c b7 8d 46 a0 5b 7e 0d ab 74 c8 1e 66 f5 ce 63 07 98 31 3c a3 8b 6c 1c 01 0e 50 7b a5 6f 17 a3 c0 36 fe 42 f7 4c a2 98 c5 0e e2 92 d4 2f 55 1f b5 6d 01 4b 0c 6c 3a 62 76 18 c6 32 19 f3 8b 2f 78 aa c0 81 98 00 80 25 6f e1 37 3e f6 db eb 55 83 6d 13 93 f1 45 04 1a 4c 87 4a 32 1e e6 66 48 06 7e 4c 21 3d 4a 0a 4e e5 a6 c2 fc b6 f9 0a 7e 9f eb 8b d9 86 1a 19 d4 03 70 6e 43 cd c6 f8 59 03 85 f4 18 c9 00 cb 07 d0 b8 1b 79 07 92 c1 88 e1 ce 5b f1 7d 44 cd 0a 9b 48 da a3 5b 2d fb 1a 35 36 28 7a a0 ca fa 7c 14 88 88 5b e9 14 47 5d e8 78 b7 e7 42 d1 cb 57 dc c3 f7 cf 17 28 b0 9d b9 25 39 50 0d e4 6f 67 1e 46 51 63 a7 ba 27 48 3a 0a ab b0 56 d4 1c 8a 7e 08 3a b6 98 f0 22 1c 5c fb 92 79 29 98 89 20 c2 5d b5 56 ca 5c b7 bd 31 fc 22 af bb d3 ab c1 b9 67 99 9f 99 84 41 f3 a4 ac 36 72 81 30 db 74 1c 35 eb 3a b5 64 c3 3d 72 e1 3d 8a e6 73 a7 78 c7 af b3 ec bc 36 b6 9e 94 25 8f 82 3f 93 7e 45 5b 70 3d 87 40 26 85 51 20 73 a3 dc 25 27 4a c0 3b 19 c5 bf b7 e9 9b 3b d3 83 d1 aa 5c ba b1 6f 2b d5 41 7e "
+      userId:
+        type: "number"
+        example: "281"
+        format: "int64"
+      
+      
+
+      
         
         
         
