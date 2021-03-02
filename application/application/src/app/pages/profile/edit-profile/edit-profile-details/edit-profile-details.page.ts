@@ -44,7 +44,7 @@ export class EditProfileDetailsPage implements OnInit {
     this.ps.getUser().subscribe(
       data => {
         //console.log(data);
-        this.ps.user = data;
+        this.ps.user.custom = data;
         console.log(this.ps.user)
       },
       error => {
@@ -77,10 +77,10 @@ export class EditProfileDetailsPage implements OnInit {
     //Update von Keycloak Daten
     this.ps.updateKeycloakUser(json).subscribe(data => {
       //Update von eigener Datenbank
-      this.ps.updateUser(u).subscribe(data => {
+      this.ps.updateUser(u.custom).subscribe(data => {
         //return ist aktualisierter User
         console.log(data)
-        this.ps.user = data;
+        this.ngOnInit();
       });
     },
       error => {

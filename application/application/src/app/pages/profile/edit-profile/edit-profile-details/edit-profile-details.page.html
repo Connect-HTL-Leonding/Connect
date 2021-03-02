@@ -30,14 +30,14 @@
 
     <ion-item>
       <ion-label slot="start">Geburtstag</ion-label>
-      <ion-input *ngIf="ps.user" type="date" [(ngModel)]="ps.user.birthday"></ion-input>
+      <ion-input *ngIf="ps.user" type="date" [(ngModel)]="ps.user.custom.birthday"></ion-input>
     </ion-item>
 
 
 
     <ion-item>
       <ion-label>Gender</ion-label>
-      <ion-select *ngIf="ps.user" value="a" interface="popover" [(ngModel)]="ps.user.gender">
+      <ion-select *ngIf="ps.user" value="a" interface="popover" [(ngModel)]="ps.user.custom.gender">
         <ion-select-option value="m">männlich</ion-select-option>
         <ion-select-option value="f">weiblich</ion-select-option>
         <ion-select-option value="s">anderes</ion-select-option>
