@@ -17,6 +17,7 @@ export class ContactlistPage implements OnInit {
   contactService
   chatService;
   latestMessage : Message;
+  modal;
 
   constructor(cs : ContactlistService, public modalController: ModalController, chatService : ChatService) { 
     this.contactService = cs;
@@ -37,12 +38,12 @@ export class ContactlistPage implements OnInit {
 
   async presentModal(room:Room) {
     this.contactService.selectedRoom = room;
-    const modal = await this.modalController.create({
+    this.modal = await this.modalController.create({
       component: ChatPage
     });
-    modal.onDidDismiss().then((data => {
-      
+    this.modal.onDidDismiss().then((data => {
+     this.ngOnInit();
     }))
-    return await modal.present();
+    return await this.modal.present();
   }
 }
