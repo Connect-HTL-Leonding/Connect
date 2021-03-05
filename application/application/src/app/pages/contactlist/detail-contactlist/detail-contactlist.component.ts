@@ -13,6 +13,7 @@ export class DetailContactlistComponent implements OnInit {
   @Input() room: Room;
   public contactlist;
   public user: User = new User();
+  public latestMessage : string;
 
   constructor(public cs: ContactlistService) {
     this.contactlist = cs;
@@ -38,6 +39,16 @@ export class DetailContactlistComponent implements OnInit {
       });
     })
 
+    this.getLatestMessage(this.room);
+  }
+
+  getLatestMessage(room: Room) {
+      this.contactlist.getLatestMessage(room).subscribe(data=> {
+        if(data != null) {
+        console.log(data.message);
+        this.latestMessage = data.message;
+        }
+      })
   }
 
   userExists(user: User) {

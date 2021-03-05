@@ -36,6 +36,14 @@ public class MessageService {
         return ms;
     }
 
+    @Path("findLatestMessage/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Message findLatestMessage(@PathParam("id") long id) {
+        Message m = dbRepo.getLatestMessage(id);
+        return m;
+    }
+
     @Path("create/{id}")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

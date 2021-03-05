@@ -55,6 +55,9 @@ public class SkinRepository {
 
         User u6 = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
 
+        User u7 = new User("5f92cdb2-1d5f-43a2-80ef-8ba5cdc3c881", "trisinger");
+        User u8 = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
+
         Friendship f = new Friendship(u,u1,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(u2,u3,s,LocalDateTime.now(),"cool");
         Friendship f2 = new Friendship(u4,u5,s,LocalDateTime.now(),"cool");
@@ -83,15 +86,11 @@ public class SkinRepository {
         r.getUsers().add(u);
 
         u1.getRooms().add(r);
-        u1.getRooms().add(r1);
         r.getUsers().add(u1);
-        r1.getUsers().add(u1);
-
 
         u2.getRooms().add(r2);
-        u2.getRooms().add(r3);
         r2.getUsers().add(u2);
-        r3.getUsers().add(u2);
+
 
         u3.getRooms().add(r2);
         r2.getUsers().add(u3);
@@ -101,8 +100,10 @@ public class SkinRepository {
         r1.getUsers().add(u6);
         r3.getUsers().add(u6);
 
-
-
+        u8.getRooms().add(r3);
+        r3.getUsers().add(u8);
+        r1.getUsers().add(u7);
+        u7.getRooms().add(r1);
 
 
 
@@ -138,6 +139,8 @@ public class SkinRepository {
         em.persist(f2);
         em.persist(f3);
         em.persist(f4);
+        em.persist(u7);
+        em.persist(u8);
     }
 
     // Finden einer Person über ID in der DB

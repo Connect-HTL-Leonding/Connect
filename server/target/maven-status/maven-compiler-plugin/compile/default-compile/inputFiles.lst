@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\CategoryService.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Skin.java
@@ -23,3 +24,30 @@ C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\Frien
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Room.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\CategoryRepository.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MessageService.java
+=======
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\CategoryService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\MessageService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\ChatService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\FriendshipService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\ChatSocket.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\CategoryRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\MySkinService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\SkinService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\ImageRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\skin\Skin.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\ChatRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\MessageRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\chat\Message.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\MySkinRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\user\User.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\UserRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\FriendshipRepository.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\user\Friendship.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\ImageService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\UserService.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\skin\Category.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\chat\Room.java
+C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\image\Image.java
+>>>>>>> 94e1d2b112d66a4f315e38ad211f82d6878333f8
