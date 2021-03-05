@@ -6,6 +6,7 @@ import { User } from '../model/user';
 import { api } from '../app.component';
 import {ContactlistService} from './contactlist.service';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { Camera, CameraResultType } from '@capacitor/core';
 @Injectable({
   providedIn: 'root'
 })
@@ -39,5 +40,19 @@ export class ChatService {
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
     return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
+  }
+
+  public async createImageMessage(m:Message) {
+    
+    try {
+      const capturedPhoto = await Camera.getPhoto({
+        resultType: CameraResultType.Base64,
+        quality: 100,
+        allowEditing: true
+      })
+      m.image = capturedPhoto.base64String;
+      return this.createMessage(m);
+    } catch (e) {
+      }
   }
 }

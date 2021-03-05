@@ -17,7 +17,9 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @ApplicationScoped
@@ -41,63 +43,85 @@ public class SkinRepository {
         Category c2 = new Category("Freizeit");
 
 
-        User u = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
-        User u1 = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
+        User susi = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
+        User jan = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
 
 
-        User u2 = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
-        User u3 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
+        User ibo = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
+        User ibo1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
+        User simon = new User("6d7975ac-28d0-4ab9-8c95-e1bf91acdf15", "simon");
 
-        User u4 = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
-        User u5 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
+        User trisi = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
+        User trisi1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
 
-        User u6 = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
+        User tobias = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
 
-        Friendship f = new Friendship(u,u1,s,LocalDateTime.now(),"cool");
-        Friendship f1 = new Friendship(u2,u3,s,LocalDateTime.now(),"cool");
-        Friendship f2 = new Friendship(u4,u5,s,LocalDateTime.now(),"cool");
-        Friendship f3 = new Friendship(u3,u5,s1,LocalDateTime.now(),"cool");
-        Friendship f4 = new Friendship(u1,u5,s1,LocalDateTime.now(),"cool");
+        User trisinger = new User("5f92cdb2-1d5f-43a2-80ef-8ba5cdc3c881", "trisinger");
+        User jan1 = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
 
+        Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
+        Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
+        Friendship f2 = new Friendship(trisi,trisi1,s,LocalDateTime.now(),"cool");
+        Friendship f3 = new Friendship(ibo1,trisi1,s1,LocalDateTime.now(),"cool");
+        Friendship f4 = new Friendship(jan,trisi1,s1,LocalDateTime.now(),"cool");
 
+        Map<String, Double> latlng = new ConcurrentHashMap<>();
+        latlng.put("Lat",123.456);
+        latlng.put("Lng",-333.33);
 
-
-
-        Room r = new Room("DM");
-        Room r1 = new Room("DM");
-        Room r2 = new Room("DM");
-        Room r3 = new Room("DM");
-
-        u.getRooms().add(r);
-        r.getUsers().add(u);
-
-        u1.getRooms().add(r);
-        u1.getRooms().add(r1);
-        r.getUsers().add(u1);
-        r1.getUsers().add(u1);
-
-
-        u2.getRooms().add(r2);
-        u2.getRooms().add(r3);
-        r2.getUsers().add(u2);
-        r3.getUsers().add(u2);
-
-        u3.getRooms().add(r2);
-        r2.getUsers().add(u3);
-
-        u6.getRooms().add(r1);
-        u6.getRooms().add(r3);
-        r1.getUsers().add(u6);
-        r3.getUsers().add(u6);
+        susi.setPosition(latlng);
+        jan.setPosition(latlng);
+        ibo.setPosition(latlng);
+        ibo1.setPosition(latlng);
+        simon.setPosition(latlng);
+        trisi.setPosition(latlng);
+        trisi1.setPosition(latlng);
+        tobias.setPosition(latlng);
+        trisinger.setPosition(latlng);
+        jan1.setPosition(latlng);
 
 
+    // Jan's rooms
+        Room roomJan1 = new Room("DM");
+        
+        susi.getRooms().add(roomJan1);
+        roomJan1.getUsers().add(susi);
 
+        jan.getRooms().add(roomJan1);
+        roomJan1.getUsers().add(jan);
 
+    // Ibo's rooms
+        Room roomIbo1 = new Room("DM");
+        Room roomIbo2 = new Room("DM");
+        ibo.getRooms().add(roomIbo1);
+        ibo1.getRooms().add(roomIbo1);
+        roomIbo1.getUsers().add(ibo);
+        roomIbo1.getUsers().add(ibo1);
 
+        ibo.getRooms().add(roomIbo2);
+        simon.getRooms().add(roomIbo2);
+        roomIbo2.getUsers().add(ibo);
+        roomIbo2.getUsers().add(simon);
+
+    // Rafi's rooms
+        Room roomRafi1 = new Room("DM");
+        Room roomRafi2 = new Room("DM");
+        
+        tobias.getRooms().add(roomRafi1);
+        trisinger.getRooms().add(roomRafi1);
+        roomRafi1.getUsers().add(tobias);
+        roomRafi1.getUsers().add(trisinger);
+        
+        jan1.getRooms().add(roomRafi2);
+        tobias.getRooms().add(roomRafi2);
+        roomRafi2.getUsers().add(jan1);
+        roomRafi2.getUsers().add(tobias);
+        
+        
 
         MySkin ms = new MySkin(30, 5, 5);
         ms.setSkin(s);
-        ms.setUser(u);
+        ms.setUser(susi);
         s.getCategories().add(c);
         s.getCategories().add(c1);
         s1.getCategories().add(c);
@@ -108,10 +132,19 @@ public class SkinRepository {
         em.persist(c);
         em.persist(c1);
         em.persist(c2);
-        em.persist(u);
-        em.persist(u1);
-        em.persist(r);
-        em.persist(r1);
+        em.persist(susi);
+        em.persist(jan);
+        em.persist(ibo);
+        em.persist(ibo1);
+        em.persist(simon);
+        em.persist(trisi);
+        em.persist(trisi1);
+        em.persist(tobias);
+        em.persist(roomJan1);
+        em.persist(roomRafi1);
+        em.persist(roomIbo1);
+        em.persist(roomIbo2);
+        em.persist(roomRafi2);
         em.persist(s);
         em.persist(s1);
         em.persist(ms);
@@ -120,6 +153,8 @@ public class SkinRepository {
         em.persist(f2);
         em.persist(f3);
         em.persist(f4);
+        em.persist(trisinger);
+        em.persist(jan1);
     }
 
     // Finden einer Person über ID in der DB

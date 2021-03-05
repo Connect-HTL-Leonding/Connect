@@ -38,6 +38,7 @@ export class ProfilePage implements OnInit {
         console.log(data);
         this.ps.user.custom = data;
 
+        console.log("westrzutqjhkgizfutetdzuz")
         console.log(this.ps.user)
 
 

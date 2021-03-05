@@ -23,6 +23,7 @@ public class MessageRepository {
 
     @Transactional
     public Message create(Message message) {
+
         em.persist(message);
         return message;
     }
@@ -44,5 +45,21 @@ public class MessageRepository {
             System.out.println(e.getMessage());
         }
         return ms;
+    }
+
+    public Message getLatestMessage(long RoomId) {
+        TypedQuery<Message> tq = this.em.createNamedQuery(Message.FINDALL, Message.class);
+        tq.setParameter("u", RoomId);
+
+        List<Message> ms = null;
+        Message latestMessage = null;
+
+        try {
+            ms = tq.getResultList();
+            latestMessage = ms.get(ms.size() - 1);
+        }catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return latestMessage;
     }
 }

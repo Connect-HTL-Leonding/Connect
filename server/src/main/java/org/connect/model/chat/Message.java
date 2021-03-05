@@ -23,6 +23,8 @@ public class Message implements Serializable {
     private String message;
     private LocalDateTime created;
     private LocalDateTime updated;
+    @Lob
+    private byte[] image;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "room_id")
     private Room room;
@@ -38,6 +40,13 @@ public class Message implements Serializable {
         this.message = message;
         this.created = created;
         this.updated = updated;
+    }
+
+    public Message(String message, LocalDateTime created, LocalDateTime updated, byte[] image) {
+        this.message = message;
+        this.created = created;
+        this.updated = updated;
+        this.image = image;
     }
 
     public long getId() {
@@ -86,5 +95,13 @@ public class Message implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 }
