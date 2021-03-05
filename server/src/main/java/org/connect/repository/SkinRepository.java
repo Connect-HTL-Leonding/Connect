@@ -17,7 +17,9 @@ import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 @ApplicationScoped
@@ -59,7 +61,16 @@ public class SkinRepository {
         Friendship f3 = new Friendship(u3,u5,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(u1,u5,s1,LocalDateTime.now(),"cool");
 
+        Map<String, Double> latlng = new ConcurrentHashMap<>();
+        latlng.put("Lat",123.456);
+        latlng.put("Lng",-333.33);
 
+        u.setPosition(latlng);
+        u1.setPosition(latlng);
+        u2.setPosition(latlng);
+        u3.setPosition(latlng);
+        u4.setPosition(latlng);
+        u5.setPosition(latlng);
 
 
 

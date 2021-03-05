@@ -55,6 +55,7 @@ public class UserService {
         //user-id
         System.out.println(jwt.claim("sub"));
 
+
         return dbRepo.find(jwt.claim("sub"));
     }
 
@@ -74,6 +75,19 @@ public class UserService {
             return new String( Base64.getDecoder().decode(new String(u.getProfilePicture()).getBytes("UTF-8")));
         } else {
             return defaultPfp;
+        }
+
+    }
+
+    @GET
+    @Path("getLocation/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Map<String, Double> getLocation(@PathParam("id") long id) throws UnsupportedEncodingException {
+        User u = findOtherUser(id);
+        if( u.getPosition() != null) {
+            return u.getPosition();
+        } else {
+            return null;
         }
 
     }

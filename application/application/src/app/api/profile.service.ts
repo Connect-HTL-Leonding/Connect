@@ -35,6 +35,7 @@ export class ProfileService {
       console.log(data)
     });
 
+  
 
     return this.http.get<CustomUser>(api.short + 'user/customData', {headers: reqHeader});
 

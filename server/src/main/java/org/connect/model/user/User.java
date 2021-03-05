@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","rooms"})
@@ -36,6 +38,15 @@ public class User implements Serializable {
     //private String lastname;
 
     private char gender;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_position_mapping",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "latlng")
+    @Column(name = "degrees")
+    Map<String,Double> position;
+
+
 
     //private LocalDateTime created;
     //LocalDateTime updated;
@@ -82,6 +93,14 @@ public class User implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Map<String, Double> getPosition() {
+        return position;
+    }
+
+    public void setPosition(Map<String, Double> position) {
+        this.position = position;
     }
 
     public List<Room> getRooms() {
