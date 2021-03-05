@@ -23,6 +23,7 @@ public class MessageRepository {
 
     @Transactional
     public Message create(Message message) {
+
         em.persist(message);
         return message;
     }

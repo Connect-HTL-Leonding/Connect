@@ -7,7 +7,7 @@ export class Message {
         public id = 0,
         public message: string = "",
         public created: Date = new Date(),
-        
+        public image = "",
         public updated: Date = new Date(),
         public room: Room = null,
         public user: User = null
