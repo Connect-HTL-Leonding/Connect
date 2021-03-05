@@ -13,6 +13,7 @@ dependencies {
     implementation "com.android.support:support-v4:27.+"
 }
 apply from: "../../node_modules/cordova-androidx-build/src/android/cordova-androidx-build.gradle"
+apply from: "../../node_modules/com-sarriaroman-photoviewer/src/android/photoviewer.gradle"
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

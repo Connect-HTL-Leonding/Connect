@@ -17,6 +17,7 @@ import { CoreModule } from './api/auth/core.module';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     SplashScreen,
     Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    PhotoViewer
+    PhotoViewer,
+    InAppBrowser
   ],
   bootstrap: [AppComponent]
 })
