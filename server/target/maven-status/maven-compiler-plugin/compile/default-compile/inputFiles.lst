@@ -1,4 +1,34 @@
+<<<<<<< HEAD
 <<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\CategoryService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Skin.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\UserRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Category.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ChatService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Message.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\ImageRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\UserService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\SkinService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\ChatRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\User.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MessageRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ImageService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\image\Image.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\FriendshipService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MySkinService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\Friendship.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MySkinRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\ChatSocket.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\FriendshipRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Room.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\CategoryRepository.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MessageService.java
+=======
+>>>>>>> 270112eef706af87b7eb5413ff136063f705fc1e
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\CategoryService.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\MessageService.java
@@ -24,6 +54,7 @@ C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\servi
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\skin\Category.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\chat\Room.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\image\Image.java
+<<<<<<< HEAD
 =======
 D:\Connect\Connect\server\src\main\java\org\connect\ChatSocket.java
 D:\Connect\Connect\server\src\main\java\org\connect\service\FriendshipService.java
@@ -51,3 +82,6 @@ D:\Connect\Connect\server\src\main\java\org\connect\model\user\User.java
 D:\Connect\Connect\server\src\main\java\org\connect\service\MessageService.java
 D:\Connect\Connect\server\src\main\java\org\connect\model\chat\Message.java
 >>>>>>> Stashed changes
+=======
+>>>>>>> 94e1d2b112d66a4f315e38ad211f82d6878333f8
+>>>>>>> 270112eef706af87b7eb5413ff136063f705fc1e
