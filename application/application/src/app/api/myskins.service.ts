@@ -13,6 +13,7 @@ export class MyskinsService {
 
   //Array an Terminen
   public myskins: Array<MySkin>;
+  public current : MySkin = null;
   message;
 
 
@@ -63,6 +64,9 @@ export class MyskinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
+    if(index == this.current.id){
+      this.current = null;
+    }
     return this.http.delete(api.url + 'myskin/delete/' + index, {headers: reqHeader});
   }
 }

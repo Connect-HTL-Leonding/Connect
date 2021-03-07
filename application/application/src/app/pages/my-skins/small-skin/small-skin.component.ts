@@ -14,6 +14,8 @@ export class SmallSkinComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.current)
+  }
 
 }

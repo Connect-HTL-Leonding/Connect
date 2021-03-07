@@ -35,10 +35,10 @@ export class MySkinsPage implements OnInit {
         console.log(data);
         this.mySkinService.myskins = data;
 
-        console.log(this.mySkinService.myskins)
+        console.log(this.mySkinService.current)
         //Skin wird selektiert
         this.selectSkin();
-
+        console.log(this.mySkinService.current)
 
 
         //console.log(this.skinService);
@@ -55,20 +55,24 @@ export class MySkinsPage implements OnInit {
   }
 
   //ausgewählter Skin änder bei klick
-  changeSelection(s: MySkin) {
-    this.currentSkin = s;
+  changeSelection(ms: MySkin) {
+    this.mySkinService.current = ms;
   }
 
   //ausgewählter Skin ändern - dynamisch
   selectSkin() {
-    if (this.mySkinService.myskins) {
-      this.mySkinService.myskins.forEach(element => {
-        this.currentSkin = element;
-      });
-    } else {
-      this.currentSkin = null;
+    if (this.mySkinService.current == null) {
+      console.log("jsaldfja")
+      if (this.mySkinService.myskins) {
+        this.mySkinService.myskins.forEach(element => {
+          this.mySkinService.current = element;
+        });
+      } else {
+        this.mySkinService.current = null;
+      }
     }
 
+    console.log(this.mySkinService.current)
   }
 
   //Modal öffnen
@@ -128,7 +132,7 @@ export class MySkinsPage implements OnInit {
         data => {
           this.mySkinService.myskins = data;
           this.selectSkin();
-
+          console.log(this.mySkinService.current)
         },
         error1 => {
           console.log('Error');
