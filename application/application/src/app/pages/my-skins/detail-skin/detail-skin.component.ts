@@ -40,4 +40,9 @@ export class DetailSkinComponent implements OnInit {
     this.updated.emit();
   }
 
+  selected(){
+    this.myskin.selected = !this.myskin.selected;
+    this.updated.emit();
+  }
+
 }

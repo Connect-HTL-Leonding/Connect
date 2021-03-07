@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { LoadingController, MenuController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { MapStyle } from './mapStyle';
 import { User } from '../../model/user';
+import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
+import { MyskinsService } from 'src/app/api/myskins.service';
 
 /*
 import {
@@ -28,7 +30,7 @@ declare var google: any;
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
-export class HomePage {
+export class HomePage implements OnInit {
   //map: GoogleMap;
   navigate: any;
   map: any;
@@ -36,16 +38,27 @@ export class HomePage {
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(private menu: MenuController, private geolocation: Geolocation) {
+  constructor(private menu: MenuController, private geolocation: Geolocation, public loadingController: LoadingController, private mySkinsService : MyskinsService) {
     this.sideMenu();
   }
 
 
-  /*
-  async ngOnInit() {
-    this.loadMap();
+  ngOnInit() {
+    this.mySkinsService.getSelectedSkins().subscribe(data => {
+      console.log(data);
+    })
   }
-  */
+
+
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Map loading...',
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+  }
 
 
 
@@ -60,7 +73,7 @@ export class HomePage {
     canvas.width = 35;
     canvas.height = 62;
     var ctx = canvas.getContext('2d');
-    var image1 = "data:image/png;base64," +user.custom.profilePicture;
+    var image1 = "data:image/png;base64," + user.custom.profilePicture;
     var image = new Image();
     var compositeImage;
 
@@ -94,82 +107,83 @@ export class HomePage {
     var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
 
 
-ctx.fillStyle = '#0eb19b';
-ctx.fill(path);
+    ctx.fillStyle = '#0eb19b';
+    ctx.fill(path);
 
     compositeImage = canvas.toDataURL("image/png");
 
     canvas.remove();
     console.log(compositeImage)
 
-var marker = new google.maps.Marker({
-  position: origin,
-  title: user.userName,
-  map: this.map,
-  icon: compositeImage
-});
+    var marker = new google.maps.Marker({
+      position: origin,
+      title: user.userName,
+      map: this.map,
+      icon: compositeImage
+    });
 
 
-}
-createMeetupMarker(source, origin){
-  var canvas = document.createElement('canvas');
-  canvas.width = 35;
-  canvas.height = 62;
-var ctx = canvas.getContext('2d');
-var image1 = source;
-var image = new Image();
-var compositeImage;
-
-
-
-image.src = image1;
-
-ctx.drawImage(image, 2.4725 , 2.9421  , 29.6, 29.6);
+  }
+  createMeetupMarker(source, origin) {
+    var canvas = document.createElement('canvas');
+    canvas.width = 35;
+    canvas.height = 62;
+    var ctx = canvas.getContext('2d');
+    var image1 = source;
+    var image = new Image();
+    var compositeImage;
 
 
 
-// only draw image where mask is
-ctx.globalCompositeOperation = 'destination-in';
+    image.src = image1;
 
-// draw our circle mask
-ctx.fillStyle = '#000';
-ctx.beginPath();
-ctx.arc(
- 14.8+2.4725,          // x
- 14.8+2.9421,          // y
- 14.8,          // radius
- 0,                  // start angle
- 2 * Math.PI         // end angle
-);
-ctx.fill();
-
-// restore to default composite operation (is draw over current image)
-ctx.globalCompositeOperation = 'source-over';
+    ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
 
 
-var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+
+    // only draw image where mask is
+    ctx.globalCompositeOperation = 'destination-in';
+
+    // draw our circle mask
+    ctx.fillStyle = '#000';
+    ctx.beginPath();
+    ctx.arc(
+      14.8 + 2.4725,          // x
+      14.8 + 2.9421,          // y
+      14.8,          // radius
+      0,                  // start angle
+      2 * Math.PI         // end angle
+    );
+    ctx.fill();
+
+    // restore to default composite operation (is draw over current image)
+    ctx.globalCompositeOperation = 'source-over';
 
 
-ctx.fillStyle = '#db3d3d';
-ctx.fill(path);
-
-compositeImage = canvas.toDataURL("image/png");
-
-canvas.remove();
-console.log(compositeImage)
-
-var marker = new google.maps.Marker({
-  position: origin,
-  title: "Jan",
-  map: this.map,
-  icon: compositeImage
-});
+    var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
 
 
-}
+    ctx.fillStyle = '#db3d3d';
+    ctx.fill(path);
+
+    compositeImage = canvas.toDataURL("image/png");
+
+    canvas.remove();
+    console.log(compositeImage)
+
+    var marker = new google.maps.Marker({
+      position: origin,
+      title: "Jan",
+      map: this.map,
+      icon: compositeImage
+    });
+
+
+  }
 
   async loadMap() {
-
+    //show LoadingScreen BITTE NICHT ENTFERNEN! danke
+    //this.presentLoading();
 
 
     console.log(this.geolocation);
@@ -187,10 +201,14 @@ var marker = new google.maps.Marker({
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
       // resp.coords.longitude
+
+      //dismiss loading if loading Overlay exists BITTE NICHT ENTFERNEN! danke
+      //this.loadingController.getTop().then(v => v ? this.loadingController.dismiss() : null);
+
       console.log(resp.coords.latitude + " " + resp.coords.longitude)
       const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-      const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
-      const location3 = new google.maps.LatLng(resp.coords.latitude-0.0005, resp.coords.longitude-0.0005);
+      const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
+      const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
 
       // new ClickEventHandler(this.map, location);
 
@@ -205,8 +223,8 @@ var marker = new google.maps.Marker({
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
-   this.createUserMarker(new User(),location2);
-   this.createMeetupMarker('../../assets/normalguy.jpg',location3);
+      this.createUserMarker(new User(), location2);
+      this.createMeetupMarker('../../assets/normalguy.jpg', location3);
 
       new ClickEventHandler(this.map, location);
 

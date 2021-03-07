@@ -4,6 +4,7 @@
     height: 85px;
     justify-content: center;
     align-items: center;
+    position: relative;
     .image {
         min-width: 60px;
         min-height: 60px;
@@ -21,5 +22,13 @@
 
     .current {
         border: 5px solid var(--ion-color-primary);
+    }
+
+    ion-badge {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 6px;
+        border-radius: 100%;
     }
 }

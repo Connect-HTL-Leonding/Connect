@@ -18,7 +18,7 @@
       <p>Skin hinzufügen</p>
     </div>
     <div class="list_item" *ngFor="let myskin of mySkinService.myskins, let i=index">
-      <small-skin [myskin]="myskin" [current]="mySkinService.current && myskin.id == mySkinService.current.id" *ngIf="matchesFilter(myskin)" (click)="changeSelection(myskin)"></small-skin>
+      <small-skin [myskin]="myskin" [selected]="myskin.selected" [current]="mySkinService.current && mySkinService.current.id == myskin.id" *ngIf="matchesFilter(myskin)" (click)="changeSelection(myskin)"></small-skin>
     </div>
   </div>
 

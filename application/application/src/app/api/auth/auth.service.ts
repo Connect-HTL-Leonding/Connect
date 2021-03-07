@@ -89,7 +89,7 @@ export class AuthService {
 
     //Automatischer
     this.oauthService.setupAutomaticSilentRefresh({}, 'access_token');
-    this.oauthService.timeoutFactor = 0.5;
+    this.oauthService.timeoutFactor = 0.1;
   }
 
 

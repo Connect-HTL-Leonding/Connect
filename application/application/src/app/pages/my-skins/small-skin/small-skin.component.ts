@@ -11,6 +11,7 @@ export class SmallSkinComponent implements OnInit {
 
   @Input() myskin: MySkin;
   @Input() current: MySkin;
+  @Input() selected: MySkin;
 
   constructor() { }
 

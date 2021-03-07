@@ -1,4 +1,5 @@
 <div class="skin-small">
+  <ion-badge *ngIf="selected" color="primary"><ion-icon name="heart"></ion-icon></ion-badge>
   <img src="{{myskin.skin.image}}" class="image" [ngClass]="{'current':current}">
   <p id="title" [ngStyle]="{'color':current ? 'var(--ion-color-primary)' : 'var(--ion-color-tertiary)' }">{{myskin.skin.title}}</p>
 </div>
