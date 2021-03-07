@@ -1,5 +1,6 @@
 package org.connect.repository;
 
+import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.model.user.Friendship;
 import org.connect.model.user.User;
@@ -10,6 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +27,35 @@ public class FriendshipRepository {
         em.persist(f);
         return f;
     }
+
+    @Transactional
+    public Friendship create(User you, User friend, Skin skin) {
+        Friendship f = new Friendship(you, friend, skin, LocalDateTime.now(), "friend");
+
+        em.persist(f);
+        return f;
+    }
+
+    @Transactional
+    public List<User> findRandom(MySkin mySkin) {
+
+        TypedQuery<User> tq = this.em.createNamedQuery(Friendship.FINDRANDOM, User.class);
+        tq.setParameter("niveau", mySkin.getNiveau());
+        tq.setParameter("age", mySkin.getAge());
+        //tq.setParameter("radius", mySkin.getRadius());
+
+        List<User> userList = null;
+        try {
+            userList = tq.getResultList();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(userList);
+
+        return userList;
+    }
+
 
 
     public List<Friendship> findAll() {

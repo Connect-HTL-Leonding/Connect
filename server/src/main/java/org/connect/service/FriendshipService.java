@@ -1,6 +1,7 @@
 package org.connect.service;
 
 import io.quarkus.security.identity.SecurityIdentity;
+import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.model.user.Friendship;
 import org.connect.model.user.User;
@@ -32,12 +33,27 @@ public class FriendshipService {
     @GET
     @Path("create")
     @Produces(MediaType.APPLICATION_JSON)
-    @NoCache
     public Friendship create(Friendship f) {
 
         return dbRepo.create(f);
     }
 
+    //Friendship zwischen aktuellem und ausgesuchtem Nutzer wird erzeugt
+    @GET
+    @Path("create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Friendship create(User you, User friend, Skin skin) {
+
+        return dbRepo.create(you, friend, skin);
+    }
+
+    @Path("findRandom")
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<User> find(MySkin mySkin) {
+        return dbRepo.findRandom(mySkin);
+    }
 
     @Path("findAll")
     @GET

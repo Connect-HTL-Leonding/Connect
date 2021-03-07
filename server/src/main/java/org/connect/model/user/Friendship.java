@@ -7,14 +7,19 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
-@NamedQueries({
-        @NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f"),
-        @NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where user1_id = :user or user2_id = :user")
-})
+
+@NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f")
+@NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where user1_id = :user or user2_id = :user")
+//Radius muss noch hinzugefügt werden
+@NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT u FROM User u join MySkin ms on(ms.user.id = u.id)" +
+        "where ms.age <= :age and ms.niveau = :niveau")
+
 public class Friendship implements Serializable {
 
     public static final String FINDALL = "Friendship.findAll";
     public static final String FINDFRIENDSHIPSOFUSER = "Friendship.findFriendshipsOfUser";
+    public static final String FINDRANDOM = "Friendship.findRandom";
+
 
 
     @Id

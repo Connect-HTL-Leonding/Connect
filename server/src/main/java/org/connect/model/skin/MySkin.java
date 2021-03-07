@@ -8,12 +8,13 @@ import java.util.List;
 
 @Entity
 @DiscriminatorValue("my")
-@NamedQueries({
-        @NamedQuery(name = MySkin.FINDALL, query = "SELECT ms FROM MySkin ms where user_id = :u")
-})
+@NamedQuery(name = MySkin.FINDALL, query = "SELECT ms FROM MySkin ms where user_id = :u")
+@NamedQuery(name = MySkin.FINDSELECTED, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.selected = true")
 public class MySkin implements Serializable {
 
     public static final String FINDALL = "MySkin.findAll";
+    public static final String FINDSELECTED = "MySkin.findSelected";
+
 
     @Id
     @GeneratedValue
@@ -21,6 +22,8 @@ public class MySkin implements Serializable {
     private int age;
     private int radius;
     private int niveau;
+
+    private boolean selected = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "skin_id")
@@ -90,5 +93,13 @@ public class MySkin implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }
