@@ -65,20 +65,37 @@ public class SkinRepository {
         Friendship f3 = new Friendship(ibo1,trisi1,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(jan,trisi1,s1,LocalDateTime.now(),"cool");
 
-        Map<String, Double> latlng = new ConcurrentHashMap<>();
-        latlng.put("Lat",123.456);
-        latlng.put("Lng",-333.33);
 
-        susi.setPosition(latlng);
-        jan.setPosition(latlng);
-        ibo.setPosition(latlng);
-        ibo1.setPosition(latlng);
-        simon.setPosition(latlng);
-        trisi.setPosition(latlng);
-        trisi1.setPosition(latlng);
-        tobias.setPosition(latlng);
-        trisinger.setPosition(latlng);
-        jan1.setPosition(latlng);
+
+
+
+        susi.getPosition().put("Lat",123.456);
+        susi.getPosition().put("Lng",-111.11);
+        jan.getPosition().put("Lat",74.543);
+        jan.getPosition().put("Lng",-9.33);
+        ibo.getPosition().put("Lat",12.9);
+        ibo.getPosition().put("Lng",120.0);
+        ibo1.getPosition().put("Lat",156.34);
+        ibo1.getPosition().put("Lng",103.39);
+        simon.getPosition().put("Lat",81.007);
+        simon.getPosition().put("Lng",0.3);
+        tobias.getPosition().put("Lat",-74.543);
+        tobias.getPosition().put("Lng",9.33);
+        trisinger.getPosition().put("Lat",-12.9);
+        trisinger.getPosition().put("Lng",-120.0);
+        jan1.getPosition().put("Lat",-156.34);
+        jan1.getPosition().put("Lng",-103.39);
+
+
+
+
+
+
+
+
+
+
+
 
 
     // Jan's rooms
@@ -118,6 +135,7 @@ public class SkinRepository {
         roomRafi2.getUsers().add(tobias);
         
         
+
 
         MySkin ms = new MySkin(30, 5, 5);
         ms.setSkin(s);

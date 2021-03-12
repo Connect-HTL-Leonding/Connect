@@ -13,10 +13,7 @@ import java.security.Principal;
 import java.sql.Blob;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Entity
@@ -44,7 +41,7 @@ public class User implements Serializable {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
     @MapKeyColumn(name = "latlng")
     @Column(name = "degrees")
-    Map<String,Double> position;
+    Map<String,Double> position = new HashMap<>();
 
 
 
