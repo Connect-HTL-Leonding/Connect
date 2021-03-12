@@ -64,16 +64,29 @@ public class SkinRepository {
         Friendship f3 = new Friendship(u3,u5,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(u1,u5,s1,LocalDateTime.now(),"cool");
 
-        Map<String, Double> latlng = new ConcurrentHashMap<>();
-        latlng.put("Lat",123.456);
-        latlng.put("Lng",-333.33);
 
-        u.setPosition(latlng);
-        u1.setPosition(latlng);
-        u2.setPosition(latlng);
-        u3.setPosition(latlng);
-        u4.setPosition(latlng);
-        u5.setPosition(latlng);
+
+
+        u.getPosition().put("Lat",123.456);
+        u.getPosition().put("Lng",-111.11);
+        u1.getPosition().put("Lat",74.543);
+        u1.getPosition().put("Lng",-9.33);
+        u2.getPosition().put("Lat",12.9);
+        u2.getPosition().put("Lng",120.0);
+        u3.getPosition().put("Lat",156.34);
+        u3.getPosition().put("Lng",103.39);
+        u4.getPosition().put("Lat",81.007);
+        u4.getPosition().put("Lng",0.3);
+        u5.getPosition().put("Lat",-74.543);
+        u5.getPosition().put("Lng",9.33);
+        u6.getPosition().put("Lat",-12.9);
+        u6.getPosition().put("Lng",-120.0);
+        u7.getPosition().put("Lat",-156.34);
+        u7.getPosition().put("Lng",-103.39);
+        u8.getPosition().put("Lat",-81.007);
+        u8.getPosition().put("Lng",-0.3);
+
+
 
 
 

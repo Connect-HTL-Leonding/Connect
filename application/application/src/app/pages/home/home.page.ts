@@ -6,6 +6,9 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { MapStyle } from './mapStyle';
 import { User } from '../../model/user';
+import { ProfileService } from 'src/app/api/profile.service';
+import { AuthService } from 'src/app/api/auth/auth.service';
+import { FriendshipService } from 'src/app/api/friendship.service';
 
 /*
 import {
@@ -32,12 +35,33 @@ export class HomePage {
   //map: GoogleMap;
   navigate: any;
   map: any;
+  
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
-  constructor(private menu: MenuController, private geolocation: Geolocation) {
+  constructor(private menu: MenuController, private geolocation: Geolocation, public ps: ProfileService, private authService: AuthService, private fs : FriendshipService) {
     this.sideMenu();
+
+    this.ps.getUser().subscribe(
+      data => {
+
+        console.log(data);
+        this.ps.user.custom = data;
+
+      
+
+        console.log("Current User:")
+        console.log(this.ps.user)
+
+
+
+        //console.log(this.skinService);
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
 
@@ -55,7 +79,7 @@ export class HomePage {
     console.log("jfsaldfjkd");
   }
 
-  createUserMarker(user: User, origin) {
+  createUserMarker(user: User) {
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
@@ -101,6 +125,8 @@ ctx.fill(path);
 
     canvas.remove();
     console.log(compositeImage)
+
+    var origin = new google.maps.LatLng(user.custom.position.Lat, user.custom.position.Lng);
 
 var marker = new google.maps.Marker({
   position: origin,
@@ -168,6 +194,8 @@ var marker = new google.maps.Marker({
 
 }
 
+
+
   async loadMap() {
 
 
@@ -188,7 +216,18 @@ var marker = new google.maps.Marker({
       // resp.coords.latitude
       // resp.coords.longitude
       console.log(resp.coords.latitude + " " + resp.coords.longitude)
-      const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
+
+      this.ps.user.custom.position.Lat = resp.coords.latitude;
+      this.ps.user.custom.position.Lng = resp.coords.longitude;
+      this.ps.updateUser(this.ps.user.custom);
+
+      this.fs.getBefriendedUsers(this.ps.user).subscribe( data => {
+        data.forEach(function(f){
+          this.createUserMarker(f);
+        })
+      });
+
+      const location = new google.maps.LatLng(this.ps.user.custom.position.Lat, this.ps.user.custom.position.Lng);
       const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
       const location3 = new google.maps.LatLng(resp.coords.latitude-0.0005, resp.coords.longitude-0.0005);
 
@@ -205,7 +244,7 @@ var marker = new google.maps.Marker({
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
-   this.createUserMarker(new User(),location2);
+   
    this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
       new ClickEventHandler(this.map, location);
@@ -224,7 +263,7 @@ var marker = new google.maps.Marker({
         fillColor: "#0eb19b",
         fillOpacity: 1,
         map: this.map,
-        center: location,
+        center: new google.maps.LatLng(this.ps.user.custom.position.Lat, this.ps.user.custom.position.Lng),
         radius: 2 //in Meter
       });
 
@@ -236,7 +275,7 @@ var marker = new google.maps.Marker({
         fillOpacity: 0.05,
         clickable: false,
         map: this.map,
-        center: location,
+        center: new google.maps.LatLng(this.ps.user.custom.position.Lat, this.ps.user.custom.position.Lng),
         radius: 100 //in Meter
       });
 
