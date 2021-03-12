@@ -6,6 +6,8 @@ import { BehaviorSubject, combineLatest, Observable, ReplaySubject } from 'rxjs'
 import { filter, map } from 'rxjs/operators';
 import { api } from 'src/app/app.component';
 import { ProfilePageModule } from 'src/app/pages/profile/profile.module';
+import { InAppBrowser, InAppBrowserOptions } from '@ionic-native/in-app-browser/ngx';
+
 
 //thx to https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards
 @Injectable({ providedIn: 'root' })
@@ -40,7 +42,8 @@ export class AuthService {
   constructor(
     private oauthService: OAuthService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
+    private inAppBrowser: InAppBrowser
   ) {
     // Useful for debugging:
     this.oauthService.events.subscribe(event => {
@@ -84,8 +87,9 @@ export class AuthService {
       .pipe(filter(e => ['session_terminated', 'session_error'].includes(e.type)))
       .subscribe(e => this.navigateToLoginPage());
 
+    //Automatischer
     this.oauthService.setupAutomaticSilentRefresh({}, 'access_token');
-    this.oauthService.timeoutFactor = 0.5;
+    this.oauthService.timeoutFactor = 0.1;
   }
 
 
@@ -160,6 +164,7 @@ export class AuthService {
         // initImplicitFlow(undefined | null) this could happen.
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
           let stateUrl = this.oauthService.state;
+          console.log(stateUrl)
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
@@ -171,7 +176,7 @@ export class AuthService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
           });
-          this.http.get<any>(api.short + 'user/login', {headers: reqHeader}).subscribe(data => {
+          this.http.get<any>(api.short + 'user/login', { headers: reqHeader }).subscribe(data => {
             console.log(data);
           })
         }
@@ -190,10 +195,13 @@ export class AuthService {
 
     this.oauthService.tryLoginCodeFlow().then()
     */
+    console.log(targetUrl)
+    console.log(this.router.url)
     this.oauthService.initLoginFlow(targetUrl || this.router.url);
   }
 
-  public logout() { this.oauthService.logOut(); 
+  public logout() {
+    this.oauthService.logOut();
   }
   public refresh() { this.oauthService.silentRefresh(); }
   public hasValidToken() { return this.oauthService.hasValidAccessToken(); }
@@ -209,4 +217,67 @@ export class AuthService {
   public get identityClaims() { return this.oauthService.getIdentityClaims(); }
   public get idToken() { return this.oauthService.getIdToken(); }
   public get logoutUrl() { return this.oauthService.logoutUrl; }
+
+  /*
+    public keycloakLogin(login: boolean): Promise<any> {
+      return new Promise((resolve, reject) => {
+        const url = this.createLoginUrl(this.keycloakConfig, login);
+  
+        const options: InAppBrowserOptions = {
+          zoom: 'no',
+          location: 'no',
+          clearsessioncache: 'yes',
+          clearcache: 'yes'
+        }
+        const browser = this.inAppBrowser.create(url, '_blank', options);
+  
+        const listener = browser.on('loadstart').subscribe((event: any) => {
+          const callback = encodeURI(event.url);
+          //Check the redirect uri
+          if (callback.indexOf(this.keycloakConfig.redirectUri) > -1) {
+            listener.unsubscribe();
+            browser.close();
+            const code = this.parseUrlParamsToObject(event.url);
+            this.getAccessToken(this.keycloakConfig, code).then(
+              () => {
+                const token = this.storage.get(StorageKeys.OAUTH_TOKENS);
+                resolve(token);
+              },
+              () => reject("Count not login in to keycloak")
+            );
+          }
+        });
+  
+      });
+    }
+  
+    parseUrlParamsToObject(url: any) {
+      const hashes = url.slice(url.indexOf('?') + 1).split('&');
+      return hashes.reduce((params, hash) => {
+        const [key, val] = hash.split('=');
+        return Object.assign(params, {[key]: decodeURIComponent(val)})
+      }, {});
+    }
+  
+    createLoginUrl(keycloakConfig: any, isLogin: boolean) {
+      const state = uuidv4();
+      const nonce = uuidv4();
+      const responseMode = 'query';
+      const responseType = 'code';
+      const scope = 'openid';
+      return this.getUrlForAction(keycloakConfig, isLogin) +
+        '?client_id=' + encodeURIComponent(keycloakConfig.clientId) +
+        '&state=' + encodeURIComponent(state) +
+        '&redirect_uri=' + encodeURIComponent(keycloakConfig.redirectUri) +
+        '&response_mode=' + encodeURIComponent(responseMode) +
+        '&response_type=' + encodeURIComponent(responseType) +
+        '&scope=' + encodeURIComponent(scope) +
+        '&nonce=' + encodeURIComponent(nonce);
+    }
+  
+    getUrlForAction(keycloakConfig: any, isLogin: boolean) {
+      return isLogin ? this.getRealmUrl(keycloakConfig) + '/protocol/openid-connect/auth'
+        : this.getRealmUrl(keycloakConfig) + '/protocol/openid-connect/registrations';
+    }
+    */
 }

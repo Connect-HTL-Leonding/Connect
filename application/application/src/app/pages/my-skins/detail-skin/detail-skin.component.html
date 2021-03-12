@@ -3,11 +3,16 @@
   <ion-card-header>
     <ion-card-subtitle>{{myskin.skin.follower}} Follower</ion-card-subtitle>
     <ion-card-title>{{myskin.skin.title}}</ion-card-title>
+    <ion-fab-button *ngIf="!myskin.selected" color="primary" (click)="selected()">
+      <ion-icon name="heart-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-button *ngIf="myskin.selected" color="danger" (click)="selected()">
+      <ion-icon name="heart-outline"></ion-icon>
+    </ion-fab-button>
   </ion-card-header>
 
   <ion-card-content>
     {{myskin.skin.description}}
-
 
     <div id="ranges">
       <div class="range_container">

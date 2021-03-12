@@ -13,39 +13,92 @@ export class MyskinsService {
 
   //Array an Terminen
   public myskins: Array<MySkin>;
+  public current: MySkin = null;
   message;
 
 
   //Konstruktor
-  constructor(http: HttpClient, private oauthService : OAuthService){
+  constructor(http: HttpClient, private oauthService: OAuthService) {
     this.http = http;
     this.myskins = [];
+    console.log("kljfdfkjsfjkald")
+  }
+
+  //ausgewählter Skin ändern - dynamisch
+  selectSkin() {
+    if (this.current == null) {
+      console.log("jsaldfja")
+      if (this.myskins) {
+        this.myskins.forEach(element => {
+          this.current = element;
+        });
+      } else {
+        this.current = null;
+      }
+    }
+
+    console.log(this.current)
+  }
+
+  //Getter Aktuell Ausgewählten Skin
+  getCurrentSkin() {
+
+    return new Promise((resolve) => {
+      console.log(this.current + " jsdlfasjdflsj")
+      if (this.current == null) {
+        this.getMySkins().subscribe(
+          data => {
+            this.myskins = data;
+
+            //Skin wird selektiert
+            this.selectSkin();
+            resolve(this.current);
+          },
+          error1 => {
+            console.log('Error');
+          }
+        )
+      } else {
+        resolve(this.current);
+      }
+    });
+
   }
 
   //getAll
-  getMySkins(){
+  getSelectedSkins() {
 
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.get<MySkin[]>(api.url +'myskin/findAll', {headers: reqHeader})
+    return this.http.get<MySkin[]>(api.url + 'myskin/findSelected', { headers: reqHeader })
+  }
+
+  //getAll
+  getMySkins() {
+
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<MySkin[]>(api.url + 'myskin/findAll', { headers: reqHeader })
   }
 
   //update
-  updateSkin(s:MySkin){
+  updateSkin(s: MySkin) {
     let body = JSON.stringify(s);
     console.log(body);
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.put( api.url+ 'myskin/update', body, {headers: reqHeader});
+    return this.http.put(api.url + 'myskin/update', body, { headers: reqHeader });
 
   }
 
-  addToMySkins(skin){
-    var ms : MySkin = new MySkin();
+  addToMySkins(skin) {
+    var ms: MySkin = new MySkin();
     ms.skin = skin;
     console.log(ms);
     let body = JSON.stringify(ms);
@@ -53,7 +106,7 @@ export class MyskinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.post( api.url + 'myskin/create', body, {headers: reqHeader});
+    return this.http.post(api.url + 'myskin/create', body, { headers: reqHeader });
 
   }
 
@@ -63,6 +116,9 @@ export class MyskinsService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.delete(api.url + 'myskin/delete/' + index, {headers: reqHeader});
+    if (index == this.current.id) {
+      this.current = null;
+    }
+    return this.http.delete(api.url + 'myskin/delete/' + index, { headers: reqHeader });
   }
 }

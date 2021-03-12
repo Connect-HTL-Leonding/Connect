@@ -13,8 +13,6 @@ import { MyskinsService } from '../../api/myskins.service';
 })
 export class MySkinsPage implements OnInit {
 
-  //Service
-  mySkinService;
 
   //Suchbegriff
   searchString: String = "";
@@ -23,8 +21,7 @@ export class MySkinsPage implements OnInit {
   currentSkin: MySkin;
 
   //Konstruktor
-  constructor(ks: MyskinsService, public modalController: ModalController, public toastController: ToastController) {
-    this.mySkinService = ks;
+  constructor(public mySkinService: MyskinsService, public modalController: ModalController, public toastController: ToastController) {
   }
 
   ngOnInit() {
@@ -35,10 +32,10 @@ export class MySkinsPage implements OnInit {
         console.log(data);
         this.mySkinService.myskins = data;
 
-        console.log(this.mySkinService.myskins)
+        console.log(this.mySkinService.current)
         //Skin wird selektiert
-        this.selectSkin();
-
+        this.mySkinService.getCurrentSkin();
+        console.log(this.mySkinService.current)
 
 
         //console.log(this.skinService);
@@ -55,20 +52,10 @@ export class MySkinsPage implements OnInit {
   }
 
   //ausgewählter Skin änder bei klick
-  changeSelection(s: MySkin) {
-    this.currentSkin = s;
-  }
-
-  //ausgewählter Skin ändern - dynamisch
-  selectSkin() {
-    if (this.mySkinService.myskins) {
-      this.mySkinService.myskins.forEach(element => {
-        this.currentSkin = element;
-      });
-    } else {
-      this.currentSkin = null;
-    }
-
+  changeSelection(ms: MySkin) {
+    this.mySkinService.current = ms;
+    console.log(this.mySkinService.current.id + " jladsflsjkdflkj");
+    
   }
 
   //Modal öffnen
@@ -127,14 +114,14 @@ export class MySkinsPage implements OnInit {
       this.mySkinService.getMySkins().subscribe(
         data => {
           this.mySkinService.myskins = data;
-          this.selectSkin();
-
+          this.mySkinService.getCurrentSkin();
+          console.log(this.mySkinService.current)
         },
         error1 => {
           console.log('Error');
         }
       )
-    });;
+    });
   }
 
   //Event bei Skin entfernen
@@ -147,7 +134,7 @@ export class MySkinsPage implements OnInit {
         data => {
           this.mySkinService.myskins = data;
           this.currentSkin = null;
-          this.selectSkin();
+          this.mySkinService.getCurrentSkin();
           this.presentToastWithOptions(deletedSkin, "gelöscht");
         },
         error1 => {

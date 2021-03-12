@@ -6,7 +6,8 @@ export class MySkin {
         public skin = new Skin(),
         public radius = 1,
         public age = 20,
-        public niveau = 1
+        public niveau = 1,
+        public selected = false
     ) {
 
     }

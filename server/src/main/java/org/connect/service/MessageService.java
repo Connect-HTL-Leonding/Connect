@@ -48,6 +48,7 @@ public class MessageService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Message createMessage(Message message, @PathParam("id") long id) {
+        System.out.println(message);
         Room room = dbRepo.findRoom(id);
         message.setRoom(room);
         message.setUser(new User(jwt));

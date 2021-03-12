@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 import { ContactlistService } from 'src/app/api/contactlist.service';
 import { User } from 'src/app/model/user';
 import { Room } from '../../../model/room'
@@ -15,8 +16,9 @@ export class DetailContactlistComponent implements OnInit {
   public user: User = new User();
   public latestMessage : string;
 
-  constructor(public cs: ContactlistService) {
+  constructor(public cs: ContactlistService,) {
     this.contactlist = cs;
+   
   }
 
   ngOnInit() {
@@ -42,6 +44,7 @@ export class DetailContactlistComponent implements OnInit {
     this.getLatestMessage(this.room);
   }
 
+
   getLatestMessage(room: Room) {
       this.contactlist.getLatestMessage(room).subscribe(data=> {
         if(data != null) {
@@ -50,6 +53,9 @@ export class DetailContactlistComponent implements OnInit {
         }
       })
   }
+
+
+
 
   userExists(user: User) {
     return user != null;

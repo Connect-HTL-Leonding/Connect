@@ -78,11 +78,26 @@ export class ChatPage implements OnInit {
     this.modalController.dismiss();
   }
 
+  doSendImage() {
+    try {
+      this.m.message = this.sendText;
+      this.m.created = new Date();
+      this.m.updated = new Date();
+      this.chatservice.createImageMessage(this.m).subscribe(data => {
+        this.websocket.send(this.sendText);
+        this.sendText = "";
+      });
+    } catch (e) {
+
+    }
+  }
+
   doSend(){
     if(this.sendText.trim().length > 0) {
       this.m.message = this.sendText;
       this.m.created = new Date();
       this.m.updated = new Date();
+      this.m.image = "";
       this.chatservice.createMessage(this.m).subscribe(data => {
         this.websocket.send(this.sendText); 
         this.sendText = "";

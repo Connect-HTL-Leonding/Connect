@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
-
 import { AuthService } from './auth.service';
+
 
 //thx to https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards
 @Injectable()

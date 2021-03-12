@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/api/auth/auth.service';
-
 @Component({
   selector: 'app-devinfos',
   templateUrl: './devinfos.page.html',
