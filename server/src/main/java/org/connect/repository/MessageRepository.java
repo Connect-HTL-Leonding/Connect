@@ -1,6 +1,7 @@
 package org.connect.repository;
 
 import org.connect.model.chat.Message;
+import org.connect.model.chat.MessageSeen;
 import org.connect.model.chat.Room;
 import org.connect.model.skin.MySkin;
 
@@ -33,18 +34,31 @@ public class MessageRepository {
     }
 
     @Transactional
-    public List<Message> findAll(long id) {
+    public List<Message> findAll(long RoomId) {
         TypedQuery<Message> tq = this.em.createNamedQuery(Message.FINDALL, Message.class);
-        tq.setParameter("u", id);
+        tq.setParameter("u", RoomId);
 
         List<Message> ms = null;
 
         try {
             ms = tq.getResultList();
+
+
+            //Set Messages to on seen
+            for (Message m: ms) {
+                //setToSeen(RoomId, m);
+            }
         }catch(Exception e) {
             System.out.println(e.getMessage());
         }
         return ms;
+    }
+
+    // Setting message to on seen
+    @Transactional
+    public void setToSeen(long RoomId, Message m) {
+        MessageSeen ms = new MessageSeen(m,RoomId);
+        em.persist(ms);
     }
 
     public Message getLatestMessage(long RoomId) {
