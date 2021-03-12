@@ -14,7 +14,8 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @ApplicationScoped
-public class UserRepository {
+public class
+UserRepository {
 
     // Entitymanager erzeugen
     @Inject

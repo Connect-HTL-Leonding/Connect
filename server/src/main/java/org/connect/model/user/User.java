@@ -46,7 +46,8 @@ public class User implements Serializable {
     @Column(name = "degrees")
     Map<String,Double> position;
 
-
+    // Boolean to detect if the User has finished the Tutorial
+    private boolean finishedTutorial;
 
     //private LocalDateTime created;
     //LocalDateTime updated;
@@ -82,6 +83,7 @@ public class User implements Serializable {
         //this.lastname = token.claim("family_name").get().toString();
         //this.email = token.claim("email").get().toString();
         this.gender = 'a';
+        this.finishedTutorial = false;
         //this.attributes = token.getRawToken();
         System.out.println(this.id);
     }
@@ -142,4 +144,8 @@ public class User implements Serializable {
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
+
+    public boolean isFinishedTutorial() { return finishedTutorial; }
+
+    public void setFinishedTutorial(boolean finishedTutorial) { this.finishedTutorial = finishedTutorial; }
 }

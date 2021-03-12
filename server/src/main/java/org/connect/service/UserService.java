@@ -78,6 +78,17 @@ public class UserService {
         }
 
     }
+    @GET
+    @Path("getIsTutorailFinished/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public boolean getIsTutorialFinished(@PathParam("id") long id){
+        User u = findOtherUser(id);
+        if(u.isFinishedTutorial()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     @GET
     @Path("getLocation/{id}")
