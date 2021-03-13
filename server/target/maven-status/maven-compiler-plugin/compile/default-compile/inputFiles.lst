@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\CategoryService.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\service\MessageService.java
@@ -25,58 +24,3 @@ C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\chat\Room.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\image\Image.java
 C:\Users\Stefan\Documents\Connect\Connect\server\src\main\java\org\connect\model\chat\MessageSeen.java
-=======
-<<<<<<< HEAD
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\CategoryService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Skin.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\UserRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Category.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ChatService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Message.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\ImageRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\UserService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\SkinService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\ChatRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\User.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MessageRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ImageService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\image\Image.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\FriendshipService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MySkinService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\Friendship.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MySkinRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\ChatSocket.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\FriendshipRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Room.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\CategoryRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MessageService.java
-=======
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/skin/MySkin.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/MySkinRepository.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/FriendshipService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/ChatService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/ImageService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/user/User.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/ImageRepository.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/MessageRepository.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/chat/Message.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/SkinService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/ChatRepository.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/skin/Skin.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/SkinRepository.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/image/Image.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/user/Friendship.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/UserRepository.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/skin/Category.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/CategoryService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/ChatSocket.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/MySkinService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/UserService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/CategoryRepository.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/service/MessageService.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/model/chat/Room.java
-/Users/jandonnerbauer/HTL_Leonding/4 JG/CONNECT/git/Connect/server/src/main/java/org/connect/repository/FriendshipRepository.java
->>>>>>> 0209a755324532fef467076db37a8295a646fb0e
->>>>>>> e3d037f6729ba40ac55834cca48fa533a26a04ad

@@ -10,11 +10,13 @@ import java.time.LocalDateTime;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Message.FINDALL, query = "SELECT ms FROM Message ms where room_id = :u")
+        @NamedQuery(name = Message.FINDALL, query = "SELECT ms FROM Message ms where room_id = :u"),
+        @NamedQuery(name = Message.GETCOUNT, query = "SELECT count(m) FROM Message m where room_id = :r")
 })
 public class Message implements Serializable {
 
     public static final String FINDALL = "Message.findAll";
+    public static final String GETCOUNT = "Message.getCount";
 
     @Id
     @GeneratedValue
