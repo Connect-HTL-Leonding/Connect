@@ -11,7 +11,7 @@ import java.util.Calendar;
 @Entity
 @NamedQueries({
         @NamedQuery(name = MessageSeen.FINDWITHID, query = "SELECT ms FROM MessageSeen ms where ms.message = :m AND ms.user_Id = :u"),
-        @NamedQuery(name = MessageSeen.GETCOUNT, query = "SELECT count(ms) FROM MessageSeen ms where ms.RoomId = :r")
+        @NamedQuery(name = MessageSeen.GETCOUNT, query = "SELECT count(ms) FROM MessageSeen ms where ms.RoomId = :r AND ms.user_Id = :u")
 })
 public class MessageSeen implements Serializable {
 
