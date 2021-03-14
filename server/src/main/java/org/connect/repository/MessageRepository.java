@@ -89,6 +89,7 @@ public class MessageRepository {
     public long getSeenMessages(long RoomId) {
         TypedQuery<Long> tq = this.em.createNamedQuery(MessageSeen.GETCOUNT, Long.class);
         tq.setParameter("r",RoomId);
+        tq.setParameter("u",jwt.claim("sub").get().toString());
         long count = 0;
         try {
            count = tq.getSingleResult();
@@ -102,6 +103,7 @@ public class MessageRepository {
     public long getAllMessages(long roomId) {
         TypedQuery<Long> tq = this.em.createNamedQuery(Message.GETCOUNT, Long.class);
         tq.setParameter("r",roomId);
+        tq.setParameter("u",jwt.claim("sub").get().toString());
         long count = 0;
         try {
             count = tq.getSingleResult();

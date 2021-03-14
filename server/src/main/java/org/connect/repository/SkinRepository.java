@@ -54,10 +54,10 @@ public class SkinRepository {
         User trisi = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
         User trisi1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
 
-        User tobias = new User("59bf6965-a264-4220-a29a-095863394040", "tobias");
-
-        User trisinger = new User("42beaa1d-b706-4282-a9b3-7185fe6c323a", "trisinger");
-        User jan1 = new User("d9d0123a-e0aa-44ba-912f-2e91ed73c01e", "jan");
+        //Tobis User, ID bitte nich ändern
+        User tobias = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
+        User trisinger = new User("5f92cdb2-1d5f-43a2-80ef-8ba5cdc3c881", "trisinger");
+        User janTobi = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
 
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
@@ -85,8 +85,8 @@ public class SkinRepository {
         tobias.getPosition().put("Lng",9.33);
         trisinger.getPosition().put("Lat",-12.9);
         trisinger.getPosition().put("Lng",-120.0);
-        jan1.getPosition().put("Lat",-156.34);
-        jan1.getPosition().put("Lng",-103.39);
+        janTobi.getPosition().put("Lat",-156.34);
+        janTobi.getPosition().put("Lng",-103.39);
 
 
 
@@ -123,9 +123,9 @@ public class SkinRepository {
         roomRafi1.getUsers().add(tobias);
         roomRafi1.getUsers().add(trisinger);
         
-        jan1.getRooms().add(roomRafi2);
+        janTobi.getRooms().add(roomRafi2);
         tobias.getRooms().add(roomRafi2);
-        roomRafi2.getUsers().add(jan1);
+        roomRafi2.getUsers().add(janTobi);
         roomRafi2.getUsers().add(tobias);
         
         
@@ -166,7 +166,7 @@ public class SkinRepository {
         em.persist(f3);
         em.persist(f4);
         em.persist(trisinger);
-        em.persist(jan1);
+        em.persist(janTobi);
     }
 
     // Finden einer Person über ID in der DB
