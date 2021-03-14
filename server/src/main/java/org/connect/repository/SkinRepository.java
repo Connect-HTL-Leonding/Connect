@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,6 @@ public class SkinRepository {
         trisinger.getPosition().put("Lng",-120.0);
         jan1.getPosition().put("Lat",-156.34);
         jan1.getPosition().put("Lng",-103.39);
-
 
 
 

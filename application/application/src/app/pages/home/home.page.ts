@@ -101,12 +101,12 @@ export class HomePage implements OnInit {
 
   createUserMarker(user: User) {
     console.log("Create Marker " + user.userName +":");
-    console.log(user);
+   
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
     var ctx = canvas.getContext('2d');
-    var image1 = "data:image/png;base64," + user.custom.profilePicture;
+    var image1 = "data:image/png;base64," + atob(user.custom.profilePicture);
     var image = new Image();
     var compositeImage;
 
@@ -146,9 +146,9 @@ export class HomePage implements OnInit {
     compositeImage = canvas.toDataURL("image/png");
 
     canvas.remove();
-   // console.log(compositeImage)
+   //console.log(compositeImage)
 
-   console.log(user.custom.position.Lat);
+   
     var origin = new google.maps.LatLng(user.custom.position.Lat, user.custom.position.Lng);
 
 var marker = new google.maps.Marker({
