@@ -101,7 +101,7 @@ export class HomePage implements OnInit {
 
   createUserMarker(user: User) {
     console.log("Create Marker " + user.userName +":");
-   
+   console.log(user);
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
