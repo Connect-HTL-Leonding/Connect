@@ -44,3 +44,17 @@
 #unreadMessage {
     font-weight: bold; 
 }
+
+ion-badge {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+}
+
+ion-label {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}

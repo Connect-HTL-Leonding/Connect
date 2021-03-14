@@ -14,11 +14,14 @@ export class DetailContactlistComponent implements OnInit {
   @Input() room: Room;
   public contactlist;
   public user: User = new User();
-  public latestMessage : string;
+  public latestMessage: string;
+  public allMessages;
+  public seenMessages;
+  public unseenMessages;
 
   constructor(public cs: ContactlistService,) {
     this.contactlist = cs;
-   
+
   }
 
   ngOnInit() {
@@ -42,19 +45,31 @@ export class DetailContactlistComponent implements OnInit {
     })
 
     this.getLatestMessage(this.room);
+    this.calcUnseenMessages(this.room);
   }
 
 
   getLatestMessage(room: Room) {
-      this.contactlist.getLatestMessage(room).subscribe(data=> {
-        if(data != null) {
+    this.contactlist.getLatestMessage(room).subscribe(data => {
+      if (data != null) {
         console.log(data.message);
         this.latestMessage = data.message;
-        }
-      })
+      }
+    })
   }
 
-
+  calcUnseenMessages(room: Room) {
+   this.contactlist.getAllMessages(room).subscribe(data=> {
+     this.allMessages = data;
+     this.contactlist.getSeenMessages(room).subscribe(data=> {
+       this.seenMessages = data;
+       this.unseenMessages = this.allMessages - this.seenMessages;
+       console.log(this.seenMessages + " seen");
+       console.log(this.allMessages + " all");
+       console.log(this.unseenMessages + " unseen")
+     })
+   })
+  }
 
 
   userExists(user: User) {
