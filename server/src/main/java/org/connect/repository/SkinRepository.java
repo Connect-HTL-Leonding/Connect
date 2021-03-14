@@ -62,7 +62,7 @@ public class SkinRepository {
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
         Friendship f2 = new Friendship(trisi,trisi1,s,LocalDateTime.now(),"cool");
-        Friendship f3 = new Friendship(ibo1,trisi1,s1,LocalDateTime.now(),"cool");
+        Friendship f3 = new Friendship(ibo1,trisi,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(jan,trisi1,s1,LocalDateTime.now(),"cool");
 
 

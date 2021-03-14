@@ -13,6 +13,7 @@ import { FriendshipService } from 'src/app/api/friendship.service';
 
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
+import { Friendship } from 'src/app/model/friendship';
 
 
 /*
@@ -212,7 +213,18 @@ var marker = new google.maps.Marker({
 
   }
 
-
+ goThroughFriends(friends : Friendship[]){
+ console.log(friends);
+  friends.forEach((f) => {
+         
+    if(f.user1.id == this.ps.user.id){
+     this.createUserMarker(f.user2);
+    }else{
+     this.createUserMarker(f.user1);
+    }
+    
+   })
+ }
 
   async loadMap() {
     //show LoadingScreen BITTE NICHT ENTFERNEN! danke
@@ -243,12 +255,13 @@ var marker = new google.maps.Marker({
       this.ps.user.custom.position.Lat = resp.coords.latitude;
       this.ps.user.custom.position.Lng = resp.coords.longitude;
       this.ps.updateUser(this.ps.user.custom);
+    
 
       this.fs.getBefriendedUsers(this.ps.user).subscribe( data => {
-        data.forEach(function(f){
-          this.createUserMarker(f);
-        })
+       this.goThroughFriends(data);
+       
       });
+     
 
       const location = new google.maps.LatLng(this.ps.user.custom.position.Lat, this.ps.user.custom.position.Lng);
       const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
