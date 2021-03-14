@@ -43,21 +43,21 @@ public class SkinRepository {
         Category c2 = new Category("Freizeit");
 
 
-        User susi = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
-        User jan = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
+        User susi = new User("b3c60b0b-fcd5-4790-8ca6-ac26bbf64a74", "susi");
+        User jan = new User("f835992a-3e8d-453a-87ad-57bcfcef5352", "jan");
 
 
-        User ibo = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
-        User ibo1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
-        User simon = new User("6d7975ac-28d0-4ab9-8c95-e1bf91acdf15", "simon");
+        User ibo = new User("a4054032-dafe-4979-8efd-ae1107bec778", "ibo");
+        User ibo1 = new User("74691fbf-c71c-4d9a-bb34-143265af9b5e","ibo1");
+        User simon = new User("c0281dc2-1772-4552-bc52-1d54265ba4b0", "simon");
 
         User trisi = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
         User trisi1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
 
-        User tobias = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
+        User tobias = new User("59bf6965-a264-4220-a29a-095863394040", "tobias");
 
-        User trisinger = new User("5f92cdb2-1d5f-43a2-80ef-8ba5cdc3c881", "trisinger");
-        User jan1 = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
+        User trisinger = new User("42beaa1d-b706-4282-a9b3-7185fe6c323a", "trisinger");
+        User jan1 = new User("d9d0123a-e0aa-44ba-912f-2e91ed73c01e", "jan");
 
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
@@ -71,12 +71,14 @@ public class SkinRepository {
 
         susi.getPosition().put("Lat",123.456);
         susi.getPosition().put("Lng",-111.11);
+        trisi1.getPosition().put("Lat",48.305394);
+        trisi1.getPosition().put("Lng",14.287337);
         jan.getPosition().put("Lat",74.543);
         jan.getPosition().put("Lng",-9.33);
         ibo.getPosition().put("Lat",12.9);
         ibo.getPosition().put("Lng",120.0);
-        ibo1.getPosition().put("Lat",156.34);
-        ibo1.getPosition().put("Lng",103.39);
+        ibo1.getPosition().put("Lat",48.307293);
+        ibo1.getPosition().put("Lng",14.286994);
         simon.getPosition().put("Lat",81.007);
         simon.getPosition().put("Lng",0.3);
         tobias.getPosition().put("Lat",-74.543);
@@ -85,14 +87,6 @@ public class SkinRepository {
         trisinger.getPosition().put("Lng",-120.0);
         jan1.getPosition().put("Lat",-156.34);
         jan1.getPosition().put("Lng",-103.39);
-
-
-
-
-
-
-
-
 
 
 

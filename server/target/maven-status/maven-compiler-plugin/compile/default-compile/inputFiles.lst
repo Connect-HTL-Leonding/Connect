@@ -1,4 +1,3 @@
-
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\CategoryService.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Skin.java
@@ -14,6 +13,7 @@ C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\User.
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MessageRepository.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ImageService.java
+C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\MessageSeen.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\image\Image.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\FriendshipService.java
 C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MySkinService.java

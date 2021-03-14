@@ -14,6 +14,7 @@ import { FriendshipService } from 'src/app/api/friendship.service';
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
 import { Friendship } from 'src/app/model/friendship';
+import { ContactlistService } from 'src/app/api/contactlist.service';
 
 
 /*
@@ -47,7 +48,7 @@ export class HomePage implements OnInit {
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
 
-  constructor(private menu: MenuController, private geolocation: Geolocation, public ps: ProfileService, private authService: AuthService, private fs : FriendshipService, public loadingController: LoadingController, private mySkinsService : MyskinsService) {
+  constructor(private menu: MenuController, private geolocation: Geolocation, public ps: ProfileService, private authService: AuthService, private fs : FriendshipService, public loadingController: LoadingController, private mySkinsService : MyskinsService, private cs : ContactlistService) {
 
     this.sideMenu();
 
@@ -99,6 +100,8 @@ export class HomePage implements OnInit {
   }
 
   createUserMarker(user: User) {
+    console.log("Create Marker " + user.userName +":");
+    console.log(user);
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
@@ -143,8 +146,9 @@ export class HomePage implements OnInit {
     compositeImage = canvas.toDataURL("image/png");
 
     canvas.remove();
-    console.log(compositeImage)
+   // console.log(compositeImage)
 
+   console.log(user.custom.position.Lat);
     var origin = new google.maps.LatLng(user.custom.position.Lat, user.custom.position.Lng);
 
 var marker = new google.maps.Marker({
@@ -214,14 +218,37 @@ var marker = new google.maps.Marker({
   }
 
  goThroughFriends(friends : Friendship[]){
- console.log(friends);
+ 
   friends.forEach((f) => {
-         
+    var u : User = new User;
     if(f.user1.id == this.ps.user.id){
-     this.createUserMarker(f.user2);
+     
+      this.cs.getKeyUser(f.user2).subscribe(data => {
+        u.id = data["id"];
+        u.userName = data["username"];
+        u.firstname = data["firstName"];
+        u.lastname = data["lastName"];
+        u.email = data["email"];
+        u.custom = f.user2
+        this.createUserMarker(u);
+      })
+     
+      
+    
     }else{
-     this.createUserMarker(f.user1);
+      this.cs.getKeyUser(f.user1).subscribe(data => {
+        u.id = data["id"];
+        u.userName = data["username"];
+        u.firstname = data["firstName"];
+        u.lastname = data["lastName"];
+        u.email = data["email"];
+        u.custom = f.user1
+        this.createUserMarker(u);
+      })
+      
     }
+   
+   
     
    })
  }
@@ -281,7 +308,7 @@ var marker = new google.maps.Marker({
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
    
-   this.createMeetupMarker('../../assets/normalguy.jpg',location3);
+   //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
       new ClickEventHandler(this.map, location);
 
