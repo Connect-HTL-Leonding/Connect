@@ -17,6 +17,7 @@ export class ChatService {
   public contactlist;
   public selectedRoom: Room;
   public activeUser: User;
+  public m: Message;
   
 
   constructor(http: HttpClient, cs: ContactlistService, private oauthService : OAuthService) {
@@ -42,17 +43,18 @@ export class ChatService {
     return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
   }
 
-  public async createImageMessage(m:Message) {
-    
+  /*public async createImageMessage(m:Message) {
     try {
       const capturedPhoto = await Camera.getPhoto({
         resultType: CameraResultType.Base64,
         quality: 100,
         allowEditing: true
       })
-      m.image = capturedPhoto.base64String;
-      return this.createMessage(m);
+      this.m = m;
+      this.m.image = capturedPhoto.base64String;
+      return this.m
     } catch (e) {
       }
   }
+  */
 }
