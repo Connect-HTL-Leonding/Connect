@@ -33,6 +33,10 @@ public class ChatRepository {
         }catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        for (Room r : roomList) {
+            System.out.println("test");
+            System.out.println(r);
+        }
         return roomList;
     }
 }

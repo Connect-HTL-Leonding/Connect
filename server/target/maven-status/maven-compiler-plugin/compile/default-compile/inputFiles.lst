@@ -1,6 +1,6 @@
-<<<<<<< HEAD
 D:\Connect\Connect\server\src\main\java\org\connect\ChatSocket.java
 D:\Connect\Connect\server\src\main\java\org\connect\service\FriendshipService.java
+D:\Connect\Connect\server\src\main\java\org\connect\model\chat\MessageSeen.java
 D:\Connect\Connect\server\src\main\java\org\connect\repository\MessageRepository.java
 D:\Connect\Connect\server\src\main\java\org\connect\service\UserService.java
 D:\Connect\Connect\server\src\main\java\org\connect\service\MySkinService.java
@@ -24,31 +24,3 @@ D:\Connect\Connect\server\src\main\java\org\connect\repository\SkinRepository.ja
 D:\Connect\Connect\server\src\main\java\org\connect\model\user\User.java
 D:\Connect\Connect\server\src\main\java\org\connect\service\MessageService.java
 D:\Connect\Connect\server\src\main\java\org\connect\model\chat\Message.java
-=======
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\MySkin.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\CategoryService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Skin.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\UserRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\skin\Category.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ChatService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Message.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\ImageRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\UserService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\SkinService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\ChatRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\User.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\SkinRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MessageRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\ImageService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\MessageSeen.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\image\Image.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\FriendshipService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MySkinService.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\user\Friendship.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\MySkinRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\ChatSocket.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\FriendshipRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\model\chat\Room.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\repository\CategoryRepository.java
-C:\Users\jezza\Desktop\Connect\server\src\main\java\org\connect\service\MessageService.java
->>>>>>> 0a6056cf22dd9fbcbdf6d52d45ef1fd44509136c

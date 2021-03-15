@@ -42,6 +42,7 @@ export class ChatPage implements OnInit {
   
 
   ngOnInit() {
+    console.log(this.chatservice.activeUser.userName);
     this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
     this.chatservice.getData().subscribe(data => {
       this.chatservice.messages = data;
@@ -52,7 +53,7 @@ export class ChatPage implements OnInit {
   }
 
   yousent(message:Message) : boolean {
-    return message.user.id == this.chatservice.activeUser.custom.id;
+    return message.user.id == this.chatservice.activeUser.id;
   }
   
 
