@@ -91,3 +91,20 @@ div#messageFlex {
     margin-left: -15px;
     margin-bottom: 10px;
 }
+
+.newMsgBox {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    margin: 0px 2px 8px 2px;
+}
+
+.smallFont {
+    font-size: small;
+    margin-bottom: -0.5px;
+    color:red;
+}
+
+.hline { width:80%; height:1px; background: red }

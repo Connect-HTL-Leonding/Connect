@@ -57,4 +57,20 @@ export class ChatService {
       }
   }
   */
+
+  getSeenMessages(room: Room) {
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get(api.url + 'message/getSeenMessages/' + room.id, { headers: reqHeader });
+  }
+
+  getAllMessages(room: Room) {
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get(api.url + 'message/getAllMessages/' + room.id, { headers: reqHeader });
+  }
 }
