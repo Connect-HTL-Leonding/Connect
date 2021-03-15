@@ -9,7 +9,8 @@
   <ion-label id="chat-flex">
     <div id="flex">
       <h2 *ngIf="user" id="username">{{user.userName}}</h2>
-      <p>{{this.latestMessage}}</p>
+      <p *ngIf="this.unseenMessages<=0">{{this.latestMessage}}</p>
+      <p class="bold" *ngIf="this.unseenMessages>0">{{this.latestMessage}}</p>
     </div>
     <ion-badge *ngIf="this.unseenMessages>0">{{this.unseenMessages}}</ion-badge>
   </ion-label>
