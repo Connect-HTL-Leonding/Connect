@@ -19,7 +19,7 @@ export class DetailContactlistComponent implements OnInit {
   public seenMessages;
   public unseenMessages;
 
-  constructor(public cs: ContactlistService,) {
+  constructor(public cs: ContactlistService) {
     this.contactlist = cs;
 
   }
@@ -64,6 +64,9 @@ export class DetailContactlistComponent implements OnInit {
      this.contactlist.getSeenMessages(room).subscribe(data=> {
        this.seenMessages = data;
        this.unseenMessages = this.allMessages - this.seenMessages;
+       this.contactlist.unseenMessages = this.unseenMessages;
+       this.contactlist.seenMessages = this.seenMessages;
+       this.contactlist.allMessages = this.allMessages;
        console.log(this.seenMessages + " seen");
        console.log(this.allMessages + " all");
        console.log(this.unseenMessages + " unseen")

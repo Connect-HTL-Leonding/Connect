@@ -21,6 +21,9 @@
       <div *ngIf="yousent(message)" class="youSent">
         <p class="message">{{message.message}}</p>
       </div>
+      <div *ngIf=" this.unseenMessages> 0 && (i-(chatservice.messages - this.contactlist.allMessages))==this.allMessages-this.seenMessages && !yousent(message)">
+        <p>----------</p>
+      </div>
       <div *ngIf="!yousent(message)" class="otherSent">
         <p class="message">{{message.message}}</p>
       </div>

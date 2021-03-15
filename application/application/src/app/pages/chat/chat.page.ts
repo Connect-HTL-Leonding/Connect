@@ -30,6 +30,9 @@ export class ChatPage implements OnInit {
   wsUri;
   oauthService;
   activeUser;
+  public allMessages;
+  public seenMessages;
+  public unseenMessages;
   
 
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
@@ -48,8 +51,8 @@ export class ChatPage implements OnInit {
       this.chatservice.messages = data;
     });
     this.getRoomName();
-    
     this.doConnect();
+    this.calcUnseenMessages(this.contactlist.selectedRoom);
   }
 
   yousent(message:Message) : boolean {
@@ -125,4 +128,18 @@ export class ChatPage implements OnInit {
     this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
     */
   }
+
+  calcUnseenMessages(room: Room) {
+    this.contactlist.getAllMessages(room).subscribe(data=> {
+      this.allMessages = data;
+      this.contactlist.getSeenMessages(room).subscribe(data=> {
+        this.seenMessages = data;
+        this.unseenMessages = this.allMessages - this.seenMessages;
+        console.log(this.seenMessages + " seen");
+        console.log(this.allMessages + " all");
+        console.log(this.unseenMessages + " unseen")
+      })
+    })
+   }
+ 
 }
