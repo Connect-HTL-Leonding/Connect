@@ -56,7 +56,7 @@ export class ContactlistService {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + this.oauthService.getAccessToken(),
       }),
-      responseType: 'text' as const
+      //responseType: 'text' as const
     };
     return this.http.get(api.short + 'user/getOtherPfp/' + roomid, httpOptions)
   }
