@@ -36,6 +36,23 @@ public class MessageService {
         return ms;
     }
 
+
+    @Path("getSeenMessages/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public long getSeenMessages(@PathParam("id") long roomId) {
+        long count = dbRepo.getSeenMessages(roomId);
+        return count;
+    }
+
+    @Path("getAllMessages/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public long getAllMessages(@PathParam("id") long roomId) {
+        long count = dbRepo.getAllMessages(roomId);
+        return count;
+    }
+
     @Path("findLatestMessage/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -62,4 +79,7 @@ public class MessageService {
         dbRepo.init();
         return "DB initialized";
     }
+
+
+
 }

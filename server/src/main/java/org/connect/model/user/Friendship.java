@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 
 @NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f")
-@NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where user1_id = :user or user2_id = :user")
+@NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where user1 = :user or user2 = :user")
 //Radius muss noch hinzugefügt werden
 @NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT u FROM User u join MySkin ms on(ms.user.id = u.id)" +
         "where ms.age <= :age and ms.niveau = :niveau")
@@ -27,12 +27,12 @@ public class Friendship implements Serializable {
     private long id;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user1_id")
-    private User user1_id;
+    @JoinColumn(name = "user1")
+    private User user1;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user2_id")
-    private User user2_id;
+    @JoinColumn(name = "user2")
+    private User user2;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "skin")
@@ -47,8 +47,8 @@ public class Friendship implements Serializable {
     }
 
     public Friendship(User user1_id, User user2_id, Skin skin, LocalDateTime created, String status) {
-        this.user1_id = user1_id;
-        this.user2_id = user2_id;
+        this.user1 = user1_id;
+        this.user2 = user2_id;
         this.created = created;
         this.status = status;
         this.skin = skin;
@@ -62,20 +62,20 @@ public class Friendship implements Serializable {
         this.id = id;
     }
 
-    public User getUser1_id() {
-        return user1_id;
+    public User getUser1() {
+        return user1;
     }
 
-    public void setUser1_id(User user1_id) {
-        this.user1_id = user1_id;
+    public void setUser1(User user1_id) {
+        this.user1 = user1_id;
     }
 
-    public User getUser2_id() {
-        return user2_id;
+    public User getUser2() {
+        return user2;
     }
 
-    public void setUser2_id(User user2_id) {
-        this.user2_id = user2_id;
+    public void setUser2(User user2_id) {
+        this.user2 = user2_id;
     }
 
     public Skin getSkin() {
