@@ -1,6 +1,2 @@
-<<<<<<< HEAD
-org/connect/model/chat/MessageSeen.class
-=======
 org\connect\model\chat\MessageSeen.class
 META-INF\panache-archive.marker
->>>>>>> 0f7335f1d67eeb8ff3a4912bb71d4a451831144e
