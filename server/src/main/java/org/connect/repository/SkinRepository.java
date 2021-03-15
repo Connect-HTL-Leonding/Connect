@@ -44,8 +44,8 @@ public class SkinRepository {
         Category c2 = new Category("Freizeit");
 
 
-        User susi = new User("b3c60b0b-fcd5-4790-8ca6-ac26bbf64a74", "susi");
-        User jan = new User("f835992a-3e8d-453a-87ad-57bcfcef5352", "jan");
+        User susi = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "susi");
+        User jan = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "jan");
 
 
         User ibo = new User("a4054032-dafe-4979-8efd-ae1107bec778", "ibo");
