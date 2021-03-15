@@ -33,6 +33,10 @@ export class ChatPage implements OnInit {
   public allMessages;
   public seenMessages;
   public unseenMessages;
+  //position of new Message Line
+  public pos = 0;
+  public showNewMsgLine : boolean;
+
   
 
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
@@ -47,12 +51,13 @@ export class ChatPage implements OnInit {
   ngOnInit() {
     console.log(this.chatservice.activeUser.userName);
     this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
-    this.chatservice.getData().subscribe(data => {
-      this.chatservice.messages = data;
-    });
+    this.init(this.contactlist.selectedRoom);
+   
     this.getRoomName();
     this.doConnect();
-    this.calcUnseenMessages(this.contactlist.selectedRoom);
+    
+    
+  
   }
 
   yousent(message:Message) : boolean {
@@ -104,6 +109,7 @@ export class ChatPage implements OnInit {
       this.m.created = new Date();
       this.m.updated = new Date();
       this.m.image = "";
+      this.showNewMsgLine = false;
       this.chatservice.createMessage(this.m).subscribe(data => {
         this.websocket.send(this.sendText); 
         this.sendText = "";
@@ -129,17 +135,26 @@ export class ChatPage implements OnInit {
     */
   }
 
-  calcUnseenMessages(room: Room) {
-    this.contactlist.getAllMessages(room).subscribe(data=> {
+  init(room: Room) {
+    this.showNewMsgLine = true;
+    this.chatservice.getAllMessages(room).subscribe(data=> {
       this.allMessages = data;
-      this.contactlist.getSeenMessages(room).subscribe(data=> {
+      this.chatservice.getSeenMessages(room).subscribe(data=> {
         this.seenMessages = data;
         this.unseenMessages = this.allMessages - this.seenMessages;
         console.log(this.seenMessages + " seen");
         console.log(this.allMessages + " all");
         console.log(this.unseenMessages + " unseen")
+        this.chatservice.getData().subscribe(data => {
+          this.chatservice.messages = data;
+          console.log(this.chatservice.messages.length);
+          this.pos = this.chatservice.messages.length - this.unseenMessages;
+          
+        })
       })
     })
    }
+
+ 
  
 }
