@@ -6,6 +6,7 @@ import { ChatPage } from '../chat/chat.page';
 import {ChatService} from '../../api/chat.service'
 import { Message } from 'src/app/model/message';
 import {DetailContactlistComponent} from '../contactlist/detail-contactlist/detail-contactlist.component';
+import { ProfileService } from 'src/app/api/profile.service';
 
 @Component({
   selector: 'app-contactlist',
@@ -19,14 +20,15 @@ export class ContactlistPage implements OnInit {
   latestMessage : Message;
   modal;
 
-  constructor(cs : ContactlistService, public modalController: ModalController, chatService : ChatService) { 
+  constructor(cs : ContactlistService, public modalController: ModalController, chatService : ChatService, public profileservice: ProfileService) { 
     this.contactService = cs;
     this.chatService = chatService;
   }
 
   ngOnInit() {
     this.contactService.getUser().subscribe(data => {
-      this.contactService.activeUser.custom = data;
+      console.log(data);
+      this.contactService.activeUser = data;
     });
     this.contactService.getChats().subscribe(
       data => {
