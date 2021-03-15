@@ -21,7 +21,7 @@
       <div *ngIf="yousent(message)" class="youSent">
         <p class="message">{{message.message}}</p>
       </div>
-      <div *ngIf="this.showNewMsgLine && this.unseenMessages> 0 && !yousent(message) && i == this.pos">
+      <div *ngIf="this.showNewMsgLine && this.unseenMessages> 0 && !yousent(message) && i == this.pos && i !== 0">
         <div class="newMsgBox">
           <p class="smallFont">NEW</p>
         <div class="hline"></div>
