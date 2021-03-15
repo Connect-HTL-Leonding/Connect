@@ -18,6 +18,10 @@ export class ContactlistService {
   public rooms: Array<Room>
   public selectedRoom: Room;
   public activeUser: User = new User();
+  public unseenMessages = 0;
+  public seenMessages = 0;
+  public allMessages = 0;
+  public counter = 0;
 
   constructor(http: HttpClient, private oauthService: OAuthService, public ps: ProfileService) {
     this.http = http;

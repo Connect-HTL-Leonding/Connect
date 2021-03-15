@@ -30,6 +30,9 @@ export class ChatPage implements OnInit {
   wsUri;
   oauthService;
   activeUser;
+  public allMessages;
+  public seenMessages;
+  public unseenMessages;
   
 
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
@@ -42,17 +45,18 @@ export class ChatPage implements OnInit {
   
 
   ngOnInit() {
+    console.log(this.chatservice.activeUser.userName);
     this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
     this.chatservice.getData().subscribe(data => {
       this.chatservice.messages = data;
     });
     this.getRoomName();
-    
     this.doConnect();
+    this.calcUnseenMessages(this.contactlist.selectedRoom);
   }
 
   yousent(message:Message) : boolean {
-    return message.user.id == this.chatservice.activeUser.custom.id;
+    return message.user.id == this.chatservice.activeUser.id;
   }
   
 
@@ -124,4 +128,18 @@ export class ChatPage implements OnInit {
     this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
     */
   }
+
+  calcUnseenMessages(room: Room) {
+    this.contactlist.getAllMessages(room).subscribe(data=> {
+      this.allMessages = data;
+      this.contactlist.getSeenMessages(room).subscribe(data=> {
+        this.seenMessages = data;
+        this.unseenMessages = this.allMessages - this.seenMessages;
+        console.log(this.seenMessages + " seen");
+        console.log(this.allMessages + " all");
+        console.log(this.unseenMessages + " unseen")
+      })
+    })
+   }
+ 
 }
