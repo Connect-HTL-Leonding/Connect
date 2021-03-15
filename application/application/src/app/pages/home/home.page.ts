@@ -15,6 +15,7 @@ import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
 import { Friendship } from 'src/app/model/friendship';
 import { ContactlistService } from 'src/app/api/contactlist.service';
+import { Position } from 'src/app/model/position';
 
 
 /*
@@ -220,10 +221,15 @@ var marker = new google.maps.Marker({
 
   }
 
+  calcDistance(origin1: Position, origin2:Position){
+    return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng),new google.maps.LatLng(origin2.lat, origin2.lng))
+  }
+
  goThroughFriends(friends : Friendship[]){
  
   friends.forEach((f) => {
     var u : User = new User;
+   console.log("Distance")
     if(f.user1.id == this.ps.user.id){
      
       this.cs.getKeyUser(f.user2).subscribe(data => {
@@ -233,6 +239,7 @@ var marker = new google.maps.Marker({
         u.lastname = data["lastName"];
         u.email = data["email"];
         u.custom = f.user2
+       console.log(this.calcDistance(u.custom.position,this.ps.user.custom.position));
         this.createUserMarker(u);
       })
      
@@ -246,6 +253,7 @@ var marker = new google.maps.Marker({
         u.lastname = data["lastName"];
         u.email = data["email"];
         u.custom = f.user1
+        console.log(this.calcDistance(u.custom.position,this.ps.user.custom.position));
         this.createUserMarker(u);
       })
       
@@ -296,7 +304,7 @@ var marker = new google.maps.Marker({
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
       const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
       const location3 = new google.maps.LatLng(resp.coords.latitude-0.0005, resp.coords.longitude-0.0005);
-
+      
       // new ClickEventHandler(this.map, location);
 
       console.log(MapStyle)

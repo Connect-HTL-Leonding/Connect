@@ -55,6 +55,7 @@ public class SkinRepository {
         //Trisis User, ID bitte nich ändern
         User trisi = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
         User trisi1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
+        User iboTrisi = new User("74691fbf-c71c-4d9a-bb34-143265af9b5e","ibo1");
 
         //Tobis User, ID bitte nich ändern
         User tobias = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
@@ -64,7 +65,7 @@ public class SkinRepository {
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
         Friendship f2 = new Friendship(trisi,trisi1,s,LocalDateTime.now(),"cool");
-        Friendship f3 = new Friendship(ibo1,trisi,s1,LocalDateTime.now(),"cool");
+        Friendship f3 = new Friendship(iboTrisi,trisi,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(jan,trisi1,s1,LocalDateTime.now(),"cool");
 
 
@@ -79,8 +80,8 @@ public class SkinRepository {
         jan.getPosition().put("lng",-9.33);
         ibo.getPosition().put("lat",12.9);
         ibo.getPosition().put("lng",120.0);
-        ibo1.getPosition().put("lat",48.307293);
-        ibo1.getPosition().put("lng",14.286994);
+        iboTrisi.getPosition().put("lat",48.307293);
+        iboTrisi.getPosition().put("lng",14.286994);
         simon.getPosition().put("lat",81.007);
         simon.getPosition().put("lng",0.3);
         tobias.getPosition().put("lat",-74.543);
@@ -131,12 +132,18 @@ public class SkinRepository {
 
         // Trisi's rooms
         Room roomTrisi1 = new Room("DM");
+        Room roomIboTrisi = new Room("DM");
 
 
         trisi.getRooms().add(roomTrisi1);
         trisi1.getRooms().add(roomTrisi1);
         roomTrisi1.getUsers().add(trisi);
         roomTrisi1.getUsers().add(trisi1);
+
+        trisi.getRooms().add(roomIboTrisi);
+        iboTrisi.getRooms().add(roomIboTrisi);
+        roomIboTrisi.getUsers().add(trisi);
+        roomIboTrisi.getUsers().add(iboTrisi);
 
 
         
@@ -160,6 +167,7 @@ public class SkinRepository {
         em.persist(jan);
         em.persist(ibo);
         em.persist(ibo1);
+        em.persist(iboTrisi);
         em.persist(simon);
         em.persist(trisi);
         em.persist(trisi1);
@@ -167,6 +175,7 @@ public class SkinRepository {
         em.persist(roomJan1);
         em.persist(roomRafi1);
         em.persist(roomTrisi1);
+        em.persist(roomIboTrisi);
         em.persist(roomIbo1);
         em.persist(roomIbo2);
         em.persist(roomRafi2);
