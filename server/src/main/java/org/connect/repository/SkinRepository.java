@@ -71,24 +71,24 @@ public class SkinRepository {
 
 
 
-        susi.getPosition().put("Lat",123.456);
-        susi.getPosition().put("Lng",-111.11);
-        trisi1.getPosition().put("Lat",48.305394);
-        trisi1.getPosition().put("Lng",14.287337);
-        jan.getPosition().put("Lat",74.543);
-        jan.getPosition().put("Lng",-9.33);
-        ibo.getPosition().put("Lat",12.9);
-        ibo.getPosition().put("Lng",120.0);
-        ibo1.getPosition().put("Lat",48.307293);
-        ibo1.getPosition().put("Lng",14.286994);
-        simon.getPosition().put("Lat",81.007);
-        simon.getPosition().put("Lng",0.3);
-        tobias.getPosition().put("Lat",-74.543);
-        tobias.getPosition().put("Lng",9.33);
-        trisinger.getPosition().put("Lat",-12.9);
-        trisinger.getPosition().put("Lng",-120.0);
-        janTobi.getPosition().put("Lat",-156.34);
-        janTobi.getPosition().put("Lng",-103.39);
+        susi.getPosition().put("lat",123.456);
+        susi.getPosition().put("lng",-111.11);
+        trisi1.getPosition().put("lat",48.305394);
+        trisi1.getPosition().put("lng",14.287337);
+        jan.getPosition().put("lat",74.543);
+        jan.getPosition().put("lng",-9.33);
+        ibo.getPosition().put("lat",12.9);
+        ibo.getPosition().put("lng",120.0);
+        ibo1.getPosition().put("lat",48.307293);
+        ibo1.getPosition().put("lng",14.286994);
+        simon.getPosition().put("lat",81.007);
+        simon.getPosition().put("lng",0.3);
+        tobias.getPosition().put("lat",-74.543);
+        tobias.getPosition().put("lng",9.33);
+        trisinger.getPosition().put("lat",-12.9);
+        trisinger.getPosition().put("lng",-120.0);
+        janTobi.getPosition().put("lat",-156.34);
+        janTobi.getPosition().put("lng",-103.39);
 
 
 
@@ -128,6 +128,17 @@ public class SkinRepository {
         tobias.getRooms().add(roomRafi2);
         roomRafi2.getUsers().add(janTobi);
         roomRafi2.getUsers().add(tobias);
+
+        // Trisi's rooms
+        Room roomTrisi1 = new Room("DM");
+
+
+        trisi.getRooms().add(roomTrisi1);
+        trisi1.getRooms().add(roomTrisi1);
+        roomTrisi1.getUsers().add(trisi);
+        roomTrisi1.getUsers().add(trisi1);
+
+
         
         
 
@@ -155,6 +166,7 @@ public class SkinRepository {
         em.persist(tobias);
         em.persist(roomJan1);
         em.persist(roomRafi1);
+        em.persist(roomTrisi1);
         em.persist(roomIbo1);
         em.persist(roomIbo2);
         em.persist(roomRafi2);

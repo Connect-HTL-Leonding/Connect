@@ -102,6 +102,9 @@ export class HomePage implements OnInit {
   createUserMarker(user: User) {
     console.log("Create Marker " + user.userName +":");
    console.log(user);
+
+   
+
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
@@ -149,10 +152,10 @@ export class HomePage implements OnInit {
    //console.log(compositeImage)
 
    
-    var origin = new google.maps.LatLng(user.custom.position.Lat, user.custom.position.Lng);
+  
 
 var marker = new google.maps.Marker({
-  position: origin,
+  position: user.custom.position,
   title: user.userName,
   map: this.map,
   icon: compositeImage
@@ -279,8 +282,8 @@ var marker = new google.maps.Marker({
 
       console.log(resp.coords.latitude + " " + resp.coords.longitude)
 
-      this.ps.user.custom.position.Lat = resp.coords.latitude;
-      this.ps.user.custom.position.Lng = resp.coords.longitude;
+      this.ps.user.custom.position.lat = resp.coords.latitude;
+      this.ps.user.custom.position.lng = resp.coords.longitude;
       this.ps.updateUser(this.ps.user.custom);
     
 
@@ -290,7 +293,7 @@ var marker = new google.maps.Marker({
       });
      
 
-      const location = new google.maps.LatLng(this.ps.user.custom.position.Lat, this.ps.user.custom.position.Lng);
+      const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
       const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
       const location3 = new google.maps.LatLng(resp.coords.latitude-0.0005, resp.coords.longitude-0.0005);
 
@@ -326,7 +329,7 @@ var marker = new google.maps.Marker({
         fillColor: "#0eb19b",
         fillOpacity: 1,
         map: this.map,
-        center: new google.maps.LatLng(this.ps.user.custom.position.Lat, this.ps.user.custom.position.Lng),
+        center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
         radius: 2 //in Meter
       });
 
@@ -338,7 +341,7 @@ var marker = new google.maps.Marker({
         fillOpacity: 0.05,
         clickable: false,
         map: this.map,
-        center: new google.maps.LatLng(this.ps.user.custom.position.Lat, this.ps.user.custom.position.Lng),
+        center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
         radius: 100 //in Meter
       });
 

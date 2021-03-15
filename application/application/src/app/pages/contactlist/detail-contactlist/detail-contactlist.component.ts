@@ -15,20 +15,25 @@ export class DetailContactlistComponent implements OnInit {
   public contactlist;
   public user: User = new User();
   public latestMessage: string;
+  public pfp;
   public allMessages;
   public seenMessages;
   public unseenMessages;
 
   constructor(public cs: ContactlistService) {
     this.contactlist = cs;
-
+    
   }
 
   ngOnInit() {
-
+   
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
-      console.log(this.user)
+     
       this.user.custom = data;
+      this.pfp = "data:image/png;base64,"+atob(this.user.custom.profilePicture);
+
+  
+    
       console.log(this.user)
       this.contactlist.getKeyUser(this.user.custom).subscribe(data => {
         this.user.id = data["id"];
@@ -37,11 +42,15 @@ export class DetailContactlistComponent implements OnInit {
         this.user.lastname = data["lastName"];
         this.user.email = data["email"];
         console.log(data)
+       
       })
-      console.log(this.user)
+      
+      /*
+      console.log(atob(this.user.custom.profilePicture));
       this.contactlist.getOtherPfp(this.room.id).subscribe(data => {
         this.user.custom.profilePicture = "data:image/png;base64," + data;
       });
+      */
     })
 
     this.getLatestMessage(this.room);

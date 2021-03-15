@@ -14,6 +14,7 @@ import { PhotoService } from "../../api/photo.service";
 export class ProfilePage implements OnInit {
 
   user;
+ 
   
 
   constructor(public ps: ProfileService, private authService: AuthService, public modalController: ModalController, public photoService: PhotoService) {
@@ -37,8 +38,10 @@ export class ProfilePage implements OnInit {
 
         console.log(data);
         this.ps.user.custom = data;
+       
 
         console.log("westrzutqjhkgizfutetdzuz")
+    
         console.log(this.ps.user)
 
 

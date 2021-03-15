@@ -17,7 +17,7 @@
       <div class="mid" (click)="loadFromStorage()">
 
         <div class="pfpBox">
-          <img *ngIf="user" class="pfp" src = {{photoService.imgURL}}>
+          <img *ngIf="user" class="pfp" src = {{this.photoService.imgURL}}>
         </div>
 
         <p class="changePfpText">Profilbild ändern</p>

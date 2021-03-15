@@ -52,7 +52,7 @@ public class ImageService {
     @Consumes(MediaType.APPLICATION_JSON)
     public void saveImageToDatabase(String base64string) throws Exception {
         try {
-            profilePicture = Base64.getEncoder().encode(base64string.getBytes());
+            profilePicture = base64string.getBytes();
         } catch (Exception e) {
             e.printStackTrace();
         }
