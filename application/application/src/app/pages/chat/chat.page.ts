@@ -37,6 +37,7 @@ export class ChatPage implements OnInit {
   public pos = 0;
   public showNewMsgLine : boolean;
 
+  public pfp;
   
 
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
@@ -68,6 +69,7 @@ export class ChatPage implements OnInit {
   getRoomName() {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
       this.otherUser.custom = data;
+      this.pfp = "data:image/png;base64,"+atob(this.otherUser.custom.profilePicture);
       this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
         this.otherUser.id = data["id"];
         this.otherUser.userName = data["username"];
@@ -76,9 +78,11 @@ export class ChatPage implements OnInit {
         this.otherUser.email = data["email"];
         console.log(data)
       })
+      /*
       this.contactlist.getOtherPfp(this.contactlist.selectedRoom.id).subscribe(data => {
         this.otherUser.custom.profilePicture = "data:image/png;base64," + data;
       });
+      */
     })
   }
 

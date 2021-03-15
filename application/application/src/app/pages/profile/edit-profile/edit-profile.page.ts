@@ -20,6 +20,7 @@ export class EditProfilePage implements OnInit {
   nachrichten: boolean = false;
   connects: boolean = false;
   imgURL;
+ 
   noImgs : boolean;
 
   constructor(public ps: ProfileService,  public modalController: ModalController, public photoService: PhotoService, private authService: AuthService) { }
@@ -56,7 +57,9 @@ export class EditProfilePage implements OnInit {
 
         console.log(data);
         this.ps.user.custom = data;
+        
 
+       
         this.photoService.loadPfp();
         this.photoService.loadGalleryImages();
         console.log("Images loaded.")
