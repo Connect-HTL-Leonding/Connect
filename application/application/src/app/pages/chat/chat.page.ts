@@ -8,10 +8,14 @@ import { Room } from '../../model/room';
 import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
 
+
+
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
+ 
+  
 })
 export class ChatPage implements OnInit {
 
@@ -36,8 +40,8 @@ export class ChatPage implements OnInit {
   //position of new Message Line
   public pos = 0;
   public showNewMsgLine : boolean;
-
   public pfp;
+
   
 
   constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
