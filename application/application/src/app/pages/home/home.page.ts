@@ -43,6 +43,7 @@ export class HomePage implements OnInit {
   //map: GoogleMap;
   navigate: any;
   map: any;
+  friendMarkers = [];
   
 
   //map
@@ -76,6 +77,7 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
+
     this.mySkinsService.getSelectedSkins().subscribe(data => {
       console.log(data);
     })
@@ -157,11 +159,13 @@ export class HomePage implements OnInit {
 
 var marker = new google.maps.Marker({
   position: user.custom.position,
-  title: user.userName,
+  title: user.id,
   map: this.map,
   icon: compositeImage
 });
 
+this.friendMarkers.push(marker);
+console.log(this.friendMarkers);
 
   }
   createMeetupMarker(source, origin) {
@@ -279,7 +283,7 @@ var marker = new google.maps.Marker({
     });
     */
 
-
+ 
 
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
