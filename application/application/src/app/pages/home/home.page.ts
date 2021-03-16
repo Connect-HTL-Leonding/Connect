@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, MenuController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
+import  {AfterViewInit} from '@angular/core';
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
@@ -8,6 +11,7 @@ import { MapStyle } from './mapStyle';
 import { User } from '../../model/user';
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
+import Showcaser  from 'showcaser'
 
 /*
 import {
@@ -38,6 +42,9 @@ export class HomePage implements OnInit {
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
+  // Button
+  @ViewChild('connect_button', { static: false }) connectButRef: ElementRef;
+
   constructor(private menu: MenuController, private geolocation: Geolocation, public loadingController: LoadingController, private mySkinsService : MyskinsService) {
     this.sideMenu();
   }
@@ -48,6 +55,8 @@ export class HomePage implements OnInit {
       console.log(data);
     })
   }
+
+
 
 
   async presentLoading() {
@@ -65,8 +74,12 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.loadMap();
-    console.log("jfsaldfjkd");
+    console.log(this.connectButRef.nativeElement);
+    
+   
   }
+
+
 
   createUserMarker(user: User, origin) {
     var canvas = document.createElement('canvas');
@@ -244,6 +257,8 @@ export class HomePage implements OnInit {
         map: this.map,
         center: location,
         radius: 2 //in Meter
+
+
       });
 
       const radiusCircle = new google.maps.Circle({
@@ -257,7 +272,7 @@ export class HomePage implements OnInit {
         center: location,
         radius: 100 //in Meter
       });
-
+      this.showTutorial();
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -278,8 +293,20 @@ export class HomePage implements OnInit {
         alert('clicked');
       });
       */
+       
   }
 
+  showTutorial(){
+    Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
+      shape: "circle",
+      buttonText: "Ok!",
+      position: {
+        horizontal: "center",
+        vertical: "top"
+      },
+      allowSkip: false
+    });
+  }
   sideMenu() {
     this.navigate =
       [

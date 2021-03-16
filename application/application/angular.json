@@ -40,7 +40,9 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": []
+            "scripts": [
+              "node-modules/showcaser/dist/showcaser.min.js"
+            ]
           },
           "configurations": {
             "production": {
