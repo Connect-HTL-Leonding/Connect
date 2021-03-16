@@ -62,3 +62,14 @@ ion-label {
 .bold {
     font-weight: 700;
 }
+
+.rightBox {
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+    align-items: flex-start;
+}
+
+.rightBox p {
+    font-size: x-small;
+}

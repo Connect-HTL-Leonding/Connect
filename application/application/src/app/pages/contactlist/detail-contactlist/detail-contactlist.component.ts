@@ -2,12 +2,15 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ContactlistService } from 'src/app/api/contactlist.service';
 import { User } from 'src/app/model/user';
-import { Room } from '../../../model/room'
+import { Room } from '../../../model/room';
+import {formatDate} from '@angular/common';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-detail-contactlist',
   templateUrl: './detail-contactlist.component.html',
   styleUrls: ['./detail-contactlist.component.scss'],
+  providers: [DatePipe]
 })
 export class DetailContactlistComponent implements OnInit {
 
@@ -15,14 +18,18 @@ export class DetailContactlistComponent implements OnInit {
   public contactlist;
   public user: User = new User();
   public latestMessage: string;
+  public latestMessageCreated : Date;
   public pfp;
   public allMessages;
   public seenMessages;
   public unseenMessages;
+  public datePipe : DatePipe;
+  public array = [];
 
-  constructor(public cs: ContactlistService) {
+
+  constructor(public cs: ContactlistService, datePipe: DatePipe) {
     this.contactlist = cs;
-    
+    this.datePipe = datePipe;
   }
 
   ngOnInit() {
@@ -63,6 +70,9 @@ export class DetailContactlistComponent implements OnInit {
       if (data != null) {
         console.log(data.message);
         this.latestMessage = data.message;
+        this.latestMessageCreated = data.created;
+        console.log(this.latestMessageCreated);
+        
       }
     })
   }
