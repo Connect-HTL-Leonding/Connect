@@ -268,6 +268,12 @@ console.log(this.friendMarkers);
    })
  }
 
+  success(pos) {
+  var crd = pos.coords;
+  console.log(crd.latitude+' / '+crd.longitude);
+ 
+}
+
   async loadMap() {
     //show LoadingScreen BITTE NICHT ENTFERNEN! danke
     //this.presentLoading();
@@ -283,6 +289,7 @@ console.log(this.friendMarkers);
     });
     */
 
+   var id = navigator.geolocation.watchPosition(this.success);
  
 
     this.geolocation.getCurrentPosition().then((resp) => {
