@@ -44,6 +44,7 @@ export class HomePage implements OnInit {
   //map: GoogleMap;
   navigate: any;
   map: any;
+  friendMarkers = [];
   
 
   //map
@@ -176,11 +177,13 @@ export class HomePage implements OnInit {
 
 var marker = new google.maps.Marker({
   position: user.custom.position,
-  title: user.userName,
+  title: user.id,
   map: this.map,
   icon: compositeImage
 });
 
+this.friendMarkers.push(marker);
+console.log(this.friendMarkers);
 
   }
   createMeetupMarker(source, origin) {
@@ -283,6 +286,12 @@ var marker = new google.maps.Marker({
    })
  }
 
+  success(pos) {
+  var crd = pos.coords;
+  console.log(crd.latitude+' / '+crd.longitude);
+ 
+}
+
   async loadMap() {
     //show LoadingScreen BITTE NICHT ENTFERNEN! danke
     //this.presentLoading();
@@ -298,7 +307,8 @@ var marker = new google.maps.Marker({
     });
     */
 
-
+   var id = navigator.geolocation.watchPosition(this.success);
+ 
 
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude

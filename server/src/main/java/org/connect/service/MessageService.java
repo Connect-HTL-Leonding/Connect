@@ -13,6 +13,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Calendar;
 import java.util.List;
 
 @ApplicationScoped
@@ -65,7 +66,9 @@ public class MessageService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Message createMessage(Message message, @PathParam("id") long id) {
-        System.out.println(message);
+        System.out.println(java.time.LocalDateTime.now());
+        message.setCreated(java.time.LocalDateTime.now());
+        message.setUpdated(java.time.LocalDateTime.now());
         Room room = dbRepo.findRoom(id);
         message.setRoom(room);
         message.setUser(new User(jwt));
