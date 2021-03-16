@@ -64,6 +64,24 @@ export class ChatPage implements OnInit {
   yousent(message:Message) : boolean {
     return message.user.id == this.chatservice.activeUser.id;
   }
+
+  imageIsNotNull(message:Message) : boolean {
+    if(message.image != null && message.image != "" ){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  messageIsNotNull(message:Message) :boolean {
+    if(message.message != null && message.message != "") {
+      return true;
+    } 
+    else {
+      return false;
+    }
+  }
   
 
   getRoomName() {
@@ -91,13 +109,13 @@ export class ChatPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  /*
+  
   doSendImage() {
       this.m.message = this.sendText;
       this.m.created = new Date();
       this.m.updated = new Date();
-      console.log("vor callback");
-      this.chatservice.createImageMessage(this.m).then(data => {
+      this.m.image = "";
+      this.chatservice.addImage(this.m).then(data => {
         console.log(data);
         this.chatservice.createMessage(data).subscribe(data => {
           this.websocket.send(this.sendText);
@@ -105,7 +123,7 @@ export class ChatPage implements OnInit {
         })
       });
   }
-  */
+  
 
   doSend(){
     if(this.sendText.trim().length > 0) {

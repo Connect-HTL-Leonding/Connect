@@ -37,11 +37,19 @@ div#messageFlex {
     flex-direction: column;
     margin-top: 5px;
     margin-bottom: 5px;
+    width: 100%;
 }
 
 .message {
-    margin-left: 5px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.imageMessage {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0;
+    margin-bottom: 7px;
 }
 
 .youSent {
@@ -108,3 +116,19 @@ div#messageFlex {
 }
 
 .hline { width:80%; height:1px; background: red }
+
+.youSentImage {
+    width: 75vw;
+    height: auto;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: var(--ion-color-secondary);
+}
+
+.otherSentImage {
+    width: 75vw;
+    height: auto;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: lightgray;
+}

@@ -43,7 +43,7 @@ export class ChatService {
     return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
   }
 
-  /*public async createImageMessage(m:Message) {
+  public async addImage(m:Message) {
     try {
       const capturedPhoto = await Camera.getPhoto({
         resultType: CameraResultType.Base64,
@@ -56,7 +56,7 @@ export class ChatService {
     } catch (e) {
       }
   }
-  */
+  
 
   getSeenMessages(room: Room) {
     const reqHeader = new HttpHeaders({
