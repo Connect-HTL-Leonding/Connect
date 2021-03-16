@@ -47,6 +47,16 @@ public class MySkinService {
         return dbRepo.findSelected(jwt.claim("sub"));
     }
 
+    // Liste aller selektierten Skins senden
+    @Path("findMapSkins")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<MySkin> findMapSkins() {
+        System.out.println(identity.getPrincipal().getName());
+
+        return dbRepo.findMapSkin(jwt.claim("sub"));
+    }
+
     // Ein Skin senden
     @Path("find/{id}")
     @GET
