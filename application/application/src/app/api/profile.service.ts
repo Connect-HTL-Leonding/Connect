@@ -44,7 +44,7 @@ export class ProfileService {
   //update aktuellen User
   updateUser(u: CustomUser) {
     let body = JSON.stringify(u);
-    console.log(body);
+    //console.log(body);
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()

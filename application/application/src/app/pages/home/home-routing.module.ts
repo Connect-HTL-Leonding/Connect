@@ -7,6 +7,10 @@ const routes: Routes = [
     path: '',
     component: HomePage,
 
+  },
+  {
+    path: 'selected-skins',
+    loadChildren: () => import('./selected-skins/selected-skins.module').then( m => m.SelectedSkinsPageModule)
   }
 ];
 

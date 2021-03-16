@@ -36,8 +36,8 @@ export class DevinfosPage {
     window.open(this.authService.logoutUrl);
   }
 
-  dismissModal(newSkin) {
-    this.modalController.dismiss(newSkin);
+  dismissModal() {
+    this.modalController.dismiss();
   }
 
   get hasValidToken() { return this.authService.hasValidToken(); }

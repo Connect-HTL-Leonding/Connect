@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+    <ion-title>Skin Favoriten</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="mySkinsService.selectedMySkins">
+    <ion-item *ngFor="let mySkin of mySkinsService.selectedMySkins, let i = index" (click)="toggle(mySkin)">
+      <ion-avatar slot="start">
+        <img src="{{mySkin.skin.image}}">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{mySkin.skin.title}}</h2>
+        <h3>{{mySkin.skin.description}}</h3>
+        <ion-checkbox [(ngModel)]="mySkin.showInMap"></ion-checkbox>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

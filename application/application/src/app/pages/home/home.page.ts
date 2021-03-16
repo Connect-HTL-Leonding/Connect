@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, MenuController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -16,6 +16,7 @@ import { MyskinsService } from 'src/app/api/myskins.service';
 import { Friendship } from 'src/app/model/friendship';
 import { ContactlistService } from 'src/app/api/contactlist.service';
 import { Position } from 'src/app/model/position';
+import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
 
 
 /*
@@ -49,7 +50,15 @@ export class HomePage implements OnInit {
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
 
-  constructor(private menu: MenuController, private geolocation: Geolocation, public ps: ProfileService, private authService: AuthService, private fs : FriendshipService, public loadingController: LoadingController, private mySkinsService : MyskinsService, private cs : ContactlistService) {
+  constructor(private menu: MenuController, 
+    private geolocation: Geolocation, 
+    public ps: ProfileService, 
+    private authService: AuthService, 
+    private fs : FriendshipService, 
+    public loadingController: LoadingController, 
+    private mySkinsService : MyskinsService, 
+    private cs : ContactlistService,
+    public modalController: ModalController) {
 
     this.sideMenu();
 
@@ -76,9 +85,19 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
-    this.mySkinsService.getSelectedSkins().subscribe(data => {
-      console.log(data);
+    this.mySkinsService.getMapSkins().subscribe(data => {
+      this.mySkinsService.mapSkins = data;
+      console.log(this.mySkinsService.mapSkins)
     })
+  }
+
+  async presentModal() {
+
+    const modal = await this.modalController.create({
+      component: SelectedSkinsPage,
+      //cssClass: 'my-custom-class'
+    });
+    return await modal.present();
   }
 
 

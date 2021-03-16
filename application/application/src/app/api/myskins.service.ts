@@ -14,6 +14,8 @@ export class MyskinsService {
   //Array an Terminen
   public myskins: Array<MySkin>;
   public current: MySkin = null;
+  public selectedMySkins: Array<MySkin>;
+  public mapSkins: Array<MySkin>;
   message;
 
 
@@ -75,6 +77,15 @@ export class MyskinsService {
     return this.http.get<MySkin[]>(api.url + 'myskin/findSelected', { headers: reqHeader })
   }
 
+  getMapSkins() {
+
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.get<MySkin[]>(api.url + 'myskin/findMapSkins', { headers: reqHeader })
+  }
+
   //getAll
   getMySkins() {
 
@@ -88,7 +99,7 @@ export class MyskinsService {
   //update
   updateSkin(s: MySkin) {
     let body = JSON.stringify(s);
-    console.log(body);
+    //console.log(body);
     const reqHeader = new HttpHeaders({
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
