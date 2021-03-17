@@ -44,8 +44,9 @@ public class SkinRepository {
         Category c2 = new Category("Freizeit");
 
 
-        User susi = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "susi");
-        User jan = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "jan");
+        User susi = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
+        User jan = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
+        User franz = new User("cf0f860a-8a18-4967-b010-233a7cef9bc3", "franz");
 
 
         User ibo = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
@@ -67,13 +68,16 @@ public class SkinRepository {
         Friendship f2 = new Friendship(trisi,trisi1,s,LocalDateTime.now(),"cool");
         Friendship f3 = new Friendship(iboTrisi,trisi,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(jan,trisi1,s1,LocalDateTime.now(),"cool");
+ //       Friendship f5 = new Friendship(franz, jan, s, LocalDateTime.now(), "cool");
 
 
 
 
 
-        susi.getPosition().put("lat",123.456);
-        susi.getPosition().put("lng",-111.11);
+        susi.getPosition().put("lat",48.205866965334934);
+        susi.getPosition().put("lng",14.056365489806257);
+        franz.getPosition().put("lat",48.305866965334934);
+        franz.getPosition().put("lng",14.156365489806257);
         trisi1.getPosition().put("lat",48.305394);
         trisi1.getPosition().put("lng",14.287337);
         jan.getPosition().put("lat",74.543);
@@ -150,9 +154,12 @@ public class SkinRepository {
         
 
 
-        MySkin ms = new MySkin(30, 5, 5);
+        MySkin ms = new MySkin(30, 5, 1);
         ms.setSkin(s);
         ms.setUser(susi);
+        MySkin ms2 = new MySkin(30, 5, 1);
+        ms2.setSkin(s);
+        ms2.setUser(franz);
         s.getCategories().add(c);
         s.getCategories().add(c1);
         s1.getCategories().add(c);
@@ -165,6 +172,7 @@ public class SkinRepository {
         em.persist(c2);
         em.persist(susi);
         em.persist(jan);
+        em.persist(franz);
         em.persist(ibo);
         em.persist(ibo1);
         em.persist(iboTrisi);
@@ -182,11 +190,13 @@ public class SkinRepository {
         em.persist(s);
         em.persist(s1);
         em.persist(ms);
+        em.persist(ms2);
         em.persist(f);
         em.persist(f1);
         em.persist(f2);
         em.persist(f3);
         em.persist(f4);
+//        em.persist(f5);
         em.persist(trisinger);
         em.persist(janTobi);
     }

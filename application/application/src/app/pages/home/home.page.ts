@@ -45,20 +45,20 @@ export class HomePage implements OnInit {
   navigate: any;
   map: any;
   friendMarkers = [];
-  
+
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
 
-  constructor(private menu: MenuController, 
-    private geolocation: Geolocation, 
-    public ps: ProfileService, 
-    private authService: AuthService, 
-    private fs : FriendshipService, 
-    public loadingController: LoadingController, 
-    private mySkinsService : MyskinsService, 
-    private cs : ContactlistService,
+  constructor(private menu: MenuController,
+    private geolocation: Geolocation,
+    public ps: ProfileService,
+    private authService: AuthService,
+    private fs: FriendshipService,
+    public loadingController: LoadingController,
+    private mySkinsService: MyskinsService,
+    private cs: ContactlistService,
     public modalController: ModalController) {
 
     this.sideMenu();
@@ -69,7 +69,7 @@ export class HomePage implements OnInit {
         console.log(data);
         this.ps.user.custom = data;
 
-      
+
 
         console.log("Current User:")
         console.log(this.ps.user)
@@ -86,10 +86,6 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
-    this.mySkinsService.getMapSkins().subscribe(data => {
-      this.mySkinsService.mapSkins = data;
-      console.log(this.mySkinsService.mapSkins)
-    })
   }
 
   async presentModal() {
@@ -113,18 +109,16 @@ export class HomePage implements OnInit {
   }
 
 
-
-
   ionViewDidEnter() {
     this.loadMap();
     console.log("jfsaldfjkd");
   }
 
-  createUserMarker(user: User) {
-    console.log("Create Marker " + user.userName +":");
-   console.log(user);
 
-   
+  //Funktion zum User Marker erstellen
+  createUserMarker(user: User) {
+    console.log("Create Marker " + user.userName + ":");
+    console.log(user);
 
     var canvas = document.createElement('canvas');
     canvas.width = 35;
@@ -134,13 +128,9 @@ export class HomePage implements OnInit {
     var image = new Image();
     var compositeImage;
 
-
-
     image.src = image1;
 
     ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
-
-
 
     // only draw image where mask is
     ctx.globalCompositeOperation = 'destination-in';
@@ -170,22 +160,22 @@ export class HomePage implements OnInit {
     compositeImage = canvas.toDataURL("image/png");
 
     canvas.remove();
-   //console.log(compositeImage)
+    //console.log(compositeImage)
 
-   
-  
+    var marker = new google.maps.Marker({
+      position: user.custom.position,
+      title: user.id,
+      map: this.map,
+      icon: compositeImage
+    });
 
-var marker = new google.maps.Marker({
-  position: user.custom.position,
-  title: user.id,
-  map: this.map,
-  icon: compositeImage
-});
-
-this.friendMarkers.push(marker);
-console.log(this.friendMarkers);
+    this.friendMarkers.push(marker);
+    console.log(this.friendMarkers);
 
   }
+
+
+  //Funktion für Meetup marker
   createMeetupMarker(source, origin) {
     var canvas = document.createElement('canvas');
     canvas.width = 35;
@@ -195,13 +185,9 @@ console.log(this.friendMarkers);
     var image = new Image();
     var compositeImage;
 
-
-
     image.src = image1;
 
     ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
-
-
 
     // only draw image where mask is
     ctx.globalCompositeOperation = 'destination-in';
@@ -243,55 +229,96 @@ console.log(this.friendMarkers);
 
   }
 
-  calcDistance(origin1: Position, origin2:Position){
-    return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng),new google.maps.LatLng(origin2.lat, origin2.lng))
+
+  //Distance zwischen zwei Positionen
+  calcDistance(origin1: Position, origin2: Position) {
+    return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng))
   }
 
- goThroughFriends(friends : Friendship[]){
- 
-  friends.forEach((f) => {
-    var u : User = new User;
-   console.log("Distance")
-    if(f.user1.id == this.ps.user.id){
-     
-      this.cs.getKeyUser(f.user2).subscribe(data => {
-        u.id = data["id"];
-        u.userName = data["username"];
-        u.firstname = data["firstName"];
-        u.lastname = data["lastName"];
-        u.email = data["email"];
-        u.custom = f.user2
-       console.log(this.calcDistance(u.custom.position,this.ps.user.custom.position));
-        this.createUserMarker(u);
-      })
-     
-      
-    
-    }else{
-      this.cs.getKeyUser(f.user1).subscribe(data => {
-        u.id = data["id"];
-        u.userName = data["username"];
-        u.firstname = data["firstName"];
-        u.lastname = data["lastName"];
-        u.email = data["email"];
-        u.custom = f.user1
-        console.log(this.calcDistance(u.custom.position,this.ps.user.custom.position));
-        this.createUserMarker(u);
-      })
-      
-    }
-   
-   
-    
-   })
- }
 
-  success(pos) {
-  var crd = pos.coords;
-  console.log(crd.latitude+' / '+crd.longitude);
- 
+  //iterate through friends in Friendship-Table
+  goThroughFriends(friends: Friendship[]) {
+
+    friends.forEach((f) => {
+      var u: User = new User;
+      console.log("Distance")
+      if (f.user1.id == this.ps.user.id) {
+
+        this.cs.getKeyUser(f.user2).subscribe(data => {
+          u.id = data["id"];
+          u.userName = data["username"];
+          u.firstname = data["firstName"];
+          u.lastname = data["lastName"];
+          u.email = data["email"];
+          u.custom = f.user2
+          console.log(this.calcDistance(u.custom.position, this.ps.user.custom.position));
+          this.createUserMarker(u);
+        })
+
+      } else {
+        this.cs.getKeyUser(f.user1).subscribe(data => {
+          u.id = data["id"];
+          u.userName = data["username"];
+          u.firstname = data["firstName"];
+          u.lastname = data["lastName"];
+          u.email = data["email"];
+          u.custom = f.user1
+          console.log(this.calcDistance(u.custom.position, this.ps.user.custom.position));
+          this.createUserMarker(u);
+        })
+
+      }
+
+
+
+    })
+  }
+
+  createMySkinRaduis() {
+    console.log(this.map + "jasdöfkasfdalsfk")
+    if (this.mySkinsService.mapSkins) {
+      this.mySkinsService.mapSkins.forEach((myskin) => {
+        console.log("seas")
+        var circle = new google.maps.Circle({
+          title: myskin.skin.id,
+          strokeColor: "#0eb19b",
+          strokeOpacity: 0.8,
+          strokeWeight: 2,
+          fillColor: this.intToRGB(this.hashCode(myskin.skin.title)),
+          fillOpacity: 0.08,
+          clickable: false,
+          map: this.map,
+          center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
+          radius: myskin.radius * 1000 //Umwandlung von Kilometer auf Meter
+        });
+      })
+    }
+  }
+
+  hashCode(str) { // java String#hashCode
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    //console.log(hash)
+    return hash;
+  }
+
+  intToRGB(i){
+    var c = (i & 0x00FFFFFF)
+        .toString(16)
+        .toUpperCase();
+    return "#" + "00000".substring(0, 6 - c.length) + c;
 }
 
+  success(pos) {
+    var crd = pos.coords;
+    console.log(crd.latitude + ' / ' + crd.longitude);
+
+  }
+
+
+  //Map loading Funktion
   async loadMap() {
     //show LoadingScreen BITTE NICHT ENTFERNEN! danke
     //this.presentLoading();
@@ -307,8 +334,8 @@ console.log(this.friendMarkers);
     });
     */
 
-   var id = navigator.geolocation.watchPosition(this.success);
- 
+    var id = navigator.geolocation.watchPosition(this.success);
+
 
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
@@ -322,18 +349,23 @@ console.log(this.friendMarkers);
       this.ps.user.custom.position.lat = resp.coords.latitude;
       this.ps.user.custom.position.lng = resp.coords.longitude;
       this.ps.updateUser(this.ps.user.custom);
-    
 
-      this.fs.getBefriendedUsers(this.ps.user).subscribe( data => {
-       this.goThroughFriends(data);
-       
+
+      this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
+        this.goThroughFriends(data);
+
       });
-     
+
+      this.mySkinsService.getMapSkins().subscribe(data => {
+        this.mySkinsService.mapSkins = data;
+        this.createMySkinRaduis();
+      })
+
 
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
-      const location2 = new google.maps.LatLng(resp.coords.latitude+0.0005, resp.coords.longitude+0.0005);
-      const location3 = new google.maps.LatLng(resp.coords.latitude-0.0005, resp.coords.longitude-0.0005);
-      
+      const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
+      const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
+
       // new ClickEventHandler(this.map, location);
 
       console.log(MapStyle)
@@ -347,18 +379,13 @@ console.log(this.friendMarkers);
 
       this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
-   
-   //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
+
+      //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
       new ClickEventHandler(this.map, location);
 
 
-
-
-
-
-
-
+      //angemeldeter User
       const userDot = new google.maps.Circle({
         strokeColor: "#0eb19b",
         strokeOpacity: 1,
@@ -369,19 +396,6 @@ console.log(this.friendMarkers);
         center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
         radius: 2 //in Meter
       });
-
-      const radiusCircle = new google.maps.Circle({
-        strokeColor: "#0eb19b",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#0eb19b",
-        fillOpacity: 0.05,
-        clickable: false,
-        map: this.map,
-        center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
-        radius: 100 //in Meter
-      });
-
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -439,6 +453,17 @@ console.log(this.friendMarkers);
       ]
 
     console.log(this.navigate);
+  }
+
+
+
+
+  connect(){
+    if(this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null){
+      this.fs.connect(this.mySkinsService.mapSkins).subscribe(data => {
+        console.log(data);
+      })
+    }
   }
 
 }

@@ -9,17 +9,33 @@ import java.time.LocalDateTime;
 @Entity
 
 @NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f")
-@NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where user1 = :user or user2 = :user")
-//Radius muss noch hinzugefügt werden
-@NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT u FROM User u join MySkin ms on(ms.user.id = u.id)" +
-        "where ms.age <= :age and ms.niveau = :niveau")
-
+@NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where f.user1 = :user or f.user2 = :user")
+@NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where f.user1 = :user_1 and f.user2 = :user_2")
+@NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1")
+//CONNECT
+//holt alle User, die den MySkin-Kriterien entsprechen
+//muss noch mehr überprüft werden!!!!
+//Radius muss noch hinzugefügt werden!!!!!
+/*
+@NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT distinct u FROM User u join MySkin ms on(ms.user.id = u.id) " +
+        "join Friendship f1 on(f1.user1 = u) " +
+        "join Friendship f2 on(f2.user2 = u) " +
+        "where f1.user2 <> :user_1 and f2.user1 <> :user_1 " +
+        "and ms.skin.id = :mySkinSkin_id " +
+        "and ms.age <= :age and ms.niveau <= :niveau " +
+        "and u <> :user_1")
+*/
+@NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT distinct u FROM User u join MySkin ms on(ms.user.id = u.id) " +
+        "where ms.skin.id = :mySkinSkin_id " +
+        "and ms.age <= :age and ms.niveau <= :niveau " +
+        "and u <> :user_1")
 public class Friendship implements Serializable {
 
     public static final String FINDALL = "Friendship.findAll";
     public static final String FINDFRIENDSHIPSOFUSER = "Friendship.findFriendshipsOfUser";
     public static final String FINDRANDOM = "Friendship.findRandom";
-
+    public static final String FIND = "Friendship.find";
+    public static final String FIND2 = "Friendship.find2";
 
 
     @Id

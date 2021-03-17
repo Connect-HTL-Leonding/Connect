@@ -29,3 +29,8 @@
 .remove {
     margin: 25px 50px 0;     
 }
+
+ion-card-header {
+    display: flex;
+    justify-content: space-between;
+}

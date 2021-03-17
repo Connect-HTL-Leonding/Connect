@@ -57,6 +57,15 @@ export class FriendshipService {
     return this.http.post(api.url + 'friendship/create/', body, {headers: reqHeader});
   }
 
+  connect(mySkins : Array<MySkin>) {
+    let body = JSON.stringify(mySkins);
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    return this.http.post(api.url + 'friendship/findRandom', body, {headers: reqHeader});
+  }
+
   
 
   //update

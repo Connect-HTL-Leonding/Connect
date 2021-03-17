@@ -30,6 +30,7 @@ public class FriendshipService {
     @Inject
     UserRepository userRepo;
 
+
     @GET
     @Path("create")
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,11 +49,11 @@ public class FriendshipService {
     }
 
     @Path("findRandom")
-    @GET
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<User> find(MySkin mySkin) {
-        return dbRepo.findRandom(mySkin);
+    public List<User> find(List<MySkin> mySkin) {
+        return dbRepo.findRandom(mySkin, jwt.claim("sub"));
     }
 
     @Path("findAll")

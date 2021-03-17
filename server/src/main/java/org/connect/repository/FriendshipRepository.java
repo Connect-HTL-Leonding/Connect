@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class FriendshipRepository {
     // Entitymanager erzeugen
     @Inject
     protected EntityManager em;
+
 
     @Transactional
     public Friendship create(Friendship f) {
@@ -37,21 +39,82 @@ public class FriendshipRepository {
     }
 
     @Transactional
-    public List<User> findRandom(MySkin mySkin) {
+    public List<User> findRandom(List<MySkin> mySkins, Optional id) {
 
-        TypedQuery<User> tq = this.em.createNamedQuery(Friendship.FINDRANDOM, User.class);
-        tq.setParameter("niveau", mySkin.getNiveau());
-        tq.setParameter("age", mySkin.getAge());
-        //tq.setParameter("radius", mySkin.getRadius());
+        List<User> userList = new LinkedList<>();
+        List<User> deleteList = new LinkedList<>();
+        for (MySkin mySkin: mySkins) {
+            TypedQuery<User> tq = this.em.createNamedQuery(Friendship.FINDRANDOM, User.class);
+            tq.setParameter("niveau", mySkin.getNiveau());
+            tq.setParameter("age", mySkin.getAge());
+            tq.setParameter("user_1", em.find(User.class, id.get().toString()));
+            tq.setParameter("mySkinSkin_id", mySkin.getSkin().getId());
+            //muss noch implementiert werden
+            //tq.setParameter("radius", mySkin.getRadius());
 
-        List<User> userList = null;
-        try {
-            userList = tq.getResultList();
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
+            try {
+                List<User> users= tq.getResultList();
+                System.out.println(users);
+                userList.addAll(users);
+                /*
+                for (User user: userList) {
+                    Friendship friendship = null;
+                    TypedQuery<Friendship> tq2 = this.em.createNamedQuery(Friendship.FIND, Friendship.class);
+                    tq2.setParameter("user_1", em.find(User.class, id.get().toString()));
+                    tq2.setParameter("user_2", user);
+
+
+                    friendship = tq2.getSingleResult();
+
+                    if(friendship == null){
+                        userList.remove(user);
+                    }
+                }
+                 */
+            }catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+
+            System.out.println(userList);
         }
 
-        System.out.println(userList);
+        if(!userList.isEmpty()){
+            System.out.println(userList.size());
+            for (User user: userList) {
+                System.out.println("test");
+                TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FIND, Friendship.class);
+                tq.setParameter("user_1", user);
+                tq.setParameter("user_2", em.find(User.class, id.get().toString()));
+                //muss noch implementiert werden
+                //tq.setParameter("radius", mySkin.getRadius());
+
+                try {
+                    Friendship dummy = tq.getSingleResult();
+                    System.out.println(dummy + "Schritt 1");
+                    if(dummy == null){
+                        TypedQuery<Friendship> tq2 = this.em.createNamedQuery(Friendship.FIND2, Friendship.class);
+                        tq2.setParameter("user_1", user);
+                        tq2.setParameter("user_2", em.find(User.class, id.get().toString()));
+                        dummy = tq2.getSingleResult();
+                        System.out.println(dummy + "Schritt 2");
+                        if(dummy != null){
+
+                            deleteList.add(user);
+                        }
+                    }else {
+                        deleteList.add(user);
+                    }
+
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+
+
+            userList.removeAll(deleteList);
+
+            System.out.println(userList);
+        }
 
         return userList;
     }
