@@ -17,19 +17,21 @@ export class SelectedSkinsPage implements OnInit {
     })
   }
 
-  dismissModal() {
-    this.modalController.dismiss();
-  }
-
   toggle(mySkin){
     console.log(mySkin.showInMap)
     this.mySkinsService.updateSkin(mySkin).subscribe(data => {
       //nach unpdate erneutes getAll
       this.mySkinsService.getMySkins().subscribe(
         data => {
+          
           this.mySkinsService.myskins = data;
           this.mySkinsService.getCurrentSkin();
-          //console.log(this.mySkinsService.current)
+
+
+          this.mySkinsService.getMapSkins().subscribe(
+            data => {
+              this.mySkinsService.mapSkins = data;
+            });
         },
         error1 => {
           console.log('Error');

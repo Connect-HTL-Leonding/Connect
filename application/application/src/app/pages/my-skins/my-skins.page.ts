@@ -116,6 +116,12 @@ export class MySkinsPage implements OnInit {
           this.mySkinService.myskins = data;
           this.mySkinService.getCurrentSkin();
           console.log(this.mySkinService.current)
+          this.mySkinService.getSelectedSkins().subscribe(data => {
+            this.mySkinService.selectedMySkins = data;
+            this.mySkinService.getMapSkins().subscribe(data => {
+              this.mySkinService.mapSkins = data;
+            })
+          })
         },
         error1 => {
           console.log('Error');

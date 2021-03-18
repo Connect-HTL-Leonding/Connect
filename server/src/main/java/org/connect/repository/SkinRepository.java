@@ -36,13 +36,54 @@ public class SkinRepository {
     @Transactional
     public void initDB() {
 
-        Skin s = new Skin("Fußball","Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png", 100);
-        Skin s1 = new Skin("Fußball2","Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png", 100);
+        Skin s = new Skin("Fußball","Du magst Fußball? Cool! Das ist der Fußball Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png", 100);
+        Skin s1 = new Skin("Ausgehen","Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!","../assets/connect_img/square/ausgehen_square.png", 100);
+        Skin s2 = new Skin("Basketball","Du magst Basketball? Cool! Das ist der Basketball Skin. Komm doch vorbei!","../assets/connect_img/square/basketball_square.png", 100);
+        Skin s3 = new Skin("Schwimmen","Du magst Schwimmen? Cool! Das ist der Schwimmen Skin. Komm doch vorbei!","../assets/connect_img/square/schwimmen_square.png", 100);
+        Skin s4 = new Skin("Golf","Du magst Golf? Cool! Das ist der Golf Skin. Komm doch vorbei!","../assets/connect_img/square/golf_square.png", 100);
+        Skin s5 = new Skin("Volleyball","Du magst Volleyball? Cool! Das ist der Volleyball Skin. Komm doch vorbei!","../assets/connect_img/square/volleyball_square.png", 100);
+        Skin s6 = new Skin("Tennis","Du magst Tennis? Cool! Das ist der Tennis Skin. Komm doch vorbei!","../assets/connect_img/square/tennis_square.png", 100);
+
+
 
         Category c = new Category("All");
         Category c1 = new Category("Sport");
         Category c2 = new Category("Freizeit");
 
+        s.getCategories().add(c);
+        s.getCategories().add(c1);
+        c.getSkins().add(s);
+        c1.getSkins().add(s);
+
+        s1.getCategories().add(c);
+        s1.getCategories().add(c2);
+        c.getSkins().add(s1);
+        c2.getSkins().add(s1);
+
+        s2.getCategories().add(c);
+        s2.getCategories().add(c1);
+        c.getSkins().add(s2);
+        c1.getSkins().add(s2);
+
+        s3.getCategories().add(c);
+        s3.getCategories().add(c1);
+        c.getSkins().add(s3);
+        c1.getSkins().add(s3);
+
+        s4.getCategories().add(c);
+        s4.getCategories().add(c1);
+        c.getSkins().add(s4);
+        c1.getSkins().add(s4);
+
+        s5.getCategories().add(c);
+        s5.getCategories().add(c1);
+        c.getSkins().add(s5);
+        c1.getSkins().add(s5);
+
+        s6.getCategories().add(c);
+        s6.getCategories().add(c1);
+        c.getSkins().add(s6);
+        c1.getSkins().add(s6);
 
         User susi = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
         User jan = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
@@ -160,12 +201,7 @@ public class SkinRepository {
         MySkin ms2 = new MySkin(30, 5, 1);
         ms2.setSkin(s);
         ms2.setUser(franz);
-        s.getCategories().add(c);
-        s.getCategories().add(c1);
-        s1.getCategories().add(c);
-        s1.getCategories().add(c1);
-        c.getSkins().add(s);
-        c1.getSkins().add(s);
+
 
         em.persist(c);
         em.persist(c1);
@@ -189,6 +225,11 @@ public class SkinRepository {
         em.persist(roomRafi2);
         em.persist(s);
         em.persist(s1);
+        em.persist(s2);
+        em.persist(s3);
+        em.persist(s4);
+        em.persist(s5);
+        em.persist(s6);
         em.persist(ms);
         em.persist(ms2);
         em.persist(f);

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, MenuController, ModalController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController, PopoverController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
     public loadingController: LoadingController,
     private mySkinsService: MyskinsService,
     private cs: ContactlistService,
-    public modalController: ModalController) {
+    public popoverController: PopoverController) {
 
     this.sideMenu();
 
@@ -88,13 +88,14 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  async presentModal() {
-
-    const modal = await this.modalController.create({
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
       component: SelectedSkinsPage,
-      //cssClass: 'my-custom-class'
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
     });
-    return await modal.present();
+    return await popover.present();
   }
 
 
