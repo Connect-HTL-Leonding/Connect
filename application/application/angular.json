@@ -41,7 +41,6 @@
               }
             ],
             "scripts": [
-              "node-modules/showcaser/dist/showcaser.min.js"
             ]
           },
           "configurations": {

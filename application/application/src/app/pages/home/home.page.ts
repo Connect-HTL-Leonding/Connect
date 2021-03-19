@@ -4,6 +4,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import  {AfterViewInit} from '@angular/core';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
@@ -45,7 +46,7 @@ export class HomePage implements OnInit {
   // Button
   @ViewChild('connect_button', { static: false }) connectButRef: ElementRef;
 
-  constructor(private menu: MenuController, private geolocation: Geolocation, public loadingController: LoadingController, private mySkinsService : MyskinsService) {
+  constructor(private menu: MenuController, private geolocation: Geolocation, public loadingController: LoadingController, private mySkinsService : MyskinsService, private router: Router) {
     this.sideMenu();
   }
 
@@ -305,6 +306,27 @@ export class HomePage implements OnInit {
         vertical: "top"
       },
       allowSkip: false
+    });
+    Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
+      shape: "circle",
+      buttonText: "Ok!",
+      position: {
+        horizontal: "center",
+        vertical: "middle"
+      },
+      allowSkip: false
+    });
+    Showcaser.showcase("Diese Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
+      shape: "rectangle",
+      buttonText: "Ok!",
+      position: {
+        horizontal: "center",
+        vertical: "middle"
+      },
+      allowSkip: false,
+      close: () => {
+          this.router.navigate(['/my-skins']);
+      }
     });
   }
   sideMenu() {
