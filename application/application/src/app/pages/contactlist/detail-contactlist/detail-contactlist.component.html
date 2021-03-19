@@ -12,7 +12,7 @@
       <p class="bold" *ngIf="this.unseenMessages>0">{{this.latestMessage}}</p>
     </div>
     <div class="rightBox">
-      <p *ngIf="this.latestMessageCreated">{{this.latestMessageCreated[2]}}.{{this.latestMessageCreated[1]}}.{{this.latestMessageCreated[0]}}</p>
+      <p class="timeDisplay" *ngIf="this.latestMessageCreated">{{this.timeDisplay}}</p>
     <ion-badge *ngIf="this.unseenMessages>0">{{this.unseenMessages}}</ion-badge>
     </div>
   </ion-label>
