@@ -51,9 +51,9 @@
   <div id="inputdiv">
     <div id="input">
       <ion-input placeholder="Nachricht..." [(ngModel)]="sendText"></ion-input>
-      <ion-icon name="camera-outline" (click)="doSendImage()"></ion-icon>
+      <ion-icon id="camera" name="camera" (click)="doSendImage()"></ion-icon>
     </div>
-    <ion-icon id="send" name="send-outline" (click)="doSend()"></ion-icon>
+    <ion-icon id="send" name="send" (click)="doSend()"></ion-icon>
   </div>
 </ion-footer>
 
