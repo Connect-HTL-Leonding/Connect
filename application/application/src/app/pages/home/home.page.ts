@@ -5,7 +5,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { MapStyle } from './mapStyle';
-import { User } from '../../model/user';
+import { CustomUser, User } from '../../model/user';
 
 import { ProfileService } from 'src/app/api/profile.service';
 import { AuthService } from 'src/app/api/auth/auth.service';
@@ -17,6 +17,7 @@ import { Friendship } from 'src/app/model/friendship';
 import { ContactlistService } from 'src/app/api/contactlist.service';
 import { Position } from 'src/app/model/position';
 import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
+import { MySkin } from 'src/app/model/myskin';
 
 
 /*
@@ -238,47 +239,55 @@ export class HomePage implements OnInit {
 
 
   //iterate through friends in Friendship-Table
-  goThroughFriends(friends: Friendship[]) {
+  displayFriends(myskin : MySkin) {
+    this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
+      var friends = data;
+     
+      friends.forEach((f) => {
+        var u: User = new User;
+        console.log("Distance")
+        if(this.calcDistance(f.user1.position,f.user2.position) <= myskin.radius * 1000){
 
-    friends.forEach((f) => {
-      var u: User = new User;
-      console.log("Distance")
-      if (f.user1.id == this.ps.user.id) {
-
-        this.cs.getKeyUser(f.user2).subscribe(data => {
-          u.id = data["id"];
-          u.userName = data["username"];
-          u.firstname = data["firstName"];
-          u.lastname = data["lastName"];
-          u.email = data["email"];
-          u.custom = f.user2
-          console.log(this.calcDistance(u.custom.position, this.ps.user.custom.position));
-          this.createUserMarker(u);
-        })
-
-      } else {
-        this.cs.getKeyUser(f.user1).subscribe(data => {
-          u.id = data["id"];
-          u.userName = data["username"];
-          u.firstname = data["firstName"];
-          u.lastname = data["lastName"];
-          u.email = data["email"];
-          u.custom = f.user1
-          console.log(this.calcDistance(u.custom.position, this.ps.user.custom.position));
-          this.createUserMarker(u);
-        })
-
+        if (f.user1.id == this.ps.user.id) {
+  
+          this.cs.getKeyUser(f.user2).subscribe(data => {
+            u.id = data["id"];
+            u.userName = data["username"];
+            u.firstname = data["firstName"];
+            u.lastname = data["lastName"];
+            u.email = data["email"];
+            u.custom = f.user2
+           
+            this.createUserMarker(u);
+          })
+  
+        } else {
+          this.cs.getKeyUser(f.user1).subscribe(data => {
+            u.id = data["id"];
+            u.userName = data["username"];
+            u.firstname = data["firstName"];
+            u.lastname = data["lastName"];
+            u.email = data["email"];
+            u.custom = f.user1
+           
+            this.createUserMarker(u);
+          })
+  
+        }
+  
       }
+  
+      })
 
-
-
-    })
+    });
+    
   }
 
   createMySkinRaduis() {
     console.log(this.map + "jasdöfkasfdalsfk")
     if (this.mySkinsService.mapSkins) {
       this.mySkinsService.mapSkins.forEach((myskin) => {
+        this.displayFriends(myskin);
         console.log("seas")
         var circle = new google.maps.Circle({
           title: myskin.skin.id,
@@ -351,11 +360,8 @@ export class HomePage implements OnInit {
       this.ps.user.custom.position.lng = resp.coords.longitude;
       this.ps.updateUser(this.ps.user.custom);
 
-
-      this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
-        this.goThroughFriends(data);
-
-      });
+     
+     
 
       this.mySkinsService.getMapSkins().subscribe(data => {
         this.mySkinsService.mapSkins = data;
@@ -367,9 +373,9 @@ export class HomePage implements OnInit {
       const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
       const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
 
-      // new ClickEventHandler(this.map, location);
+      //new ClickEventHandler(this.map, location);
 
-      console.log(this.ps.user.custom.position.lat +" "+this.ps.user.custom.position.lng);
+      
 
       const mapOptions = {
         center: location,
@@ -462,7 +468,8 @@ export class HomePage implements OnInit {
   connect(){
     if(this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null){
       this.fs.connect(this.mySkinsService.mapSkins).subscribe(data => {
-        console.log(data);
+      console.log(typeof(data))
+
       })
     }
   }

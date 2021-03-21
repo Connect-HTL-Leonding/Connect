@@ -243,7 +243,7 @@ public class SkinRepository {
         em.persist(ms4);
         em.persist(f);
         em.persist(f1);
-      //  em.persist(f2);
+        em.persist(f2);
        // em.persist(f3);
         em.persist(f4);
 //        em.persist(f5);
