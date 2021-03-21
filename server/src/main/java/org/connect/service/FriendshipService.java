@@ -53,6 +53,7 @@ public class FriendshipService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<User> find(List<MySkin> mySkin) {
+
         return dbRepo.findRandom(mySkin, jwt.claim("sub"));
     }
 

@@ -369,7 +369,7 @@ export class HomePage implements OnInit {
 
       // new ClickEventHandler(this.map, location);
 
-      console.log(MapStyle)
+      console.log(this.ps.user.custom.position.lat +" "+this.ps.user.custom.position.lng);
 
       const mapOptions = {
         center: location,
@@ -482,6 +482,10 @@ class ClickEventHandler {
   placesService: google.maps.places.PlacesService;
   infowindow: google.maps.InfoWindow;
   infowindowContent: HTMLElement;
+  e1 : HTMLElement;
+  e2 : HTMLElement;
+  eb : HTMLElement;
+  e3 : HTMLElement;
   constructor(map: google.maps.Map, origin: any) {
     this.origin = origin;
     this.map = map;
@@ -493,6 +497,22 @@ class ClickEventHandler {
     this.infowindowContent = document.getElementById(
       "infowindow-content"
     ) as HTMLElement;
+    /*
+    this.infowindowContent = document.createElement("div");
+    this.infowindowContent.classList.add("infowindow-content");
+    this.e1 = document.createElement("img");
+    this.e1.classList.add("place-icon");
+    this.e1.setAttribute("src","");
+    this.e2 = document.createElement("span");
+    this.e1.classList.add("place-name");
+    this.eb = document.createElement("br");
+    this.e3 = document.createElement("span");
+    this.e1.classList.add("place-address");
+    this.infowindowContent.append(this.e1);
+    this.infowindowContent.append(this.e2);
+    this.infowindowContent.append(this.eb);
+    this.infowindowContent.append(this.e3);
+    */
     console.log(this.infowindowContent);
     this.infowindow.setContent(this.infowindowContent);
 
@@ -572,6 +592,7 @@ class ClickEventHandler {
           (me.infowindowContent.children[
             "place-address"
           ] as HTMLElement).textContent = place.formatted_address as string;
+          
           me.infowindow.open(me.map);
         }
       }

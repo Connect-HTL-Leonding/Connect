@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f")
 @NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where f.user1 = :user or f.user2 = :user")
-@NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where f.user1 = :user_1 and f.user2 = :user_2")
+@NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where (f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)")
 @NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1")
 //CONNECT
 //holt alle User, die den MySkin-Kriterien entsprechen
@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 @NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT distinct u FROM User u join MySkin ms on(ms.user.id = u.id) " +
         "where ms.skin.id = :mySkinSkin_id " +
         "and ms.age <= :age and ms.niveau <= :niveau " +
+        "" +
         "and u <> :user_1")
 public class Friendship implements Serializable {
 

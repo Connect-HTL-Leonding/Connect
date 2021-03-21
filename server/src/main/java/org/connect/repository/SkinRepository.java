@@ -108,13 +108,14 @@ public class SkinRepository {
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
         Friendship f2 = new Friendship(trisi,trisi1,s,LocalDateTime.now(),"cool");
         Friendship f3 = new Friendship(iboTrisi,trisi,s1,LocalDateTime.now(),"cool");
-        Friendship f4 = new Friendship(jan,trisi1,s1,LocalDateTime.now(),"cool");
+        Friendship f4 = new Friendship(iboTrisi,trisi1,s1,LocalDateTime.now(),"cool");
  //       Friendship f5 = new Friendship(franz, jan, s, LocalDateTime.now(), "cool");
 
 
 
 
-
+        trisi.getPosition().put("lat",48.3059);
+        trisi.getPosition().put("lng",14.2863);
         susi.getPosition().put("lat",48.205866965334934);
         susi.getPosition().put("lng",14.056365489806257);
         franz.getPosition().put("lat",48.305866965334934);
@@ -201,6 +202,12 @@ public class SkinRepository {
         MySkin ms2 = new MySkin(30, 5, 1);
         ms2.setSkin(s);
         ms2.setUser(franz);
+        MySkin ms3 = new MySkin(30, 5, 1);
+        ms3.setSkin(s);
+        ms3.setUser(trisi1);
+        MySkin ms4 = new MySkin(30, 5, 1);
+        ms4.setSkin(s);
+        ms4.setUser(iboTrisi);
 
 
         em.persist(c);
@@ -232,10 +239,12 @@ public class SkinRepository {
         em.persist(s6);
         em.persist(ms);
         em.persist(ms2);
+        em.persist(ms3);
+        em.persist(ms4);
         em.persist(f);
         em.persist(f1);
-        em.persist(f2);
-        em.persist(f3);
+      //  em.persist(f2);
+       // em.persist(f3);
         em.persist(f4);
 //        em.persist(f5);
         em.persist(trisinger);
