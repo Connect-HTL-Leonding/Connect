@@ -239,48 +239,48 @@ export class HomePage implements OnInit {
 
 
   //iterate through friends in Friendship-Table
-  displayFriends(myskin : MySkin) {
+  displayFriends(myskin: MySkin) {
     this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
       var friends = data;
-     
+
       friends.forEach((f) => {
         var u: User = new User;
         console.log("Distance")
-        if(this.calcDistance(f.user1.position,f.user2.position) <= myskin.radius * 1000){
+        if (this.calcDistance(f.user1.position, f.user2.position) <= myskin.radius * 1000) {
 
-        if (f.user1.id == this.ps.user.id) {
-  
-          this.cs.getKeyUser(f.user2).subscribe(data => {
-            u.id = data["id"];
-            u.userName = data["username"];
-            u.firstname = data["firstName"];
-            u.lastname = data["lastName"];
-            u.email = data["email"];
-            u.custom = f.user2
-           
-            this.createUserMarker(u);
-          })
-  
-        } else {
-          this.cs.getKeyUser(f.user1).subscribe(data => {
-            u.id = data["id"];
-            u.userName = data["username"];
-            u.firstname = data["firstName"];
-            u.lastname = data["lastName"];
-            u.email = data["email"];
-            u.custom = f.user1
-           
-            this.createUserMarker(u);
-          })
-  
+          if (f.user1.id == this.ps.user.id) {
+
+            this.cs.getKeyUser(f.user2).subscribe(data => {
+              u.id = data["id"];
+              u.userName = data["username"];
+              u.firstname = data["firstName"];
+              u.lastname = data["lastName"];
+              u.email = data["email"];
+              u.custom = f.user2
+
+              this.createUserMarker(u);
+            })
+
+          } else {
+            this.cs.getKeyUser(f.user1).subscribe(data => {
+              u.id = data["id"];
+              u.userName = data["username"];
+              u.firstname = data["firstName"];
+              u.lastname = data["lastName"];
+              u.email = data["email"];
+              u.custom = f.user1
+
+              this.createUserMarker(u);
+            })
+
+          }
+
         }
-  
-      }
-  
+
       })
 
     });
-    
+
   }
 
   createMySkinRaduis() {
@@ -314,12 +314,12 @@ export class HomePage implements OnInit {
     return hash;
   }
 
-  intToRGB(i){
+  intToRGB(i) {
     var c = (i & 0x00FFFFFF)
-        .toString(16)
-        .toUpperCase();
+      .toString(16)
+      .toUpperCase();
     return "#" + "00000".substring(0, 6 - c.length) + c;
-}
+  }
 
   success(pos) {
     var crd = pos.coords;
@@ -360,8 +360,8 @@ export class HomePage implements OnInit {
       this.ps.user.custom.position.lng = resp.coords.longitude;
       this.ps.updateUser(this.ps.user.custom);
 
-     
-     
+
+
 
       this.mySkinsService.getMapSkins().subscribe(data => {
         this.mySkinsService.mapSkins = data;
@@ -375,7 +375,7 @@ export class HomePage implements OnInit {
 
       //new ClickEventHandler(this.map, location);
 
-      
+
 
       const mapOptions = {
         center: location,
@@ -465,11 +465,11 @@ export class HomePage implements OnInit {
 
 
 
-  connect(){
-    if(this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null){
+  connect() {
+    if (this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null) {
       this.fs.connect(this.mySkinsService.mapSkins).subscribe(data => {
-      console.log(typeof(data))
-
+        console.log(typeof (data))
+        console.log(data);
       })
     }
   }
@@ -489,10 +489,10 @@ class ClickEventHandler {
   placesService: google.maps.places.PlacesService;
   infowindow: google.maps.InfoWindow;
   infowindowContent: HTMLElement;
-  e1 : HTMLElement;
-  e2 : HTMLElement;
-  eb : HTMLElement;
-  e3 : HTMLElement;
+  e1: HTMLElement;
+  e2: HTMLElement;
+  eb: HTMLElement;
+  e3: HTMLElement;
   constructor(map: google.maps.Map, origin: any) {
     this.origin = origin;
     this.map = map;
@@ -599,7 +599,7 @@ class ClickEventHandler {
           (me.infowindowContent.children[
             "place-address"
           ] as HTMLElement).textContent = place.formatted_address as string;
-          
+
           me.infowindow.open(me.map);
         }
       }

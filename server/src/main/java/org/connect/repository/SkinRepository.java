@@ -85,9 +85,12 @@ public class SkinRepository {
         c.getSkins().add(s6);
         c1.getSkins().add(s6);
 
+        //Jans User
         User susi = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
         User jan = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
         User franz = new User("cf0f860a-8a18-4967-b010-233a7cef9bc3", "franz");
+        User hello = new User("8c34c68f-3c8f-49e6-98be-a6a8a5e82939", "hello");
+
 
 
         User ibo = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
@@ -118,12 +121,14 @@ public class SkinRepository {
         trisi.getPosition().put("lng",14.2863);
         susi.getPosition().put("lat",48.205866965334934);
         susi.getPosition().put("lng",14.056365489806257);
-        franz.getPosition().put("lat",48.305866965334934);
-        franz.getPosition().put("lng",14.156365489806257);
+        franz.getPosition().put("lat",48.205866965334934);
+        franz.getPosition().put("lng",14.056365489806257);
         trisi1.getPosition().put("lat",48.305394);
         trisi1.getPosition().put("lng",14.287337);
-        jan.getPosition().put("lat",74.543);
-        jan.getPosition().put("lng",-9.33);
+        jan.getPosition().put("lat",48.205414999999995);
+        jan.getPosition().put("lng",14.058034399999999);
+        hello.getPosition().put("lat",48.205414999999995);
+        hello.getPosition().put("lng",14.058034399999999);
         ibo.getPosition().put("lat",12.9);
         ibo.getPosition().put("lng",120.0);
         iboTrisi.getPosition().put("lat",48.307293);
@@ -208,6 +213,9 @@ public class SkinRepository {
         MySkin ms4 = new MySkin(30, 5, 1);
         ms4.setSkin(s);
         ms4.setUser(iboTrisi);
+        MySkin ms5 = new MySkin(30, 5, 1);
+        ms4.setSkin(s);
+        ms4.setUser(hello);
 
 
         em.persist(c);
@@ -215,6 +223,7 @@ public class SkinRepository {
         em.persist(c2);
         em.persist(susi);
         em.persist(jan);
+        em.persist(hello);
         em.persist(franz);
         em.persist(ibo);
         em.persist(ibo1);
@@ -241,6 +250,7 @@ public class SkinRepository {
         em.persist(ms2);
         em.persist(ms3);
         em.persist(ms4);
+        em.persist(ms5);
         em.persist(f);
         em.persist(f1);
         em.persist(f2);

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @ApplicationScoped
 public class FriendshipRepository {
@@ -58,8 +59,9 @@ public class FriendshipRepository {
     }
 
     @Transactional
-    public List<User> findRandom(List<MySkin> mySkins, Optional id) {
+    public User findRandom(List<MySkin> mySkins, Optional id) {
         User curUser = em.find(User.class, id.get().toString());
+        Integer randomNumber = null;
         int tolerance = 50;
         List<User> userList = new LinkedList<>();
         List<User> deleteList = new LinkedList<>();
@@ -157,11 +159,19 @@ public class FriendshipRepository {
 
 
             userList.removeAll(deleteList);
+            if(!userList.isEmpty()){
+                randomNumber = ThreadLocalRandom.current().nextInt(0, userList.size());
+            }
+
             System.out.println("finale Userlist");
             System.out.println(userList);
         }
 
-        return userList;
+        if(randomNumber != null){
+            return userList.get(randomNumber);
+        }
+
+        return null;
     }
 
 
