@@ -1,5 +1,6 @@
 package org.connect.repository;
 
+import org.connect.model.chat.Room;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.model.user.Friendship;
@@ -12,9 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @ApplicationScoped
@@ -61,6 +60,7 @@ public class FriendshipRepository {
     @Transactional
     public User findRandom(List<MySkin> mySkins, Optional id) {
         User curUser = em.find(User.class, id.get().toString());
+        Map<User, Skin> userSkin = new HashMap<User, Skin>();
         Integer randomNumber = null;
         int tolerance = 50;
         List<User> userList = new LinkedList<>();
@@ -102,6 +102,8 @@ public class FriendshipRepository {
 
                     if(distance >= radius * 1000 + tolerance){
                         deleteList.add(user);
+                    }else {
+                        userSkin.put(user, mySkin.getSkin());
                     }
                 }
                 /*
@@ -168,7 +170,18 @@ public class FriendshipRepository {
         }
 
         if(randomNumber != null){
-            return userList.get(randomNumber);
+
+            User newFriend = userList.get(randomNumber);
+            Skin sameSkin = userSkin.get(newFriend);
+
+            create(curUser, newFriend, em.find(Skin.class, sameSkin.getId()));
+
+            Room room = new Room();
+            room.getUsers().add(curUser);
+            room.getUsers().add(newFriend);
+            em.persist(room);
+
+            return newFriend;
         }
 
         return null;

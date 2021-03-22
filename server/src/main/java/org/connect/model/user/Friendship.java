@@ -5,6 +5,8 @@ import org.connect.model.skin.Skin;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 
@@ -28,7 +30,6 @@ import java.time.LocalDateTime;
 @NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT distinct u FROM User u join MySkin ms on(ms.user.id = u.id) " +
         "where ms.skin.id = :mySkinSkin_id " +
         "and ms.age <= :age and ms.niveau <= :niveau " +
-        "" +
         "and u <> :user_1")
 public class Friendship implements Serializable {
 
@@ -51,9 +52,9 @@ public class Friendship implements Serializable {
     @JoinColumn(name = "user2")
     private User user2;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "skin")
-    private Skin skin;
+    private List<Skin> skins = new LinkedList<>();
 
     private LocalDateTime created;
 
@@ -68,7 +69,7 @@ public class Friendship implements Serializable {
         this.user2 = user2_id;
         this.created = created;
         this.status = status;
-        this.skin = skin;
+        this.skins.add(skin);
     }
 
     public long getId() {
@@ -95,12 +96,12 @@ public class Friendship implements Serializable {
         this.user2 = user2_id;
     }
 
-    public Skin getSkin() {
-        return skin;
+    public List<Skin> getSkin() {
+        return skins;
     }
 
-    public void setSkin(Skin skin) {
-        this.skin = skin;
+    public void setSkin(List<Skin> skin) {
+        this.skins = skin;
     }
 
     public LocalDateTime getCreated() {
