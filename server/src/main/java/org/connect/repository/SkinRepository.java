@@ -117,8 +117,8 @@ public class SkinRepository {
 
 
 
-        trisi.getPosition().put("lat",48.3059);
-        trisi.getPosition().put("lng",14.2863);
+        trisi.getPosition().put("lat",40.0);
+        trisi.getPosition().put("lng",14.0);
         susi.getPosition().put("lat",48.205866965334934);
         susi.getPosition().put("lng",14.056365489806257);
         franz.getPosition().put("lat",48.205866965334934);

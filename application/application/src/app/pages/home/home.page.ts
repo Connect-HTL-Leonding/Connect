@@ -46,6 +46,8 @@ export class HomePage implements OnInit {
   navigate: any;
   map: any;
   friendMarkers = [];
+  userDot : google.maps.Circle;
+  skinRadi = [];
 
 
   //map
@@ -70,11 +72,29 @@ export class HomePage implements OnInit {
         console.log(data);
         this.ps.user.custom = data;
 
+        this.map = new google.maps.Map(this.mapRef.nativeElement, {
+          center: this.ps.user.custom.position,
+          zoom: 18,
+          disableDefaultUI: true,
+          mapId: '2fcab7b62a0e3af9'
+        });
 
 
         console.log("Current User:")
         console.log(this.ps.user)
 
+
+        //angemeldeter User
+        this.userDot = new google.maps.Circle({
+          strokeColor: "#0eb19b",
+          strokeOpacity: 1,
+          strokeWeight: 2,
+          fillColor: "#0eb19b",
+          fillOpacity: 1,
+          map: this.map,
+          center: new Position(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
+          radius: 2  //in Meter
+        });
 
 
         //console.log(this.skinService);
@@ -96,6 +116,7 @@ export class HomePage implements OnInit {
       event: ev,
       translucent: true
     });
+    popover.onDidDismiss().then(() => {this.createMySkinRaduis();});
     return await popover.present();
   }
 
@@ -121,7 +142,14 @@ export class HomePage implements OnInit {
   createUserMarker(user: User) {
     console.log("Create Marker " + user.userName + ":");
     console.log(user);
+    var exists = false
+    this.friendMarkers.forEach((friend: google.maps.Marker)=>{
+      if(friend.getTitle == user.id.toString){
+        exists = true;
+      }
+    })
 
+   if(!exists) {
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
@@ -172,6 +200,8 @@ export class HomePage implements OnInit {
     });
 
     this.friendMarkers.push(marker);
+  }
+    console.log("friend MArkers")
     console.log(this.friendMarkers);
 
   }
@@ -243,10 +273,23 @@ export class HomePage implements OnInit {
     this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
       var friends = data;
 
+      this.friendMarkers.forEach((marker: google.maps.Marker,index)=>{
+        var exists = false;
+      friends.forEach((f) => {
+        if(marker.getTitle() == f.user1.id.toString() || marker.getTitle() == f.user2.id.toString()){
+          exists = true;
+        }
+      })
+      if(!exists){
+        marker.setMap(null);
+        this.friendMarkers.splice(index,1);
+      }
+    })
+
       friends.forEach((f) => {
         var u: User = new User;
         console.log("Distance")
-        if (this.calcDistance(f.user1.position, f.user2.position) <= myskin.radius * 1000) {
+      
 
           if (f.user1.id == this.ps.user.id) {
 
@@ -275,7 +318,7 @@ export class HomePage implements OnInit {
 
           }
 
-        }
+        
 
       })
 
@@ -284,25 +327,69 @@ export class HomePage implements OnInit {
   }
 
   createMySkinRaduis() {
+    this.mySkinsService.getMapSkins().subscribe(data => {
+      this.mySkinsService.mapSkins = data;
     console.log(this.map + "jasdöfkasfdalsfk")
+    
     if (this.mySkinsService.mapSkins) {
+      this.skinRadi.forEach((circle: google.maps.Circle,index)=>{
+        var exists = false;
       this.mySkinsService.mapSkins.forEach((myskin) => {
-        this.displayFriends(myskin);
-        console.log("seas")
-        var circle = new google.maps.Circle({
-          title: myskin.skin.id,
-          strokeColor: "#0eb19b",
-          strokeOpacity: 0.8,
-          strokeWeight: 2,
-          fillColor: this.intToRGB(this.hashCode(myskin.skin.title)),
-          fillOpacity: 0.08,
-          clickable: false,
-          map: this.map,
-          center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
-          radius: myskin.radius * 1000 //Umwandlung von Kilometer auf Meter
-        });
+        if(circle.get('title') == myskin.skin.id){
+          exists = true;
+        }
       })
+      if(!exists){
+        circle.setMap(null);
+        this.skinRadi.splice(index,1);
+      }
+    })
+        
+
+        this.mySkinsService.mapSkins.forEach((myskin) => {
+          this.displayFriends(myskin);
+          var existingCircle: google.maps.Circle;
+          this.skinRadi.forEach((circle: google.maps.Circle)=>{
+            if(circle.get('title') == myskin.skin.id){
+              existingCircle = circle;
+            }
+          });
+
+          if(existingCircle != null && existingCircle != undefined){
+            
+            existingCircle.setRadius(myskin.radius * 1000);
+          }else{
+            console.log("seas")
+            var newCircle = new google.maps.Circle({
+              title: myskin.skin.id,
+              strokeColor: "#0eb19b",
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: this.intToRGB(this.hashCode(myskin.skin.title)),
+              fillOpacity: 0.08,
+              clickable: false,
+              map: this.map,
+              center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
+              radius: myskin.radius * 1000 //Umwandlung von Kilometer auf Meter
+            });
+            this.skinRadi.push(newCircle);
+          }
+
+       
+          
+        })
+
+     
+     
+    }else{
+      this.skinRadi.forEach((circle: google.maps.Circle)=>{
+        circle.setMap(null);
+      });
+      this.skinRadi = [];
     }
+  })
+  console.log("Skin Radi");
+  console.log(this.skinRadi);
   }
 
   hashCode(str) { // java String#hashCode
@@ -325,6 +412,13 @@ export class HomePage implements OnInit {
     var crd = pos.coords;
     console.log(crd.latitude + ' / ' + crd.longitude);
 
+  }
+
+  updateUserDot(){
+    
+   this.userDot.setMap(this.map);
+    this.userDot.setCenter(new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng));
+  
   }
 
 
@@ -354,55 +448,54 @@ export class HomePage implements OnInit {
       //dismiss loading if loading Overlay exists BITTE NICHT ENTFERNEN! danke
       //this.loadingController.getTop().then(v => v ? this.loadingController.dismiss() : null);
 
-      console.log(resp.coords.latitude + " " + resp.coords.longitude)
+      
+    
 
       this.ps.user.custom.position.lat = resp.coords.latitude;
       this.ps.user.custom.position.lng = resp.coords.longitude;
-      this.ps.updateUser(this.ps.user.custom);
-
-
-
-
-      this.mySkinsService.getMapSkins().subscribe(data => {
-        this.mySkinsService.mapSkins = data;
-        this.createMySkinRaduis();
-      })
-
-
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
-      const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
-      const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
 
-      //new ClickEventHandler(this.map, location);
+     
 
+      this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
+       
 
-      const mapOptions = {
-        center: location,
-        zoom: 18,
-        disableDefaultUI: true,
-        mapId: '2fcab7b62a0e3af9'
-      };
+    
+          this.createMySkinRaduis();
+       
+  
+  
+      
+        const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
+        const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
+  
+        //new ClickEventHandler(this.map, location);
+  
+  
+  
+  
+       
+        console.log("Update User Dot");
+        console.log(this.ps.user.custom.position)
+        console.log(this.userDot.getCenter())
+        this.updateUserDot();
+        console.log(this.userDot.getCenter())
+  
+  
+        //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
+  
+        new ClickEventHandler(this.map, location);
+  
+  
+        
 
-      this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
-
-
-      //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
-
-      new ClickEventHandler(this.map, location);
-
-
-      //angemeldeter User
-      const userDot = new google.maps.Circle({
-        strokeColor: "#0eb19b",
-        strokeOpacity: 1,
-        strokeWeight: 2,
-        fillColor: "#0eb19b",
-        fillOpacity: 1,
-        map: this.map,
-        center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
-        radius: 2 //in Meter
       });
+
+
+
+
+
 
     }).catch((error) => {
       console.log('Error getting location', error);
