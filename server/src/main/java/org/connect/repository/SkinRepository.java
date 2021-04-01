@@ -119,14 +119,14 @@ public class SkinRepository {
 
         trisi.getPosition().put("lat",48.3059);
         trisi.getPosition().put("lng",14.2863);
-        susi.getPosition().put("lat",48.205866965334934);
-        susi.getPosition().put("lng",14.056365489806257);
-        franz.getPosition().put("lat",48.205866965334934);
-        franz.getPosition().put("lng",14.056365489806257);
+        susi.getPosition().put("lat",48.205425);
+        susi.getPosition().put("lng",14.0579813);
+        franz.getPosition().put("lat",48.20523283811573);
+        franz.getPosition().put("lng",14.058724581632184);
         trisi1.getPosition().put("lat",48.305394);
         trisi1.getPosition().put("lng",14.287337);
-        jan.getPosition().put("lat",48.205414999999995);
-        jan.getPosition().put("lng",14.058034399999999);
+        jan.getPosition().put("lat",48.205424900000004);
+        jan.getPosition().put("lng",14.057973299999999);
         hello.getPosition().put("lat",48.205414999999995);
         hello.getPosition().put("lng",14.058034399999999);
         ibo.getPosition().put("lat",12.9);
@@ -207,15 +207,15 @@ public class SkinRepository {
         MySkin ms2 = new MySkin(30, 5, 1);
         ms2.setSkin(s);
         ms2.setUser(franz);
-        MySkin ms3 = new MySkin(30, 5, 1);
-        ms3.setSkin(s);
-        ms3.setUser(trisi1);
-        MySkin ms4 = new MySkin(30, 5, 1);
-        ms4.setSkin(s);
-        ms4.setUser(iboTrisi);
+        //MySkin ms3 = new MySkin(30, 5, 1);
+        //ms3.setSkin(s);
+       // ms3.setUser(trisi1);
+        //MySkin ms4 = new MySkin(30, 5, 1);
+        //ms4.setSkin(s);
+        //ms4.setUser(iboTrisi);
         MySkin ms5 = new MySkin(30, 5, 1);
-        ms4.setSkin(s);
-        ms4.setUser(hello);
+        ms5.setSkin(s);
+        ms5.setUser(hello);
 
 
         em.persist(c);
@@ -248,8 +248,8 @@ public class SkinRepository {
         em.persist(s6);
         em.persist(ms);
         em.persist(ms2);
-        em.persist(ms3);
-        em.persist(ms4);
+     //   em.persist(ms3);
+    //    em.persist(ms4);
         em.persist(ms5);
         em.persist(f);
         em.persist(f1);

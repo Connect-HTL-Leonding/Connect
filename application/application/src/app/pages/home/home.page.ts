@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, MenuController, ModalController, PopoverController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -60,7 +60,9 @@ export class HomePage implements OnInit {
     public loadingController: LoadingController,
     private mySkinsService: MyskinsService,
     private cs: ContactlistService,
-    public popoverController: PopoverController) {
+    public popoverController: PopoverController,
+    public toastController: ToastController,
+    public contactService: ContactlistService) {
 
     this.sideMenu();
 
@@ -470,8 +472,44 @@ export class HomePage implements OnInit {
       this.fs.connect(this.mySkinsService.mapSkins).subscribe(data => {
         console.log(typeof (data))
         console.log(data);
+        if (data != null) {
+          var user = new CustomUser();
+
+          user = data;
+          this.contactService.getKeyUser(user).subscribe(data => {
+            this.presentToastWithOptions(data, "You connected with");
+          })
+
+        } else {
+          console.log(data)
+          this.presentToastWithOptions(data, "Currently nobody near you");
+        }
+
       })
     }
+  }
+
+  async presentToastWithOptions(data, msg) {
+    var username = ""
+    if(data != null){
+      console.log("yes");
+      username = data["username"];
+    }
+    const toast = await this.toastController.create({
+      header: msg + ' ' + username,
+      message: 'Click to Close',
+      position: 'top',
+      buttons: [
+        {
+          text: 'Done',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
   }
 
 }

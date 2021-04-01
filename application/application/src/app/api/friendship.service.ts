@@ -9,7 +9,7 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
 import { ProfileService } from './profile.service';
 import { Friendship } from '../model/friendship';
-import { User } from '../model/user';
+import { CustomUser, User } from '../model/user';
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +63,7 @@ export class FriendshipService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-    return this.http.post(api.url + 'friendship/findRandom', body, {headers: reqHeader});
+    return this.http.post<CustomUser>(api.url + 'friendship/findRandom', body, {headers: reqHeader});
   }
 
   
