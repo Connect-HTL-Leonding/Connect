@@ -7,6 +7,7 @@ import { api } from '../app.component';
 import { Message } from '../model/message';
 import { ProfileService } from './profile.service';
 import { ThrowStmt } from '@angular/compiler';
+import { AuthService } from '../api/auth/auth.service';
 
 
 @Injectable({
@@ -17,15 +18,17 @@ export class ContactlistService {
   http: HttpClient;
   public rooms: Array<Room>
   public selectedRoom: Room;
-  public activeUser: User = new User();
+  public activeUser;
   public unseenMessages = 0;
   public seenMessages = 0;
   public allMessages = 0;
   public counter = 0;
+  websocket;
 
-  constructor(http: HttpClient, private oauthService: OAuthService, public ps: ProfileService) {
+  constructor(http: HttpClient, private oauthService: OAuthService, public ps: ProfileService,private authService: AuthService) {
     this.http = http;
     this.rooms = [];
+    this.activeUser = this.authService.getUserInfo();
   }
 
   getUser() {

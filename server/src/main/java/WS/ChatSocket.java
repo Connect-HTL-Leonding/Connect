@@ -1,4 +1,4 @@
-package org.connect;
+package WS;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.chat.Message;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -58,8 +58,6 @@ public class ChatSocket {
     }
 
     private void broadcast(String message, String roomid) {
-        System.out.println(sessions.size());
-        System.out.println(sessions);
         sessions.values().forEach(s -> {
             String roomid1 = rooms.get(s);
             if(roomid.equals(roomid1)) {

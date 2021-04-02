@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {ContactlistService} from '../../api/contactlist.service'
 import { MenuController, ModalController } from '@ionic/angular';
 import { User } from '../../model/user';
@@ -18,6 +18,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
   
 })
 export class ChatPage implements OnInit {
+
+  @Input() contacListWebsocket : any;
 
   sendText = '';
   receiveText = '';
@@ -59,9 +61,7 @@ export class ChatPage implements OnInit {
     this.init(this.contactlist.selectedRoom);
    
     this.getRoomName();
-    this.doConnect();
-    
-    
+    this.doConnect();    
   
   }
 
@@ -136,6 +136,7 @@ export class ChatPage implements OnInit {
       this.m.updated = new Date();
       this.m.image = "";
       this.showNewMsgLine = false;
+      this.contacListWebsocket.send(this.sendText);
       this.chatservice.createMessage(this.m).subscribe(data => {
         this.websocket.send(this.sendText); 
         this.sendText = "";
@@ -145,6 +146,7 @@ export class ChatPage implements OnInit {
 
   doConnect(){
     this.websocket = new WebSocket(this.wsUri);
+    console.log(this.websocket);
     this.websocket.onmessage = (evt) => {
       this.receiveText = evt.data +'\n';
       this.chatservice.getData().subscribe(data => {

@@ -19,15 +19,17 @@ export class ContactlistPage implements OnInit {
   chatService;
   latestMessage : Message;
   modal;
+  wsUri;
+  websocket;
 
   constructor(cs : ContactlistService, public modalController: ModalController, chatService : ChatService, public profileservice: ProfileService) { 
     this.contactService = cs;
     this.chatService = chatService;
+    console.log(this.contactService.activeUser);
+    this.wsUri = 'ws://localhost:8080/contactListSocket/' + this.contactService.activeUser.sub;
   }
 
-  ngOnInit() {
-    this.profileservice.getUser();
-    this.contactService.activeUser = this.profileservice.user;
+  reloadRooms() {
     this.contactService.getChats().subscribe(
       data => {
         this.contactService.rooms = data;
@@ -36,14 +38,32 @@ export class ContactlistPage implements OnInit {
     )
   }
 
+  ngOnInit() {
+    this.doConnect();
+    this.profileservice.getUser();
+    this.contactService.activeUser = this.profileservice.user;
+    this.reloadRooms();
+  }
+
   async presentModal(room:Room) {
     this.contactService.selectedRoom = room;
     this.modal = await this.modalController.create({
-      component: ChatPage
+      component: ChatPage,
+      componentProps: {
+        'contacListWebsocket': this.contactService.websocket
+      }
     });
     this.modal.onDidDismiss().then((data => {
-     this.ngOnInit();
+     this.reloadRooms();
     }))
     return await this.modal.present();
+  }
+
+  doConnect(){
+    this.contactService.websocket = new WebSocket(this.wsUri);
+    this.contactService.websocket.onmessage = (evt) => {
+     this.reloadRooms();
+    } 
+
   }
 }

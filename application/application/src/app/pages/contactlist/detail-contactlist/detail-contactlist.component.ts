@@ -27,7 +27,7 @@ export class DetailContactlistComponent implements OnInit {
   public array = [];
   dateNow = new Date();
   timeDisplayArr = [];
-  timeDisplay: string = "dssfd";
+  timeDisplay: string = "";
 
   constructor(public cs: ContactlistService, datePipe: DatePipe) {
     this.contactlist = cs;
@@ -35,6 +35,10 @@ export class DetailContactlistComponent implements OnInit {
   }
 
   ngOnInit() {
+    setTimeout(() => {
+     this.getLatestMessage(this.room);
+     this.calcUnseenMessages(this.room);
+    }, 10);
 
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
 
@@ -62,12 +66,11 @@ export class DetailContactlistComponent implements OnInit {
       */
     })
 
-    this.getLatestMessage(this.room);
-    this.calcUnseenMessages(this.room);
   }
 
 
   getLatestMessage(room: Room) {
+    console.log("wird aufgerufen");
     this.contactlist.getLatestMessage(room).subscribe(data => {
       if (data != null) {
         console.log(data.message);
@@ -80,6 +83,7 @@ export class DetailContactlistComponent implements OnInit {
 
   calcTimeDisplayed() {
     console.log(this.latestMessageCreated);
+    console.log(this.dateNow.getSeconds());
     this.timeDisplayArr[0] = this.latestMessageCreated[2] - this.dateNow.getUTCDate();
     this.timeDisplayArr[1] = this.latestMessageCreated[1] - (this.dateNow.getUTCMonth() + 1);
     this.timeDisplayArr[2] = this.latestMessageCreated[0] - this.dateNow.getUTCFullYear();
@@ -87,25 +91,21 @@ export class DetailContactlistComponent implements OnInit {
     this.timeDisplayArr[4] = this.latestMessageCreated[4] - this.dateNow.getMinutes();
     this.timeDisplayArr[5] = this.latestMessageCreated[5] - this.dateNow.getSeconds();
 
+    console.log(this.timeDisplayArr);
+
+    if (this.timeDisplayArr[5] == 0) {
+      this.timeDisplay = "Just now";
+    }
+
     if (this.timeDisplayArr[5] < 0) {
       this.timeDisplay = this.timeDisplayArr[5] * -1 + " sec. ago";
-    }
-    if (this.timeDisplayArr[4] < 0) {
+    } else if (this.timeDisplayArr[4] < 0) {
       this.timeDisplay = this.timeDisplayArr[4] * -1 + " min. ago";
-    }
-    if (this.timeDisplayArr[3] < 0) {
+    } else if (this.timeDisplayArr[3] < 0) {
       this.timeDisplay = this.timeDisplayArr[3] * -1 + "h ago";
-    }
-    if (this.timeDisplayArr[0] < 0) {
+    } else if (this.timeDisplayArr[0] < 0) {
       this.timeDisplay = this.timeDisplayArr[0] * -1 + " days ago";
-    }
-    if (this.timeDisplayArr[1] < 0) {
-      this.timeDisplay = this.timeDisplayArr[1] * -1 + " months ago";
-    }
-    if (this.timeDisplayArr[2] < 0) {
-      this.timeDisplay = this.timeDisplayArr[2] * -1 + " years ago";
-    }
-    console.log(this.timeDisplayArr);
+    } 
   }
 
   calcUnseenMessages(room: Room) {
