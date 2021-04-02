@@ -18,6 +18,7 @@ import { ContactlistService } from 'src/app/api/contactlist.service';
 import { Position } from 'src/app/model/position';
 import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
 import { MySkin } from 'src/app/model/myskin';
+import { Router } from '@angular/router';
 
 
 /*
@@ -46,7 +47,7 @@ export class HomePage implements OnInit {
   navigate: any;
   map: any;
   friendMarkers = [];
-  userDot : google.maps.Circle;
+  userDot: google.maps.Circle;
   skinRadi = [];
 
 
@@ -64,7 +65,8 @@ export class HomePage implements OnInit {
     private cs: ContactlistService,
     public popoverController: PopoverController,
     public toastController: ToastController,
-    public contactService: ContactlistService) {
+    public contactService: ContactlistService,
+    public router: Router) {
 
     this.sideMenu();
 
@@ -118,7 +120,7 @@ export class HomePage implements OnInit {
       event: ev,
       translucent: true
     });
-    popover.onDidDismiss().then(() => {this.createMySkinRaduis();});
+    popover.onDidDismiss().then(() => { this.createMySkinRaduis(); });
     return await popover.present();
   }
 
@@ -145,64 +147,64 @@ export class HomePage implements OnInit {
     console.log("Create Marker " + user.userName + ":");
     console.log(user);
     var exists = false
-    this.friendMarkers.forEach((friend: google.maps.Marker)=>{
-      if(friend.getTitle == user.id.toString){
+    this.friendMarkers.forEach((friend: google.maps.Marker) => {
+      if (friend.getTitle == user.id.toString) {
         exists = true;
       }
     })
 
-   if(!exists) {
-    var canvas = document.createElement('canvas');
-    canvas.width = 35;
-    canvas.height = 62;
-    var ctx = canvas.getContext('2d');
-    var image1 = "data:image/png;base64," + atob(user.custom.profilePicture);
-    var image = new Image();
-    var compositeImage;
+    if (!exists) {
+      var canvas = document.createElement('canvas');
+      canvas.width = 35;
+      canvas.height = 62;
+      var ctx = canvas.getContext('2d');
+      var image1 = "data:image/png;base64," + atob(user.custom.profilePicture);
+      var image = new Image();
+      var compositeImage;
 
-    image.src = image1;
+      image.src = image1;
 
-    ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
+      ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
 
-    // only draw image where mask is
-    ctx.globalCompositeOperation = 'destination-in';
+      // only draw image where mask is
+      ctx.globalCompositeOperation = 'destination-in';
 
-    // draw our circle mask
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.arc(
-      14.8 + 2.4725,          // x
-      14.8 + 2.9421,          // y
-      14.8,          // radius
-      0,                  // start angle
-      2 * Math.PI         // end angle
-    );
-    ctx.fill();
+      // draw our circle mask
+      ctx.fillStyle = '#000';
+      ctx.beginPath();
+      ctx.arc(
+        14.8 + 2.4725,          // x
+        14.8 + 2.9421,          // y
+        14.8,          // radius
+        0,                  // start angle
+        2 * Math.PI         // end angle
+      );
+      ctx.fill();
 
-    // restore to default composite operation (is draw over current image)
-    ctx.globalCompositeOperation = 'source-over';
-
-
-    var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+      // restore to default composite operation (is draw over current image)
+      ctx.globalCompositeOperation = 'source-over';
 
 
-    ctx.fillStyle = '#0eb19b';
-    ctx.fill(path);
+      var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
 
-    compositeImage = canvas.toDataURL("image/png");
 
-    canvas.remove();
-    //console.log(compositeImage)
+      ctx.fillStyle = '#0eb19b';
+      ctx.fill(path);
 
-    var marker = new google.maps.Marker({
-      position: user.custom.position,
-      title: user.id,
-      map: this.map,
-      icon: compositeImage
-    });
+      compositeImage = canvas.toDataURL("image/png");
 
-    this.friendMarkers.push(marker);
-  }
+      canvas.remove();
+      //console.log(compositeImage)
+
+      var marker = new google.maps.Marker({
+        position: user.custom.position,
+        title: user.id,
+        map: this.map,
+        icon: compositeImage
+      });
+
+      this.friendMarkers.push(marker);
+    }
     console.log("friend MArkers")
     console.log(this.friendMarkers);
 
@@ -275,52 +277,52 @@ export class HomePage implements OnInit {
     this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
       var friends = data;
 
-      this.friendMarkers.forEach((marker: google.maps.Marker,index)=>{
+      this.friendMarkers.forEach((marker: google.maps.Marker, index) => {
         var exists = false;
-      friends.forEach((f) => {
-        if(marker.getTitle() == f.user1.id.toString() || marker.getTitle() == f.user2.id.toString()){
-          exists = true;
+        friends.forEach((f) => {
+          if (marker.getTitle() == f.user1.id.toString() || marker.getTitle() == f.user2.id.toString()) {
+            exists = true;
+          }
+        })
+        if (!exists) {
+          marker.setMap(null);
+          this.friendMarkers.splice(index, 1);
         }
       })
-      if(!exists){
-        marker.setMap(null);
-        this.friendMarkers.splice(index,1);
-      }
-    })
 
       friends.forEach((f) => {
         var u: User = new User;
         console.log("Distance")
-      
 
-          if (f.user1.id == this.ps.user.id) {
 
-            this.cs.getKeyUser(f.user2).subscribe(data => {
-              u.id = data["id"];
-              u.userName = data["username"];
-              u.firstname = data["firstName"];
-              u.lastname = data["lastName"];
-              u.email = data["email"];
-              u.custom = f.user2
+        if (f.user1.id == this.ps.user.id) {
 
-              this.createUserMarker(u);
-            })
+          this.cs.getKeyUser(f.user2).subscribe(data => {
+            u.id = data["id"];
+            u.userName = data["username"];
+            u.firstname = data["firstName"];
+            u.lastname = data["lastName"];
+            u.email = data["email"];
+            u.custom = f.user2
 
-          } else {
-            this.cs.getKeyUser(f.user1).subscribe(data => {
-              u.id = data["id"];
-              u.userName = data["username"];
-              u.firstname = data["firstName"];
-              u.lastname = data["lastName"];
-              u.email = data["email"];
-              u.custom = f.user1
+            this.createUserMarker(u);
+          })
 
-              this.createUserMarker(u);
-            })
+        } else {
+          this.cs.getKeyUser(f.user1).subscribe(data => {
+            u.id = data["id"];
+            u.userName = data["username"];
+            u.firstname = data["firstName"];
+            u.lastname = data["lastName"];
+            u.email = data["email"];
+            u.custom = f.user1
 
-          }
+            this.createUserMarker(u);
+          })
 
-        
+        }
+
+
 
       })
 
@@ -331,36 +333,36 @@ export class HomePage implements OnInit {
   createMySkinRaduis() {
     this.mySkinsService.getMapSkins().subscribe(data => {
       this.mySkinsService.mapSkins = data;
-    console.log(this.map + "jasdöfkasfdalsfk")
-    
-    if (this.mySkinsService.mapSkins) {
-      this.skinRadi.forEach((circle: google.maps.Circle,index)=>{
-        var exists = false;
-      this.mySkinsService.mapSkins.forEach((myskin) => {
-        if(circle.get('title') == myskin.skin.id){
-          exists = true;
-        }
-      })
-      if(!exists){
-        circle.setMap(null);
-        this.skinRadi.splice(index,1);
-      }
-    })
-        
+      console.log(this.map + "jasdöfkasfdalsfk")
+
+      if (this.mySkinsService.mapSkins) {
+        this.skinRadi.forEach((circle: google.maps.Circle, index) => {
+          var exists = false;
+          this.mySkinsService.mapSkins.forEach((myskin) => {
+            if (circle.get('title') == myskin.skin.id) {
+              exists = true;
+            }
+          })
+          if (!exists) {
+            circle.setMap(null);
+            this.skinRadi.splice(index, 1);
+          }
+        })
+
 
         this.mySkinsService.mapSkins.forEach((myskin) => {
           this.displayFriends(myskin);
           var existingCircle: google.maps.Circle;
-          this.skinRadi.forEach((circle: google.maps.Circle)=>{
-            if(circle.get('title') == myskin.skin.id){
+          this.skinRadi.forEach((circle: google.maps.Circle) => {
+            if (circle.get('title') == myskin.skin.id) {
               existingCircle = circle;
             }
           });
 
-          if(existingCircle != null && existingCircle != undefined){
-            
+          if (existingCircle != null && existingCircle != undefined) {
+
             existingCircle.setRadius(myskin.radius * 1000);
-          }else{
+          } else {
             console.log("seas")
             var newCircle = new google.maps.Circle({
               title: myskin.skin.id,
@@ -377,21 +379,21 @@ export class HomePage implements OnInit {
             this.skinRadi.push(newCircle);
           }
 
-       
-          
+
+
         })
 
-     
-     
-    }else{
-      this.skinRadi.forEach((circle: google.maps.Circle)=>{
-        circle.setMap(null);
-      });
-      this.skinRadi = [];
-    }
-  })
-  console.log("Skin Radi");
-  console.log(this.skinRadi);
+
+
+      } else {
+        this.skinRadi.forEach((circle: google.maps.Circle) => {
+          circle.setMap(null);
+        });
+        this.skinRadi = [];
+      }
+    })
+    console.log("Skin Radi");
+    console.log(this.skinRadi);
   }
 
   hashCode(str) { // java String#hashCode
@@ -416,11 +418,11 @@ export class HomePage implements OnInit {
 
   }
 
-  updateUserDot(){
-    
-   this.userDot.setMap(this.map);
+  updateUserDot() {
+
+    this.userDot.setMap(this.map);
     this.userDot.setCenter(new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng));
-  
+
   }
 
 
@@ -450,47 +452,47 @@ export class HomePage implements OnInit {
       //dismiss loading if loading Overlay exists BITTE NICHT ENTFERNEN! danke
       //this.loadingController.getTop().then(v => v ? this.loadingController.dismiss() : null);
 
-      
-    
+
+
 
       this.ps.user.custom.position.lat = resp.coords.latitude;
       this.ps.user.custom.position.lng = resp.coords.longitude;
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
-     
+
 
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
-       
 
-    
-          this.createMySkinRaduis();
-       
-  
-  
-      
+
+
+        this.createMySkinRaduis();
+
+
+
+
         const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
         const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
-  
+
         //new ClickEventHandler(this.map, location);
-  
-  
-  
-  
-       
+
+
+
+
+
         console.log("Update User Dot");
         console.log(this.ps.user.custom.position)
         console.log(this.userDot.getCenter())
         this.updateUserDot();
         console.log(this.userDot.getCenter())
-  
-  
+
+
         //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
-  
+
         new ClickEventHandler(this.map, location);
-  
-  
-        
+
+
+
 
       });
 
@@ -583,21 +585,24 @@ export class HomePage implements OnInit {
   }
 
   async presentToastWithOptions(data, msg) {
-    var username = ""
-    if(data != null){
+    var username = "";
+    var header = "Sorry!"
+    if (data != null) {
       console.log("yes");
+      header = "Congratulations!"
       username = data["username"];
     }
     const toast = await this.toastController.create({
-      header: msg + ' ' + username,
-      message: 'Click to Close',
+      header: header,
+      message: msg + ' ' + username,
       position: 'top',
+      duration: 2000,
       buttons: [
         {
-          text: 'Done',
-          role: 'cancel',
+          side: 'end',
+          text: 'Chat now',
           handler: () => {
-            console.log('Cancel clicked');
+            this.router.navigate(["contactlist"])
           }
         }
       ]
