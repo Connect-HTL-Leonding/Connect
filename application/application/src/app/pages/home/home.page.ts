@@ -50,6 +50,7 @@ export class HomePage implements OnInit {
   userDot: google.maps.Circle;
   skinRadi = [];
 
+  mySubscription;
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -69,6 +70,15 @@ export class HomePage implements OnInit {
     public router: Router) {
 
     this.sideMenu();
+
+    this.mySubscription = this.mySkinsService.mySkinUpdateNotify.subscribe(value => {
+      console.log("Observer schmoberver");
+      console.log(value);
+      console.log(this.skinRadi);
+
+      this.createMySkinRaduis();
+    });
+    
 
     this.ps.getUser().subscribe(
       data => {
@@ -144,16 +154,19 @@ export class HomePage implements OnInit {
 
   //Funktion zum User Marker erstellen
   createUserMarker(user: User) {
-    console.log("Create Marker " + user.userName + ":");
-    console.log(user);
+    
+  
     var exists = false
     this.friendMarkers.forEach((friend: google.maps.Marker) => {
-      if (friend.getTitle == user.id.toString) {
+    
+      if (friend.getTitle() == user.id.toString()) {
         exists = true;
+        console.log("Marker exists" + user.userName + ":");
       }
     })
 
     if (!exists) {
+      console.log("Create Marker " + user.userName + ":");
       var canvas = document.createElement('canvas');
       canvas.width = 35;
       canvas.height = 62;
@@ -414,7 +427,7 @@ export class HomePage implements OnInit {
 
   success(pos) {
     var crd = pos.coords;
-    console.log(crd.latitude + ' / ' + crd.longitude);
+   // console.log(crd.latitude + ' / ' + crd.longitude);
 
   }
 

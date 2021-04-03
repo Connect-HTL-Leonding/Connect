@@ -1,10 +1,11 @@
 import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-import { MenuController, ModalController, ToastController } from '@ionic/angular';
+import { MenuController, ModalController, ToastController} from '@ionic/angular';
 import { SkinsService } from '../../api/skins.service';
 import { Skin } from 'src/app/model/skin';
 import { SkinselectionPage } from '../skinselection/skinselection.page'
 import { MySkin } from '../../model/myskin';
 import { MyskinsService } from '../../api/myskins.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-my-skins',
@@ -120,6 +121,7 @@ export class MySkinsPage implements OnInit {
             this.mySkinService.selectedMySkins = data;
             this.mySkinService.getMapSkins().subscribe(data => {
               this.mySkinService.mapSkins = data;
+              this.mySkinService.mySkinObserveable.next(data);
             })
           })
         },

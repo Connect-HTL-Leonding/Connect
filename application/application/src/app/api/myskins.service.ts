@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { Observable, Subject } from 'rxjs';
 import { api } from '../app.component';
 import { MySkin } from '../model/myskin';
 
@@ -16,6 +17,8 @@ export class MyskinsService {
   public current: MySkin = null;
   public selectedMySkins: Array<MySkin>;
   public mapSkins: Array<MySkin>;
+  public mySkinObserveable = new Subject<any>();
+  mySkinUpdateNotify = this.mySkinObserveable.asObservable();
   message;
 
 
