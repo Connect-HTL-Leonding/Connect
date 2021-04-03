@@ -600,10 +600,12 @@ export class HomePage implements OnInit {
 
   async presentToastWithOptions(data, msg) {
     var username = "";
+    var buttonText = "Change Settings!"
     var header = "Sorry!"
     if (data != null) {
       console.log("yes");
       header = "Congratulations!"
+      buttonText = "Chat now"
       username = data["username"];
     }
     const toast = await this.toastController.create({
@@ -614,9 +616,13 @@ export class HomePage implements OnInit {
       buttons: [
         {
           side: 'end',
-          text: 'Chat now',
+          text: buttonText,
           handler: () => {
-            this.router.navigate(["contactlist"])
+            if (username == "") {
+              this.router.navigate(["my-skins"])
+            } else {
+              this.router.navigate(["contactlist"])
+            }
           }
         }
       ]
