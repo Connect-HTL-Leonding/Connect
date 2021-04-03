@@ -273,7 +273,7 @@ export class HomePage implements OnInit {
 
 
   //iterate through friends in Friendship-Table
-  displayFriends(myskin: MySkin) {
+  displayFriends() {
     this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
       var friends = data;
 
@@ -351,7 +351,7 @@ export class HomePage implements OnInit {
 
 
         this.mySkinsService.mapSkins.forEach((myskin) => {
-          this.displayFriends(myskin);
+          
           var existingCircle: google.maps.Circle;
           this.skinRadi.forEach((circle: google.maps.Circle) => {
             if (circle.get('title') == myskin.skin.id) {
@@ -467,7 +467,7 @@ export class HomePage implements OnInit {
 
 
         this.createMySkinRaduis();
-
+        this.displayFriends();
 
 
 
@@ -573,6 +573,7 @@ export class HomePage implements OnInit {
           user = data;
           this.contactService.getKeyUser(user).subscribe(data => {
             this.presentToastWithOptions(data, "You connected with");
+            this.displayFriends();
           })
 
         } else {

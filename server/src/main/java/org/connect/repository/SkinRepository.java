@@ -211,9 +211,9 @@ public class SkinRepository {
         //MySkin ms3 = new MySkin(30, 5, 1);
         //ms3.setSkin(s);
        // ms3.setUser(trisi1);
-        //MySkin ms4 = new MySkin(30, 5, 1);
-        //ms4.setSkin(s);
-        //ms4.setUser(iboTrisi);
+        MySkin ms4 = new MySkin(30, 5, 1);
+        ms4.setSkin(s);
+        ms4.setUser(iboTrisi);
         MySkin ms5 = new MySkin(30, 5, 1);
         ms5.setSkin(s);
         ms5.setUser(hello);
@@ -250,7 +250,7 @@ public class SkinRepository {
         em.persist(ms);
         em.persist(ms2);
      //   em.persist(ms3);
-    //    em.persist(ms4);
+       em.persist(ms4);
         em.persist(ms5);
         em.persist(f);
         em.persist(f1);
