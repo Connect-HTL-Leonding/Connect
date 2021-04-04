@@ -17,6 +17,7 @@ import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.util.Base64;
 import java.util.Map;
+import java.util.Optional;
 
 @Path("user")
 public class UserService {
@@ -56,6 +57,14 @@ public class UserService {
 
 
         return dbRepo.find(jwt.claim("sub"));
+    }
+
+    @GET
+    @Path("customData/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @NoCache
+    public User getFriendData(@PathParam("id") String id) {
+        return dbRepo.findFriend(id);
     }
 
     @Path("findOtherUser/{id}")

@@ -14,7 +14,7 @@ import { PhotoService } from "../../api/photo.service";
 export class ProfilePage implements OnInit {
 
   user;
- 
+  ownProfile = true;
   
 
   constructor(public ps: ProfileService, private authService: AuthService, public modalController: ModalController, public photoService: PhotoService) {
@@ -29,29 +29,70 @@ export class ProfilePage implements OnInit {
   };
 
   ngOnInit() {
-    this.photoService.loadPfp();
-    this.photoService.loadGalleryImages();
-    this.user = this.authService.getUserInfo();
-
-    this.ps.getUser().subscribe(
-      data => {
-
-        console.log(data);
+    this.ownProfile = !this.ps.friendUser;
+    if(this.ownProfile == true) {
+      this.photoService.loadPfp();
+      this.photoService.loadGalleryImages();
+      this.user = this.authService.getUserInfo();
+  
+      this.ps.getUser().subscribe(
+        data => {
+  
+          console.log(data);
+          this.ps.user.custom = data;
+         
+  
+          console.log("westrzutqjhkgizfutetdzuz")
+      
+          console.log(this.ps.user)
+  
+  
+  
+          //console.log(this.skinService);
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
+    }
+    else {
+      
+      this.ps.friendCustomData(this.ps.user.id).subscribe(data => {
+        this.photoService.loadFriendGalleryImages(data.id);
+        data.profilePicture = "data:image/png;base64," + atob(data.profilePicture);
         this.ps.user.custom = data;
-       
-
-        console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user.custom.profilePicture);
+        console.log(this.ps.user);
+      })
+    }
     
-        console.log(this.ps.user)
+  }
 
-
-
-        //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
-      }
-    )
+  dismissModal() {
+    this.photoService.loadPfp();
+      this.photoService.loadGalleryImages();
+      this.user = this.authService.getUserInfo();
+  
+      this.ps.getUser().subscribe(
+        data => {
+  
+          console.log(data);
+          this.ps.user.custom = data;
+         
+  
+          console.log("westrzutqjhkgizfutetdzuz")
+      
+          console.log(this.ps.user)
+  
+  
+  
+          //console.log(this.skinService);
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
+    this.modalController.dismiss();
   }
 
   async presentModal() {

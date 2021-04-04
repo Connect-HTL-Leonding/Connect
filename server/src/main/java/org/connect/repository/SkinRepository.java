@@ -134,8 +134,8 @@ public class SkinRepository {
         ibo.getPosition().put("lng",120.0);
         iboTrisi.getPosition().put("lat",48.307293);
         iboTrisi.getPosition().put("lng",14.286994);
-        simon.getPosition().put("lat",81.007);
-        simon.getPosition().put("lng",0.3);
+        ibo1.getPosition().put("lat",81.007);
+        ibo1.getPosition().put("lng",0.3);
         tobias.getPosition().put("lat",-74.543);
         tobias.getPosition().put("lng",9.33);
         trisinger.getPosition().put("lat",-12.9);

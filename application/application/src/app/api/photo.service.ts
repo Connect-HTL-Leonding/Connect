@@ -105,6 +105,34 @@ export class PhotoService {
     }) 
   }
 
+  public loadFriendGalleryImages(id) {
+    
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+    this.http.get(api.url + 'image/getFriendImages/' + id, {headers: reqHeader}).subscribe(data => {
+      this.photos = [];
+      var images : any = [];
+    images = data;
+    for(var i = 0;i<=images.length; i++) {
+      if(images[i]!=null) {
+        this.photos.unshift({
+          webviewPath: "data:image/png;base64," + atob(atob(images[i].img)),
+          id: images[i].Id
+        }) 
+       
+      } else {
+       
+      }
+      console.log(images);
+      //for(let photo of this.photos) {
+        //console.log(photo.id);
+      //}
+    }
+    }) 
+  }
+
   public loadAllGalleryImages()  : Photo[] {
     this.galleryPhotos = [];
     const reqHeader = new HttpHeaders({

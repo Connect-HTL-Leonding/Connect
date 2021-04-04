@@ -61,6 +61,34 @@ public class ImageRepository {
         return tail;
     }
 
+    public List<Image> getFriendImgURLs(String id) {
+         TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID, Image.class);
+         tq.setParameter("user_id", id);
+        List<Image> images = null;
+        List<Image> tail = null;
+        try {
+            images = tq.getResultList();
+            System.out.println(images);
+            tail = images.subList(Math.max(images.size() - 4, 0), images.size());
+            System.out.println(tail);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return tail;
+    }
+
+    public List<Image> getAllFriendImgURLs(String id) {
+        TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID, Image.class);
+        tq.setParameter("user_id", id);
+        List<Image> images = null;
+        try {
+            images = tq.getResultList();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return images;
+    }
+
     public List<Image> getALlImagesURLs(JsonWebToken jwt) {
         TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID,Image.class);
         tq.setParameter("user_id", jwt.claim("sub").get().toString());

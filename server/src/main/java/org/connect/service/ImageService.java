@@ -28,6 +28,7 @@ import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @ApplicationScoped
 @Path("/api/image")
@@ -98,6 +99,20 @@ public class ImageService {
     public List<Image> getImages() {
         List<Image> images = iRepo.getImgURLs(jwt);
         return images;
+    }
+
+    @GET
+    @Path("getFriendImages/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Image> getFriendImages(@PathParam("id") String id) {
+        return iRepo.getFriendImgURLs(id);
+    }
+
+    @GET
+    @Path("getAllFriendImages/{id}}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Image> getAllFriendImages(@PathParam("id") String id) {
+        return iRepo.getAllFriendImgURLs(id);
     }
 
     @GET

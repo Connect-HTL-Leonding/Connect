@@ -12,6 +12,7 @@ export class ProfileService {
   http: HttpClient
   //aktueller User
   user : User = new User();
+  friendUser : boolean = false
 
   //Konstruktor
   constructor(http: HttpClient, private oauthService: OAuthService) {
@@ -38,6 +39,25 @@ export class ProfileService {
   
 
     return this.http.get<CustomUser>(api.short + 'user/customData', {headers: reqHeader});
+
+  }
+
+  findFriendUser(id) {
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+
+    return this.http.get<User>('http://localhost:8010/auth/admin/realms/connect/users/' + id, {headers: reqHeader});
+  }
+
+  friendCustomData(id) {
+    const reqHeader = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+    });
+
+    return this.http.get<CustomUser>(api.short + 'user/customData/' + id, {headers: reqHeader});
 
   }
 

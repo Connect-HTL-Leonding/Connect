@@ -19,6 +19,7 @@ import { Position } from 'src/app/model/position';
 import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
 import { MySkin } from 'src/app/model/myskin';
 import { Router } from '@angular/router';
+import { ProfilePage } from '../profile/profile.page';
 
 
 /*
@@ -49,6 +50,7 @@ export class HomePage implements OnInit {
   friendMarkers = [];
   userDot: google.maps.Circle;
   skinRadi = [];
+  friendProfile:ProfilePage;
 
   mySubscription;
 
@@ -67,6 +69,7 @@ export class HomePage implements OnInit {
     public popoverController: PopoverController,
     public toastController: ToastController,
     public contactService: ContactlistService,
+    public modalController: ModalController,
     public router: Router) {
 
     this.sideMenu();
@@ -216,11 +219,33 @@ export class HomePage implements OnInit {
         icon: compositeImage
       });
 
+      marker.addListener("click", () => {
+        this.ps.findFriendUser(marker.title).subscribe(data => {
+          console.log(data)
+          this.presentModal(data);
+        });
+      });
+
       this.friendMarkers.push(marker);
     }
     console.log("friend MArkers")
     console.log(this.friendMarkers);
 
+  }
+
+  async presentModal(friend:User) {
+    this.ps.user = friend;
+    this.ps.friendUser = true;
+    const modal = await this.modalController.create({
+      component: ProfilePage,
+      componentProps: {
+        'contacListWebsocket': this.contactService.websocket
+      }
+    });
+    modal.onDidDismiss().then((data => {
+      this.ps.friendUser = false;
+    }))
+    return await modal.present();
   }
 
 
