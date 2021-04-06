@@ -10,6 +10,7 @@ import { api } from '../app.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Image } from '../model/image';
+import { KeycloakService } from 'keycloak-angular';
 
 
 const { Camera, Filesystem, Storage } = Plugins;
@@ -25,7 +26,7 @@ export class PhotoService {
   public imgURL;
   http : HttpClient;
 
-  constructor(private ps: ProfileService, http: HttpClient, private oauthService: OAuthService, private sanitizer: DomSanitizer) {
+  constructor(private ps: ProfileService, http: HttpClient, private keyCloakService: KeycloakService, private sanitizer: DomSanitizer) {
     this.http = http;
   }
 
@@ -40,11 +41,7 @@ export class PhotoService {
       })
 
       let body = capturedPhoto.base64String;
-      const reqHeader = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-      });
-      this.http.post(api.url + 'image/saveImage', body, {headers: reqHeader}).subscribe(data=> {
+      this.http.post(api.url + 'image/saveImage', body).subscribe(data=> {
       });
 
       if(this.photos.length >= 4) {
@@ -62,10 +59,6 @@ export class PhotoService {
  
   public loadPfp() {
     const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.oauthService.getAccessToken(),
-      }),
       responseType: 'text' as const
     };
 
@@ -78,12 +71,7 @@ export class PhotoService {
 
 
   public loadGalleryImages() {
-    
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    this.http.get(api.url + 'image/getImages',{headers: reqHeader}).subscribe(data => {
+    this.http.get(api.url + 'image/getImages').subscribe(data => {
       this.photos = [];
       var images : any = [];
     images = data;
@@ -106,12 +94,7 @@ export class PhotoService {
   }
 
   public loadFriendGalleryImages(id) {
-    
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    this.http.get(api.url + 'image/getFriendImages/' + id, {headers: reqHeader}).subscribe(data => {
+    this.http.get(api.url + 'image/getFriendImages/' + id).subscribe(data => {
       this.photos = [];
       var images : any = [];
     images = data;
@@ -135,11 +118,7 @@ export class PhotoService {
 
   public loadAllGalleryImages()  : Photo[] {
     this.galleryPhotos = [];
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    this.http.get(api.url + 'image/getAllImages',{headers: reqHeader}).subscribe(data => {
+    this.http.get(api.url + 'image/getAllImages').subscribe(data => {
       var images : any = [];
     images = data;
     for(var i = 0;i<=images.length; i++) {
@@ -196,14 +175,7 @@ export class PhotoService {
         this.imgURL = mySrc
       } */
 
-      
-     
-      const reqHeader = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.oauthService.getAccessToken(),
-        
-      });
-      this.http.put(api.url + 'image/setPfp', image.base64String, { headers: reqHeader }).subscribe(data => {
+      this.http.put(api.url + 'image/setPfp', image.base64String).subscribe(data => {
         this.ps.getUser().subscribe(data => {
           this.ps.user.custom = data;
           this.loadPfp();

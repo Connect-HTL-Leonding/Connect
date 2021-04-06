@@ -4,6 +4,7 @@ import { Category } from '../model/category';
 import { Observable } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
+import { KeycloakService } from 'keycloak-angular';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,7 +18,7 @@ export class CategoryService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, private oauthService: OAuthService) {
+  constructor(http: HttpClient, private keyCloakService: KeycloakService) {
     this.http = http;
     this.categories = [];
     //this.generateCategories();
@@ -66,11 +67,7 @@ export class CategoryService {
   }
 
   getCategories() : Observable<any>{
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get<Category[]>(api.url+ 'category/findAll', {headers: reqHeader})
+    return this.http.get<Category[]>(api.url+ 'category/findAll')
   }
 
   deleteCategory(index: number) {

@@ -4,7 +4,7 @@ import { User } from "./user";
 export class Message {
 
     constructor(
-        public id = 0,
+        public id = "",
         public message: string = "",
         public created: Date = new Date(),
         public image = "",

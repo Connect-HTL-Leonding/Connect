@@ -7,6 +7,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Room } from '../../model/room';
 import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { KeycloakService } from 'keycloak-angular';
 
 
 
@@ -35,7 +36,6 @@ export class ChatPage implements OnInit {
   chatservice;
   wsUri;
   oauthService;
-  activeUser;
   public allMessages;
   public seenMessages;
   public unseenMessages;
@@ -46,18 +46,17 @@ export class ChatPage implements OnInit {
 
   
 
-  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
+  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
-    this.chatservice.activeUser = this.contactlist.activeUser;
     this.oauthService = os;
   }
   
 
   ngOnInit() {
-    console.log(this.chatservice.activeUser.userName);
-    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
+    console.log(this.keycloakService.getUsername());
+    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
     this.init(this.contactlist.selectedRoom);
    
     this.getRoomName();
@@ -66,7 +65,7 @@ export class ChatPage implements OnInit {
   }
 
   yousent(message:Message) : boolean {
-    return message.user.id == this.chatservice.activeUser.id;
+    return message.user.id == this.keycloakService.getKeycloakInstance().subject;
   }
 
   imageIsNotNull(message:Message) : boolean {
