@@ -36,8 +36,8 @@ export class DetailContactlistComponent implements OnInit {
 
   ngOnInit() {
     setTimeout(() => {
-     this.getLatestMessage(this.room);
-     this.calcUnseenMessages(this.room);
+      this.getLatestMessage(this.room);
+      this.calcUnseenMessages(this.room);
     }, 10);
 
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
@@ -99,13 +99,13 @@ export class DetailContactlistComponent implements OnInit {
 
     if (this.timeDisplayArr[5] < 0) {
       this.timeDisplay = this.timeDisplayArr[5] * -1 + " sec. ago";
-    } else if (this.timeDisplayArr[4] < 0) {
+    } if (this.timeDisplayArr[4] < 0) {
       this.timeDisplay = this.timeDisplayArr[4] * -1 + " min. ago";
-    } else if (this.timeDisplayArr[3] < 0) {
+    } if (this.timeDisplayArr[3] < 0) {
       this.timeDisplay = this.timeDisplayArr[3] * -1 + "h ago";
-    } else if (this.timeDisplayArr[0] < 0) {
+    } if (this.timeDisplayArr[0] < 0) {
       this.timeDisplay = this.timeDisplayArr[0] * -1 + " days ago";
-    } 
+    }
   }
 
   calcUnseenMessages(room: Room) {

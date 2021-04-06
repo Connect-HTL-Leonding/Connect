@@ -456,6 +456,12 @@ export class HomePage implements OnInit {
 
   }
 
+  centerMap(){
+    this.map.panTo(this.ps.user.custom.position);
+    this.map.setZoom(18);
+    
+  }
+
   updateUserDot() {
 
     this.userDot.setMap(this.map);
