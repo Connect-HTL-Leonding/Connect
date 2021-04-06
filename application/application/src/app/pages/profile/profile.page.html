@@ -11,7 +11,7 @@
   <div class="wrapper">
     <div style="height: 150px; background-color:var(--ion-color-primary)"></div>
     <div class="container">
-      <div class="mid">
+      <div class="mid" id="profile_pic" #profile_pic>
         <div class="pfpBox">
         <img class="pfp" src={{photoService.imgURL}}>
         </div>
@@ -22,7 +22,7 @@
         <p *ngIf="this.ps.user">{{this.ps.user.custom.description}}</p>
       </div>
 
-      <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']">Anpassen</ion-button>
+      <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']" #change_button id="change_button">Anpassen</ion-button>
 
      <div class="photo-slider-con">
         <p style="left:0;">Über mich</p>

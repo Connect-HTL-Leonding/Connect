@@ -5,6 +5,7 @@ export class User {
         public email: string = "",
         public firstname: string = "",
         public lastname: string = "",
+        public finishedTutorial: boolean = false,
         public custom : CustomUser = new CustomUser()
     ) { }
 }

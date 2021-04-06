@@ -32,6 +32,7 @@ export class ProfileService {
       this.user.firstname = data["firstName"];
       this.user.lastname = data["lastName"];
       this.user.email = data["email"];
+      this.user.finishedTutorial = data["finishedTutorial"];
       console.log(data)
     });
 

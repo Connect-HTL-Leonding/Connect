@@ -13,6 +13,8 @@ import { User } from '../../model/user';
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
 import Showcaser  from 'showcaser'
+import { TutorialService } from 'src/app/api/tutorial.service';
+import { ProfileService } from 'src/app/api/profile.service';
 
 /*
 import {
@@ -46,7 +48,7 @@ export class HomePage implements OnInit {
   // Button
   @ViewChild('connect_button', { static: false }) connectButRef: ElementRef;
 
-  constructor(private menu: MenuController, private geolocation: Geolocation, public loadingController: LoadingController, private mySkinsService : MyskinsService, private router: Router) {
+  constructor(private menu: MenuController, private geolocation: Geolocation, public loadingController: LoadingController, private mySkinsService : MyskinsService, private router: Router, private ps: ProfileService) {
     this.sideMenu();
   }
 
@@ -298,36 +300,46 @@ export class HomePage implements OnInit {
   }
 
   showTutorial(){
-    Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
-      shape: "circle",
-      buttonText: "Ok!",
-      position: {
-        horizontal: "center",
-        vertical: "top"
-      },
-      allowSkip: false
-    });
-    Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
-      shape: "circle",
-      buttonText: "Ok!",
-      position: {
-        horizontal: "center",
-        vertical: "middle"
-      },
-      allowSkip: false
-    });
-    Showcaser.showcase("Diese Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
-      shape: "rectangle",
-      buttonText: "Ok!",
-      position: {
-        horizontal: "center",
-        vertical: "middle"
-      },
-      allowSkip: false,
-      close: () => {
-          this.router.navigate(['/my-skins']);
-      }
-    });
+    var user = this.ps.getUser();
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log(this.ps.user.custom)
+        //console.log(this.skinService);
+      });
+    if(!this.ps.user.finishedTutorial){
+      Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "top"
+        },
+        allowSkip: false
+      });
+      Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false
+      });
+      Showcaser.showcase("Die Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
+        shape: "rectangle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+            this.router.navigate(['/profile']);
+        }
+      });
+  }
   }
   sideMenu() {
     this.navigate =

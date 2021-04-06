@@ -1,10 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit} from '@angular/core';
 import { AuthService } from '../../api/auth/auth.service';
 import { ProfileService } from "../../api/profile.service";
 import { User } from "../../model/user";
 import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from './photogallery/photogallery.page';
 import { PhotoService } from "../../api/photo.service";
+import Showcaser  from 'showcaser'
+import { TutorialService } from 'src/app/api/tutorial.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-profile',
@@ -14,9 +18,13 @@ import { PhotoService } from "../../api/photo.service";
 export class ProfilePage implements OnInit {
 
   user;
-  
 
-  constructor(public ps: ProfileService, private authService: AuthService, public modalController: ModalController, public photoService: PhotoService) {
+  // Button
+   @ViewChild('change_button', { static: false }) changeButRef: ElementRef;
+
+  // Button
+  @ViewChild('profile_pic', { static: false }) profilePicRef: ElementRef;
+  constructor(public ts: TutorialService, public ps: ProfileService,private router: Router, private authService: AuthService, public modalController: ModalController, public photoService: PhotoService) {
    
   }
 
@@ -37,12 +45,6 @@ export class ProfilePage implements OnInit {
 
         console.log(data);
         this.ps.user.custom = data;
-
-        console.log("westrzutqjhkgizfutetdzuz")
-        console.log(this.ps.user)
-
-
-
         //console.log(this.skinService);
       },
       error1 => {
@@ -51,6 +53,41 @@ export class ProfilePage implements OnInit {
     )
   }
 
+  ngAfterViewInit(){
+    this.showTutorial();
+  }
+  
+  showTutorial(){
+    this.ts.getUser().subscribe(
+      data => {
+
+        console.log(data);
+        this.ts.user.custom = data;
+
+        console.log("1231231231231232132131323123")
+        console.log(this.ts.user.custom)
+        console.log(this.profilePicRef.nativeElement);
+
+
+
+        //console.log(this.skinService);
+      });
+    if(!this.ts.user.finishedTutorial){
+      console.log("Bruhhhhh" + this.profilePicRef.nativeElement);
+      Showcaser.showcase("Das ist deine Profilseite. Diese Seite können andere User von dir sehen", this.changeButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+            this.router.navigate(['/my-skins']);
+        }
+      });
+    }
+  }
   async presentModal() {
     
     const modal = await this.modalController.create({
