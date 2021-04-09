@@ -51,6 +51,9 @@ export class HomePage implements OnInit {
   userDot: google.maps.Circle;
   skinRadi = [];
   friendProfile:ProfilePage;
+  location: Position = new Position();
+  websocket: WebSocket;
+  wsUri;
 
   mySubscription;
 
@@ -124,6 +127,27 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
+    this.ps.getUser().subscribe(data => {
+      this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
+      this.doConnect();
+    })
+    
+  }
+
+  doConnect(){
+    this.websocket = new WebSocket(this.wsUri);
+    console.log(this.websocket);
+    this.websocket.onmessage = (evt) => {
+      console.log(evt.data);
+    } 
+
+    
+    /*
+    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
+    
+    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
+    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
+    */
   }
 
   async presentPopover(ev: any) {
@@ -450,10 +474,8 @@ export class HomePage implements OnInit {
     return "#" + "00000".substring(0, 6 - c.length) + c;
   }
 
-  success(pos) {
-    var crd = pos.coords;
-   // console.log(crd.latitude + ' / ' + crd.longitude);
-
+  doSend() {
+    this.websocket.send('position updated!' + this.ps.user.userName);
   }
 
   updateUserDot() {
@@ -480,7 +502,12 @@ export class HomePage implements OnInit {
     });
     */
 
-    var id = navigator.geolocation.watchPosition(this.success);
+    var id = navigator.geolocation.watchPosition(pos => {
+      var crd = pos.coords;
+      var updatedLocation = new Position(crd.longitude, crd.latitude);
+      var distance = this.calcDistance(this.location, updatedLocation);
+      this.doSend();
+    } );
 
 
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -495,6 +522,8 @@ export class HomePage implements OnInit {
 
       this.ps.user.custom.position.lat = resp.coords.latitude;
       this.ps.user.custom.position.lng = resp.coords.longitude;
+      //this.location.lat = this.ps.user.custom.position.lat;
+      //this.location.lng = this.ps.user.custom.position.lng;
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 

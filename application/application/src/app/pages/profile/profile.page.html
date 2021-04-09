@@ -14,7 +14,7 @@
       <div class="mid">
         <div class="pfpBox">
         <img *ngIf="this.ownProfile" class="pfp" src={{this.photoService.imgURL}}>
-        <img *ngIf="!this.ownProfile" class="pfp" src="{{this.ps.user.custom.profilePicture}}">
+        <img *ngIf="!this.ownProfile && this.ps.user.custom" class="pfp" src="{{this.ps.user.custom.profilePicture}}">
         </div>
       </div>
       <h2 *ngIf="this.ownProfile && this.ps.user" id="name">{{this.ps.user.userName}}</h2>

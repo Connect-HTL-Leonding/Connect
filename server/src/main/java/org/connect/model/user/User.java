@@ -142,4 +142,16 @@ public class User implements Serializable {
     public void setProfilePicture(byte[] profilePicture) {
         this.profilePicture = profilePicture;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", gender=" + gender +
+                ", position=" + position +
+                ", description='" + description + '\'' +
+                ", birthday=" + birthday +
+                ", rooms=" + rooms +
+                '}';
+    }
 }
