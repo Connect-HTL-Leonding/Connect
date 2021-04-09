@@ -783,9 +783,7 @@ class ClickEventHandler {
             "place-name"
           ] as HTMLElement).textContent = place.name!;
 
-          (me.infowindowContent.children[
-            "place-address"
-          ] as HTMLElement).textContent = place.formatted_address as string;
+         
 
           me.infowindow.open(me.map);
         }
