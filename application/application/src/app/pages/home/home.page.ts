@@ -8,7 +8,6 @@ import { MapStyle } from './mapStyle';
 import { CustomUser, User } from '../../model/user';
 
 import { ProfileService } from 'src/app/api/profile.service';
-import { AuthService } from 'src/app/api/auth/auth.service';
 import { FriendshipService } from 'src/app/api/friendship.service';
 
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
@@ -20,6 +19,7 @@ import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
 import { MySkin } from 'src/app/model/myskin';
 import { Router } from '@angular/router';
 import { ProfilePage } from '../profile/profile.page';
+import { KeycloakService } from 'keycloak-angular';
 
 
 /*
@@ -64,7 +64,7 @@ export class HomePage implements OnInit {
   constructor(private menu: MenuController,
     private geolocation: Geolocation,
     public ps: ProfileService,
-    private authService: AuthService,
+    public keyCloakService: KeycloakService,
     private fs: FriendshipService,
     public loadingController: LoadingController,
     private mySkinsService: MyskinsService,
@@ -476,6 +476,12 @@ export class HomePage implements OnInit {
 
   doSend() {
     this.websocket.send('position updated!' + this.ps.user.userName);
+  }
+
+  centerMap(){
+    this.map.panTo(this.ps.user.custom.position);
+    this.map.setZoom(18);
+    
   }
 
   updateUserDot() {

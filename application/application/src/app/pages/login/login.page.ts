@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
+import { KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
-import { AuthService } from '../../api/auth/auth.service';
 import { DevinfosPage } from './devinfos/devinfos.page';
 
 @Component({
@@ -20,30 +20,22 @@ export class LoginPage {
   isDoneLoading: Observable<boolean>;
   canActivateProtectedRoutes: Observable<boolean>;
 
-  constructor(http: HttpClient, private authService: AuthService, public modalController: ModalController) {
+  constructor(http: HttpClient, public keyCloakService: KeycloakService, public modalController: ModalController) {
     this.http = http;
-    this.isAuthenticated = this.authService.isAuthenticated$;
-    this.isDoneLoading = this.authService.isDoneLoading$;
-    this.canActivateProtectedRoutes = this.authService.canActivateProtectedRoutes$;
-    console.log("login page")
-    this.authService.runInitialLoginSequence();
   }
 
-  login() { this.authService.login(); }
-  logout() { this.authService.logout(); }
-  refresh() { this.authService.refresh(); }
+  login() { this.keyCloakService.login(); }
+  logout() { this.keyCloakService.logout(); }
+  refresh() { this.keyCloakService.updateToken(); }
   reload() { window.location.reload(); }
   clearStorage() { localStorage.clear(); }
 
   logoutExternally() {
-    window.open(this.authService.logoutUrl);
+    //window.open(this.keyCloakService.getKeycloakInstance());
   }
 
-  get hasValidToken() { return this.authService.hasValidToken(); }
-  get accessToken() { return this.authService.accessToken; }
-  get refreshToken() { return this.authService.refreshToken; }
-  get identityClaims() { return this.authService.identityClaims; }
-  get idToken() { return this.authService.idToken; }
+  get accessToken() { return this.keyCloakService.getToken(); }
+  //get idToken() { return this.keyCloakService.getKeycloakInstance().idToken; }
 
 
 

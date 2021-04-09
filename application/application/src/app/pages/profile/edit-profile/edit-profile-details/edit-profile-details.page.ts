@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../../../../api/auth/auth.service';
+import { KeycloakService } from 'keycloak-angular';
 import { ProfileService } from '../../../../api/profile.service';
 import { User } from '../../../../model/user';
 
@@ -15,7 +15,7 @@ export class EditProfileDetailsPage implements OnInit {
   passwort: FormGroup;
 
   //Konstruktor
-  constructor(public ps: ProfileService, private auth: AuthService, private router: Router, private fb: FormBuilder) {
+  constructor(public ps: ProfileService, private keyCloakService : KeycloakService, private router: Router, private fb: FormBuilder) {
     this.passwort = this.fb.group({
       password: new FormControl('', Validators.compose([
         Validators.required,
@@ -56,7 +56,7 @@ export class EditProfileDetailsPage implements OnInit {
   //User Logout
   logout() {
     //logout
-    this.auth.logout();
+    this.keyCloakService.logout();
     //redirect to login, weil autamtischer redirect nicht immer funktioniert
     //bessere Lösung ist willkommen
     this.router.navigate(["/login"]);
