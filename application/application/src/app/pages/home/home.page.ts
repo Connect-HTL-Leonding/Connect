@@ -8,7 +8,6 @@ import { MapStyle } from './mapStyle';
 import { CustomUser, User } from '../../model/user';
 
 import { ProfileService } from 'src/app/api/profile.service';
-import { AuthService } from 'src/app/api/auth/auth.service';
 import { FriendshipService } from 'src/app/api/friendship.service';
 
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
@@ -20,6 +19,7 @@ import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
 import { MySkin } from 'src/app/model/myskin';
 import { Router } from '@angular/router';
 import { ProfilePage } from '../profile/profile.page';
+import { KeycloakService } from 'keycloak-angular';
 
 
 /*
@@ -51,6 +51,9 @@ export class HomePage implements OnInit {
   userDot: google.maps.Circle;
   skinRadi = [];
   friendProfile:ProfilePage;
+  location: Position = new Position();
+  websocket: WebSocket;
+  wsUri;
 
   mySubscription;
 
@@ -61,7 +64,7 @@ export class HomePage implements OnInit {
   constructor(private menu: MenuController,
     private geolocation: Geolocation,
     public ps: ProfileService,
-    private authService: AuthService,
+    public keyCloakService: KeycloakService,
     private fs: FriendshipService,
     public loadingController: LoadingController,
     private mySkinsService: MyskinsService,
@@ -124,6 +127,27 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
+    this.ps.getUser().subscribe(data => {
+      this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
+      this.doConnect();
+    })
+    
+  }
+
+  doConnect(){
+    this.websocket = new WebSocket(this.wsUri);
+    console.log(this.websocket);
+    this.websocket.onmessage = (evt) => {
+      console.log(evt.data);
+    } 
+
+    
+    /*
+    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
+    
+    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
+    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
+    */
   }
 
   async presentPopover(ev: any) {
@@ -450,10 +474,8 @@ export class HomePage implements OnInit {
     return "#" + "00000".substring(0, 6 - c.length) + c;
   }
 
-  success(pos) {
-    var crd = pos.coords;
-   // console.log(crd.latitude + ' / ' + crd.longitude);
-
+  doSend() {
+    this.websocket.send('position updated!' + this.ps.user.userName);
   }
 
   centerMap(){
@@ -486,7 +508,12 @@ export class HomePage implements OnInit {
     });
     */
 
-    var id = navigator.geolocation.watchPosition(this.success);
+    var id = navigator.geolocation.watchPosition(pos => {
+      var crd = pos.coords;
+      var updatedLocation = new Position(crd.longitude, crd.latitude);
+      var distance = this.calcDistance(this.location, updatedLocation);
+      this.doSend();
+    } );
 
 
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -501,6 +528,8 @@ export class HomePage implements OnInit {
 
       this.ps.user.custom.position.lat = resp.coords.latitude;
       this.ps.user.custom.position.lng = resp.coords.longitude;
+      //this.location.lat = this.ps.user.custom.position.lat;
+      //this.location.lng = this.ps.user.custom.position.lng;
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 

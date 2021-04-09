@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { MySkin } from '../model/myskin';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,7 @@ export class SkinsService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, cs: CategoryService, private oauthService: OAuthService) {
+  constructor(http: HttpClient, cs: CategoryService, private keyCloakService: KeycloakService) {
     this.http = http;
     this.skins = [];
     this.categoryService = cs;
@@ -31,36 +32,17 @@ export class SkinsService {
 
   //getAll
   getSkins() {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get<Skin[]>(api.url + 'skin/findAll', {headers: reqHeader})
+    return this.http.get<Skin[]>(api.url + 'skin/findAll')
   }
 
   //check
   check(id) {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get<MySkin>(api.url + 'skin/check/' + id, {headers: reqHeader})
+    return this.http.get<MySkin>(api.url + 'skin/check/' + id)
   }
 
   //update
   updateSkin(s: Skin) {
-    let body = JSON.stringify(s);
-    console.log(body);
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.put(api.url + 'skin/update', body, {headers: reqHeader});
-
-  }
-
-  //delete
-  deleteSkin(index: number) {
+    return this.http.put(api.url + 'skin/update', s);
   }
 
 }

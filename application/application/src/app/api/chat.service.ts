@@ -27,20 +27,11 @@ export class ChatService {
   }
 
   getData() {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get<Message[]>(api.url +'message/findAll/' + this.selectedRoom.id, {headers: reqHeader});
+    return this.http.get<Message[]>(api.url +'message/findAll/' + this.selectedRoom.id);
   }
 
   createMessage(m:Message) {
-    let body = JSON.stringify(m);
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
+    return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, m);
   }
 
   public async addImage(m:Message) {
@@ -59,18 +50,10 @@ export class ChatService {
   
 
   getSeenMessages(room: Room) {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get(api.url + 'message/getSeenMessages/' + room.id, { headers: reqHeader });
+    return this.http.get(api.url + 'message/getSeenMessages/' + room.id);
   }
 
   getAllMessages(room: Room) {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get(api.url + 'message/getAllMessages/' + room.id, { headers: reqHeader });
+    return this.http.get(api.url + 'message/getAllMessages/' + room.id);
   }
 }

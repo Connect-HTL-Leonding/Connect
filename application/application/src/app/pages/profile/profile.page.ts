@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../../api/auth/auth.service';
 import { ProfileService } from "../../api/profile.service";
 import { User } from "../../model/user";
 import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from './photogallery/photogallery.page';
 import { PhotoService } from "../../api/photo.service";
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +17,7 @@ export class ProfilePage implements OnInit {
   ownProfile = true;
   
 
-  constructor(public ps: ProfileService, private authService: AuthService, public modalController: ModalController, public photoService: PhotoService) {
+  constructor(public ps: ProfileService, private keyCloakService : KeycloakService, public modalController: ModalController, public photoService: PhotoService) {
    
   }
 
@@ -30,10 +30,10 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.ownProfile = !this.ps.friendUser;
-    if(this.ownProfile == true) {
+    if(this.ownProfile) {
       this.photoService.loadPfp();
       this.photoService.loadGalleryImages();
-      this.user = this.authService.getUserInfo();
+      this.user = this.keyCloakService.getKeycloakInstance().userInfo;
   
       this.ps.getUser().subscribe(
         data => {
@@ -71,7 +71,7 @@ export class ProfilePage implements OnInit {
   dismissModal() {
     this.photoService.loadPfp();
       this.photoService.loadGalleryImages();
-      this.user = this.authService.getUserInfo();
+      this.user = this.keyCloakService.getKeycloakInstance().userInfo;
   
       this.ps.getUser().subscribe(
         data => {
@@ -92,7 +92,10 @@ export class ProfilePage implements OnInit {
           console.log('Error');
         }
       )
-    this.modalController.dismiss();
+      if(!this.ownProfile) {
+        this.modalController.dismiss();
+      }
+    
   }
 
   async presentModal() {

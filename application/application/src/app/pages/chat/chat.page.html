@@ -42,6 +42,8 @@
         </div>
         <ng-template #otherNoImage>
           <p class="message">{{message.message}}</p>
+          <p *ngIf="message.message.length>29" class="timeOnWrap">{{message.created[3]}}:{{message.created[4]}}</p>
+          <p *ngIf="message.message.length<=29" class="time">{{message.created[3]}}:{{message.created[4]}}</p>
       </ng-template>
       </div>
       
