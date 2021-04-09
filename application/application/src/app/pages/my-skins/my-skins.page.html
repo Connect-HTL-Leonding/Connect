@@ -11,7 +11,7 @@
   <ion-searchbar [(ngModel)]="searchString"></ion-searchbar>
 
   <div class="list_skins" no-bounce>
-    <div id="add_skin_container" (click)="presentModal()">
+    <div id="add_skin_container" #add_skin_container (click)="presentModal()">
       <div id="add_skin_circle">
         <ion-icon name="add-outline"></ion-icon>
       </div>

@@ -1,10 +1,13 @@
-import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { MenuController, ModalController, ToastController } from '@ionic/angular';
 import { SkinsService } from '../../api/skins.service';
 import { Skin } from 'src/app/model/skin';
 import { SkinselectionPage } from '../skinselection/skinselection.page'
 import { MySkin } from '../../model/myskin';
 import { MyskinsService } from '../../api/myskins.service';
+import Showcaser from 'showcaser';
+import { TutorialService } from 'src/app/api/tutorial.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-skins',
@@ -13,7 +16,8 @@ import { MyskinsService } from '../../api/myskins.service';
 })
 export class MySkinsPage implements OnInit {
 
-
+  // Button
+  @ViewChild('add_skin_container', { static: false }) addSkinButRef: ElementRef;
   //Suchbegriff
   searchString: String = "";
 
@@ -21,11 +25,12 @@ export class MySkinsPage implements OnInit {
   currentSkin: MySkin;
 
   //Konstruktor
-  constructor(public mySkinService: MyskinsService, public modalController: ModalController, public toastController: ToastController) {
+  constructor(public ts: TutorialService, public mySkinService: MyskinsService,private router: Router, public modalController: ModalController, public toastController: ToastController) {
   }
 
   ngOnInit() {
     //async Skin loading
+    
     this.mySkinService.getMySkins().subscribe(
       data => {
 
@@ -46,6 +51,53 @@ export class MySkinsPage implements OnInit {
     )
   }
 
+  ngAfterViewInit(){
+    this.showTutorial();
+  }
+  
+  showTutorial(){
+    this.ts.getUser().subscribe(
+      data => {
+
+        console.log(data);
+        this.ts.user.custom = data;
+
+        console.log("1231231231231232132131323123")
+        console.log(this.ts.user.custom)
+        console.log(this.addSkinButRef.nativeElement);
+
+
+
+        //console.log(this.skinService);
+      });
+    if(!this.ts.user.finishedTutorial){
+      Showcaser.showcase("Das ist deine Profilseite. Diese Seite können andere User von dir sehen", this.addSkinButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ts.getUser().subscribe(
+            data => {
+      
+              console.log(data);
+              this.ts.user.custom = data;
+            },
+            error1 => {
+              console.log('Error');
+            }
+          )
+            this.ts.user.finishedTutorial = true;
+            this.ts.updateUser(this.ts.user);
+            console.log(this.ts.user)
+            console.log(this.ts.user.finishedTutorial + "Yeahhh les go");
+        }
+      });
+    }
+  }
   //check
   matchesFilter(s: MySkin) {
     return s.skin.title.toUpperCase().indexOf(this.searchString.toUpperCase()) == 0

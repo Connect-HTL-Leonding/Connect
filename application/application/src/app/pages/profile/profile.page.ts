@@ -83,7 +83,7 @@ export class ProfilePage implements OnInit {
         },
         allowSkip: false,
         close: () => {
-            this.router.navigate(['/my-skins']);
+            
         }
       });
     }

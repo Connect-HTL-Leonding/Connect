@@ -40,4 +40,15 @@ export class TutorialService {
     return this.http.get<CustomUser>(api.short + 'user/customData', {headers: reqHeader});
 
   }
+  updateUser(u: User) {
+      let body = JSON.stringify(u);
+      console.log(body);
+      const reqHeader = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
+      });
+      return this.http.put(api.short + 'user/update', body, {headers: reqHeader});
+  
+    
+  }
 }

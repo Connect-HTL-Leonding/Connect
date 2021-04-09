@@ -336,7 +336,6 @@ export class HomePage implements OnInit {
         },
         allowSkip: false,
         close: () => {
-            this.router.navigate(['/profile']);
         }
       });
   }
