@@ -32,7 +32,7 @@ export class MySkinsPage implements OnInit {
 
   ngOnInit() {
     //async Skin loading
-    
+    /*
     this.mySkinService.getMySkins().subscribe(
       data => {
 
@@ -51,6 +51,7 @@ export class MySkinsPage implements OnInit {
         console.log('Error');
       }
     )
+    */
   }
 
   ngAfterViewInit(){
@@ -61,8 +62,6 @@ export class MySkinsPage implements OnInit {
     
     this.ts.getUser().subscribe(
       data => {
-
-        
           this.ts.user.id = data["id"];
           this.ts.user.userName = data["username"];
           this.ts.user.firstname = data["firstName"];
@@ -90,8 +89,7 @@ export class MySkinsPage implements OnInit {
         }
           
         console.log("1231231231231232132131323123")
-        console.log(this.addSkinButRef.nativeElement);
-
+        console.log(this.ts.user);
 
 
         //console.log(this.skinService);

@@ -300,10 +300,10 @@ export class HomePage implements OnInit {
   }
 
   showTutorial(){
-    var user = this.ps.getUser();
+    /*var user = this.ps.getUser();
     this.ps.getUser().subscribe(
       data => {
-        console.log(data);
+//        console.log(data);
         this.ps.user.custom = data;
         console.log(this.ps.user.custom)
         //console.log(this.skinService);
@@ -338,7 +338,10 @@ export class HomePage implements OnInit {
         close: () => {
         }
       });
-  }
+    }
+      Ü*/
+  
+
   }
   sideMenu() {
     this.navigate =
