@@ -103,9 +103,9 @@ public class SkinRepository {
         User iboTrisi = new User("74691fbf-c71c-4d9a-bb34-143265af9b5e","ibo1");
 
         //Tobis User, ID bitte nich ändern
-        User tobias = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
-        User trisinger = new User("5f92cdb2-1d5f-43a2-80ef-8ba5cdc3c881", "trisinger");
-        User janTobi = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
+        User tobias = new User("88db121c-4f49-42c2-8f96-5db7d3cbe75a", "tobias");
+        User trisinger = new User("8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3", "trisinger");
+        User janTobi = new User("7e375e76-dc48-4c84-94ad-ce512effc6d9", "jan");
 
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");

@@ -162,6 +162,18 @@ export class ChatPage implements OnInit {
     */
   }
 
+  convert(date: number[]): string {
+    let hours = "";
+    let minutes = "";
+    if(date[3]<=9) {
+      hours = "0"
+    }
+    if(date[4]<=9) {
+      minutes = "0";
+    }
+    return `${hours}${date[3]}:${minutes}${date[4]}`;
+  }
+
   init(room: Room) {
     this.showNewMsgLine = true;
     this.chatservice.getAllMessages(room).subscribe(data=> {
@@ -174,6 +186,7 @@ export class ChatPage implements OnInit {
         console.log(this.unseenMessages + " unseen")
         this.chatservice.getData().subscribe(data => {
           this.chatservice.messages = data;
+          console.log(this.convert(this.chatservice.messages[0].created));
           console.log(this.chatservice.messages.length);
           this.pos = this.chatservice.messages.length - this.unseenMessages;
           

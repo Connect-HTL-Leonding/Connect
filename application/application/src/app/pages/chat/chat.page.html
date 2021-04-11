@@ -25,8 +25,9 @@
         </div>
         <ng-template #youNoImage>
             <p class="message">{{message.message}}</p>
-            <p *ngIf="message.message.length>29" class="timeOnWrap">{{message.created[3]}}:{{message.created[4]}}</p>
-            <p *ngIf="message.message.length<=29" class="time">{{message.created[3]}}:{{message.created[4]}}</p>
+           <p *ngIf="message.message.length>29" class="timeOnWrap">{{convert(message.created)}}</p>
+            <p *ngIf="message.message.length<=29" class="time">{{convert(message.created)}}</p>
+           <!-- <p>{{message.created | date:'shortTime'}}</p> -->
         </ng-template>
       </div>
       <div *ngIf="this.showNewMsgLine && this.unseenMessages> 0 && !yousent(message) && i == this.pos && i !== 0">

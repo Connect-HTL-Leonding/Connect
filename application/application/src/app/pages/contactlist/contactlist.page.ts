@@ -27,7 +27,6 @@ export class ContactlistPage implements OnInit {
     public profileservice: ProfileService, public keyCloakService : KeycloakService) { 
     this.contactService = cs;
     this.chatService = chatService;
-    console.log(this.contactService.activeUser);
     this.wsUri = 'ws://localhost:8080/contactListSocket/' + keyCloakService.getKeycloakInstance().subject;
   }
 
@@ -63,6 +62,9 @@ export class ContactlistPage implements OnInit {
 
   doConnect(){
     this.contactService.websocket = new WebSocket(this.wsUri);
+    this.contactService.websocket.onerror = (evt) => {
+      console.log(evt.error);
+    }
     this.contactService.websocket.onmessage = (evt) => {
      this.reloadRooms();
     } 
