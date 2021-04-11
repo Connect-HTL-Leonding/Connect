@@ -93,9 +93,9 @@ public class SkinRepository {
 
 
 
-        User ibo = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
-        User ibo1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
-        User simon = new User("6d7975ac-28d0-4ab9-8c95-e1bf91acdf15", "simon");
+        User ibo = new User("9e5a3e77-8cc6-4f44-b59d-35c5b58ef36a", "ibo");
+        User ibo1 = new User("3d225746-744d-4aca-a6c1-1e329c52cdbb","ibo1");
+        User simon = new User("bf217210-fe97-41e5-80f9-2dcd84bb0308", "simon");
 
         //Trisis User, ID bitte nich ändern
         User trisi = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
@@ -103,9 +103,9 @@ public class SkinRepository {
         User iboTrisi = new User("74691fbf-c71c-4d9a-bb34-143265af9b5e","ibo1");
 
         //Tobis User, ID bitte nich ändern
-        User tobias = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
-        User trisinger = new User("5f92cdb2-1d5f-43a2-80ef-8ba5cdc3c881", "trisinger");
-        User janTobi = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
+        User tobias = new User("88db121c-4f49-42c2-8f96-5db7d3cbe75a", "tobias");
+        User trisinger = new User("8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3", "trisinger");
+        User janTobi = new User("7e375e76-dc48-4c84-94ad-ce512effc6d9", "jan");
 
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
