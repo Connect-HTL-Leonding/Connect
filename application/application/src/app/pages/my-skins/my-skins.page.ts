@@ -9,6 +9,7 @@ import Showcaser from 'showcaser';
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/api/profile.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-my-skins',
@@ -166,6 +167,13 @@ export class MySkinsPage implements OnInit {
           this.mySkinService.myskins = data;
           this.mySkinService.getCurrentSkin();
           console.log(this.mySkinService.current)
+          this.mySkinService.getSelectedSkins().subscribe(data => {
+            this.mySkinService.selectedMySkins = data;
+            this.mySkinService.getMapSkins().subscribe(data => {
+              this.mySkinService.mapSkins = data;
+              this.mySkinService.mySkinObserveable.next(data);
+            })
+          })
         },
         error1 => {
           console.log('Error');

@@ -17,6 +17,7 @@ export class ChatService {
   public contactlist;
   public selectedRoom: Room;
   public activeUser: User;
+  public m: Message;
   
 
   constructor(http: HttpClient, cs: ContactlistService, private oauthService : OAuthService) {
@@ -26,33 +27,33 @@ export class ChatService {
   }
 
   getData() {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get<Message[]>(api.url +'message/findAll/' + this.selectedRoom.id, {headers: reqHeader});
+    return this.http.get<Message[]>(api.url +'message/findAll/' + this.selectedRoom.id);
   }
 
   createMessage(m:Message) {
-    let body = JSON.stringify(m);
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, body, {headers: reqHeader});
+    return this.http.post(api.url + 'message/create/' + this.selectedRoom.id, m);
   }
 
-  public async createImageMessage(m:Message) {
-    
+  public async addImage(m:Message) {
     try {
       const capturedPhoto = await Camera.getPhoto({
         resultType: CameraResultType.Base64,
         quality: 100,
         allowEditing: true
       })
-      m.image = capturedPhoto.base64String;
-      return this.createMessage(m);
+      this.m = m;
+      this.m.image = capturedPhoto.base64String;
+      return this.m
     } catch (e) {
       }
+  }
+  
+
+  getSeenMessages(room: Room) {
+    return this.http.get(api.url + 'message/getSeenMessages/' + room.id);
+  }
+
+  getAllMessages(room: Room) {
+    return this.http.get(api.url + 'message/getAllMessages/' + room.id);
   }
 }

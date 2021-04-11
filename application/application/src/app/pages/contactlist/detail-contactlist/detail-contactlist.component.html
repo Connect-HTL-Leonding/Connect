@@ -3,13 +3,17 @@
 <div *ngIf="userExists(user)" class="chat-user">
   
   <ion-avatar slot="start">
-    <img *ngIf="user.custom" src="{{user.custom.profilePicture}}">
+    <img *ngIf="user.custom" src={{pfp}}>
   </ion-avatar>
-  
   <ion-label id="chat-flex">
     <div id="flex">
       <h2 *ngIf="user" id="username">{{user.userName}}</h2>
-      <p>{{this.latestMessage}}</p>
+      <p *ngIf="this.unseenMessages<=0">{{this.latestMessage}}</p>
+      <p class="bold" *ngIf="this.unseenMessages>0">{{this.latestMessage}}</p>
+    </div>
+    <div class="rightBox">
+      <p class="timeDisplay" *ngIf="this.latestMessageCreated">{{this.timeDisplay}}</p>
+    <ion-badge *ngIf="this.unseenMessages>0">{{this.unseenMessages}}</ion-badge>
     </div>
   </ion-label>
   

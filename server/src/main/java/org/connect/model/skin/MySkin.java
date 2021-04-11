@@ -9,11 +9,15 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("my")
 @NamedQuery(name = MySkin.FINDALL, query = "SELECT ms FROM MySkin ms where user_id = :u")
+@NamedQuery(name = MySkin.FINDSPECIFIC, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.skin.id = :skin")
 @NamedQuery(name = MySkin.FINDSELECTED, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.selected = true")
+@NamedQuery(name = MySkin.FINDMAPSKINS, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.selected = true and ms.showInMap = true")
 public class MySkin implements Serializable {
 
     public static final String FINDALL = "MySkin.findAll";
+    public static final String FINDSPECIFIC = "MySkin.findSpecific";
     public static final String FINDSELECTED = "MySkin.findSelected";
+    public static final String FINDMAPSKINS = "MySkin.findMapSkins";
 
 
     @Id
@@ -24,6 +28,7 @@ public class MySkin implements Serializable {
     private int niveau;
 
     private boolean selected = false;
+    private boolean showInMap = false;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "skin_id")
@@ -101,5 +106,13 @@ public class MySkin implements Serializable {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public boolean isShowInMap() {
+        return showInMap;
+    }
+
+    public void setShowInMap(boolean showInMap) {
+        this.showInMap = showInMap;
     }
 }

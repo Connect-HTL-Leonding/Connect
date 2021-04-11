@@ -18,7 +18,7 @@
   width: 100%;
 }
 
-#infowindow-content {
+.infowindow-content {
   align-items: center;
   display: flex;
   flex-direction: row;
@@ -62,5 +62,23 @@ ion-footer {
     img {
       max-height: 40px;
     }
+  }
+
+  #center_map_button {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: lightslategray;
+    
+  }
+
+  #center_map_button:active{
+    color: black;
   }
 }

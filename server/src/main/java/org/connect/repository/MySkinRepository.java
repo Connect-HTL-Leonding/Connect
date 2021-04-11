@@ -68,6 +68,23 @@ public class MySkinRepository {
         return ms;
     }
 
+    @Transactional
+    public List<MySkin> findMapSkin(Optional id) {
+        TypedQuery<MySkin> tq = this.em.createNamedQuery(MySkin.FINDMAPSKINS, MySkin.class);
+        tq.setParameter("u", id.get().toString());
+
+        List<MySkin> ms = null;
+        try {
+            ms = tq.getResultList();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(ms);
+
+        return ms;
+    }
+
     // Löschen einer Person
     @Transactional
     public MySkin delete(long id) {

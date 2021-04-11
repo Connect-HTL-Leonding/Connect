@@ -1,4 +1,4 @@
-package org.connect;
+package WS;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.chat.Message;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -69,5 +69,4 @@ public class ChatSocket {
             }
         });
     }
-
 }

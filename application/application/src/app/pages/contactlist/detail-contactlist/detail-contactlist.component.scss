@@ -44,3 +44,39 @@
 #unreadMessage {
     font-weight: bold; 
 }
+
+ion-badge {
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20px;
+}
+
+ion-label {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.bold {
+    font-weight: 700;
+}
+
+.rightBox {
+    display: flex;
+    justify-content: center;
+    flex-flow: column wrap;
+    align-items: flex-start;
+}
+
+.rightBox p {
+    font-size: x-small;
+}
+
+.timeDisplay {
+    opacity: 0.7;
+    position: absolute;
+    top: 0;
+    right: 0;
+}

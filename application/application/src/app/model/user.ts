@@ -1,6 +1,8 @@
+import { Position } from "./position";
+
 export class User {
     constructor(
-        public id = 0,
+        public id = "",
         public userName: string = "",
         public email: string = "",
         public firstname: string = "",
@@ -11,13 +13,13 @@ export class User {
 
 export class CustomUser {
     constructor(
-        public id = 0,
+        public id = "",
         public profilePicture = "",
         public finishedTutorial: boolean = false,
         public description: string = "",
         public gender: string = "",
         public birthday: Date = new Date(),
-        public position = {}
+        public position = new Position()
         ) {
 
     }

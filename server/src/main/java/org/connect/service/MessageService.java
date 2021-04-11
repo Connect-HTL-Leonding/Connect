@@ -13,6 +13,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.Calendar;
 import java.util.List;
 
 @ApplicationScoped
@@ -36,6 +37,23 @@ public class MessageService {
         return ms;
     }
 
+
+    @Path("getSeenMessages/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public long getSeenMessages(@PathParam("id") long roomId) {
+        long count = dbRepo.getSeenMessages(roomId);
+        return count;
+    }
+
+    @Path("getAllMessages/{id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public long getAllMessages(@PathParam("id") long roomId) {
+        long count = dbRepo.getAllMessages(roomId);
+        return count;
+    }
+
     @Path("findLatestMessage/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -48,7 +66,9 @@ public class MessageService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Message createMessage(Message message, @PathParam("id") long id) {
-        System.out.println(message);
+        System.out.println(java.time.LocalDateTime.now());
+        message.setCreated(java.time.LocalDateTime.now());
+        message.setUpdated(java.time.LocalDateTime.now());
         Room room = dbRepo.findRoom(id);
         message.setRoom(room);
         message.setUser(new User(jwt));
@@ -62,4 +82,7 @@ public class MessageService {
         dbRepo.init();
         return "DB initialized";
     }
+
+
+
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, MenuController } from '@ionic/angular';
+import { LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 import  {AfterViewInit} from '@angular/core';
 import { Inject } from '@angular/core';
@@ -9,12 +9,23 @@ import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 import { MapStyle } from './mapStyle';
-import { User } from '../../model/user';
+import { CustomUser, User } from '../../model/user';
+
+import { ProfileService } from 'src/app/api/profile.service';
+import { FriendshipService } from 'src/app/api/friendship.service';
+
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
 import Showcaser  from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
-import { ProfileService } from 'src/app/api/profile.service';
+import { Friendship } from 'src/app/model/friendship';
+import { ContactlistService } from 'src/app/api/contactlist.service';
+import { Position } from 'src/app/model/position';
+import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
+import { MySkin } from 'src/app/model/myskin';
+import { ProfilePage } from '../profile/profile.page';
+import { KeycloakService } from 'keycloak-angular';
+
 
 /*
 import {
@@ -41,6 +52,15 @@ export class HomePage implements OnInit {
   //map: GoogleMap;
   navigate: any;
   map: any;
+  friendMarkers = [];
+  userDot: google.maps.Circle;
+  skinRadi = [];
+  friendProfile:ProfilePage;
+  location: Position = new Position();
+  websocket: WebSocket;
+  wsUri;
+
+  mySubscription;
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -48,15 +68,104 @@ export class HomePage implements OnInit {
   // Button
   @ViewChild('connect_button', { static: false }) connectButRef: ElementRef;
 
-  constructor(private menu: MenuController, private geolocation: Geolocation, public loadingController: LoadingController, private mySkinsService : MyskinsService, private router: Router, private ps: ProfileService) {
+  constructor(private menu: MenuController,
+    private geolocation: Geolocation,
+    public ps: ProfileService,
+    public keyCloakService: KeycloakService,
+    private fs: FriendshipService,
+    public loadingController: LoadingController,
+    private mySkinsService: MyskinsService,
+    private cs: ContactlistService,
+    public popoverController: PopoverController,
+    public toastController: ToastController,
+    public contactService: ContactlistService,
+    public modalController: ModalController,
+    public router: Router) {
+
     this.sideMenu();
+
+    this.mySubscription = this.mySkinsService.mySkinUpdateNotify.subscribe(value => {
+      console.log("Observer schmoberver");
+      console.log(value);
+      console.log(this.skinRadi);
+
+      this.createMySkinRaduis();
+    });
+    
+
+    this.ps.getUser().subscribe(
+      data => {
+
+        console.log(data);
+        this.ps.user.custom = data;
+
+        this.map = new google.maps.Map(this.mapRef.nativeElement, {
+          center: this.ps.user.custom.position,
+          zoom: 18,
+          disableDefaultUI: true,
+          mapId: '2fcab7b62a0e3af9'
+        });
+
+
+        console.log("Current User:")
+        console.log(this.ps.user)
+
+
+        //angemeldeter User
+        this.userDot = new google.maps.Circle({
+          strokeColor: "#0eb19b",
+          strokeOpacity: 1,
+          strokeWeight: 2,
+          fillColor: "#0eb19b",
+          fillOpacity: 1,
+          map: this.map,
+          center: new Position(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
+          radius: 2  //in Meter
+        });
+
+
+        //console.log(this.skinService);
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
 
   ngOnInit() {
-    this.mySkinsService.getSelectedSkins().subscribe(data => {
-      console.log(data);
+    this.ps.getUser().subscribe(data => {
+      this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
+      this.doConnect();
     })
+    
+  }
+
+  doConnect(){
+    this.websocket = new WebSocket(this.wsUri);
+    console.log(this.websocket);
+    this.websocket.onmessage = (evt) => {
+      console.log(evt.data);
+    } 
+
+    
+    /*
+    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
+    
+    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
+    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
+    */
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: SelectedSkinsPage,
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
+    });
+    popover.onDidDismiss().then(() => { this.createMySkinRaduis(); });
+    return await popover.present();
   }
 
 
@@ -73,8 +182,6 @@ export class HomePage implements OnInit {
   }
 
 
-
-
   ionViewDidEnter() {
     this.loadMap();
     console.log(this.connectButRef.nativeElement);
@@ -83,63 +190,101 @@ export class HomePage implements OnInit {
   }
 
 
+  //Funktion zum User Marker erstellen
+  createUserMarker(user: User) {
+    
+  
+    var exists = false
+    this.friendMarkers.forEach((friend: google.maps.Marker) => {
+    
+      if (friend.getTitle() == user.id.toString()) {
+        exists = true;
+        console.log("Marker exists" + user.userName + ":");
+      }
+    })
 
-  createUserMarker(user: User, origin) {
-    var canvas = document.createElement('canvas');
-    canvas.width = 35;
-    canvas.height = 62;
-    var ctx = canvas.getContext('2d');
-    var image1 = "data:image/png;base64," + user.custom.profilePicture;
-    var image = new Image();
-    var compositeImage;
+    if (!exists) {
+      console.log("Create Marker " + user.userName + ":");
+      var canvas = document.createElement('canvas');
+      canvas.width = 35;
+      canvas.height = 62;
+      var ctx = canvas.getContext('2d');
+      var image1 = "data:image/png;base64," + atob(user.custom.profilePicture);
+      var image = new Image();
+      var compositeImage;
+
+      image.src = image1;
+
+      ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
+
+      // only draw image where mask is
+      ctx.globalCompositeOperation = 'destination-in';
+
+      // draw our circle mask
+      ctx.fillStyle = '#000';
+      ctx.beginPath();
+      ctx.arc(
+        14.8 + 2.4725,          // x
+        14.8 + 2.9421,          // y
+        14.8,          // radius
+        0,                  // start angle
+        2 * Math.PI         // end angle
+      );
+      ctx.fill();
+
+      // restore to default composite operation (is draw over current image)
+      ctx.globalCompositeOperation = 'source-over';
 
 
-
-    image.src = image1;
-
-    ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
+      var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
 
 
+      ctx.fillStyle = '#0eb19b';
+      ctx.fill(path);
 
-    // only draw image where mask is
-    ctx.globalCompositeOperation = 'destination-in';
+      compositeImage = canvas.toDataURL("image/png");
 
-    // draw our circle mask
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.arc(
-      14.8 + 2.4725,          // x
-      14.8 + 2.9421,          // y
-      14.8,          // radius
-      0,                  // start angle
-      2 * Math.PI         // end angle
-    );
-    ctx.fill();
+      canvas.remove();
+      //console.log(compositeImage)
 
-    // restore to default composite operation (is draw over current image)
-    ctx.globalCompositeOperation = 'source-over';
+      var marker = new google.maps.Marker({
+        position: user.custom.position,
+        title: user.id,
+        map: this.map,
+        icon: compositeImage
+      });
 
+      marker.addListener("click", () => {
+        this.ps.findFriendUser(marker.title).subscribe(data => {
+          console.log(data)
+          this.presentModal(data);
+        });
+      });
 
-    var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
-
-
-    ctx.fillStyle = '#0eb19b';
-    ctx.fill(path);
-
-    compositeImage = canvas.toDataURL("image/png");
-
-    canvas.remove();
-    console.log(compositeImage)
-
-    var marker = new google.maps.Marker({
-      position: origin,
-      title: user.userName,
-      map: this.map,
-      icon: compositeImage
-    });
-
+      this.friendMarkers.push(marker);
+    }
+    console.log("friend MArkers")
+    console.log(this.friendMarkers);
 
   }
+
+  async presentModal(friend:User) {
+    this.ps.user = friend;
+    this.ps.friendUser = true;
+    const modal = await this.modalController.create({
+      component: ProfilePage,
+      componentProps: {
+        'contacListWebsocket': this.contactService.websocket
+      }
+    });
+    modal.onDidDismiss().then((data => {
+      this.ps.friendUser = false;
+    }))
+    return await modal.present();
+  }
+
+
+  //Funktion für Meetup marker
   createMeetupMarker(source, origin) {
     var canvas = document.createElement('canvas');
     canvas.width = 35;
@@ -149,13 +294,9 @@ export class HomePage implements OnInit {
     var image = new Image();
     var compositeImage;
 
-
-
     image.src = image1;
 
     ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
-
-
 
     // only draw image where mask is
     ctx.globalCompositeOperation = 'destination-in';
@@ -197,6 +338,172 @@ export class HomePage implements OnInit {
 
   }
 
+
+  //Distance zwischen zwei Positionen
+  calcDistance(origin1: Position, origin2: Position) {
+    return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng))
+  }
+
+
+  //iterate through friends in Friendship-Table
+  displayFriends() {
+    this.fs.getBefriendedUsers(this.ps.user).subscribe(data => {
+      var friends = data;
+
+      this.friendMarkers.forEach((marker: google.maps.Marker, index) => {
+        var exists = false;
+        friends.forEach((f) => {
+          if (marker.getTitle() == f.user1.id.toString() || marker.getTitle() == f.user2.id.toString()) {
+            exists = true;
+          }
+        })
+        if (!exists) {
+          marker.setMap(null);
+          this.friendMarkers.splice(index, 1);
+        }
+      })
+
+      friends.forEach((f) => {
+        var u: User = new User;
+        console.log("Distance")
+
+
+        if (f.user1.id == this.ps.user.id) {
+
+          this.cs.getKeyUser(f.user2).subscribe(data => {
+            u.id = data["id"];
+            u.userName = data["username"];
+            u.firstname = data["firstName"];
+            u.lastname = data["lastName"];
+            u.email = data["email"];
+            u.custom = f.user2
+
+            this.createUserMarker(u);
+          })
+
+        } else {
+          this.cs.getKeyUser(f.user1).subscribe(data => {
+            u.id = data["id"];
+            u.userName = data["username"];
+            u.firstname = data["firstName"];
+            u.lastname = data["lastName"];
+            u.email = data["email"];
+            u.custom = f.user1
+
+            this.createUserMarker(u);
+          })
+
+        }
+
+
+
+      })
+
+    });
+
+  }
+
+  createMySkinRaduis() {
+    this.mySkinsService.getMapSkins().subscribe(data => {
+      this.mySkinsService.mapSkins = data;
+      console.log(this.map + "jasdöfkasfdalsfk")
+
+      if (this.mySkinsService.mapSkins) {
+        this.skinRadi.forEach((circle: google.maps.Circle, index) => {
+          var exists = false;
+          this.mySkinsService.mapSkins.forEach((myskin) => {
+            if (circle.get('title') == myskin.skin.id) {
+              exists = true;
+            }
+          })
+          if (!exists) {
+            circle.setMap(null);
+            this.skinRadi.splice(index, 1);
+          }
+        })
+
+
+        this.mySkinsService.mapSkins.forEach((myskin) => {
+          
+          var existingCircle: google.maps.Circle;
+          this.skinRadi.forEach((circle: google.maps.Circle) => {
+            if (circle.get('title') == myskin.skin.id) {
+              existingCircle = circle;
+            }
+          });
+
+          if (existingCircle != null && existingCircle != undefined) {
+
+            existingCircle.setRadius(myskin.radius * 1000);
+          } else {
+            console.log("seas")
+            var newCircle = new google.maps.Circle({
+              title: myskin.skin.id,
+              strokeColor: "#0eb19b",
+              strokeOpacity: 0.8,
+              strokeWeight: 2,
+              fillColor: this.intToRGB(this.hashCode(myskin.skin.title)),
+              fillOpacity: 0.08,
+              clickable: false,
+              map: this.map,
+              center: new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
+              radius: myskin.radius * 1000 //Umwandlung von Kilometer auf Meter
+            });
+            this.skinRadi.push(newCircle);
+          }
+
+
+
+        })
+
+
+
+      } else {
+        this.skinRadi.forEach((circle: google.maps.Circle) => {
+          circle.setMap(null);
+        });
+        this.skinRadi = [];
+      }
+    })
+    console.log("Skin Radi");
+    console.log(this.skinRadi);
+  }
+
+  hashCode(str) { // java String#hashCode
+    var hash = 0;
+    for (var i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    //console.log(hash)
+    return hash;
+  }
+
+  intToRGB(i) {
+    var c = (i & 0x00FFFFFF)
+      .toString(16)
+      .toUpperCase();
+    return "#" + "00000".substring(0, 6 - c.length) + c;
+  }
+
+  doSend() {
+    this.websocket.send('position updated!' + this.ps.user.userName);
+  }
+
+  centerMap(){
+    this.map.panTo(this.ps.user.custom.position);
+    this.map.setZoom(18);
+    
+  }
+
+  updateUserDot() {
+
+    this.userDot.setMap(this.map);
+    this.userDot.setCenter(new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng));
+
+  }
+
+
+  //Map loading Funktion
   async loadMap() {
     //show LoadingScreen BITTE NICHT ENTFERNEN! danke
     //this.presentLoading();
@@ -212,6 +519,12 @@ export class HomePage implements OnInit {
     });
     */
 
+    var id = navigator.geolocation.watchPosition(pos => {
+      var crd = pos.coords;
+      var updatedLocation = new Position(crd.longitude, crd.latitude);
+      var distance = this.calcDistance(this.location, updatedLocation);
+      this.doSend();
+    } );
 
 
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -221,61 +534,56 @@ export class HomePage implements OnInit {
       //dismiss loading if loading Overlay exists BITTE NICHT ENTFERNEN! danke
       //this.loadingController.getTop().then(v => v ? this.loadingController.dismiss() : null);
 
-      console.log(resp.coords.latitude + " " + resp.coords.longitude)
-      const location = new google.maps.LatLng(resp.coords.latitude, resp.coords.longitude);
-      const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
-      const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
 
-      // new ClickEventHandler(this.map, location);
 
-      console.log(MapStyle)
 
-      const mapOptions = {
-        center: location,
-        zoom: 18,
-        disableDefaultUI: true,
-        mapId: '2fcab7b62a0e3af9'
-      };
+      this.ps.user.custom.position.lat = resp.coords.latitude;
+      this.ps.user.custom.position.lng = resp.coords.longitude;
+      //this.location.lat = this.ps.user.custom.position.lat;
+      //this.location.lng = this.ps.user.custom.position.lng;
+      const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
-      this.map = new google.maps.Map(this.mapRef.nativeElement, mapOptions);
 
-      this.createUserMarker(new User(), location2);
-      this.createMeetupMarker('../../assets/normalguy.jpg', location3);
 
-      new ClickEventHandler(this.map, location);
+      this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
 
 
 
+        this.createMySkinRaduis();
+        this.displayFriends();
+
+
+
+        const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
+        const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
+
+        //new ClickEventHandler(this.map, location);
 
 
 
 
-      const userDot = new google.maps.Circle({
-        strokeColor: "#0eb19b",
-        strokeOpacity: 1,
-        strokeWeight: 2,
-        fillColor: "#0eb19b",
-        fillOpacity: 1,
-        map: this.map,
-        center: location,
-        radius: 2 //in Meter
+
+        console.log("Update User Dot");
+        console.log(this.ps.user.custom.position)
+        console.log(this.userDot.getCenter())
+        this.updateUserDot();
+        console.log(this.userDot.getCenter())
 
 
-      });
+        //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
-      const radiusCircle = new google.maps.Circle({
-        strokeColor: "#0eb19b",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#0eb19b",
-        fillOpacity: 0.05,
-        clickable: false,
-        map: this.map,
-        center: location,
-        radius: 100 //in Meter
+        new ClickEventHandler(this.map, location);
+
+
+
+
       });
       this.showTutorial();
+
+
+
+
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -380,6 +688,64 @@ export class HomePage implements OnInit {
     console.log(this.navigate);
   }
 
+
+
+
+  connect() {
+    if (this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null) {
+      this.fs.connect(this.mySkinsService.mapSkins).subscribe(data => {
+        console.log(typeof (data))
+        console.log(data);
+        if (data != null) {
+          var user = new CustomUser();
+
+          user = data;
+          this.contactService.getKeyUser(user).subscribe(data => {
+            this.presentToastWithOptions(data, "You connected with");
+            this.displayFriends();
+          })
+
+        } else {
+          console.log(data)
+          this.presentToastWithOptions(data, "Currently nobody near you");
+        }
+
+      })
+    }
+  }
+
+  async presentToastWithOptions(data, msg) {
+    var username = "";
+    var buttonText = "Change Settings!"
+    var header = "Sorry!"
+    if (data != null) {
+      console.log("yes");
+      header = "Congratulations!"
+      buttonText = "Chat now"
+      username = data["username"];
+    }
+    const toast = await this.toastController.create({
+      header: header,
+      message: msg + ' ' + username,
+      position: 'top',
+      duration: 2000,
+      buttons: [
+        {
+          side: 'end',
+          text: buttonText,
+          handler: () => {
+            if (username == "") {
+              this.router.navigate(["my-skins"])
+            } else {
+              this.router.navigate(["contactlist"])
+            }
+          }
+        }
+      ]
+    });
+    toast.present();
+  }
+
 }
 
 
@@ -395,6 +761,10 @@ class ClickEventHandler {
   placesService: google.maps.places.PlacesService;
   infowindow: google.maps.InfoWindow;
   infowindowContent: HTMLElement;
+  e1: HTMLElement;
+  e2: HTMLElement;
+  eb: HTMLElement;
+  e3: HTMLElement;
   constructor(map: google.maps.Map, origin: any) {
     this.origin = origin;
     this.map = map;
@@ -406,6 +776,22 @@ class ClickEventHandler {
     this.infowindowContent = document.getElementById(
       "infowindow-content"
     ) as HTMLElement;
+    /*
+    this.infowindowContent = document.createElement("div");
+    this.infowindowContent.classList.add("infowindow-content");
+    this.e1 = document.createElement("img");
+    this.e1.classList.add("place-icon");
+    this.e1.setAttribute("src","");
+    this.e2 = document.createElement("span");
+    this.e1.classList.add("place-name");
+    this.eb = document.createElement("br");
+    this.e3 = document.createElement("span");
+    this.e1.classList.add("place-address");
+    this.infowindowContent.append(this.e1);
+    this.infowindowContent.append(this.e2);
+    this.infowindowContent.append(this.eb);
+    this.infowindowContent.append(this.e3);
+    */
     console.log(this.infowindowContent);
     this.infowindow.setContent(this.infowindowContent);
 
@@ -485,6 +871,7 @@ class ClickEventHandler {
           (me.infowindowContent.children[
             "place-address"
           ] as HTMLElement).textContent = place.formatted_address as string;
+
           me.infowindow.open(me.map);
         }
       }

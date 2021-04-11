@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {ContactlistService} from '../../api/contactlist.service'
 import { MenuController, ModalController } from '@ionic/angular';
 import { User } from '../../model/user';
@@ -7,13 +7,20 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Room } from '../../model/room';
 import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { KeycloakService } from 'keycloak-angular';
+
+
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
   styleUrls: ['./chat.page.scss'],
+ 
+  
 })
 export class ChatPage implements OnInit {
+
+  @Input() contacListWebsocket : any;
 
   sendText = '';
   receiveText = '';
@@ -29,36 +36,61 @@ export class ChatPage implements OnInit {
   chatservice;
   wsUri;
   oauthService;
-  activeUser;
+  public allMessages;
+  public seenMessages;
+  public unseenMessages;
+  //position of new Message Line
+  public pos = 0;
+  public showNewMsgLine : boolean;
+  public pfp;
+
   
 
-  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService) {
+  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
-    this.chatservice.activeUser = this.contactlist.activeUser;
     this.oauthService = os;
   }
   
 
   ngOnInit() {
-    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.chatservice.activeUser.userName;
-    this.chatservice.getData().subscribe(data => {
-      this.chatservice.messages = data;
-    });
+    console.log(this.keycloakService.getUsername());
+    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
+    this.init(this.contactlist.selectedRoom);
+   
     this.getRoomName();
-    
-    this.doConnect();
+    this.doConnect();    
+  
   }
 
   yousent(message:Message) : boolean {
-    return message.user.id == this.chatservice.activeUser.custom.id;
+    return message.user.id == this.keycloakService.getKeycloakInstance().subject;
+  }
+
+  imageIsNotNull(message:Message) : boolean {
+    if(message.image != null && message.image != "" ){
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+
+  messageIsNotNull(message:Message) :boolean {
+    if(message.message != null && message.message != "") {
+      return true;
+    } 
+    else {
+      return false;
+    }
   }
   
 
   getRoomName() {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
       this.otherUser.custom = data;
+      this.pfp = "data:image/png;base64,"+atob(this.otherUser.custom.profilePicture);
       this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
         this.otherUser.id = data["id"];
         this.otherUser.userName = data["username"];
@@ -67,9 +99,11 @@ export class ChatPage implements OnInit {
         this.otherUser.email = data["email"];
         console.log(data)
       })
+      /*
       this.contactlist.getOtherPfp(this.contactlist.selectedRoom.id).subscribe(data => {
         this.otherUser.custom.profilePicture = "data:image/png;base64," + data;
       });
+      */
     })
   }
 
@@ -78,19 +112,21 @@ export class ChatPage implements OnInit {
     this.modalController.dismiss();
   }
 
+  
   doSendImage() {
-    try {
       this.m.message = this.sendText;
       this.m.created = new Date();
       this.m.updated = new Date();
-      this.chatservice.createImageMessage(this.m).subscribe(data => {
-        this.websocket.send(this.sendText);
-        this.sendText = "";
+      this.m.image = "";
+      this.chatservice.addImage(this.m).then(data => {
+        console.log(data);
+        this.chatservice.createMessage(data).subscribe(data => {
+          this.websocket.send(this.sendText);
+          this.sendText = "";
+        })
       });
-    } catch (e) {
-
-    }
   }
+  
 
   doSend(){
     if(this.sendText.trim().length > 0) {
@@ -98,6 +134,8 @@ export class ChatPage implements OnInit {
       this.m.created = new Date();
       this.m.updated = new Date();
       this.m.image = "";
+      this.showNewMsgLine = false;
+      this.contacListWebsocket.send(this.sendText);
       this.chatservice.createMessage(this.m).subscribe(data => {
         this.websocket.send(this.sendText); 
         this.sendText = "";
@@ -107,6 +145,7 @@ export class ChatPage implements OnInit {
 
   doConnect(){
     this.websocket = new WebSocket(this.wsUri);
+    console.log(this.websocket);
     this.websocket.onmessage = (evt) => {
       this.receiveText = evt.data +'\n';
       this.chatservice.getData().subscribe(data => {
@@ -122,4 +161,27 @@ export class ChatPage implements OnInit {
     this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
     */
   }
+
+  init(room: Room) {
+    this.showNewMsgLine = true;
+    this.chatservice.getAllMessages(room).subscribe(data=> {
+      this.allMessages = data;
+      this.chatservice.getSeenMessages(room).subscribe(data=> {
+        this.seenMessages = data;
+        this.unseenMessages = this.allMessages - this.seenMessages;
+        console.log(this.seenMessages + " seen");
+        console.log(this.allMessages + " all");
+        console.log(this.unseenMessages + " unseen")
+        this.chatservice.getData().subscribe(data => {
+          this.chatservice.messages = data;
+          console.log(this.chatservice.messages.length);
+          this.pos = this.chatservice.messages.length - this.unseenMessages;
+          
+        })
+      })
+    })
+   }
+
+ 
+ 
 }

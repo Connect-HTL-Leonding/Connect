@@ -37,14 +37,23 @@ div#messageFlex {
     flex-direction: column;
     margin-top: 5px;
     margin-bottom: 5px;
+    width: 100%;
 }
 
 .message {
-    margin-left: 5px;
-    margin-right: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.imageMessage {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 0;
+    margin-bottom: 7px;
 }
 
 .youSent {
+   
     background-color: var(--ion-color-secondary);
     border-radius: 20px 2px 20px 20px;
     align-self: flex-end;
@@ -52,6 +61,11 @@ div#messageFlex {
     max-width: 75%;
     padding-right: 0px;
     overflow-wrap: break-word;
+    position: relative;
+    height: auto;
+    width: auto;   
+    min-width: 12%;
+    min-height: 55px;
 }
 
 .otherSent {
@@ -62,6 +76,11 @@ div#messageFlex {
     border-radius: 2px 20px 20px 20px;
     max-width: 75%;
     overflow-wrap: break-word;
+    position: relative;
+    height: auto;
+    width: auto;   
+    min-width: 12%;
+    min-height: 55px;
 }
 
 #inputdiv {
@@ -75,12 +94,14 @@ div#messageFlex {
 }
 
 #input {
+    display: flex;
+    align-items: center;
     border-style: solid;
-
     border-width: 1px;
     border-color: gray;
     border-radius: 50px;
     padding-left: 20px;
+    padding-right: 10px;
     width: 85%;
     margin-left: 5px;
     margin-bottom: 10px;
@@ -90,4 +111,55 @@ div#messageFlex {
     align-self: center;
     margin-left: -15px;
     margin-bottom: 10px;
+}
+
+.newMsgBox {
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+    margin: 0px 2px 8px 2px;
+}
+
+.smallFont {
+    font-size: small;
+    margin-bottom: -0.5px;
+    color:red;
+}
+
+.hline { width:80%; height:1px; background: red }
+
+.youSentImage {
+    width: 75vw;
+    height: auto;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: var(--ion-color-secondary);
+}
+
+.otherSentImage {
+    width: 75vw;
+    height: auto;
+    border-style: solid;
+    border-width: 2px 2px 2px 2px;
+    border-color: lightgray;
+} 
+
+.timeOnWrap {
+    font-size: xx-small;
+    opacity: 0.6;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin:0 7px 7px 0;
+}
+
+.time{
+    font-size: xx-small;
+    opacity: 0.6;
+   right: 0;
+   bottom: 0;
+   position: absolute;
+   margin: 0 7px 7px 0;
 }

@@ -9,7 +9,8 @@ import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
 import { ProfileService } from './profile.service';
 import { Friendship } from '../model/friendship';
-import { User } from '../model/user';
+import { CustomUser, User } from '../model/user';
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class FriendshipService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, us: ProfileService, private oauthService: OAuthService) {
+  constructor(http: HttpClient, us: ProfileService, private keyCloakService: KeycloakService) {
     this.http = http;
     this.userService = us;
   
@@ -33,46 +34,25 @@ export class FriendshipService {
 
   //getAll
   getFriendships() {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get<Friendship[]>(api.url + 'friendship/findAll', {headers: reqHeader})
+    return this.http.get<Friendship[]>(api.url + 'friendship/findAll')
   }
 
   getBefriendedUsers(u: User){
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.get<Friendship[]>(api.url + 'friendship/findFriendshipsOfUser/' + u.id, {headers: reqHeader})
+    return this.http.get<Friendship[]>(api.url + 'friendship/findFriendshipsOfUser/' + u.id)
   }
 
   createFriendship(f:Friendship) {
-    let body = JSON.stringify(f);
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.post(api.url + 'friendship/create/', body, {headers: reqHeader});
+    return this.http.post(api.url + 'friendship/create/', f);
   }
 
-  
+  connect(mySkins : Array<MySkin>) {
+    return this.http.post<CustomUser>(api.url + 'friendship/findRandom', mySkins);
+  }
 
   //update
   updateFriendship(f: Friendship) {
-    let body = JSON.stringify(f);
-    console.log(body);
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    return this.http.put(api.url + 'friendship/update', body, {headers: reqHeader});
+    return this.http.put(api.url + 'friendship/update', f);
 
-  }
-
-  //delete
-  deleteSkin(index: number) {
   }
 
 }

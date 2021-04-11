@@ -1,0 +1,14 @@
+<ion-content>
+  <ion-list lines="none" *ngIf="mySkinsService.selectedMySkins">
+    <ion-item *ngFor="let mySkin of mySkinsService.selectedMySkins, let i = index" (click)="toggle(mySkin)">
+      <ion-avatar slot="start">
+        <img src="{{mySkin.skin.image}}">
+      </ion-avatar>
+      <ion-label>
+        <h2>{{mySkin.skin.title}}</h2>
+      </ion-label>
+      <ion-checkbox [(ngModel)]="mySkin.showInMap"></ion-checkbox>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

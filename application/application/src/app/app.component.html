@@ -21,7 +21,7 @@
 -->
 
   <ion-tabs >
-    <ion-tab-bar slot="bottom" *ngIf="this.oauthService.hasValidAccessToken()">
+    <ion-tab-bar slot="bottom" *ngIf="this.keycloak.getKeycloakInstance().subject">
   
       <ion-tab-button tab="profile">
         <ion-icon name="cog"></ion-icon>

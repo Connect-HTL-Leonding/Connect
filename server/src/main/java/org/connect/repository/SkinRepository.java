@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -35,50 +36,116 @@ public class SkinRepository {
     @Transactional
     public void initDB() {
 
-        Skin s = new Skin("Fußball","Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png", 100);
-        Skin s1 = new Skin("Fußball2","Du magst Fußball? Cool! Das ist der Fußbal Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png", 100);
+        Skin s = new Skin("Fußball","Du magst Fußball? Cool! Das ist der Fußball Skin. Komm doch vorbei!","../assets/connect_img/square/fussball_square.png", 100);
+        Skin s1 = new Skin("Ausgehen","Du magst Ausgehen? Cool! Das ist der Ausgehen Skin. Komm doch vorbei!","../assets/connect_img/square/ausgehen_square.png", 100);
+        Skin s2 = new Skin("Basketball","Du magst Basketball? Cool! Das ist der Basketball Skin. Komm doch vorbei!","../assets/connect_img/square/basketball_square.png", 100);
+        Skin s3 = new Skin("Schwimmen","Du magst Schwimmen? Cool! Das ist der Schwimmen Skin. Komm doch vorbei!","../assets/connect_img/square/schwimmen_square.png", 100);
+        Skin s4 = new Skin("Golf","Du magst Golf? Cool! Das ist der Golf Skin. Komm doch vorbei!","../assets/connect_img/square/golf_square.png", 100);
+        Skin s5 = new Skin("Volleyball","Du magst Volleyball? Cool! Das ist der Volleyball Skin. Komm doch vorbei!","../assets/connect_img/square/volleyball_square.png", 100);
+        Skin s6 = new Skin("Tennis","Du magst Tennis? Cool! Das ist der Tennis Skin. Komm doch vorbei!","../assets/connect_img/square/tennis_square.png", 100);
+
+
 
         Category c = new Category("All");
         Category c1 = new Category("Sport");
         Category c2 = new Category("Freizeit");
 
+        s.getCategories().add(c);
+        s.getCategories().add(c1);
+        c.getSkins().add(s);
+        c1.getSkins().add(s);
 
+        s1.getCategories().add(c);
+        s1.getCategories().add(c2);
+        c.getSkins().add(s1);
+        c2.getSkins().add(s1);
+
+        s2.getCategories().add(c);
+        s2.getCategories().add(c1);
+        c.getSkins().add(s2);
+        c1.getSkins().add(s2);
+
+        s3.getCategories().add(c);
+        s3.getCategories().add(c1);
+        c.getSkins().add(s3);
+        c1.getSkins().add(s3);
+
+        s4.getCategories().add(c);
+        s4.getCategories().add(c1);
+        c.getSkins().add(s4);
+        c1.getSkins().add(s4);
+
+        s5.getCategories().add(c);
+        s5.getCategories().add(c1);
+        c.getSkins().add(s5);
+        c1.getSkins().add(s5);
+
+        s6.getCategories().add(c);
+        s6.getCategories().add(c1);
+        c.getSkins().add(s6);
+        c1.getSkins().add(s6);
+
+        //Jans User
         User susi = new User("7dfd00ec-436f-4d97-a72b-e9e82a7af50a", "susi");
         User jan = new User("85d71aa5-aae8-48c1-8145-9cb3163d41bd", "jan");
+        User franz = new User("cf0f860a-8a18-4967-b010-233a7cef9bc3", "franz");
+        User hello = new User("8c34c68f-3c8f-49e6-98be-a6a8a5e82939", "hello");
+
 
 
         User ibo = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
         User ibo1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
         User simon = new User("6d7975ac-28d0-4ab9-8c95-e1bf91acdf15", "simon");
 
+        //Trisis User, ID bitte nich ändern
         User trisi = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
         User trisi1 = new User("5eb2297f-85a9-4e6a-9901-268353e2e4c4","trisi1");
+        User iboTrisi = new User("74691fbf-c71c-4d9a-bb34-143265af9b5e","ibo1");
 
+        //Tobis User, ID bitte nich ändern
         User tobias = new User("f8da46c4-406d-48db-97a3-bfbd85e87276", "tobias");
-
         User trisinger = new User("5f92cdb2-1d5f-43a2-80ef-8ba5cdc3c881", "trisinger");
-        User jan1 = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
+        User janTobi = new User("4024687d-3598-4e70-86f2-8a9ffcbf11d0", "jan");
 
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
         Friendship f2 = new Friendship(trisi,trisi1,s,LocalDateTime.now(),"cool");
-        Friendship f3 = new Friendship(ibo1,trisi1,s1,LocalDateTime.now(),"cool");
-        Friendship f4 = new Friendship(jan,trisi1,s1,LocalDateTime.now(),"cool");
+        Friendship f3 = new Friendship(iboTrisi,trisi,s1,LocalDateTime.now(),"cool");
+        Friendship f4 = new Friendship(iboTrisi,trisi1,s1,LocalDateTime.now(),"cool");
+ //       Friendship f5 = new Friendship(franz, jan, s, LocalDateTime.now(), "cool");
 
-        Map<String, Double> latlng = new ConcurrentHashMap<>();
-        latlng.put("Lat",123.456);
-        latlng.put("Lng",-333.33);
 
-        susi.setPosition(latlng);
-        jan.setPosition(latlng);
-        ibo.setPosition(latlng);
-        ibo1.setPosition(latlng);
-        simon.setPosition(latlng);
-        trisi.setPosition(latlng);
-        trisi1.setPosition(latlng);
-        tobias.setPosition(latlng);
-        trisinger.setPosition(latlng);
-        jan1.setPosition(latlng);
+
+
+
+        trisi.getPosition().put("lat",40.0);
+        trisi.getPosition().put("lng",14.0);
+        susi.getPosition().put("lat",48.205866965334934);
+        susi.getPosition().put("lng",14.056365489806257);
+        franz.getPosition().put("lat",48.205866965334934);
+        franz.getPosition().put("lng",14.056365489806257);
+        trisi1.getPosition().put("lat",48.305394);
+        trisi1.getPosition().put("lng",14.287337);
+        jan.getPosition().put("lat",48.205424900000004);
+        jan.getPosition().put("lng",14.057973299999999);
+        hello.getPosition().put("lat",48.205414999999995);
+        hello.getPosition().put("lng",14.058034399999999);
+        ibo.getPosition().put("lat",12.9);
+        ibo.getPosition().put("lng",120.0);
+        iboTrisi.getPosition().put("lat",48.307293);
+        iboTrisi.getPosition().put("lng",14.286994);
+        ibo1.getPosition().put("lat",81.007);
+        ibo1.getPosition().put("lng",0.3);
+        simon.getPosition().put("lat", 48.27776187468075);
+        simon.getPosition().put("lng", 14.307813528905484);
+        tobias.getPosition().put("lat",-74.543);
+        tobias.getPosition().put("lng",9.33);
+        trisinger.getPosition().put("lat",-12.9);
+        trisinger.getPosition().put("lng",-120.0);
+        janTobi.getPosition().put("lat",-156.34);
+        janTobi.getPosition().put("lng",-103.39);
+
+
 
 
     // Jan's rooms
@@ -112,49 +179,89 @@ public class SkinRepository {
         roomRafi1.getUsers().add(tobias);
         roomRafi1.getUsers().add(trisinger);
         
-        jan1.getRooms().add(roomRafi2);
+        janTobi.getRooms().add(roomRafi2);
         tobias.getRooms().add(roomRafi2);
-        roomRafi2.getUsers().add(jan1);
+        roomRafi2.getUsers().add(janTobi);
         roomRafi2.getUsers().add(tobias);
+
+        // Trisi's rooms
+        Room roomTrisi1 = new Room("DM");
+        Room roomIboTrisi = new Room("DM");
+
+
+        trisi.getRooms().add(roomTrisi1);
+        trisi1.getRooms().add(roomTrisi1);
+        roomTrisi1.getUsers().add(trisi);
+        roomTrisi1.getUsers().add(trisi1);
+
+        trisi.getRooms().add(roomIboTrisi);
+        iboTrisi.getRooms().add(roomIboTrisi);
+        roomIboTrisi.getUsers().add(trisi);
+        roomIboTrisi.getUsers().add(iboTrisi);
+
+
         
         
 
-        MySkin ms = new MySkin(30, 5, 5);
+
+        MySkin ms = new MySkin(30, 5, 1);
         ms.setSkin(s);
         ms.setUser(susi);
-        s.getCategories().add(c);
-        s.getCategories().add(c1);
-        s1.getCategories().add(c);
-        s1.getCategories().add(c1);
-        c.getSkins().add(s);
-        c1.getSkins().add(s);
+        MySkin ms2 = new MySkin(30, 5, 1);
+        ms2.setSkin(s);
+        ms2.setUser(franz);
+        //MySkin ms3 = new MySkin(30, 5, 1);
+        //ms3.setSkin(s);
+       // ms3.setUser(trisi1);
+        MySkin ms4 = new MySkin(30, 5, 1);
+        ms4.setSkin(s);
+        ms4.setUser(iboTrisi);
+        MySkin ms5 = new MySkin(30, 5, 1);
+        ms5.setSkin(s);
+        ms5.setUser(hello);
+
 
         em.persist(c);
         em.persist(c1);
         em.persist(c2);
         em.persist(susi);
         em.persist(jan);
+        em.persist(hello);
+        em.persist(franz);
         em.persist(ibo);
         em.persist(ibo1);
+        em.persist(iboTrisi);
         em.persist(simon);
         em.persist(trisi);
         em.persist(trisi1);
         em.persist(tobias);
         em.persist(roomJan1);
         em.persist(roomRafi1);
+        em.persist(roomTrisi1);
+        em.persist(roomIboTrisi);
         em.persist(roomIbo1);
         em.persist(roomIbo2);
         em.persist(roomRafi2);
         em.persist(s);
         em.persist(s1);
+        em.persist(s2);
+        em.persist(s3);
+        em.persist(s4);
+        em.persist(s5);
+        em.persist(s6);
         em.persist(ms);
+        em.persist(ms2);
+     //   em.persist(ms3);
+       em.persist(ms4);
+        em.persist(ms5);
         em.persist(f);
         em.persist(f1);
         em.persist(f2);
-        em.persist(f3);
+       // em.persist(f3);
         em.persist(f4);
+//        em.persist(f5);
         em.persist(trisinger);
-        em.persist(jan1);
+        em.persist(janTobi);
     }
 
     // Finden einer Person über ID in der DB

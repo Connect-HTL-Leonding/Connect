@@ -66,6 +66,11 @@ UserRepository {
         return em.find(User.class, id.get().toString());
     }
 
+    @Transactional
+    public User findFriend(String id) {
+        return em.find(User.class, id);
+    }
+
     // Finden einer Person über ID in der DB
     @Transactional
     public User findUser(String id) {

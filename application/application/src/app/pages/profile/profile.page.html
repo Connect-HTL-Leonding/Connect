@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Profile</ion-title>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home"></ion-back-button>
+      <ion-back-button defaultHref="home" (click)="dismissModal()"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -13,16 +13,21 @@
     <div class="container">
       <div class="mid" id="profile_pic" #profile_pic>
         <div class="pfpBox">
-        <img class="pfp" src={{photoService.imgURL}}>
+        <img *ngIf="this.ownProfile" class="pfp" src={{this.photoService.imgURL}}>
+        <img *ngIf="!this.ownProfile && this.ps.user.custom" class="pfp" src="{{this.ps.user.custom.profilePicture}}">
         </div>
       </div>
-      <h2 *ngIf="ps.user" id="name">{{ps.user.userName}}</h2>
-
+      <h2 *ngIf="this.ownProfile && this.ps.user" id="name">{{this.ps.user.userName}}</h2>
+      <h2 *ngIf="!this.ownProfile && this.ps.user" id="name">{{this.ps.user.username}}</h2>
       <div class="descBox">
-        <p *ngIf="this.ps.user">{{this.ps.user.custom.description}}</p>
+        <p *ngIf="this.ps.user.custom">{{this.ps.user.custom.description}}</p>
       </div>
 
+<<<<<<< HEAD
       <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']" #change_button id="change_button">Anpassen</ion-button>
+=======
+      <ion-button *ngIf="this.ownProfile" color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']">Anpassen</ion-button>
+>>>>>>> main
 
      <div class="photo-slider-con">
         <p style="left:0;">Über mich</p>
@@ -41,7 +46,7 @@
      </div>
    
 
-
+<!--
       <div class="social-media-con">
         <p style="color: var(--ion-color-secondary);">Social Media</p>
         <ion-grid>
@@ -69,7 +74,7 @@
 
         </ion-grid>
       </div>
-
+-->
 
 
 

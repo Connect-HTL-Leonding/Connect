@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/api/auth/auth.service';
+import { KeycloakService } from 'keycloak-angular';
 @Component({
   selector: 'app-devinfos',
   templateUrl: './devinfos.page.html',
@@ -12,38 +12,27 @@ export class DevinfosPage {
 
   http: HttpClient;
 
-
-  isAuthenticated: Observable<boolean>;
-  isDoneLoading: Observable<boolean>;
-  canActivateProtectedRoutes: Observable<boolean>;
-
-  constructor(http: HttpClient, private authService: AuthService, public modalController: ModalController) {
+  constructor(http: HttpClient, public keyCloakService : KeycloakService, public modalController: ModalController) {
     this.http = http;
-    this.isAuthenticated = this.authService.isAuthenticated$;
-    this.isDoneLoading = this.authService.isDoneLoading$;
-    this.canActivateProtectedRoutes = this.authService.canActivateProtectedRoutes$;
-    console.log("login page")
-    this.authService.runInitialLoginSequence();
   }
 
-  login() { this.authService.login(); }
-  logout() { this.authService.logout(); }
-  refresh() { this.authService.refresh(); }
+  login() { this.keyCloakService.login(); }
+  logout() { this.keyCloakService.logout(); }
+  refresh() { this.keyCloakService.updateToken(); }
   reload() { window.location.reload(); }
   clearStorage() { localStorage.clear(); }
 
   logoutExternally() {
-    window.open(this.authService.logoutUrl);
+    //window.open(this.keyCloakService.getKeycloakInstance());
   }
 
-  dismissModal(newSkin) {
-    this.modalController.dismiss(newSkin);
-  }
+  get hasValidToken() { return this.keyCloakService.getToken() }
+  get accessToken() { return this.keyCloakService.getToken() }
+  get identityClaims() { return this.keyCloakService.loadUserProfile(); }
+  //get idToken() { return this.keyCloakService.getKeycloakInstance().idToken; }
 
-  get hasValidToken() { return this.authService.hasValidToken(); }
-  get accessToken() { return this.authService.accessToken; }
-  get refreshToken() { return this.authService.refreshToken; }
-  get identityClaims() { return this.authService.identityClaims; }
-  get idToken() { return this.authService.idToken; }
+  dismissModal() {
+    this.modalController.dismiss();
+  }
 
 }

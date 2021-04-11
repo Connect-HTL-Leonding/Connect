@@ -1,5 +1,4 @@
 import { Component, ElementRef, OnInit, ViewChild, AfterViewInit} from '@angular/core';
-import { AuthService } from '../../api/auth/auth.service';
 import { ProfileService } from "../../api/profile.service";
 import { User } from "../../model/user";
 import { MenuController, ModalController } from '@ionic/angular';
@@ -9,6 +8,7 @@ import Showcaser  from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-profile',
@@ -24,7 +24,10 @@ export class ProfilePage implements OnInit {
 
   // Button
   @ViewChild('profile_pic', { static: false }) profilePicRef: ElementRef;
-  constructor(public ts: TutorialService, public ps: ProfileService,private router: Router, private authService: AuthService, public modalController: ModalController, public photoService: PhotoService) {
+  ownProfile = true;
+  
+
+  constructor(public ts: TutorialService, public ps: ProfileService, private keyCloakService : KeycloakService, public modalController: ModalController, public photoService: PhotoService) {
    
   }
 
@@ -36,21 +39,73 @@ export class ProfilePage implements OnInit {
   };
 
   ngOnInit() {
-    this.photoService.loadPfp();
-    this.photoService.loadGalleryImages();
-    this.user = this.authService.getUserInfo();
-
-    this.ps.getUser().subscribe(
-      data => {
-
-        console.log(data);
+    this.ownProfile = !this.ps.friendUser;
+    if(this.ownProfile) {
+      this.photoService.loadPfp();
+      this.photoService.loadGalleryImages();
+      this.user = this.keyCloakService.getKeycloakInstance().userInfo;
+  
+      this.ps.getUser().subscribe(
+        data => {
+  
+          console.log(data);
+          this.ps.user.custom = data;
+         
+  
+          console.log("westrzutqjhkgizfutetdzuz")
+      
+          console.log(this.ps.user)
+  
+  
+  
+          //console.log(this.skinService);
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
+    }
+    else {
+      
+      this.ps.friendCustomData(this.ps.user.id).subscribe(data => {
+        this.photoService.loadFriendGalleryImages(data.id);
+        data.profilePicture = "data:image/png;base64," + atob(data.profilePicture);
         this.ps.user.custom = data;
-        //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
+        console.log(this.ps.user.custom.profilePicture);
+        console.log(this.ps.user);
+      })
+    }
+    
+  }
+
+  dismissModal() {
+    this.photoService.loadPfp();
+      this.photoService.loadGalleryImages();
+      this.user = this.keyCloakService.getKeycloakInstance().userInfo;
+  
+      this.ps.getUser().subscribe(
+        data => {
+  
+          console.log(data);
+          this.ps.user.custom = data;
+         
+  
+          console.log("westrzutqjhkgizfutetdzuz")
+      
+          console.log(this.ps.user)
+  
+  
+  
+          //console.log(this.skinService);
+        },
+        error1 => {
+          console.log('Error');
+        }
+      )
+      if(!this.ownProfile) {
+        this.modalController.dismiss();
       }
-    )
+    
   }
 
   ngAfterViewInit(){
