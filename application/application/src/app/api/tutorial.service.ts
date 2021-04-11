@@ -23,22 +23,8 @@ export class TutorialService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
     });
-
-    //Get Userinfo über aktuellen Nutzer (live)
-    this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + this.oauthService.getIdentityClaims()["sub"], {headers: reqHeader}).subscribe(data => {
-      this.user.id = data["id"];
-      this.user.userName = data["username"];
-      this.user.firstname = data["firstName"];
-      this.user.lastname = data["lastName"];
-      this.user.email = data["email"];
-      this.user.finishedTutorial = data["finishedTutorial"];
-      console.log(data)
-    });
-
-  
-
-    return this.http.get<CustomUser>(api.short + 'user/customData', {headers: reqHeader});
-
+    
+    return this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + this.oauthService.getIdentityClaims()["sub"], {headers: reqHeader})
   }
   updateUser(u: User) {
       let body = JSON.stringify(u);
@@ -48,7 +34,6 @@ export class TutorialService {
         'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
       });
       return this.http.put(api.short + 'user/update', body, {headers: reqHeader});
-  
-    
+
   }
 }

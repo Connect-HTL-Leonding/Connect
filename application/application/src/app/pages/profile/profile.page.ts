@@ -62,7 +62,6 @@ export class ProfilePage implements OnInit {
       data => {
 
         console.log(data);
-        this.ts.user.custom = data;
 
         console.log("1231231231231232132131323123")
         console.log(this.ts.user.custom)
@@ -72,7 +71,7 @@ export class ProfilePage implements OnInit {
 
         //console.log(this.skinService);
       });
-    if(!this.ts.user.finishedTutorial){
+    if(!this.ts.user.custom.finishedTutorial){
       console.log("Bruhhhhh" + this.profilePicRef.nativeElement);
       Showcaser.showcase("Das ist deine Profilseite. Diese Seite können andere User von dir sehen", this.changeButRef.nativeElement, {
         shape: "circle",

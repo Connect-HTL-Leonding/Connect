@@ -308,7 +308,7 @@ export class HomePage implements OnInit {
         console.log(this.ps.user.custom)
         //console.log(this.skinService);
       });
-    if(!this.ps.user.finishedTutorial){
+    if(!this.ps.user.custom.finishedTutorial){
       Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",

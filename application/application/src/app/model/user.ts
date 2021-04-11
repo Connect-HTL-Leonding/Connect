@@ -5,7 +5,6 @@ export class User {
         public email: string = "",
         public firstname: string = "",
         public lastname: string = "",
-        public finishedTutorial: boolean = false,
         public custom : CustomUser = new CustomUser()
     ) { }
 }
@@ -14,6 +13,7 @@ export class CustomUser {
     constructor(
         public id = 0,
         public profilePicture = "",
+        public finishedTutorial: boolean = false,
         public description: string = "",
         public gender: string = "",
         public birthday: Date = new Date(),

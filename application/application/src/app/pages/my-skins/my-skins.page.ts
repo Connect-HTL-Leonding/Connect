@@ -8,6 +8,7 @@ import { MyskinsService } from '../../api/myskins.service';
 import Showcaser from 'showcaser';
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/api/profile.service';
 
 @Component({
   selector: 'app-my-skins',
@@ -17,15 +18,16 @@ import { Router } from '@angular/router';
 export class MySkinsPage implements OnInit {
 
   // Button
-  @ViewChild('add_skin_container', { static: false }) addSkinButRef: ElementRef;
+  @ViewChild('sBar', { static: false }) addSkinButRef: ElementRef;
   //Suchbegriff
   searchString: String = "";
+  bruh: object;
 
   //Ausgewählter Skin
   currentSkin: MySkin;
 
   //Konstruktor
-  constructor(public ts: TutorialService, public mySkinService: MyskinsService,private router: Router, public modalController: ModalController, public toastController: ToastController) {
+  constructor(public ps: ProfileService, public ts: TutorialService, public mySkinService: MyskinsService,private router: Router, public modalController: ModalController, public toastController: ToastController) {
   }
 
   ngOnInit() {
@@ -56,47 +58,45 @@ export class MySkinsPage implements OnInit {
   }
   
   showTutorial(){
+    
     this.ts.getUser().subscribe(
       data => {
 
-        console.log(data);
-        this.ts.user.custom = data;
+        
+          this.ts.user.id = data["id"];
+          this.ts.user.userName = data["username"];
+          this.ts.user.firstname = data["firstName"];
+          this.ts.user.lastname = data["lastName"];
+          this.ts.user.email = data["email"];
+          this.ts.user.custom.finishedTutorial = data["finishedTutorial"];
+          console.log(this.ts.user);
+          console.log(data)
 
+          if(!this.ts.user.custom.finishedTutorial){
+            Showcaser.showcase("Das hier sind deine Skins", this.addSkinButRef.nativeElement, {
+              shape: "circle",
+              buttonText: "Ok!",
+              position: {
+                horizontal: "center",
+                vertical: "middle"
+              },
+              allowSkip: false,
+              close: () => {
+                this.ts.user.custom.finishedTutorial = true;
+                this.ts.updateUser(this.ts.user);
+                console.log(this.ts.user.custom.finishedTutorial + "Yeahhh les go");
+              }
+          });      
+        }
+          
         console.log("1231231231231232132131323123")
-        console.log(this.ts.user.custom)
         console.log(this.addSkinButRef.nativeElement);
 
 
 
         //console.log(this.skinService);
       });
-    if(!this.ts.user.finishedTutorial){
-      Showcaser.showcase("Das ist deine Profilseite. Diese Seite können andere User von dir sehen", this.addSkinButRef.nativeElement, {
-        shape: "circle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "middle"
-        },
-        allowSkip: false,
-        close: () => {
-          this.ts.getUser().subscribe(
-            data => {
-      
-              console.log(data);
-              this.ts.user.custom = data;
-            },
-            error1 => {
-              console.log('Error');
-            }
-          )
-            this.ts.user.finishedTutorial = true;
-            this.ts.updateUser(this.ts.user);
-            console.log(this.ts.user)
-            console.log(this.ts.user.finishedTutorial + "Yeahhh les go");
-        }
-      });
-    }
+    
   }
   //check
   matchesFilter(s: MySkin) {
