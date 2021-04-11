@@ -533,7 +533,7 @@ export class HomePage implements OnInit {
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
-
+      console.log(this.ps.user.custom);
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
 

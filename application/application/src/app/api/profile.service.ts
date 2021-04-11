@@ -24,6 +24,7 @@ export class ProfileService {
   getUser() {
     //Get Userinfo über aktuellen Nutzer (live)
     this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject).subscribe(data => {
+      console.log(data);
       this.user.id = data["id"];
       this.user.userName = data["username"];
       this.user.firstname = data["firstName"];
@@ -46,8 +47,8 @@ export class ProfileService {
 
   //update aktuellen User
   updateUser(u: CustomUser) {
+    console.log(u);
     return this.http.put(api.short + 'user/update', u);
-
   }
 
   //update aktuellen User (Keycloak Nutzerdaten)
