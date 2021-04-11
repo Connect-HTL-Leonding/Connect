@@ -93,9 +93,9 @@ public class SkinRepository {
 
 
 
-        User ibo = new User("54670498-2e18-404a-9c70-ef4245b8b358", "ibo");
-        User ibo1 = new User("5f5079ab-63b9-4147-b8ae-1d3976338e23","ibo1");
-        User simon = new User("6d7975ac-28d0-4ab9-8c95-e1bf91acdf15", "simon");
+        User ibo = new User("9e5a3e77-8cc6-4f44-b59d-35c5b58ef36a", "ibo");
+        User ibo1 = new User("3d225746-744d-4aca-a6c1-1e329c52cdbb","ibo1");
+        User simon = new User("bf217210-fe97-41e5-80f9-2dcd84bb0308", "simon");
 
         //Trisis User, ID bitte nich ändern
         User trisi = new User("f065e017-25a6-4868-88be-79e5b0b38a84", "trisi");
