@@ -79,10 +79,10 @@ public class UserService {
 
     }
     @GET
-    @Path("getIsTutorailFinished/{id}")
+    @Path("getIsTutorialFinished/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public boolean getIsTutorialFinished(@PathParam("id") long id){
-        User u = findOtherUser(id);
+    public boolean getIsTutorialFinished(@PathParam("id") String id){
+        User u = dbRepo.find(jwt.claim("sub"));
         if(u.isFinishedTutorial()){
             return true;
         } else {
@@ -100,7 +100,6 @@ public class UserService {
         } else {
             return null;
         }
-
     }
 
     @PUT
