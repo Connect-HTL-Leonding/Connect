@@ -327,7 +327,10 @@ export class HomePage implements OnInit {
 
   //Distance zwischen zwei Positionen
   calcDistance(origin1: Position, origin2: Position) {
-      return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng))
+    if(google.maps.geometry) {
+      return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng));
+    }
+    return null;
   }
 
 
@@ -754,7 +757,7 @@ class ClickEventHandler {
   }
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
-    console.log('you clicked on: ' + event.latLng);
+    console.log('you clicked on: ' + event.latLng.toString());
     /*
     var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
     console.log(distance);
