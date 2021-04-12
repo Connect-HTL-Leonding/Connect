@@ -41,7 +41,7 @@ export class ContactlistService {
 
   getKeyUser(u: CustomUser) {
     console.log(u)
-    return this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + u.id);
+    return this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + u.id);
   }
 
   getOtherPfp(roomid) {

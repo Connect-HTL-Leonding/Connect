@@ -23,7 +23,7 @@ export class ProfileService {
   //get aktuellen User
   getUser() {
     //Get Userinfo über aktuellen Nutzer (live)
-    this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject).subscribe(data => {
+    this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject).subscribe(data => {
       this.user.id = data["id"];
       this.user.userName = data["username"];
       this.user.firstname = data["firstName"];
@@ -36,7 +36,7 @@ export class ProfileService {
   }
 
   findFriendUser(id) {
-    return this.http.get<User>('http://localhost:8010/auth/admin/realms/connect/users/' + id);
+    return this.http.get<User>(api.ip + ':8010/auth/admin/realms/connect/users/' + id);
   }
 
   friendCustomData(id) {

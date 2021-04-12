@@ -8,6 +8,7 @@ import { Room } from '../../model/room';
 import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { KeycloakService } from 'keycloak-angular';
+import { api } from 'src/app/app.component';
 
 
 
@@ -56,7 +57,7 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     console.log(this.keycloakService.getUsername());
-    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
+    this.wsUri = api.ws + '/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
     this.init(this.contactlist.selectedRoom);
    
     this.getRoomName();
