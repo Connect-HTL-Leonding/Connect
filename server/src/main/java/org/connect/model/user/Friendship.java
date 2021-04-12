@@ -12,6 +12,7 @@ import java.util.List;
 
 @NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f")
 @NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where f.user1 = :user or f.user2 = :user")
+@NamedQuery(name = Friendship.USERSOFFRIENDSHIPS, query = "SELECT f.user1.id, f.user2.id FROM Friendship f where f.user1 = :user or f.user2 = :user")
 @NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where (f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)")
 @NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1")
 //CONNECT
@@ -35,6 +36,7 @@ public class Friendship implements Serializable {
 
     public static final String FINDALL = "Friendship.findAll";
     public static final String FINDFRIENDSHIPSOFUSER = "Friendship.findFriendshipsOfUser";
+    public static final String USERSOFFRIENDSHIPS = "Friendship.usersOfFriendship";
     public static final String FINDRANDOM = "Friendship.findRandom";
     public static final String FIND = "Friendship.find";
     public static final String FIND2 = "Friendship.find2";

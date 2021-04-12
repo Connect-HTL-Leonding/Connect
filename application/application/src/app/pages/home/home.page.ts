@@ -51,6 +51,9 @@ export class HomePage implements OnInit {
   userDot: google.maps.Circle;
   skinRadi = [];
   friendProfile:ProfilePage;
+  location: Position = new Position();
+  websocket: WebSocket;
+  wsUri;
 
   mySubscription;
 
@@ -124,6 +127,28 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
+    this.ps.getUser().subscribe(data => {
+      this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
+      this.doConnect();
+    })
+    
+  }
+
+  doConnect(){
+    this.websocket = new WebSocket(this.wsUri);
+    this.websocket.onmessage = (evt) => {
+      if(this.ps.user.custom.id != evt.data) {
+        this.displayFriends();
+      }
+    } 
+
+    
+    /*
+    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
+    
+    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
+    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
+    */
   }
 
   async presentPopover(ev: any) {
@@ -151,25 +176,21 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.loadMap();
-    console.log("jfsaldfjkd");
   }
 
 
   //Funktion zum User Marker erstellen
   createUserMarker(user: User) {
-    
-  
+
     var exists = false
     this.friendMarkers.forEach((friend: google.maps.Marker) => {
-    
       if (friend.getTitle() == user.id.toString()) {
         exists = true;
-        console.log("Marker exists" + user.userName + ":");
+        friend.setPosition(user.custom.position);
       }
     })
 
     if (!exists) {
-      console.log("Create Marker " + user.userName + ":");
       var canvas = document.createElement('canvas');
       canvas.width = 35;
       canvas.height = 62;
@@ -230,7 +251,7 @@ export class HomePage implements OnInit {
     }
     console.log("friend MArkers")
     console.log(this.friendMarkers);
-
+  
   }
 
   async presentModal(friend:User) {
@@ -306,7 +327,10 @@ export class HomePage implements OnInit {
 
   //Distance zwischen zwei Positionen
   calcDistance(origin1: Position, origin2: Position) {
-    return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng))
+    if(google.maps.geometry) {
+      return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng));
+    }
+    return null;
   }
 
 
@@ -400,6 +424,7 @@ export class HomePage implements OnInit {
           if (existingCircle != null && existingCircle != undefined) {
 
             existingCircle.setRadius(myskin.radius * 1000);
+            existingCircle.setCenter(this.ps.user.custom.position);
           } else {
             console.log("seas")
             var newCircle = new google.maps.Circle({
@@ -450,10 +475,8 @@ export class HomePage implements OnInit {
     return "#" + "00000".substring(0, 6 - c.length) + c;
   }
 
-  success(pos) {
-    var crd = pos.coords;
-   // console.log(crd.latitude + ' / ' + crd.longitude);
-
+  doSend() {
+    this.websocket.send('position updated!' + this.ps.user.userName);
   }
 
   centerMap(){
@@ -486,7 +509,20 @@ export class HomePage implements OnInit {
     });
     */
 
-    var id = navigator.geolocation.watchPosition(this.success);
+    var id = navigator.geolocation.watchPosition(pos => {
+      var crd = pos.coords;
+      var updatedLocation = new Position(crd.longitude, crd.latitude);
+      var distance = this.calcDistance(this.location, updatedLocation);
+      console.log(distance);
+      if(distance > 50) {
+          this.ps.updateUser(this.ps.user.custom).subscribe(data => {
+            this.createMySkinRaduis();
+            this.updateUserDot();
+            this.doSend();
+          })
+      }
+      
+    } );
 
 
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -498,13 +534,15 @@ export class HomePage implements OnInit {
 
 
 
-
+      this.location.lat = this.ps.user.custom.position.lat;
+      this.location.lng = this.ps.user.custom.position.lng;
       this.ps.user.custom.position.lat = resp.coords.latitude;
       this.ps.user.custom.position.lng = resp.coords.longitude;
+      
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
-
+      console.log(this.ps.user.custom);
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
 
@@ -533,7 +571,7 @@ export class HomePage implements OnInit {
 
         //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
-        new ClickEventHandler(this.map, location);
+        new ClickEventHandler(this.map, location, this.ps, this);
 
 
 
@@ -671,6 +709,8 @@ export class HomePage implements OnInit {
 class ClickEventHandler {
   origin;
   map: google.maps.Map;
+  ps;
+  hp;
   directionsService: google.maps.DirectionsService;
   directionsRenderer: google.maps.DirectionsRenderer;
   placesService: google.maps.places.PlacesService;
@@ -680,9 +720,11 @@ class ClickEventHandler {
   e2: HTMLElement;
   eb: HTMLElement;
   e3: HTMLElement;
-  constructor(map: google.maps.Map, origin: any) {
+  constructor(map: google.maps.Map, origin: any, ps:ProfileService, hp: HomePage) {
     this.origin = origin;
     this.map = map;
+    this.ps = ps;
+    this.hp = hp;
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer();
     this.directionsRenderer.setMap(map);
@@ -715,7 +757,21 @@ class ClickEventHandler {
   }
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
-    console.log("You clicked on: " + event.latLng);
+    console.log('you clicked on: ' + event.latLng.toString());
+    /*
+    var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
+    console.log(distance);
+    if(distance > 50) {
+      this.ps.user.custom.position.lat = event.latLng.lat();
+      this.ps.user.custom.position.lng = event.latLng.lng();
+      this.ps.updateUser(this.ps.user.custom).subscribe(data => {
+        this.hp.createMySkinRaduis();
+        this.hp.updateUserDot();
+        this.hp.doSend();
+      });
+    }
+    */
+    
 
     // If the event has a placeId, use it.
     if (this.isIconMouseEvent(event)) {

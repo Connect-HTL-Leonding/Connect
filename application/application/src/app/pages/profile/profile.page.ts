@@ -30,7 +30,7 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.ownProfile = !this.ps.friendUser;
-    if(this.ownProfile == true) {
+    if(this.ownProfile) {
       this.photoService.loadPfp();
       this.photoService.loadGalleryImages();
       this.user = this.keyCloakService.getKeycloakInstance().userInfo;
@@ -92,7 +92,10 @@ export class ProfilePage implements OnInit {
           console.log('Error');
         }
       )
-    this.modalController.dismiss();
+      if(!this.ownProfile) {
+        this.modalController.dismiss();
+      }
+    
   }
 
   async presentModal() {

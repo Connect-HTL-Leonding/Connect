@@ -17,7 +17,7 @@ export class CustomUser {
         public profilePicture = "",
         public description: string = "",
         public gender: string = "",
-        public birthday: Date = new Date(),
+        public birthday : Date = null,
         public position = new Position()
         ) {
 
