@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
 import { CustomUser, User } from "../model/user";
+import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -14,26 +15,16 @@ export class TutorialService {
   user : User = new User();
 
   //Konstruktor
-  constructor(http: HttpClient, private oauthService: OAuthService) {
+  constructor(http: HttpClient, public keycloakService: KeycloakService) {
     this.http = http
   }
 
-  getUser() {
-    const reqHeader = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-    });
-    
-    return this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + this.oauthService.getIdentityClaims()["sub"], {headers: reqHeader})
+  getUser() {    
+    return this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + this.keycloakService.getKeycloakInstance().subject)
   }
-  updateUser(u: User) {
+  updateUserTutorial(u: User) {
       let body = JSON.stringify(u);
       console.log(body);
-      const reqHeader = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
-      });
-      return this.http.put(api.short + 'user/update', body, {headers: reqHeader});
-
+      return this.http.put(api.short + 'user/updateTutorial', u);
   }
 }

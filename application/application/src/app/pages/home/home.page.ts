@@ -80,7 +80,8 @@ export class HomePage implements OnInit {
     public toastController: ToastController,
     public contactService: ContactlistService,
     public modalController: ModalController,
-    public router: Router) {
+    public router: Router,
+    public ts: TutorialService) {
 
     this.sideMenu();
 
@@ -608,48 +609,58 @@ export class HomePage implements OnInit {
   }
 
   showTutorial(){
-    /*var user = this.ps.getUser();
-    this.ps.getUser().subscribe(
+    this.ts.getUser().subscribe(
       data => {
-//        console.log(data);
-        this.ps.user.custom = data;
-        console.log(this.ps.user.custom)
-        //console.log(this.skinService);
-      });
-    if(!this.ps.user.custom.finishedTutorial){
-      Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
-        shape: "circle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "top"
-        },
-        allowSkip: false
-      });
-      Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
-        shape: "circle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "middle"
-        },
-        allowSkip: false
-      });
-      Showcaser.showcase("Die Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
-        shape: "rectangle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "middle"
-        },
-        allowSkip: false,
-        close: () => {
-        }
-      });
-    }
-      Ü*/
-  
+          this.ts.user.id = data["id"];
+          this.ts.user.userName = data["username"];
+          this.ts.user.firstname = data["firstName"];
+          this.ts.user.lastname = data["lastName"];
+          this.ts.user.email = data["email"];
+          this.ts.user.custom.finishedTutorial = data["finishedTutorial"];
+          console.log(this.ts.user);
+          console.log(data)
 
+          if(!this.ts.user.custom.finishedTutorial){
+            Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
+              shape: "circle",
+              buttonText: "Ok!",
+              position: {
+                horizontal: "center",
+                vertical: "top"
+              },
+              allowSkip: false
+            });
+            Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
+              shape: "circle",
+              buttonText: "Ok!",
+              position: {
+                horizontal: "center",
+                vertical: "middle"
+              },
+              allowSkip: false
+            });
+            Showcaser.showcase("Die Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
+              shape: "rectangle",
+              buttonText: "Ok!",
+              position: {
+                horizontal: "center",
+                vertical: "middle"
+              },
+              allowSkip: false,
+              close: () => {
+                console.log(this.ts.user);
+                this.ts.user.custom.finishedTutorial = true;
+                this.ts.updateUserTutorial(this.ts.user).subscribe(data => {
+                  console.log(this.ts.user.custom.finishedTutorial + "Yeahhh les go");
+                  console.log(this.ts.user);
+                });
+                
+              }
+            });
+          }
+        
+    });
+  
   }
   sideMenu() {
     this.navigate =

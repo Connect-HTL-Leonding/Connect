@@ -23,11 +23,7 @@
         <p *ngIf="this.ps.user.custom">{{this.ps.user.custom.description}}</p>
       </div>
 
-<<<<<<< HEAD
-      <ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']" #change_button id="change_button">Anpassen</ion-button>
-=======
-      <ion-button *ngIf="this.ownProfile" color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']">Anpassen</ion-button>
->>>>>>> main
+      <ion-button *ngIf="this.ownProfile" color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']"  id="change_button" #change_button>Anpassen</ion-button>
 
      <div class="photo-slider-con">
         <p style="left:0;">Über mich</p>

@@ -122,7 +122,17 @@ public class UserService {
         return dbRepo.update(user);
     }
 
+    @PUT
+    @Path("updateTutorial")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User updateTutorial() {
 
+        //user-id
+        System.out.println(jwt.claim("sub"));
+        User u = dbRepo.find(jwt.claim("sub"));
+        return dbRepo.update(u);
+    }
     /*
     @GET
     @Path("logout")

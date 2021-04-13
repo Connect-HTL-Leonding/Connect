@@ -159,6 +159,7 @@ public class User implements Serializable {
                 ", description='" + description + '\'' +
                 ", birthday=" + birthday +
                 ", rooms=" + rooms +
+                ", tutorial=" + finishedTutorial +
                 '}';
     }
 

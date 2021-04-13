@@ -19,7 +19,7 @@ import { Observable } from 'rxjs';
 export class MySkinsPage implements OnInit {
 
   // Button
-  @ViewChild('sBar', { static: false }) addSkinButRef: ElementRef;
+  @ViewChild('add_skin_circle', { static: false }) addSkinButRef: ElementRef;
   //Suchbegriff
   searchString: String = "";
   bruh: object;
@@ -60,7 +60,7 @@ export class MySkinsPage implements OnInit {
   }
   
   showTutorial(){
-    
+    console.log("123111111111111111111111111111111111111111111111")
     this.ts.getUser().subscribe(
       data => {
           this.ts.user.id = data["id"];
@@ -69,7 +69,7 @@ export class MySkinsPage implements OnInit {
           this.ts.user.lastname = data["lastName"];
           this.ts.user.email = data["email"];
           this.ts.user.custom.finishedTutorial = data["finishedTutorial"];
-          console.log(this.ts.user);
+          console.log("fkdsjflkjdslkfjdslkfjöldskjflkdsöfljdsöfljfdsjdsf" + this.ts.user);
           console.log(data)
 
           if(!this.ts.user.custom.finishedTutorial){
@@ -83,7 +83,7 @@ export class MySkinsPage implements OnInit {
               allowSkip: false,
               close: () => {
                 this.ts.user.custom.finishedTutorial = true;
-                this.ts.updateUser(this.ts.user);
+                this.ts.updateUserTutorial(this.ts.user);
                 console.log(this.ts.user.custom.finishedTutorial + "Yeahhh les go");
               }
           });      
