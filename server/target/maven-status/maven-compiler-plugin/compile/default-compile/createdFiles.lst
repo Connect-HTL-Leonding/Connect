@@ -2,6 +2,7 @@ org\connect\model\skin\Skin.class
 org\connect\repository\SkinRepository.class
 org\connect\repository\FriendshipRepository.class
 org\connect\service\MySkinService.class
+org\connect\model\chat\MessageSeen.class
 org\connect\model\image\Image.class
 org\connect\repository\ChatRepository.class
 META-INF\panache-archive.marker
@@ -11,7 +12,10 @@ org\connect\repository\MessageRepository.class
 org\connect\service\SkinService.class
 org\connect\model\skin\MySkin.class
 org\connect\service\ChatService.class
+WS\ChatSocket.class
+WS\ContactlistSocket.class
 org\connect\repository\UserRepository.class
+WS\MapSocket.class
 org\connect\service\MessageService.class
 org\connect\service\ImageService.class
 org\connect\repository\ImageRepository.class
@@ -21,6 +25,5 @@ org\connect\model\chat\Message.class
 org\connect\service\FriendshipService.class
 org\connect\model\skin\Category.class
 org\connect\repository\MySkinRepository.class
-org\connect\ChatSocket.class
 org\connect\model\user\Friendship.class
 org\connect\service\CategoryService.class
