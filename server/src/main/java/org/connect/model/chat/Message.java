@@ -1,5 +1,6 @@
 package org.connect.model.chat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import net.bytebuddy.asm.Advice;
 import org.connect.model.skin.MySkin;
 import org.connect.model.user.User;
@@ -7,6 +8,7 @@ import org.connect.model.user.User;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @NamedQueries({

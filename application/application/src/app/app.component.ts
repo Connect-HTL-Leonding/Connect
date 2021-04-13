@@ -60,5 +60,6 @@ export class AppComponent implements OnInit{
 export const api = {
   url: "http://localhost:8080/api/",
   short: "http://localhost:8080/",
-  ip: "http://localhost"
+  ip: "http://localhost",
+  ws: "ws://localhost:8080"
 }

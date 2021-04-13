@@ -18,7 +18,7 @@ export class CustomUser {
         public finishedTutorial: boolean = false,
         public description: string = "",
         public gender: string = "",
-        public birthday: Date = null,
+        public birthday : Date = null,
         public position = new Position()
         ) {
 

@@ -76,7 +76,7 @@ public class MapSocket {
         list.forEach(l -> {
             sessions.values().forEach(s -> {
                 if(users.get(s).equals(l[0]) || users.get(s).equals(l[1])) {
-                    s.getAsyncRemote().sendObject(message, result -> {
+                    s.getAsyncRemote().sendObject(id, result -> {
                         if (result.getException() != null) {
                             System.out.println("Unable to send message: " + result.getException());
                         }

@@ -8,6 +8,7 @@ import { Room } from '../../model/room';
 import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { KeycloakService } from 'keycloak-angular';
+import { api } from 'src/app/app.component';
 
 
 
@@ -56,7 +57,7 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     console.log(this.keycloakService.getUsername());
-    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
+    this.wsUri = api.ws + '/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
     this.init(this.contactlist.selectedRoom);
    
     this.getRoomName();
@@ -162,6 +163,18 @@ export class ChatPage implements OnInit {
     */
   }
 
+  convert(date: number[]): string {
+    let hours = "";
+    let minutes = "";
+    if(date[3]<=9) {
+      hours = "0"
+    }
+    if(date[4]<=9) {
+      minutes = "0";
+    }
+    return `${hours}${date[3]}:${minutes}${date[4]}`;
+  }
+
   init(room: Room) {
     this.showNewMsgLine = true;
     this.chatservice.getAllMessages(room).subscribe(data=> {
@@ -174,6 +187,7 @@ export class ChatPage implements OnInit {
         console.log(this.unseenMessages + " unseen")
         this.chatservice.getData().subscribe(data => {
           this.chatservice.messages = data;
+          console.log(this.convert(this.chatservice.messages[0].created));
           console.log(this.chatservice.messages.length);
           this.pos = this.chatservice.messages.length - this.unseenMessages;
           
