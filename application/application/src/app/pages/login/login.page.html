@@ -14,8 +14,8 @@
   
 
       <h2>Willkommen</h2>
-      <p *ngIf="!this.hasValidToken" id="text">Logge dich ein oder regestriere dich, um Teil von etwas großem zu werden!</p>
-      <ion-button *ngIf="!this.hasValidToken" shape="round" color="primary" expand="block" (click)="login()">Starte dein Abenteuer</ion-button>
+      <p *ngIf="" id="text">Logge dich ein oder regestriere dich, um Teil von etwas großem zu werden!</p>
+      <ion-button *ngIf="" shape="round" color="primary" expand="block" (click)="login()">Starte dein Abenteuer</ion-button>
 
       <p *ngIf="this.isAuthenticated | async" id="text">Starte doch mit einem kleinen Tutorial, um die neue Welt zu entdecken!</p>
       <ion-button *ngIf="this.isAuthenticated | async" shape="round" color="primary" expand="block">Starte Tutorial</ion-button>
