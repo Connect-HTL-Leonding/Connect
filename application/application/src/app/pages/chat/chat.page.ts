@@ -196,6 +196,19 @@ export class ChatPage implements OnInit {
     })
    }
 
+
+   newDay(message : Message, olderMessage : Message) : boolean {
+     let newDay = false;
+     if(olderMessage==undefined) {
+       return true;
+     }
+    if(message.created[2]!=olderMessage.created[2]) {
+      newDay = true;
+    }
+     return newDay;
+   }
+
+
  
  
 }

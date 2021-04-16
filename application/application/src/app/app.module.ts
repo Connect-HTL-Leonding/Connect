@@ -59,7 +59,7 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
     //Keycloak-Config-Daten
     return await keycloak.init({
       config: {
-        url: 'http://192.168.1.26:8010/auth',
+        url: 'http://localhost:8010/auth',
         realm: 'connect',
         clientId: 'connect-client'
       },
