@@ -18,6 +18,7 @@
 <ion-content>
   <div id="messageFlex">
     <div class="messageDiv" *ngFor="let message of chatservice.messages, let i = index">
+      <div class="dateBox" *ngIf="newDay(message,chatservice.messages[i-1])">{{message.created[2]}}.{{message.created[1]}}.{{message.created[0]}}</div>
       <div *ngIf="yousent(message)" class="youSent">
         <div *ngIf="imageIsNotNull(message) else youNoImage" >
           <img class="youSentImage" src="data:image/png;base64,{{message.image}}">
@@ -43,8 +44,8 @@
         </div>
         <ng-template #otherNoImage>
           <p class="message">{{message.message}}</p>
-          <p *ngIf="message.message.length>29" class="timeOnWrap">{{message.created[3]}}:{{message.created[4]}}</p>
-          <p *ngIf="message.message.length<=29" class="time">{{message.created[3]}}:{{message.created[4]}}</p>
+          <p *ngIf="message.message.length>29" class="timeOnWrap">{{convert(message.created)}}</p>
+          <p *ngIf="message.message.length<=29" class="time">{{convert(message.created)}}</p>
       </ng-template>
       </div>
       

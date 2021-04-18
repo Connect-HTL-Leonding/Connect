@@ -8,6 +8,7 @@ import { Room } from '../../model/room';
 import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { KeycloakService } from 'keycloak-angular';
+import { api } from 'src/app/app.component';
 
 
 
@@ -56,7 +57,7 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     console.log(this.keycloakService.getUsername());
-    this.wsUri = 'ws://localhost:8080/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
+    this.wsUri = api.ws + '/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
     this.init(this.contactlist.selectedRoom);
    
     this.getRoomName();
@@ -186,14 +187,28 @@ export class ChatPage implements OnInit {
         console.log(this.unseenMessages + " unseen")
         this.chatservice.getData().subscribe(data => {
           this.chatservice.messages = data;
-          console.log(this.convert(this.chatservice.messages[0].created));
-          console.log(this.chatservice.messages.length);
           this.pos = this.chatservice.messages.length - this.unseenMessages;
           
         })
       })
     })
    }
+
+
+   newDay(message : Message, olderMessage : Message) : boolean {
+     let newDay = false;
+     if(message==undefined) {
+       return false;
+     }
+     if(olderMessage==undefined) {
+       return true;
+     }
+    if(message.created[2]!=olderMessage.created[2]) {
+      newDay = true;
+    }
+     return newDay;
+   }
+
 
  
  

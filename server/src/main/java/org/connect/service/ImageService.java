@@ -50,7 +50,7 @@ public class ImageService {
 
     @PUT
     @Path("setPfp")
-    @Consumes(MediaType.APPLICATION_JSON)
+    //@Consumes(MediaType.APPLICATION_JSON)
     public void saveImageToDatabase(String base64string) throws Exception {
         try {
             profilePicture = base64string.getBytes();

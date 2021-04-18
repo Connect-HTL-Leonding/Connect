@@ -16,7 +16,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { KeycloakAngularModule, KeycloakAuthGuard, KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 import { from } from 'rxjs';
 import { AppAuthGuard } from './api/auth/auth.guard';
@@ -65,9 +64,10 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
         clientId: 'connect-client'
       },
       initOptions: {
+//        adapter: "cordova-native",
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
-        checkLoginIframeInterval: 10
+        checkLoginIframeInterval: 100
         //onLoad: 'login-required',
         //checkLoginIframe: false
       },
@@ -110,7 +110,6 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
     Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     PhotoViewer,
-    InAppBrowser,
     AppAuthGuard
 
   ],

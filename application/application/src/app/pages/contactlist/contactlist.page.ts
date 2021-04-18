@@ -8,6 +8,7 @@ import { Message } from 'src/app/model/message';
 import {DetailContactlistComponent} from '../contactlist/detail-contactlist/detail-contactlist.component';
 import { ProfileService } from 'src/app/api/profile.service';
 import { KeycloakService } from 'keycloak-angular';
+import { api } from 'src/app/app.component';
 
 @Component({
   selector: 'app-contactlist',
@@ -27,7 +28,8 @@ export class ContactlistPage implements OnInit {
     public profileservice: ProfileService, public keyCloakService : KeycloakService) { 
     this.contactService = cs;
     this.chatService = chatService;
-    this.wsUri = 'ws://localhost:8080/contactListSocket/' + keyCloakService.getKeycloakInstance().subject;
+    console.log(this.contactService.activeUser);
+    this.wsUri = api.ws + '/contactListSocket/' + keyCloakService.getKeycloakInstance().subject;
   }
 
   reloadRooms() {
@@ -61,6 +63,7 @@ export class ContactlistPage implements OnInit {
   }
 
   doConnect(){
+    console.log(this.wsUri)
     this.contactService.websocket = new WebSocket(this.wsUri);
     this.contactService.websocket.onerror = (evt) => {
       console.log(evt.error);
