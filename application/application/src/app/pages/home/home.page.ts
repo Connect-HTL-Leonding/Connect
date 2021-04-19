@@ -89,11 +89,17 @@ export class HomePage implements OnInit {
     this.ps.getUser().subscribe(
       data => {
 
+        console.log("Current user");
         console.log(data);
         this.ps.user.custom = data;
 
+        
+        let myPos = new Position(6.935640686097218,51.17546707292189);
+        if("lat" in this.ps.user.custom.position){
+          myPos = this.ps.user.custom.position;
+        }
         this.map = new google.maps.Map(this.mapRef.nativeElement, {
-          center: this.ps.user.custom.position,
+          center: myPos,
           zoom: 18,
           disableDefaultUI: true,
           mapId: '2fcab7b62a0e3af9'
@@ -112,7 +118,7 @@ export class HomePage implements OnInit {
           fillColor: "#0eb19b",
           fillOpacity: 1,
           map: this.map,
-          center: new Position(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
+          center: myPos,
           radius: 2  //in Meter
         });
 
@@ -395,7 +401,7 @@ export class HomePage implements OnInit {
   createMySkinRaduis() {
     this.mySkinsService.getMapSkins().subscribe(data => {
       this.mySkinsService.mapSkins = data;
-      console.log(this.map + "jasdöfkasfdalsfk")
+      
 
       if (this.mySkinsService.mapSkins) {
         this.skinRadi.forEach((circle: google.maps.Circle, index) => {
@@ -455,8 +461,7 @@ export class HomePage implements OnInit {
         this.skinRadi = [];
       }
     })
-    console.log("Skin Radi");
-    console.log(this.skinRadi);
+    
   }
 
   hashCode(str) { // java String#hashCode
@@ -480,6 +485,8 @@ export class HomePage implements OnInit {
   }
 
   centerMap(){
+    console.log("centermap");
+console.log(this.ps.user.custom.position);
     this.map.panTo(this.ps.user.custom.position);
     this.map.setZoom(18);
     
@@ -513,8 +520,9 @@ export class HomePage implements OnInit {
       var crd = pos.coords;
       var updatedLocation = new Position(crd.longitude, crd.latitude);
       var distance = this.calcDistance(this.location, updatedLocation);
-      console.log(distance);
+      
       if(distance > 50) {
+        console.log("user moved");
           this.ps.updateUser(this.ps.user.custom).subscribe(data => {
             this.createMySkinRaduis();
             this.updateUserDot();
@@ -534,18 +542,24 @@ export class HomePage implements OnInit {
 
 
 
+     console.log("Resp");
+     console.log(resp.coords);
+      this.ps.user.custom.position = new Position(resp.coords.longitude,resp.coords.latitude);
       this.location.lat = this.ps.user.custom.position.lat;
       this.location.lng = this.ps.user.custom.position.lng;
-      this.ps.user.custom.position.lat = resp.coords.latitude;
-      this.ps.user.custom.position.lng = resp.coords.longitude;
+
+    console.log(this.location);
       
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
-      console.log(this.ps.user.custom);
+      console.log(this.ps.user.custom.position);
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
-
+        this.ps.user.custom=data;
+        console.log("User sollte eig jetzt a position haben");
+        console.log(this.ps.user.custom);
+        console.log(data);
 
 
         this.createMySkinRaduis();
@@ -562,11 +576,10 @@ export class HomePage implements OnInit {
 
 
 
-        console.log("Update User Dot");
-        console.log(this.ps.user.custom.position)
-        console.log(this.userDot.getCenter())
+      
         this.updateUserDot();
-        console.log(this.userDot.getCenter())
+      
+       
 
 
         //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
@@ -574,7 +587,7 @@ export class HomePage implements OnInit {
         new ClickEventHandler(this.map, location, this.ps, this);
 
 
-
+        
 
       });
 

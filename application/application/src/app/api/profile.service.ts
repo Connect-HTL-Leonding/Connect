@@ -47,7 +47,7 @@ export class ProfileService {
   //update aktuellen User
   updateUser(u: CustomUser) {
     console.log(u);
-    return this.http.put(api.short + 'user/update', u);
+    return this.http.put<CustomUser>(api.short + 'user/update', u);
   }
 
   //update aktuellen User (Keycloak Nutzerdaten)
