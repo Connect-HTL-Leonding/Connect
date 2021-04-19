@@ -22,11 +22,55 @@ import { AppAuthGuard } from './api/auth/auth.guard';
 
 //Keycloak initialisieren
 function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
+  /*
+  return () => {
+    
+    return new Promise(async (resolve, reject) => {
+      try {
+        const _REALM = "connect";
+        const _URL = "http://localhost:8010/auth";
+        const _CLIENT_ID = "connect-client"
+
+        await keycloak.init({
+          config: {
+            realm: _REALM,
+            url: _URL,
+            clientId: _CLIENT_ID,
+          },
+          initOptions: {
+            onLoad: 'check-sso',
+            silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
+          },
+          enableBearerInterceptor: true,
+          bearerExcludedUrls: ['/assets', '/clients/public']
+        })
+
+        const keycloakAuth = keycloak.getKeycloakInstance();
+
+
+        keycloakAuth.onTokenExpired = () => {
+          if (keycloakAuth.refreshToken) {
+            updateToken();
+          } else {
+            login();
+          }
+        }
+
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+  */
+
   return async () => {
 
     //keycloak.getKeycloakInstance().clientSecret = "9c9838ca-9311-473f-8c7a-d5cef6de1a3e"
     //keycloak.updateToken(180)
-    
+
+
+
     from(keycloak.keycloakEvents$).subscribe(event => {
       console.log(event.type)
 
@@ -36,10 +80,10 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
         var userProfile = keycloak.loadUserProfile().then(data => {
           console.log(keycloak.getKeycloakInstance().subject)
           var subject = {
-            subject : keycloak.getKeycloakInstance().subject
+            subject: keycloak.getKeycloakInstance().subject
           }
 
-          
+
           const reqHeader = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + keycloak.getToken()
@@ -54,7 +98,9 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
       }
     })
 
-    
+
+    const keyCloakAuth = await keycloak.getKeycloakInstance();
+    console.log(keyCloakAuth)
 
     //Keycloak-Config-Daten
     return await keycloak.init({
@@ -64,10 +110,10 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
         clientId: 'connect-client'
       },
       initOptions: {
-//        adapter: "cordova-native",
+        //        adapter: "cordova-native",
         onLoad: 'check-sso',
         silentCheckSsoRedirectUri: window.location.origin + '/assets/silent-check-sso.html',
-        checkLoginIframeInterval: 100
+        //        checkLoginIframeInterval: 10
         //onLoad: 'login-required',
         //checkLoginIframe: false
       },
