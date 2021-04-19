@@ -52,16 +52,13 @@ export class ProfileService {
 
   //update aktuellen User (Keycloak Nutzerdaten)
   updateKeycloakUser(u) {
-    let body = JSON.stringify(u);
-    console.log(body);
-
-    return this.http.post(api.ip + ':8010/auth/realms/connect/account/', body);
+    return this.http.post(api.ip + ':8010/auth/realms/connect/account/', u);
   }
 
+  //nicht mehr funktionsfähig ):
   updatePassword(password) {
-    let body = JSON.stringify(password);
-    console.log(body);
-
-    return this.http.post(api.ip + ':8010/auth/realms/connect/account/credentials/password/', body);
+    var body = JSON.stringify(password)
+    
+    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject + '/reset-password', password);
   }
 }
