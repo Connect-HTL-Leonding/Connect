@@ -3,8 +3,6 @@
   bottom: 20px;
   left: 0;
   z-index: 11;
-
-
 }
 
 #map {
@@ -31,7 +29,7 @@
 #place-icon {
   height: 25px;
   width: 25px;
-  
+
 }
 
 #place-name {
@@ -59,10 +57,15 @@ ion-footer {
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 5px solid #fff;
 
     img {
       max-height: 40px;
     }
+  }
+
+  #connect_button:active {
+    filter: brightness(50%);
   }
 
   #center_map_button {
@@ -76,10 +79,9 @@ ion-footer {
     align-items: center;
     justify-content: center;
     color: lightslategray;
-    
   }
 
-  #center_map_button:active{
+  #center_map_button:active {
     color: black;
   }
 }

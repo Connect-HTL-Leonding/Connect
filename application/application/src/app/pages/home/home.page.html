@@ -24,7 +24,9 @@
       <ion-menu-button id="main-content"></ion-menu-button>
     </ion-buttons>
     <ion-buttons slot="end" (click)="presentPopover($event)">
-      <ion-button><ion-icon name="albums"></ion-icon></ion-button>
+      <ion-button>
+        <ion-icon name="albums"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 
@@ -43,11 +45,12 @@
   </ion-buttons>
   -->
   <div #map id="map"></div>
-  
+
   <div id="infowindow-content">
-    <img id="place-icon" src=""  />
-    <span id="place-name" ></span>
-  </div> <!--
+    <img id="place-icon" src="" />
+    <span id="place-name"></span>
+  </div>
+  <!--
  
     <div id="map_canvas">
   </div>
@@ -58,7 +61,7 @@
   <div id="connect_button" (click)="connect()">
     <img src="../../assets/connect_img/logo/connect_button.png">
   </div>
- <ion-icon id="center_map_button" (click)="centerMap()" name="locate"></ion-icon>
+  <ion-icon id="center_map_button" (click)="centerMap()" name="locate"></ion-icon>
   <!--
   <ion-toolbar>
     <ion-buttons slot="start">

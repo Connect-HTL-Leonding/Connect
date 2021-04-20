@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list lines="full">
 
-    <ion-list-header>
+    <ion-list-header class="header">
       Deine Daten
     </ion-list-header>
 
@@ -52,6 +52,18 @@
         <ion-select-option value="s">andere</ion-select-option>
         <ion-select-option value="a">keine Angabe</ion-select-option>
       </ion-select>
+    </ion-item>
+
+    <ion-list-header class="header">
+      <p>Benachrichtigungen</p>
+    </ion-list-header>
+    <ion-item>
+      <ion-label class="gender_label">Nachrichten</ion-label>
+      <ion-toggle [(ngModel)]="nachrichten"></ion-toggle>
+    </ion-item>
+    <ion-item>
+      <ion-label class="gender_label">Connects</ion-label>
+      <ion-toggle [(ngModel)]="connects"></ion-toggle>
     </ion-item>
 
     <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Speichern</ion-button>

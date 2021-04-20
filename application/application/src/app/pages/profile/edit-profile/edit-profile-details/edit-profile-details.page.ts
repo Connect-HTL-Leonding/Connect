@@ -13,6 +13,8 @@ import { User } from '../../../../model/user';
 export class EditProfileDetailsPage implements OnInit {
 
   passwort: FormGroup;
+  nachrichten: boolean = false;
+  connects: boolean = false;
 
   //Konstruktor
   constructor(public ps: ProfileService, private keyCloakService : KeycloakService, private router: Router, private fb: FormBuilder) {

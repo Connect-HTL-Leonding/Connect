@@ -96,9 +96,13 @@ ion-toolbar {
 
 .first {
     width: 35%;
-    color: rgb(153, 153, 153);
+    font-weight: bold;
 }
 
 .gender_label {
-    color: rgb(153, 153, 153);
+    font-weight: bold;
+}
+
+.header {
+    color: var(--ion-color-primary);
 }

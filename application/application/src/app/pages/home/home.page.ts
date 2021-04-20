@@ -50,12 +50,14 @@ export class HomePage implements OnInit {
   friendMarkers = [];
   userDot: google.maps.Circle;
   skinRadi = [];
-  friendProfile:ProfilePage;
+  friendProfile: ProfilePage;
   location: Position = new Position();
   websocket: WebSocket;
   wsUri;
 
   mySubscription;
+
+  toast: HTMLIonToastElement;
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -84,7 +86,7 @@ export class HomePage implements OnInit {
 
       this.createMySkinRaduis();
     });
-    
+
 
     this.ps.getUser().subscribe(
       data => {
@@ -93,9 +95,9 @@ export class HomePage implements OnInit {
         console.log(data);
         this.ps.user.custom = data;
 
-        
-        let myPos = new Position(6.935640686097218,51.17546707292189);
-        if("lat" in this.ps.user.custom.position){
+
+        let myPos = new Position(6.935640686097218, 51.17546707292189);
+        if ("lat" in this.ps.user.custom.position) {
           myPos = this.ps.user.custom.position;
         }
         this.map = new google.maps.Map(this.mapRef.nativeElement, {
@@ -137,18 +139,18 @@ export class HomePage implements OnInit {
       this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
       this.doConnect();
     })
-    
+
   }
 
-  doConnect(){
+  doConnect() {
     this.websocket = new WebSocket(this.wsUri);
     this.websocket.onmessage = (evt) => {
-      if(this.ps.user.custom.id != evt.data) {
+      if (this.ps.user.custom.id != evt.data) {
         this.displayFriends();
       }
-    } 
+    }
 
-    
+
     /*
     this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
     
@@ -257,10 +259,10 @@ export class HomePage implements OnInit {
     }
     console.log("friend MArkers")
     console.log(this.friendMarkers);
-  
+
   }
 
-  async presentModal(friend:User) {
+  async presentModal(friend: User) {
     this.ps.user = friend;
     this.ps.friendUser = true;
     const modal = await this.modalController.create({
@@ -333,7 +335,7 @@ export class HomePage implements OnInit {
 
   //Distance zwischen zwei Positionen
   calcDistance(origin1: Position, origin2: Position) {
-    if(google.maps.geometry) {
+    if (google.maps.geometry) {
       return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng));
     }
     return null;
@@ -401,7 +403,7 @@ export class HomePage implements OnInit {
   createMySkinRaduis() {
     this.mySkinsService.getMapSkins().subscribe(data => {
       this.mySkinsService.mapSkins = data;
-      
+
 
       if (this.mySkinsService.mapSkins) {
         this.skinRadi.forEach((circle: google.maps.Circle, index) => {
@@ -419,7 +421,7 @@ export class HomePage implements OnInit {
 
 
         this.mySkinsService.mapSkins.forEach((myskin) => {
-          
+
           var existingCircle: google.maps.Circle;
           this.skinRadi.forEach((circle: google.maps.Circle) => {
             if (circle.get('title') == myskin.skin.id) {
@@ -461,7 +463,7 @@ export class HomePage implements OnInit {
         this.skinRadi = [];
       }
     })
-    
+
   }
 
   hashCode(str) { // java String#hashCode
@@ -484,12 +486,12 @@ export class HomePage implements OnInit {
     this.websocket.send('position updated!' + this.ps.user.userName);
   }
 
-  centerMap(){
+  centerMap() {
     console.log("centermap");
-console.log(this.ps.user.custom.position);
+    console.log(this.ps.user.custom.position);
     this.map.panTo(this.ps.user.custom.position);
     this.map.setZoom(18);
-    
+
   }
 
   updateUserDot() {
@@ -520,17 +522,17 @@ console.log(this.ps.user.custom.position);
       var crd = pos.coords;
       var updatedLocation = new Position(crd.longitude, crd.latitude);
       var distance = this.calcDistance(this.location, updatedLocation);
-      
-      if(distance > 50) {
+
+      if (distance > 50) {
         console.log("user moved");
-          this.ps.updateUser(this.ps.user.custom).subscribe(data => {
-            this.createMySkinRaduis();
-            this.updateUserDot();
-            this.doSend();
-          })
+        this.ps.updateUser(this.ps.user.custom).subscribe(data => {
+          this.createMySkinRaduis();
+          this.updateUserDot();
+          this.doSend();
+        })
       }
-      
-    } );
+
+    });
 
 
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -542,21 +544,21 @@ console.log(this.ps.user.custom.position);
 
 
 
-     console.log("Resp");
-     console.log(resp.coords);
-      this.ps.user.custom.position = new Position(resp.coords.longitude,resp.coords.latitude);
+      console.log("Resp");
+      console.log(resp.coords);
+      this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
       this.location.lat = this.ps.user.custom.position.lat;
       this.location.lng = this.ps.user.custom.position.lng;
 
-    console.log(this.location);
-      
+      console.log(this.location);
+
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
       console.log(this.ps.user.custom.position);
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
-        this.ps.user.custom=data;
+        this.ps.user.custom = data;
         console.log("User sollte eig jetzt a position haben");
         console.log(this.ps.user.custom);
         console.log(data);
@@ -576,10 +578,10 @@ console.log(this.ps.user.custom.position);
 
 
 
-      
+
         this.updateUserDot();
-      
-       
+
+
 
 
         //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
@@ -587,7 +589,7 @@ console.log(this.ps.user.custom.position);
         new ClickEventHandler(this.map, location, this.ps, this);
 
 
-        
+
 
       });
 
@@ -681,6 +683,13 @@ console.log(this.ps.user.custom.position);
   }
 
   async presentToastWithOptions(data, msg) {
+    //überprüft ob schon ein taost aktiv ist
+    //wenn ja, toast schließen, dann neuen toast erstellen
+    //--> kein stack von toasts (:
+    try {
+      this.toast.dismiss();
+    } catch (e) { }
+
     var username = "";
     var buttonText = "Change Settings!"
     var header = "Sorry!"
@@ -690,15 +699,15 @@ console.log(this.ps.user.custom.position);
       buttonText = "Chat now"
       username = data["username"];
     }
-    const toast = await this.toastController.create({
+    this.toast = await this.toastController.create({
       header: header,
       message: msg + ' ' + username,
       position: 'top',
-      duration: 2000,
+      duration: 5000,
       buttons: [
         {
-          side: 'end',
           text: buttonText,
+          side: "end",
           handler: () => {
             if (username == "") {
               this.router.navigate(["my-skins"])
@@ -709,7 +718,7 @@ console.log(this.ps.user.custom.position);
         }
       ]
     });
-    toast.present();
+    this.toast.present();
   }
 
 }
@@ -733,7 +742,7 @@ class ClickEventHandler {
   e2: HTMLElement;
   eb: HTMLElement;
   e3: HTMLElement;
-  constructor(map: google.maps.Map, origin: any, ps:ProfileService, hp: HomePage) {
+  constructor(map: google.maps.Map, origin: any, ps: ProfileService, hp: HomePage) {
     this.origin = origin;
     this.map = map;
     this.ps = ps;
@@ -774,7 +783,7 @@ class ClickEventHandler {
 
     var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
     console.log(distance);
-    if(distance > 50) {
+    if (distance > 50) {
       this.ps.user.custom.position.lat = event.latLng.lat();
       this.ps.user.custom.position.lng = event.latLng.lng();
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
@@ -783,8 +792,8 @@ class ClickEventHandler {
         this.hp.doSend();
       });
     }
-    
-    
+
+
 
     // If the event has a placeId, use it.
     if (this.isIconMouseEvent(event)) {
@@ -852,7 +861,7 @@ class ClickEventHandler {
             "place-name"
           ] as HTMLElement).textContent = place.name!;
 
-         
+
 
           me.infowindow.open(me.map);
         }
