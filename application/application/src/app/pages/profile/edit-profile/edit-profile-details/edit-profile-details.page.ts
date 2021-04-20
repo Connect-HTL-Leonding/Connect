@@ -91,10 +91,11 @@ export class EditProfileDetailsPage implements OnInit {
   updatePasswort() {
     if (this.passwort.valid) {
       console.log("Form Submitted!");
+      //{ "type": "password", "temporary": false, "value": "my-new-password" }
       var json = {
-        "currentPassword": this.passwort.get("password").value,
-        "newPassword": this.passwort.get("newPassword").value,
-        "confirmation": this.passwort.get("confirmation").value
+        "type": "password",
+        "temporary": false,
+        "value": this.passwort.get("confirmation").value
       }
 
       console.log(json)

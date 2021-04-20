@@ -15,42 +15,52 @@
     </ion-list-header>
 
     <ion-item>
-      <ion-label slot="start">Vorname</ion-label>
-      <ion-input *ngIf="ps.user" placeholder="Max" [(ngModel)]="ps.user.firstname"></ion-input>
+      <div class="first">
+        <ion-label slot="start">Vorname</ion-label>
+      </div>
+        <ion-input *ngIf="ps.user" placeholder="Max" [(ngModel)]="ps.user.firstname"></ion-input>
     </ion-item>
+
     <ion-item>
+      <div class="first">
       <ion-label slot="start">Nachname</ion-label>
+      </div>
       <ion-input *ngIf="ps.user" placeholder="Mustermann" [(ngModel)]="ps.user.lastname"></ion-input>
     </ion-item>
 
     <ion-item>
+      <div class="first">
       <ion-label slot="start">Email</ion-label>
+      </div>
       <ion-input *ngIf="ps.user" type="email" [(ngModel)]="ps.user.email"></ion-input>
     </ion-item>
 
     <ion-item>
+      <div class="first">
       <ion-label slot="start">Geburtstag</ion-label>
+      </div>
       <ion-input *ngIf="ps.user" type="date" [(ngModel)]="ps.user.custom.birthday"></ion-input>
     </ion-item>
 
 
 
     <ion-item>
-      <ion-label>Gender</ion-label>
+      <ion-label class="gender_label">Geschlecht</ion-label>
       <ion-select *ngIf="ps.user" value="a" interface="popover" [(ngModel)]="ps.user.custom.gender">
         <ion-select-option value="m">männlich</ion-select-option>
         <ion-select-option value="f">weiblich</ion-select-option>
-        <ion-select-option value="s">anderes</ion-select-option>
+        <ion-select-option value="s">andere</ion-select-option>
         <ion-select-option value="a">keine Angabe</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Speichern</ion-button>
-
+    <!-- 
     <ion-item-divider>
       <ion-label>Passwort</ion-label>
 
     </ion-item-divider>
+
 
     <form class="form" [formGroup]="passwort" (ngSubmit)="updatePasswort()">
 
@@ -71,6 +81,7 @@
       <ion-button shape="round" color="warning" expand="block" type="submit">Passwort ändern</ion-button>
 
   </form>
+  -->
 
 
 
