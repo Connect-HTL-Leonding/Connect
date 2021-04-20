@@ -57,7 +57,7 @@ export class ChatPage implements OnInit {
 
   ngOnInit() {
     console.log(this.keycloakService.getUsername());
-    this.wsUri = api.ws + '/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
+    this.wsUri = api.ws + '/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getKeycloakInstance().subject;
     this.init(this.contactlist.selectedRoom);
    
     this.getRoomName();

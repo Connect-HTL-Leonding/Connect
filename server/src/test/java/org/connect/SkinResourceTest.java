@@ -51,7 +51,7 @@ public class SkinResourceTest {
         System.out.println(response);
     }
 
-    @Test
+    /*@Test
     public void testHelloEndpoint() {
         given()
                 .auth().preemptive().oauth2(userToken)
@@ -60,5 +60,7 @@ public class SkinResourceTest {
                 .statusCode(200)
                 .body(is("DB initialized"));
     }
+
+     */
 
 }
