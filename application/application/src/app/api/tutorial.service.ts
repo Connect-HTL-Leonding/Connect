@@ -18,10 +18,6 @@ export class TutorialService {
   constructor(http: HttpClient, public keycloakService: KeycloakService) {
     this.http = http
   }
-
-  getUser() {    
-    return this.http.get<Object>('http://localhost:8010/auth/admin/realms/connect/users/' + this.keycloakService.getKeycloakInstance().subject)
-  }
   updateUserTutorial(u: User) {
       let body = JSON.stringify(u);
       console.log(body);

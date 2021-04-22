@@ -28,7 +28,7 @@ export class MySkinsPage implements OnInit {
   currentSkin: MySkin;
 
   //Konstruktor
-  constructor(public ps: ProfileService, public ts: TutorialService, public mySkinService: MyskinsService,private router: Router, public modalController: ModalController, public toastController: ToastController) {
+  constructor(public ps: ProfileService, public ts: TutorialService, public mySkinService: MyskinsService, private router: Router, public modalController: ModalController, public toastController: ToastController) {
   }
 
   ngOnInit() {
@@ -55,47 +55,36 @@ export class MySkinsPage implements OnInit {
     */
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.showTutorial();
   }
-  
-  showTutorial(){
+
+  showTutorial() {
     console.log("123111111111111111111111111111111111111111111111")
-    this.ts.getUser().subscribe(
-      data => {
-          this.ts.user.id = data["id"];
-          this.ts.user.userName = data["username"];
-          this.ts.user.firstname = data["firstName"];
-          this.ts.user.lastname = data["lastName"];
-          this.ts.user.email = data["email"];
-          this.ts.user.custom.finishedTutorial = data["finishedTutorial"];
-          console.log("fkdsjflkjdslkfjdslkfjöldskjflkdsöfljdsöfljfdsjdsf" + this.ts.user);
-          console.log(data)
-
-          if(!this.ts.user.custom.finishedTutorial){
-            Showcaser.showcase("Das hier sind deine Skins", this.addSkinButRef.nativeElement, {
-              shape: "circle",
-              buttonText: "Ok!",
-              position: {
-                horizontal: "center",
-                vertical: "middle"
-              },
-              allowSkip: false,
-              close: () => {
-                this.ts.user.custom.finishedTutorial = true;
-                this.ts.updateUserTutorial(this.ts.user);
-                console.log(this.ts.user.custom.finishedTutorial + "Yeahhh les go");
-              }
-          });      
+    if (this.ps.user.custom.tutorialStage == 1) {
+      Showcaser.showcase("Das hier sind deine Skins", this.addSkinButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ps.user.custom.tutorialStage = 2;
+          this.ts.updateUserTutorial(this.ts.user);
+          console.log(this.ts.user.custom.tutorialStage + "Yeahhh les go");
         }
-          
-        console.log("1231231231231232132131323123")
-        console.log(this.ts.user);
-
-
-        //console.log(this.skinService);
       });
-    
+    }
+
+    console.log("1231231231231232132131323123")
+    console.log(this.ts.user);
+
+
+    //console.log(this.skinService);
+
+
   }
   //check
   matchesFilter(s: MySkin) {
@@ -106,7 +95,7 @@ export class MySkinsPage implements OnInit {
   changeSelection(ms: MySkin) {
     this.mySkinService.current = ms;
     console.log(this.mySkinService.current.id + " jladsflsjkdflkj");
-    
+
   }
 
   //Modal öffnen

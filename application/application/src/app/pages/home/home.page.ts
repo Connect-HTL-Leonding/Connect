@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
-import  {AfterViewInit} from '@angular/core';
+import { AfterViewInit } from '@angular/core';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { FriendshipService } from 'src/app/api/friendship.service';
 
 import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
-import Showcaser  from 'showcaser'
+import Showcaser from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Friendship } from 'src/app/model/friendship';
 import { ContactlistService } from 'src/app/api/contactlist.service';
@@ -55,7 +55,7 @@ export class HomePage implements OnInit {
   friendMarkers = [];
   userDot: google.maps.Circle;
   skinRadi = [];
-  friendProfile:ProfilePage;
+  friendProfile: ProfilePage;
   location: Position = new Position();
   websocket: WebSocket;
   wsUri;
@@ -92,16 +92,22 @@ export class HomePage implements OnInit {
 
       this.createMySkinRaduis();
     });
-    
+
 
     this.ps.getUser().subscribe(
       data => {
 
+        console.log("Current user");
         console.log(data);
         this.ps.user.custom = data;
 
+
+        let myPos = new Position(6.935640686097218, 51.17546707292189);
+        if ("lat" in this.ps.user.custom.position) {
+          myPos = this.ps.user.custom.position;
+        }
         this.map = new google.maps.Map(this.mapRef.nativeElement, {
-          center: this.ps.user.custom.position,
+          center: myPos,
           zoom: 18,
           disableDefaultUI: true,
           mapId: '2fcab7b62a0e3af9'
@@ -120,7 +126,7 @@ export class HomePage implements OnInit {
           fillColor: "#0eb19b",
           fillOpacity: 1,
           map: this.map,
-          center: new Position(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng),
+          center: myPos,
           radius: 2  //in Meter
         });
 
@@ -139,18 +145,18 @@ export class HomePage implements OnInit {
       this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
       this.doConnect();
     })
-    
+
   }
 
-  doConnect(){
+  doConnect() {
     this.websocket = new WebSocket(this.wsUri);
     this.websocket.onmessage = (evt) => {
-      if(this.ps.user.custom.id != evt.data) {
+      if (this.ps.user.custom.id != evt.data) {
         this.displayFriends();
       }
-    } 
+    }
 
-    
+
     /*
     this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
     
@@ -186,7 +192,7 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.loadMap();
-    console.log(this.connectButRef.nativeElement);   
+    console.log(this.connectButRef.nativeElement);
   }
 
 
@@ -262,10 +268,10 @@ export class HomePage implements OnInit {
     }
     console.log("friend MArkers")
     console.log(this.friendMarkers);
-  
+
   }
 
-  async presentModal(friend:User) {
+  async presentModal(friend: User) {
     this.ps.user = friend;
     this.ps.friendUser = true;
     const modal = await this.modalController.create({
@@ -338,7 +344,7 @@ export class HomePage implements OnInit {
 
   //Distance zwischen zwei Positionen
   calcDistance(origin1: Position, origin2: Position) {
-    if(google.maps.geometry) {
+    if (google.maps.geometry) {
       return google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(origin1.lat, origin1.lng), new google.maps.LatLng(origin2.lat, origin2.lng));
     }
     return null;
@@ -406,7 +412,7 @@ export class HomePage implements OnInit {
   createMySkinRaduis() {
     this.mySkinsService.getMapSkins().subscribe(data => {
       this.mySkinsService.mapSkins = data;
-      console.log(this.map + "jasdöfkasfdalsfk")
+
 
       if (this.mySkinsService.mapSkins) {
         this.skinRadi.forEach((circle: google.maps.Circle, index) => {
@@ -424,7 +430,7 @@ export class HomePage implements OnInit {
 
 
         this.mySkinsService.mapSkins.forEach((myskin) => {
-          
+
           var existingCircle: google.maps.Circle;
           this.skinRadi.forEach((circle: google.maps.Circle) => {
             if (circle.get('title') == myskin.skin.id) {
@@ -466,8 +472,7 @@ export class HomePage implements OnInit {
         this.skinRadi = [];
       }
     })
-    console.log("Skin Radi");
-    console.log(this.skinRadi);
+
   }
 
   hashCode(str) { // java String#hashCode
@@ -490,10 +495,12 @@ export class HomePage implements OnInit {
     this.websocket.send('position updated!' + this.ps.user.userName);
   }
 
-  centerMap(){
+  centerMap() {
+    console.log("centermap");
+    console.log(this.ps.user.custom.position);
     this.map.panTo(this.ps.user.custom.position);
     this.map.setZoom(18);
-    
+
   }
 
   updateUserDot() {
@@ -524,16 +531,17 @@ export class HomePage implements OnInit {
       var crd = pos.coords;
       var updatedLocation = new Position(crd.longitude, crd.latitude);
       var distance = this.calcDistance(this.location, updatedLocation);
-      console.log(distance);
-      if(distance > 50) {
-          this.ps.updateUser(this.ps.user.custom).subscribe(data => {
-            this.createMySkinRaduis();
-            this.updateUserDot();
-            this.doSend();
-          })
+
+      if (distance > 50) {
+        console.log("user moved");
+        this.ps.updateUser(this.ps.user.custom).subscribe(data => {
+          this.createMySkinRaduis();
+          this.updateUserDot();
+          this.doSend();
+        })
       }
-      
-    } );
+
+    });
 
 
     this.geolocation.getCurrentPosition().then((resp) => {
@@ -545,18 +553,24 @@ export class HomePage implements OnInit {
 
 
 
+      console.log("Resp");
+      console.log(resp.coords);
+      this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
       this.location.lat = this.ps.user.custom.position.lat;
       this.location.lng = this.ps.user.custom.position.lng;
-      this.ps.user.custom.position.lat = resp.coords.latitude;
-      this.ps.user.custom.position.lng = resp.coords.longitude;
-      
+
+      console.log(this.location);
+
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
-      console.log(this.ps.user.custom);
+      console.log(this.ps.user.custom.position);
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
-
+        this.ps.user.custom = data;
+        console.log("User sollte eig jetzt a position haben");
+        console.log(this.ps.user.custom);
+        console.log(data);
 
 
         this.createMySkinRaduis();
@@ -573,11 +587,10 @@ export class HomePage implements OnInit {
 
 
 
-        console.log("Update User Dot");
-        console.log(this.ps.user.custom.position)
-        console.log(this.userDot.getCenter())
+
         this.updateUserDot();
-        console.log(this.userDot.getCenter())
+
+
 
 
         //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
@@ -613,62 +626,49 @@ export class HomePage implements OnInit {
         alert('clicked');
       });
       */
-       
+
   }
 
-  showTutorial(){
-    this.ts.getUser().subscribe(
-      data => {
-          this.ts.user.id = data["id"];
-          this.ts.user.userName = data["username"];
-          this.ts.user.firstname = data["firstName"];
-          this.ts.user.lastname = data["lastName"];
-          this.ts.user.email = data["email"];
-          this.ts.user.custom.finishedTutorial = data["finishedTutorial"];
-          console.log(this.ts.user);
-          console.log(data)
+  showTutorial() {
+    console.log(this.ps.user);
+    if(this.ps.user.custom.tutorialStage == 0) {
+      Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "top"
+        },
+        allowSkip: false
+      });
+      Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false
+      });
+      Showcaser.showcase("Die Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
+        shape: "rectangle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+            console.log(this.ps.user.custom.tutorialStage + "Yeahhh les go");
+          });
 
-          if(!this.ts.user.custom.finishedTutorial){
-            Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
-              shape: "circle",
-              buttonText: "Ok!",
-              position: {
-                horizontal: "center",
-                vertical: "top"
-              },
-              allowSkip: false
-            });
-            Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
-              shape: "circle",
-              buttonText: "Ok!",
-              position: {
-                horizontal: "center",
-                vertical: "middle"
-              },
-              allowSkip: false
-            });
-            Showcaser.showcase("Die Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
-              shape: "rectangle",
-              buttonText: "Ok!",
-              position: {
-                horizontal: "center",
-                vertical: "middle"
-              },
-              allowSkip: false,
-              close: () => {
-                console.log(this.ts.user);
-                this.ts.user.custom.finishedTutorial = true;
-                this.ts.updateUserTutorial(this.ts.user).subscribe(data => {
-                  console.log(this.ts.user.custom.finishedTutorial + "Yeahhh les go");
-                  console.log(this.ts.user);
-                });
-                
-              }
-            });
-          }
-        
-    });
-  
+        }
+      });
+    }
+
+
+
   }
   sideMenu() {
     this.navigate =
@@ -786,7 +786,7 @@ class ClickEventHandler {
   e2: HTMLElement;
   eb: HTMLElement;
   e3: HTMLElement;
-  constructor(map: google.maps.Map, origin: any, ps:ProfileService, hp: HomePage) {
+  constructor(map: google.maps.Map, origin: any, ps: ProfileService, hp: HomePage) {
     this.origin = origin;
     this.map = map;
     this.ps = ps;
@@ -837,7 +837,7 @@ class ClickEventHandler {
       });
     }
     */
-    
+
 
     // If the event has a placeId, use it.
     if (this.isIconMouseEvent(event)) {
@@ -905,9 +905,7 @@ class ClickEventHandler {
             "place-name"
           ] as HTMLElement).textContent = place.name!;
 
-          (me.infowindowContent.children[
-            "place-address"
-          ] as HTMLElement).textContent = place.formatted_address as string;
+
 
           me.infowindow.open(me.map);
         }

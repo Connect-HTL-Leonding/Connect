@@ -15,7 +15,7 @@ export class CustomUser {
     constructor(
         public id = "",
         public profilePicture = "",
-        public finishedTutorial: boolean = false,
+        public tutorialStage: number = 0,
         public description: string = "",
         public gender: string = "",
         public birthday : Date = null,

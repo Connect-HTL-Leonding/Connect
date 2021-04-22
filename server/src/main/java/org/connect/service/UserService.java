@@ -85,15 +85,11 @@ public class UserService {
 
     }
     @GET
-    @Path("getIsTutorialFinished/{id}")
+    @Path("getTutorialStage/{id}")
     @Produces(MediaType.TEXT_PLAIN)
-    public boolean getIsTutorialFinished(@PathParam("id") String id){
+    public int getIsTutorialFinished(@PathParam("id") String id){
         User u = dbRepo.find(jwt.claim("sub"));
-        if(u.isFinishedTutorial()){
-            return true;
-        } else {
-            return false;
-        }
+        return u.getTutorialStage();
     }
 
     @GET
@@ -131,6 +127,7 @@ public class UserService {
         //user-id
         System.out.println(jwt.claim("sub"));
         User u = dbRepo.find(jwt.claim("sub"));
+        u.setTutorialStage(u.getTutorialStage() + 1);
         return dbRepo.update(u);
     }
     /*

@@ -29,7 +29,7 @@ export class ProfileService {
       this.user.firstname = data["firstName"];
       this.user.lastname = data["lastName"];
       this.user.email = data["email"];
-      this.user.custom.finishedTutorial = data["finishedTutorial"];
+      this.user.custom.tutorialStage = data["tutorialStage"];
       console.log(data)
     });
     return this.http.get<CustomUser>(api.short + 'user/customData');
@@ -48,7 +48,7 @@ export class ProfileService {
   //update aktuellen User
   updateUser(u: CustomUser) {
     console.log(u);
-    return this.http.put(api.short + 'user/update', u);
+    return this.http.put<CustomUser>(api.short + 'user/update', u);
   }
 
   //update aktuellen User (Keycloak Nutzerdaten)
@@ -64,5 +64,10 @@ export class ProfileService {
     console.log(body);
 
     return this.http.post(api.ip + ':8010/auth/realms/connect/account/credentials/password/', body);
+  }
+  updateUserTutorial(u: User) {
+    let body = JSON.stringify(u);
+    console.log(body);
+    return this.http.put(api.short + 'user/updateTutorial', u);
   }
 }

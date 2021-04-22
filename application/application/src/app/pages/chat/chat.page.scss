@@ -163,3 +163,18 @@ div#messageFlex {
    position: absolute;
    margin: 0 7px 7px 0;
 }
+
+.dateBox {
+    width: 30%;
+    background-color: lightgray;
+    margin: 5px;
+    justify-self: center;
+    margin-left:auto;
+    margin-right: auto;
+    border-radius: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:small;
+    opacity: 0.8;
+}
