@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-    <ion-back-button defaultHref="profile" (click)="dismissModal()"></ion-back-button>
+      <ion-back-button defaultHref="profile" (click)="dismissModal()"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -10,9 +10,9 @@
   <div class="image-container">
 
     <div class="images">
-    <div *ngFor="let photo of this.photos">
-      <img (click)="show(photo.webviewPath)" class="one-image" [src]=photo.webviewPath>
-  </div>
-  </div>
+      <div *ngFor="let photo of this.photos">
+        <img (click)="show(photo.webviewPath)" class="one-image" [src]=photo.webviewPath>
+      </div>
+    </div>
   </div>
 </ion-content>

@@ -9,73 +9,51 @@
 
 <ion-content>
   <div class="wrapper">
-    <div style="height: 150px; background-color:var(--ion-color-primary)"></div>
+    <div class="background"></div>
     <div class="container">
       <div class="mid">
         <div class="pfpBox">
-        <img *ngIf="this.ownProfile" class="pfp" src={{this.photoService.imgURL}}>
-        <img *ngIf="!this.ownProfile && this.ps.user.custom" class="pfp" src="{{this.ps.user.custom.profilePicture}}">
+          <img *ngIf="this.ownProfile" class="pfp" src={{this.photoService.imgURL}}>
+          <img *ngIf="!this.ownProfile && this.ps.user.custom" class="pfp" src="{{this.ps.user.custom.profilePicture}}">
         </div>
       </div>
-      <h2 *ngIf="this.ownProfile && this.ps.user" id="name">{{this.ps.user.userName}}</h2>
-      <h2 *ngIf="!this.ownProfile && this.ps.user" id="name">{{this.ps.user.username}}</h2>
-      <div class="descBox">
-        <p *ngIf="this.ps.user.custom">{{this.ps.user.custom.description}}</p>
+      <ion-label *ngIf="this.ownProfile && this.ps.user" class="name">{{this.ps.user.userName}}</ion-label>
+      <ion-label *ngIf="!this.ownProfile && this.ps.user" class="name">{{this.ps.user.username}}</ion-label>
+      <div class="wrap">
+        <ion-label color="primary" class="desc-label">Beschreibung</ion-label>
+        <div *ngIf="this.ps.user.custom">
+          <ion-input readonly  *ngIf="this.ps.user.custom.description; else noDesc">{{this.ps.user.custom.description}}</ion-input>
+        </div>
+       
+        <ng-template #noDesc>
+          <ion-input readonly >Hey there! I am using Connect</ion-input>
+        </ng-template>
+      </div>
+      <div class="wrap">
+        <ion-label color="primary" class="desc-label">Fotogalerie</ion-label>
       </div>
 
-      <ion-button *ngIf="this.ownProfile" color="secondary" size="default" shape="round" style="margin-top: 3vh;" [routerLink]="['../edit-profile']">Anpassen</ion-button>
 
-     <div class="photo-slider-con">
-        <p style="left:0;">Fotos</p>
-
+      <div class="photo-slider-con">
         <div *ngIf="photoService.photos.length; else noImgs" class="list_photos" no-bounce>
           <ion-card *ngFor="let photo of photoService.photos; index as position">
             <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
           </ion-card>
-          
+
           <ion-card id="openModal" (click)="presentModal()">View all</ion-card>
-          
+
         </div>
-     <ng-template #noImgs>
-       <div class="noImgs">No images yet</div>
-     </ng-template>
-     </div>
-   
-<div class="bottom">
-  <div class="about" [routerLink]="['../about']">About Connect</div>
-</div>
-<!--
-      <div class="social-media-con">
-        <p style="color: var(--ion-color-secondary);">Social Media</p>
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-instagram"></ion-icon>
-              Der Max
-            </ion-col>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-linkedin"></ion-icon>
-              MaxMusterLinkedIn
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-facebook"></ion-icon>
-              MaxMuster
-            </ion-col>
-            <ion-col>
-              <ion-icon color="secondary" name="logo-twitter"></ion-icon>
-              DerMaxTwitter
-            </ion-col>
-          </ion-row>
-
-
-        </ion-grid>
+        <ng-template #noImgs>
+          <div class="noImgs">No images yet</div>
+        </ng-template>
       </div>
--->
 
+      <ion-button *ngIf="this.ownProfile" color="primary" size="default" shape="round"
+        [routerLink]="['../edit-profile']">Anpassen</ion-button>
 
-
+        <div class="bottom">
+          <div class="about" [routerLink]="['../about']">About Connect</div>
+        </div>
     </div>
   </div>
 

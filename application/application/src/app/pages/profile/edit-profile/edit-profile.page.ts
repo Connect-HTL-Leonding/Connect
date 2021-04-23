@@ -17,8 +17,6 @@ import { KeycloakService } from 'keycloak-angular';
 export class EditProfilePage implements OnInit {
 
   user;
-  nachrichten: boolean = false;
-  connects: boolean = false;
   imgURL;
  
   noImgs : boolean;

@@ -62,10 +62,10 @@ export class PhotoService {
       responseType: 'text' as const
     };
 
-    this.http.get(api.url + 'image/getPfp',httpOptions).subscribe(data => {
+    this.http.get(api.url + 'image/getPfp', httpOptions).subscribe(data => {
       console.log("loadpfp");
       console.log(data);
-      this.imgURL = "data:image/png;base64," +  data;
+      this.imgURL = "data:image/png;base64," + data;
     })
   }
 
@@ -175,7 +175,8 @@ export class PhotoService {
         this.imgURL = mySrc
       } */
 
-      this.http.put(api.url + 'image/setPfp', image.base64String).subscribe(data => {
+      console.log(image.base64String.toString())
+      this.http.put(api.url + 'image/setPfp', image.base64String.toString()).subscribe(data => {
         this.ps.getUser().subscribe(data => {
           this.ps.user.custom = data;
           this.loadPfp();
