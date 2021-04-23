@@ -143,3 +143,16 @@ ion-toolbar {
     align-items: center;
     font-size: 1em;
   }
+
+  .bottom{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1%;
+color: rgb(153, 153, 153);
+    .about{
+margin: auto;
+    }
+  }
