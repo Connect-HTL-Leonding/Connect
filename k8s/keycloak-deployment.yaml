@@ -36,3 +36,11 @@ spec:
           httpGet:
             path: /auth/realms/master
             port: 8080
+        volumeMounts:
+          - mountPath: /opt/jboss/keycloak/standalone/configuration/profile.properties
+            name: properties-volume
+            subPath: profile.properties
+      volumes:
+        - name: properties-volume
+          configMap:
+            name: profile-config
