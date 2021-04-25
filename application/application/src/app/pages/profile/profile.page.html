@@ -4,6 +4,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="home" (click)="dismissModal()"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['../edit-profile']">
+        <ion-icon name="pencil"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -47,10 +52,10 @@
           <div class="noImgs">No images yet</div>
         </ng-template>
       </div>
-
+<!-- 
       <ion-button *ngIf="this.ownProfile" color="primary" size="default" shape="round"
         [routerLink]="['../edit-profile']">Anpassen</ion-button>
-
+-->
         
     </div>
   </div>
