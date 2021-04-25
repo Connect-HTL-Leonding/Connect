@@ -63,8 +63,6 @@ export class PhotoService {
     };
 
     this.http.get(api.url + 'image/getPfp', httpOptions).subscribe(data => {
-      console.log("loadpfp");
-      console.log(data);
       this.imgURL = "data:image/png;base64," + data;
     })
   }

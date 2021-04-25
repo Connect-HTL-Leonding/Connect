@@ -77,7 +77,7 @@ public class ImageService {
 
     @POST
     @Path("saveImage")
-    @Consumes(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.TEXT_PLAIN)
     public void saveImage(String base64string) throws UnsupportedEncodingException {
        byte[] stringToByteArray = Base64.getEncoder().encode(base64string.getBytes());
         Image i = new Image(getUser().getId(),stringToByteArray);
