@@ -18,7 +18,7 @@ export class SkinselectionPage implements OnInit {
 
   skinsService: SkinsService;
   categoryService: CategoryService;
-  mySkinService : MyskinsService
+  mySkinService: MyskinsService
 
   currCat: Category;
   searchString = "";
@@ -88,10 +88,10 @@ export class SkinselectionPage implements OnInit {
     )
   }
 
-  showTutorial(){
+  showTutorial() {
     console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
-    if (this.ps.user.custom.tutorialStage == 4) {
-      Showcaser.showcase("Das hier sind deine Skins", this.skinSelectionRef.nativeElement, {
+    if (this.ps.user.custom.tutorialStage == 3) {
+      Showcaser.showcase("Das hier sind deine Skins. Wähl am besten gleich mal einen aus!", this.skinSelectionRef.nativeElement, {
         shape: "rectangle",
         buttonText: "Ok!",
         position: {
@@ -132,10 +132,10 @@ export class SkinselectionPage implements OnInit {
   }
 
   addToMySkin(skin) {
-    this.mySkinService.addToMySkins(skin).subscribe( data => {
+    this.mySkinService.addToMySkins(skin).subscribe(data => {
       //console.log(data);
       var newSkin = data as MySkin;
-      
+
       this.skinsService.getSkins().subscribe(
         data => {
           this.skinsService.skins = data;
@@ -146,6 +146,11 @@ export class SkinselectionPage implements OnInit {
         }
       )
     })
+    if (this.ps.user.custom.tutorialStage == 4) {
+      this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+        console.log("added Skin " + this.ps.user.custom.tutorialStage);
+      });
+    }
   }
 
 }

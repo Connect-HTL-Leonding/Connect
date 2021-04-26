@@ -114,13 +114,13 @@ export class ProfilePage implements OnInit {
 
   showTutorial() {
     console.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
-    if (this.ps.user.custom.tutorialStage == 2) {
+    if (this.ps.user.custom.tutorialStage == 1) {
       console.log("Bruhhhhh" + this.profilePicRef.nativeElement);
-      Showcaser.showcase("Das ist deine Profilseite. Diese Seite können andere User von dir sehen", this.changeButRef.nativeElement, {
+      Showcaser.showcase("Das ist deine Profilseite. Diese Seite können andere User von dir sehen", this.profilePicRef.nativeElement, {
         buttonText: "Ok!",
         position: {
           horizontal: "center",
-          vertical: "middle"
+          vertical: "bottom"
         },
         allowSkip: false,
         close: () => {

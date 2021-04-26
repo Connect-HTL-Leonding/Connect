@@ -636,7 +636,7 @@ export class HomePage implements OnInit {
 
   showTutorial() {
     console.log(this.ps.user);
-    if (this.ps.user.custom.tutorialStage == 1) {
+    if (this.ps.user.custom.tutorialStage == 0) {
       console.log("test for tutorial" + this.ps.user.custom.tutorialStage)
       Showcaser.showcase("Das hier ist die Home-Seite. Hier wirst du die meiste Zeit verbringen ;)", this.mapRef.nativeElement, {
         shape: "circle",
@@ -654,7 +654,24 @@ export class HomePage implements OnInit {
         }
       });
     }
-
+    if (this.ps.user.custom.tutorialStage == 6) {
+      console.log("test for tutorial" + this.ps.user.custom.tutorialStage)
+      Showcaser.showcase("Aktiviere deinen ausgewählten Skin", this.mapRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+            console.log(this.ps.user.custom.tutorialStage + "Yeahhh les go");
+            this.router.navigate(["profile"])
+          });
+        }
+      });
+    }
 
 
   }
