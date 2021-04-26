@@ -62,9 +62,7 @@ export class ProfileService {
     
     return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject + '/reset-password', password);
   }
-  updateUserTutorial(u: User) {
-    let body = JSON.stringify(u);
-    console.log(body);
+  updateUserTutorial(u: CustomUser) {
     return this.http.put(api.short + 'user/updateTutorial', u);
   }
 }

@@ -44,6 +44,7 @@
     "keycloak-js": "^12.0.4",
     "ngx-webstorage-service": "^4.1.0",
     "rxjs": "~6.5.5",
+    "showcaser": "^1.0.0",
     "tslib": "^2.2.0",
     "ws": "^7.4.5",
     "zone.js": "~0.10.3"

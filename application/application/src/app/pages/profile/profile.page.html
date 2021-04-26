@@ -23,7 +23,7 @@
         </div>
       </div>
       <ion-label *ngIf="this.ownProfile && this.ps.user" class="name">{{this.ps.user.userName}}</ion-label>
-      <ion-label *ngIf="!this.ownProfile && this.ps.user" class="name">{{this.ps.user.username}}</ion-label>
+     <ion-label *ngIf="!this.ownProfile && this.ps.user" class="name">{{this.ps.user.username}}</ion-label>
       <div class="wrap">
         <ion-label color="primary" class="desc-label">Beschreibung</ion-label>
         <div *ngIf="this.ps.user.custom">

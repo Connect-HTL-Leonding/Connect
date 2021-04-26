@@ -25,7 +25,7 @@ import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
 import { MySkin } from 'src/app/model/myskin';
 import { ProfilePage } from '../profile/profile.page';
 import { KeycloakService } from 'keycloak-angular';
-
+import { IonicModule } from '@ionic/angular'
 
 /*
 import {
@@ -139,9 +139,10 @@ export class HomePage implements OnInit {
     )
   }
 
-  ngOnChanges(){
+  ngOnChanges() {
     this.showTutorial();
   }
+
   ngOnInit() {
     this.ps.getUser().subscribe(data => {
       this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
@@ -561,42 +562,48 @@ export class HomePage implements OnInit {
 
 
       console.log(this.ps.user.custom.position);
-      this.ps.updateUser(this.ps.user.custom).subscribe(data => {
-
+      this.ps.getUser().subscribe(data => {
+       
         this.ps.user.custom = data;
-        console.log("User sollte eig jetzt a position haben");
-        console.log(this.ps.user.custom);
-        console.log(data);
+        this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
+        console.log(this.ps.user.custom + "aslkfdlkajfdlk")
+        this.ps.updateUser(this.ps.user.custom).subscribe(data => {
+
+          this.ps.user.custom = data;
+          console.log("User sollte eig jetzt a position haben");
+          console.log(this.ps.user.custom);
+          console.log(data);
 
 
-        this.createMySkinRaduis();
-        this.displayFriends();
-
-
-
-        const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
-        const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
-
-        //new ClickEventHandler(this.map, location);
-
+          this.createMySkinRaduis();
+          this.displayFriends();
 
 
 
+          const location2 = new google.maps.LatLng(resp.coords.latitude + 0.0005, resp.coords.longitude + 0.0005);
+          const location3 = new google.maps.LatLng(resp.coords.latitude - 0.0005, resp.coords.longitude - 0.0005);
+
+          //new ClickEventHandler(this.map, location);
 
 
-        this.updateUserDot();
 
 
 
 
-        //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
+          this.updateUserDot();
 
-        new ClickEventHandler(this.map, location, this.ps, this);
+
+
+
+          //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
+
+          new ClickEventHandler(this.map, location, this.ps, this);
+        })
       });
-
     }).catch((error) => {
       console.log('Error getting location', error);
     });
+
 
     //this.map = GoogleMaps.create('map_canvas', mapOptions);
     /*
@@ -622,64 +629,63 @@ export class HomePage implements OnInit {
         console.log(data);
         this.ps.user.custom = data;
         console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user);
+        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 0) {
+          Showcaser.showcase("Das ist die Home Seite. Mit diesem Button wirst du dich später connecten können", this.connectButRef.nativeElement, {
+            shape: "rectangle",
+            buttonText: "Ok!",
+            position: {
+              horizontal: "center",
+              vertical: "top"
+            },
+            allowSkip: false,
+            close: () => {
+
+              this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+                this.router.navigate(["profile"])
+              });
+
+            }
+          });
+        }
+        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 5) {
+          Showcaser.showcase("Aktiviere oben rechts den Skin!", this.connectButRef.nativeElement, {
+            shape: "circle",
+            buttonText: "Ok!",
+            position: {
+              horizontal: "center",
+              vertical: "top"
+            },
+            allowSkip: false,
+            close: () => {
+              this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+              });
+            }
+
+          });
+        }
+        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 6) {
+          Showcaser.showcase("Drück auf den Connect Button um dich zu connecten", this.connectButRef.nativeElement, {
+            shape: "circle",
+            buttonText: "Ok!",
+            position: {
+              horizontal: "center",
+              vertical: "top"
+            },
+            allowSkip: false,
+            close: () => {
+
+              this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+              });
+
+            }
+          });
+        }
       },
       error1 => {
         console.log('Error');
       }
     )
-    console.log(this.ps.user);
-    if (this.ps.user.custom.tutorialStage == 0) {
-      Showcaser.showcase("Das ist die Home Seite. Mit diesem Button wirst du dich später connecten können", this.connectButRef.nativeElement, {
-        shape: "rectangle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "top"
-        },
-        allowSkip: false,
-        close: () => {
-
-          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
-            this.router.navigate(["profile"])
-          });
-
-        }
-      });
-    }
-    if (this.ps.user.custom.tutorialStage == 5) {
-      Showcaser.showcase("Aktiviere oben rechts den Skin!", this.connectButRef.nativeElement, {
-        shape: "circle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "top"
-        },
-        allowSkip: false,
-        close: () => {
-          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
-          });
-        }
-
-      });
-    }
-    if (this.ps.user.custom.tutorialStage == 6) {
-      Showcaser.showcase("Drück auf den Connect Button um dich zu connecten", this.connectButRef.nativeElement, {
-        shape: "circle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "top"
-        },
-        allowSkip: false,
-        close: () => {
-
-          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
-          });
-
-        }
-      });
-    }
-
 
   }
   sideMenu() {

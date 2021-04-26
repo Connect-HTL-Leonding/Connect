@@ -100,7 +100,7 @@ export class SkinselectionPage implements OnInit {
         },
         allowSkip: false,
         close: () => {
-          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+          this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
             console.log("MySKINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
           });
         }
@@ -147,7 +147,7 @@ export class SkinselectionPage implements OnInit {
       )
     })
     if (this.ps.user.custom.tutorialStage == 4) {
-      this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+      this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
         console.log("added Skin " + this.ps.user.custom.tutorialStage);
       });
     }

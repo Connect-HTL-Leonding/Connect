@@ -93,7 +93,7 @@ export class MySkinsPage implements OnInit {
         },
         allowSkip: false,
         close: () => {
-          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+          this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
 
           });
         }
@@ -110,7 +110,7 @@ export class MySkinsPage implements OnInit {
         },
         allowSkip: false,
         close: () => {
-          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+          this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
           });
         }
       });
