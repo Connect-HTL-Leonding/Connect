@@ -16,7 +16,7 @@
   <div class="wrapper">
     <div class="background"></div>
     <div class="container">
-      <div class="mid">
+      <div class="mid" id="profile_pic" #profile_pic>
         <div class="pfpBox">
           <img *ngIf="this.ownProfile" class="pfp" src={{this.photoService.imgURL}}>
           <img *ngIf="!this.ownProfile && this.ps.user.custom" class="pfp" src="{{this.ps.user.custom.profilePicture}}">

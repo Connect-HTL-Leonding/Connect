@@ -1,5 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import Showcaser from 'showcaser';
+import { ProfileService } from 'src/app/api/profile.service';
 import { CategoryService } from '../../api/category.service';
 import { MyskinsService } from '../../api/myskins.service';
 import { SkinsService } from '../../api/skins.service';
@@ -16,12 +18,14 @@ export class SkinselectionPage implements OnInit {
 
   skinsService: SkinsService;
   categoryService: CategoryService;
-  mySkinService : MyskinsService
+  mySkinService: MyskinsService
 
   currCat: Category;
   searchString = "";
 
-  constructor(ss: SkinsService, cs: CategoryService, ms: MyskinsService, public modalCtrl: ModalController) {
+  @ViewChild('skinSelection', { static: false }) skinSelectionRef: ElementRef;
+
+  constructor(public ps: ProfileService, ss: SkinsService, cs: CategoryService, ms: MyskinsService, public modalCtrl: ModalController) {
     this.skinsService = ss;
     this.categoryService = cs;
     this.mySkinService = ms;
@@ -70,6 +74,38 @@ export class SkinselectionPage implements OnInit {
         console.log('Error');
       }
     )
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user)
+        this.showTutorial();
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
+  }
+
+  showTutorial() {
+    console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
+    if (this.ps.user.custom.tutorialStage == 3) {
+      Showcaser.showcase("Hier findest du alle verfügbaren Skins. Wähl am besten gleich mal einen aus!", this.skinSelectionRef.nativeElement, {
+        shape: "rectangle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+            console.log("MySKINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+          });
+        }
+      });
+    }
   }
 
   setCurrCat(c: Category) {
@@ -96,10 +132,10 @@ export class SkinselectionPage implements OnInit {
   }
 
   addToMySkin(skin) {
-    this.mySkinService.addToMySkins(skin).subscribe( data => {
+    this.mySkinService.addToMySkins(skin).subscribe(data => {
       //console.log(data);
       var newSkin = data as MySkin;
-      
+
       this.skinsService.getSkins().subscribe(
         data => {
           this.skinsService.skins = data;
@@ -110,6 +146,11 @@ export class SkinselectionPage implements OnInit {
         }
       )
     })
+    if (this.ps.user.custom.tutorialStage == 4) {
+      this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+        console.log("added Skin " + this.ps.user.custom.tutorialStage);
+      });
+    }
   }
 
 }

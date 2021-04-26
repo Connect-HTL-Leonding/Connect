@@ -84,6 +84,13 @@ public class UserService {
 
 
     }
+    @GET
+    @Path("getTutorialStage/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public int getIsTutorialFinished(@PathParam("id") String id){
+        User u = dbRepo.find(jwt.claim("sub"));
+        return u.getTutorialStage();
+    }
 
     @GET
     @Path("getLocation/{id}")
@@ -95,7 +102,6 @@ public class UserService {
         } else {
             return null;
         }
-
     }
 
 
@@ -112,7 +118,18 @@ public class UserService {
         return dbRepo.update(user);
     }
 
+    @PUT
+    @Path("updateTutorial")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User updateTutorial() {
 
+        //user-id
+        System.out.println(jwt.claim("sub"));
+        User u = dbRepo.find(jwt.claim("sub"));
+        u.setTutorialStage(u.getTutorialStage() + 1);
+        return dbRepo.update(u);
+    }
     /*
     @GET
     @Path("logout")

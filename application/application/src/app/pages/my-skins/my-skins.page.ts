@@ -1,10 +1,14 @@
-import { Component, OnInit, SimpleChange, SimpleChanges } from '@angular/core';
-import { MenuController, ModalController, ToastController} from '@ionic/angular';
+import { Component, ElementRef, OnInit, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
+import { MenuController, ModalController, ToastController } from '@ionic/angular';
 import { SkinsService } from '../../api/skins.service';
 import { Skin } from 'src/app/model/skin';
 import { SkinselectionPage } from '../skinselection/skinselection.page'
 import { MySkin } from '../../model/myskin';
 import { MyskinsService } from '../../api/myskins.service';
+import Showcaser from 'showcaser';
+import { TutorialService } from 'src/app/api/tutorial.service';
+import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/api/profile.service';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -14,15 +18,17 @@ import { Observable } from 'rxjs';
 })
 export class MySkinsPage implements OnInit {
 
-
+  // Button
+  @ViewChild('add_skin_circle', { static: false }) addSkinButRef: ElementRef;
   //Suchbegriff
   searchString: String = "";
+  bruh: object;
 
   //Ausgewählter Skin
   currentSkin: MySkin;
 
   //Konstruktor
-  constructor(public mySkinService: MyskinsService, public modalController: ModalController, public toastController: ToastController) {
+  constructor(public ps: ProfileService, public ts: TutorialService, public mySkinService: MyskinsService, private router: Router, public modalController: ModalController, public toastController: ToastController) {
   }
 
   ngOnInit() {
@@ -45,8 +51,79 @@ export class MySkinsPage implements OnInit {
         console.log('Error');
       }
     )
+
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user)
+        this.showTutorial();
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
+  /*ngAfterViewInit() {
+    this.showTutorial();
+  }*/
+
+  showTutorial() {
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user)
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
+    console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
+    if (this.ps.user.custom.tutorialStage == 2) {
+      Showcaser.showcase("Hier wirst du neue Skins finden. Mit diesen kannst du dich für alles mögliche verabreden.", this.addSkinButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "right",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+
+          });
+        }
+      });
+    }
+
+    if (this.ps.user.custom.tutorialStage == 4) {
+      Showcaser.showcase("Klick auf einen Skin und mach ihn dann mit dem Herz zum Favoriten", this.addSkinButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "right",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+          });
+        }
+      });
+    }
+
+    console.log("1231231231231232132131323123")
+    console.log(this.ts.user);
+
+
+    //console.log(this.skinService);
+
+
+  }
   //check
   matchesFilter(s: MySkin) {
     return s.skin.title.toUpperCase().indexOf(this.searchString.toUpperCase()) == 0
@@ -56,7 +133,7 @@ export class MySkinsPage implements OnInit {
   changeSelection(ms: MySkin) {
     this.mySkinService.current = ms;
     console.log(this.mySkinService.current.id + " jladsflsjkdflkj");
-    
+
   }
 
   //Modal öffnen

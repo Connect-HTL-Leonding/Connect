@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Close</ion-button>
+      <ion-button (click)="dismissModal(null)">Close</ion-button>
     </ion-buttons>
     <ion-title>skinselection</ion-title>
   </ion-toolbar>
@@ -25,7 +25,7 @@
 </div>
 
 
-  <ion-grid>
+  <ion-grid id="skinSelection" #skinSelection>
   <ion-row>
     <ng-container *ngFor="let skin of skinsService.skins; index as i;">
     

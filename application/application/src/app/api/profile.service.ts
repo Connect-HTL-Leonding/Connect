@@ -29,6 +29,7 @@ export class ProfileService {
       this.user.firstname = data["firstName"];
       this.user.lastname = data["lastName"];
       this.user.email = data["email"];
+      this.user.custom.tutorialStage = data["tutorialStage"];
       console.log(data)
     });
     return this.http.get<CustomUser>(api.short + 'user/customData');
@@ -60,5 +61,10 @@ export class ProfileService {
     var body = JSON.stringify(password)
     
     return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject + '/reset-password', password);
+  }
+  updateUserTutorial(u: User) {
+    let body = JSON.stringify(u);
+    console.log(body);
+    return this.http.put(api.short + 'user/updateTutorial', u);
   }
 }
