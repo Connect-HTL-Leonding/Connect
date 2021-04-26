@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProfileService } from 'src/app/api/profile.service';
 import { SkinsService } from 'src/app/api/skins.service';
 import { MySkin } from 'src/app/model/myskin';
 import { Skin } from 'src/app/model/skin';
@@ -15,10 +17,10 @@ export class DetailSkinComponent implements OnInit {
   @Output() deleted: EventEmitter<Skin> = new EventEmitter<Skin>();
 
 
-  constructor() { }
+  constructor(public router: Router, public ps: ProfileService) { }
 
   ngOnInit() {
-    //console.log(this.skin)
+    
   }
 
   
@@ -43,6 +45,24 @@ export class DetailSkinComponent implements OnInit {
   selected(){
     this.myskin.selected = !this.myskin.selected;
     this.updated.emit();
+    /*
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user)
+        //console.log(this.skinService);
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
+    if(this.ps.user.custom.tutorialStage == 5){
+      this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+        this.router.navigate(["home"])
+      });
+    } */
   }
 
 }

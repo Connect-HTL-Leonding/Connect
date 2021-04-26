@@ -62,13 +62,8 @@ export class HomePage implements OnInit {
 
   mySubscription;
 
-  toast: HTMLIonToastElement;
-
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
-
-  //profile
-  @ViewChild('profile_button', { read: ElementRef, static: false }) profileButRef: ElementRef;
 
   // Button
   @ViewChild('connect_button', { static: false }) connectButRef: ElementRef;
@@ -144,13 +139,14 @@ export class HomePage implements OnInit {
     )
   }
 
-
+  ngOnChanges(){
+    this.showTutorial();
+  }
   ngOnInit() {
     this.ps.getUser().subscribe(data => {
       this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
       this.doConnect();
     })
-
   }
 
   doConnect() {
@@ -177,7 +173,8 @@ export class HomePage implements OnInit {
       event: ev,
       translucent: true
     });
-    popover.onDidDismiss().then(() => { this.createMySkinRaduis(); });
+
+    popover.onDidDismiss().then(() => { this.createMySkinRaduis(); console.log("Popoveeeeeeeeeeeeeeeeeeeeer"); });
     return await popover.present();
   }
 
@@ -448,7 +445,7 @@ export class HomePage implements OnInit {
             existingCircle.setRadius(myskin.radius * 1000);
             existingCircle.setCenter(this.ps.user.custom.position);
           } else {
-            console.log("seas")
+            console.log("seas" + this.ps.user.custom.tutorialStage)
             var newCircle = new google.maps.Circle({
               title: myskin.skin.id,
               strokeColor: "#0eb19b",
@@ -463,13 +460,7 @@ export class HomePage implements OnInit {
             });
             this.skinRadi.push(newCircle);
           }
-
-
-
         })
-
-
-
       } else {
         this.skinRadi.forEach((circle: google.maps.Circle) => {
           circle.setMap(null);
@@ -477,7 +468,7 @@ export class HomePage implements OnInit {
         this.skinRadi = [];
       }
     })
-
+    this.showTutorial();
   }
 
   hashCode(str) { // java String#hashCode
@@ -601,16 +592,7 @@ export class HomePage implements OnInit {
         //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
         new ClickEventHandler(this.map, location, this.ps, this);
-
-
-
-
       });
-      this.showTutorial();
-
-
-
-
 
     }).catch((error) => {
       console.log('Error getting location', error);
@@ -635,40 +617,65 @@ export class HomePage implements OnInit {
   }
 
   showTutorial() {
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log("westrzutqjhkgizfutetdzuz")
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
     console.log(this.ps.user);
     if (this.ps.user.custom.tutorialStage == 0) {
-      console.log("test for tutorial" + this.ps.user.custom.tutorialStage)
-      Showcaser.showcase("Das hier ist die Home-Seite. Hier wirst du die meiste Zeit verbringen ;)", this.mapRef.nativeElement, {
-        shape: "circle",
+      Showcaser.showcase("Das ist die Home Seite. Mit diesem Button wirst du dich später connecten können", this.connectButRef.nativeElement, {
+        shape: "rectangle",
         buttonText: "Ok!",
         position: {
           horizontal: "center",
-          vertical: "middle"
+          vertical: "top"
         },
         allowSkip: false,
         close: () => {
+
           this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
-            console.log(this.ps.user.custom.tutorialStage + "Yeahhh les go");
             this.router.navigate(["profile"])
           });
+
         }
       });
     }
-    if (this.ps.user.custom.tutorialStage == 6) {
-      console.log("test for tutorial" + this.ps.user.custom.tutorialStage)
-      Showcaser.showcase("Aktiviere deinen ausgewählten Skin", this.mapRef.nativeElement, {
+    if (this.ps.user.custom.tutorialStage == 5) {
+      Showcaser.showcase("Aktiviere oben rechts den Skin!", this.connectButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
         position: {
           horizontal: "center",
-          vertical: "middle"
+          vertical: "top"
         },
         allowSkip: false,
         close: () => {
           this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
-            console.log(this.ps.user.custom.tutorialStage + "Yeahhh les go");
-            this.router.navigate(["profile"])
           });
+        }
+
+      });
+    }
+    if (this.ps.user.custom.tutorialStage == 6) {
+      Showcaser.showcase("Drück auf den Connect Button um dich zu connecten", this.connectButRef.nativeElement, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "top"
+        },
+        allowSkip: false,
+        close: () => {
+
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+          });
+
         }
       });
     }
@@ -739,13 +746,6 @@ export class HomePage implements OnInit {
   }
 
   async presentToastWithOptions(data, msg) {
-    //überprüft ob schon ein taost aktiv ist
-    //wenn ja, toast schließen, dann neuen toast erstellen
-    //--> kein stack von toasts (:
-    try {
-      this.toast.dismiss();
-    } catch (e) { }
-
     var username = "";
     var buttonText = "Change Settings!"
     var header = "Sorry!"
@@ -755,15 +755,15 @@ export class HomePage implements OnInit {
       buttonText = "Chat now"
       username = data["username"];
     }
-    this.toast = await this.toastController.create({
+    const toast = await this.toastController.create({
       header: header,
       message: msg + ' ' + username,
       position: 'top',
-      duration: 5000,
+      duration: 2000,
       buttons: [
         {
+          side: 'end',
           text: buttonText,
-          side: "end",
           handler: () => {
             if (username == "") {
               this.router.navigate(["my-skins"])
@@ -774,7 +774,7 @@ export class HomePage implements OnInit {
         }
       ]
     });
-    this.toast.present();
+    toast.present();
   }
 
 }
@@ -836,10 +836,10 @@ class ClickEventHandler {
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
     console.log('you clicked on: ' + event.latLng.toString());
-
+    /*
     var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
     console.log(distance);
-    if (distance > 50) {
+    if(distance > 50) {
       this.ps.user.custom.position.lat = event.latLng.lat();
       this.ps.user.custom.position.lng = event.latLng.lng();
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
@@ -848,6 +848,7 @@ class ClickEventHandler {
         this.hp.doSend();
       });
     }
+    */
 
 
     // If the event has a placeId, use it.

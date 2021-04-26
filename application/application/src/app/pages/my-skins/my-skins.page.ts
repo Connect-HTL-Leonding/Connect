@@ -71,9 +71,20 @@ export class MySkinsPage implements OnInit {
   }*/
 
   showTutorial() {
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user)
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
     console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
     if (this.ps.user.custom.tutorialStage == 2) {
-      Showcaser.showcase("Das hier sind deine Skins", this.addSkinButRef.nativeElement, {
+      Showcaser.showcase("Hier wirst du neue Skins finden. Mit diesen kannst du dich für alles mögliche verabreden.", this.addSkinButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
         position: {
@@ -90,7 +101,7 @@ export class MySkinsPage implements OnInit {
     }
 
     if (this.ps.user.custom.tutorialStage == 4) {
-      Showcaser.showcase("Klick auf einen Skin und mach ihn dann mit dem Herz zum Favouriten", this.addSkinButRef.nativeElement, {
+      Showcaser.showcase("Klick auf einen Skin und mach ihn dann mit dem Herz zum Favoriten", this.addSkinButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
         position: {
@@ -100,7 +111,6 @@ export class MySkinsPage implements OnInit {
         allowSkip: false,
         close: () => {
           this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
-
           });
         }
       });
