@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild, AfterViewInit} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ProfileService } from "../../api/profile.service";
 import { User } from "../../model/user";
 import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from './photogallery/photogallery.page';
 import { PhotoService } from "../../api/photo.service";
-import Showcaser  from 'showcaser'
+import Showcaser from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 
@@ -20,15 +20,15 @@ export class ProfilePage implements OnInit {
   user;
 
   // Button
-   @ViewChild('change_button', { static: false }) changeButRef: ElementRef;
+  @ViewChild('change_button', { static: false }) changeButRef: ElementRef;
 
   // Button
   @ViewChild('profile_pic', { static: false }) profilePicRef: ElementRef;
   ownProfile = true;
-  
 
-  constructor(public ts: TutorialService, public ps: ProfileService, private keyCloakService : KeycloakService, public modalController: ModalController, public photoService: PhotoService) {
-   
+
+  constructor(public router: Router, public ts: TutorialService, public ps: ProfileService, private keyCloakService: KeycloakService, public modalController: ModalController, public photoService: PhotoService) {
+
   }
 
   slideOpts = {
@@ -40,24 +40,24 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.ownProfile = !this.ps.friendUser;
-    if(this.ownProfile) {
+    if (this.ownProfile) {
       this.photoService.loadPfp();
       this.photoService.loadGalleryImages();
       this.user = this.keyCloakService.getKeycloakInstance().userInfo;
-  
+
       this.ps.getUser().subscribe(
         data => {
-  
+
           console.log(data);
           this.ps.user.custom = data;
-         
-  
+
+
           console.log("westrzutqjhkgizfutetdzuz")
-      
+
           console.log(this.ps.user)
-  
-  
-  
+          this.showTutorial();
+
+
           //console.log(this.skinService);
         },
         error1 => {
@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit {
       )
     }
     else {
-      
+
       this.ps.friendCustomData(this.ps.user.id).subscribe(data => {
         this.photoService.loadFriendGalleryImages(data.id);
         data.profilePicture = "data:image/png;base64," + atob(data.profilePicture);
@@ -75,57 +75,48 @@ export class ProfilePage implements OnInit {
         console.log(this.ps.user);
       })
     }
-    
+
   }
 
   dismissModal() {
     this.photoService.loadPfp();
-      this.photoService.loadGalleryImages();
-      this.user = this.keyCloakService.getKeycloakInstance().userInfo;
-  
-      this.ps.getUser().subscribe(
-        data => {
-  
-          console.log(data);
-          this.ps.user.custom = data;
-         
-  
-          console.log("westrzutqjhkgizfutetdzuz")
-      
-          console.log(this.ps.user)
-  
-  
-  
-          //console.log(this.skinService);
-        },
-        error1 => {
-          console.log('Error');
-        }
-      )
-      if(!this.ownProfile) {
-        this.modalController.dismiss();
-      }
-    
-  }
+    this.photoService.loadGalleryImages();
+    this.user = this.keyCloakService.getKeycloakInstance().userInfo;
 
-  ngAfterViewInit(){
-    this.showTutorial();
-  }
-  
-  showTutorial(){
+    this.ps.getUser().subscribe(
+      data => {
 
-        console.log("1231231231231232132131323123")
-        console.log(this.ts.user.custom)
-        console.log(this.profilePicRef.nativeElement);
+        console.log(data);
+        this.ps.user.custom = data;
+
+
+        console.log("westrzutqjhkgizfutetdzuz")
+
+        console.log(this.ps.user)
 
 
 
         //console.log(this.skinService);
-    
-    if(this.ts.user.custom.tutorialStage == 3){
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
+    if (!this.ownProfile) {
+      this.modalController.dismiss();
+    }
+
+  }
+
+  //ngAfterViewInit() {
+    //this.showTutorial();
+  //}
+
+  showTutorial() {
+    console.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
+    if (this.ps.user.custom.tutorialStage == 2) {
       console.log("Bruhhhhh" + this.profilePicRef.nativeElement);
       Showcaser.showcase("Das ist deine Profilseite. Diese Seite können andere User von dir sehen", this.changeButRef.nativeElement, {
-        shape: "circle",
         buttonText: "Ok!",
         position: {
           horizontal: "center",
@@ -133,13 +124,15 @@ export class ProfilePage implements OnInit {
         },
         allowSkip: false,
         close: () => {
-            
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+            this.router.navigate(["my-skins"])
+          });
         }
       });
     }
   }
   async presentModal() {
-    
+
     const modal = await this.modalController.create({
       component: PhotogalleryPage
     });

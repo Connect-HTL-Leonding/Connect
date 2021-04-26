@@ -53,27 +53,39 @@ export class MySkinsPage implements OnInit {
       }
     )
     */
+    this.ps.getUser().subscribe(
+      data => {
+        console.log(data);
+        this.ps.user.custom = data;
+        console.log("westrzutqjhkgizfutetdzuz")
+        console.log(this.ps.user)
+        this.showTutorial();
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
   }
 
-  ngAfterViewInit() {
+  /*ngAfterViewInit() {
     this.showTutorial();
-  }
+  }*/
 
   showTutorial() {
-    console.log("123111111111111111111111111111111111111111111111")
-    if (this.ps.user.custom.tutorialStage == 1) {
+    console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
+    if (this.ps.user.custom.tutorialStage == 3) {
       Showcaser.showcase("Das hier sind deine Skins", this.addSkinButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
         position: {
-          horizontal: "center",
+          horizontal: "right",
           vertical: "middle"
         },
         allowSkip: false,
         close: () => {
-          this.ps.user.custom.tutorialStage = 2;
-          this.ts.updateUserTutorial(this.ts.user);
-          console.log(this.ts.user.custom.tutorialStage + "Yeahhh les go");
+          this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
+            console.log("MySKINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+          });
         }
       });
     }

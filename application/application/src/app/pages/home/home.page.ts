@@ -65,6 +65,9 @@ export class HomePage implements OnInit {
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
+  //profile
+  @ViewChild('profile_button', { read: ElementRef, static: false }) profileButRef: ElementRef;
+
   // Button
   @ViewChild('connect_button', { static: false }) connectButRef: ElementRef;
 
@@ -631,27 +634,10 @@ export class HomePage implements OnInit {
 
   showTutorial() {
     console.log(this.ps.user);
-    if(this.ps.user.custom.tutorialStage == 0) {
-      Showcaser.showcase("Mit diesem Button kannst du dich mit anderen Menschen Connecten!", this.connectButRef.nativeElement, {
+    if (this.ps.user.custom.tutorialStage == 1) {
+      console.log("test for tutorial" + this.ps.user.custom.tutorialStage)
+      Showcaser.showcase("Das hier ist die Home-Seite. Hier wirst du die meiste Zeit verbringen ;)", this.mapRef.nativeElement, {
         shape: "circle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "top"
-        },
-        allowSkip: false
-      });
-      Showcaser.showcase("Dieser Kreis ist der Radius in dem deine Freunde gematcht werden können.", this.mapRef.nativeElement, {
-        shape: "circle",
-        buttonText: "Ok!",
-        position: {
-          horizontal: "center",
-          vertical: "middle"
-        },
-        allowSkip: false
-      });
-      Showcaser.showcase("Die Pins sind deine gematchten Freunde", this.mapRef.nativeElement, {
-        shape: "rectangle",
         buttonText: "Ok!",
         position: {
           horizontal: "center",
@@ -661,8 +647,8 @@ export class HomePage implements OnInit {
         close: () => {
           this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
             console.log(this.ps.user.custom.tutorialStage + "Yeahhh les go");
+            this.router.navigate(["profile"])
           });
-
         }
       });
     }
