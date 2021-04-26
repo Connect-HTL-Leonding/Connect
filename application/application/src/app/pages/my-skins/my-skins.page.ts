@@ -33,7 +33,6 @@ export class MySkinsPage implements OnInit {
 
   ngOnInit() {
     //async Skin loading
-    /*
     this.mySkinService.getMySkins().subscribe(
       data => {
 
@@ -52,7 +51,7 @@ export class MySkinsPage implements OnInit {
         console.log('Error');
       }
     )
-    */
+
     this.ps.getUser().subscribe(
       data => {
         console.log(data);
