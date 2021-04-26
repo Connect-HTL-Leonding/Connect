@@ -59,8 +59,17 @@ const routes: Routes = [
     canActivate: [AppAuthGuard]
   },
   {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule),
+    canActivate: [AppAuthGuard]
+  },
+  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
+  },
+  {
+    path: 'about',
+    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
   }
 
 

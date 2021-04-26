@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import { MyskinsService } from 'src/app/api/myskins.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { MyskinsService } from 'src/app/api/myskins.service';
 })
 export class SelectedSkinsPage implements OnInit {
 
-  constructor(public modalController: ModalController, public mySkinsService: MyskinsService) { }
+  constructor(public popoverController: PopoverController, public mySkinsService: MyskinsService) { }
 
   ngOnInit() {
     this.mySkinsService.getSelectedSkins().subscribe(data => {

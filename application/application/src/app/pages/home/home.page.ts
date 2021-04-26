@@ -62,6 +62,8 @@ export class HomePage implements OnInit {
 
   mySubscription;
 
+  toast: HTMLIonToastElement;
+
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
 
@@ -720,6 +722,13 @@ export class HomePage implements OnInit {
   }
 
   async presentToastWithOptions(data, msg) {
+    //überprüft ob schon ein taost aktiv ist
+    //wenn ja, toast schließen, dann neuen toast erstellen
+    //--> kein stack von toasts (:
+    try {
+      this.toast.dismiss();
+    } catch (e) { }
+
     var username = "";
     var buttonText = "Change Settings!"
     var header = "Sorry!"
@@ -729,15 +738,15 @@ export class HomePage implements OnInit {
       buttonText = "Chat now"
       username = data["username"];
     }
-    const toast = await this.toastController.create({
+    this.toast = await this.toastController.create({
       header: header,
       message: msg + ' ' + username,
       position: 'top',
-      duration: 2000,
+      duration: 5000,
       buttons: [
         {
-          side: 'end',
           text: buttonText,
+          side: "end",
           handler: () => {
             if (username == "") {
               this.router.navigate(["my-skins"])
@@ -748,7 +757,7 @@ export class HomePage implements OnInit {
         }
       ]
     });
-    toast.present();
+    this.toast.present();
   }
 
 }
@@ -810,10 +819,10 @@ class ClickEventHandler {
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
     console.log('you clicked on: ' + event.latLng.toString());
-    /*
+
     var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
     console.log(distance);
-    if(distance > 50) {
+    if (distance > 50) {
       this.ps.user.custom.position.lat = event.latLng.lat();
       this.ps.user.custom.position.lng = event.latLng.lng();
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
@@ -822,7 +831,6 @@ class ClickEventHandler {
         this.hp.doSend();
       });
     }
-    */
 
 
     // If the event has a placeId, use it.

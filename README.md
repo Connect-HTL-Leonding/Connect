@@ -18,9 +18,13 @@ entwickelt im Zuge des ITP-Unterrichts <br>
 
 ## Beschreibung
 
-Bisherige „Kennenlern-Apps“ sind speziell auf bestimmte Zielgruppen ausgelegt, verwenden aber grundsätzlich ähnliche Basissysteme. 
+Connect ist eine App, die Leute schnell und einfach zusammenbringt. Anhand von bestimmten Aktivitäten (Sport, Freizeit, Hobbies, …) kann man Menschen in seiner Nähe finden, mit denen man etwas unternehmen kann. 
+Jetzt kann man ganz leicht einen Mitspieler für die nächste Golfpartie finden oder sich gegenseitig beim Mittagessen Gesellschaft leisten. 
 
-Connect stellt dieses Basissystem zur Verfügung. Mithilfe von Filter beziehungsweise Skins kann die App dynamisch auf den Anwendungsbereich angepasst werden. 
+Connect ist keine Dating-App. Ihr könnt euch ohne Druck und Erwartungen treffen und einfach eine gute Zeit miteinander verbringen. 
+
+Connect verbindet Leute, die etwas gemeinsam unternehmen wollen. Wir glauben, dass jeder Mensch das Recht auf Gesellschaft hat. Darum verzichten wir auf oberflächliche Auswahlmethoden wie Profilbilder oder ähnliches und setzten auf das Zufallsprinzip. 
+Damit das auch funktioniert, wünschen wir uns von unseren Usern eine offene und tolerante Einstellung.
 
 <img src="design/readme_src/mockup.png" width="30%">
 

@@ -4,6 +4,11 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="profile"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['../about']">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,113 +23,52 @@
       <div class="mid" (click)="loadFromStorage()">
 
         <div class="pfpBox">
-          <img *ngIf="ps.user" class="pfp" src={{this.photoService.imgURL}}>
+          <div class="rounded">
+            <img *ngIf="ps.user" class="pfp" src={{this.photoService.imgURL}}>
+          </div>
+          <ion-badge class="new-photo" color="primary"><ion-icon name="camera"></ion-icon></ion-badge>
         </div>
-
-        <p class="changePfpText">Profilbild ändern</p>
       </div>
 
-      
-      <div class="edit-container">
-        <ion-label position="stacked" color="primary">Nutzername</ion-label>
+      <ion-list class="profile-list" lines="none">
+        <ion-list-header>
+          <p>Dein Profil</p>
+        </ion-list-header>
+        <ion-item>
+          <ion-label position="stacked" class="input-label" color="primary">Nutzername</ion-label>
           <ion-input *ngIf="ps.user" disabled [(ngModel)]="ps.user.userName"></ion-input>
-      </div>
-
-      <div style="overflow:scroll;" class="edit-container">
-        
-        <!--
-        <label>Beschreibung</label>
-        
-        <p *ngIf="ps.user" id="desc" contenteditable="true" >{{ps.user.desc}}</p>
-        -->
-
-        <ion-label position="stacked" color="primary">Beschreibung</ion-label>
-        <ion-input *ngIf="ps.user" placeholder="Hi my name is ..." [(ngModel)]="ps.user.custom.description"></ion-input>
-
-
-      </div>
-
-      <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Speichern</ion-button>
-
-    
-
-      <!--
-      <ion-list id="infos" lines="full">
-        <ion-item>
-          <ion-label position="stacked">Nutzername</ion-label>
-          <ion-input>Jan Donnerbauer</ion-input>
-
         </ion-item>
-
-        <ion-row>
-          <ion-col size="6">
-            <ion-label position="stacked">Vorname</ion-label>
-            <ion-input></ion-input>
-          </ion-col>
-          <ion-col size="6">
-            <ion-label position="stacked">Nachname</ion-label>
-            <ion-input></ion-input>
-          </ion-col>
-        </ion-row>
-
-        <ion-row>
-          <ion-col size="12">
-            <ion-label position="stacked">Geburtstag</ion-label>
-            <ion-input></ion-input>
-          </ion-col>
-        </ion-row>
-
         <ion-item>
-          <ion-label position="stacked">Description</ion-label>
-          <ion-textarea></ion-textarea>
+          <ion-label position="stacked" class="input-label" color="primary">Beschreibung</ion-label>
+          <ion-textarea *ngIf="ps.user" wrap="soft" autoGrow maxlength=200 placeholder="Hi my name is ..." [(ngModel)]="ps.user.custom.description">
+          </ion-textarea>
         </ion-item>
-          
-
+        <ion-item routerLink="../edit-profile-details">
+          <p>Andere Details bearbeiten</p>
+        </ion-item>
+        <ion-button id="save-button" shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">
+          Speichern</ion-button>
       </ion-list>
-      -->
+
+      <ion-list-header>
+        Fotogalerie
+      </ion-list-header>
+
+      <div class="photo-slider-con">
+
+        <div class="list_photos" no-bounce>
+
+          <ion-card (click)="addPhotoToGallery()">
+            <ion-icon style="color: var(--ion-color-secondary)" class="icon" name="add-circle-outline"></ion-icon>
+          </ion-card>
+
+          <ion-card *ngFor="let photo of photoService.photos; index as position">
+            <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
+          </ion-card>
 
 
 
-
-      <div [routerLink]="['../edit-profile-details']" style="margin-top:20px;" class="con">
-        <p>Andere Details bearbeiten</p>
-        <ion-icon class="icon" name="chevron-forward-outline"></ion-icon>
-      </div>
-
-      <div class="con">
-        <p>Benachrichtigungen</p>
-      </div>
-
-      <div style="color:grey;" class="con">
-        <p>Nachrichten</p>
-        <ion-toggle [(ngModel)]="nachrichten"></ion-toggle>
-      </div>
-
-      <div style="color:grey;" class="con">
-        <p>Connects</p>
-        <ion-toggle [(ngModel)]="connects"></ion-toggle>
-      </div>
-
-
-      <!--<ion-button color="secondary" size="default" shape="round" style="margin-top: 3vh;"
-    [routerLink]="['../edit-profile-details']">Anpassen</ion-button>-->
-
-    <div class="photo-slider-con">
-      <p style="left:0;">Über mich</p>
-     
-      <div class="list_photos" no-bounce>
-            
-              <ion-card (click)="addPhotoToGallery()">
-                <ion-icon style="color: var(--ion-color-secondary)" class="icon" name="add-circle-outline"></ion-icon>
-              </ion-card>
-              
-              <ion-card *ngFor="let photo of photoService.photos; index as position">
-                <ion-img class="photo" [src]="photo.webviewPath"></ion-img>
-              </ion-card> 
-            
-              
-           
-              <ion-card id="openModal" (click)="presentModal()">View all</ion-card>             
+          <ion-card id="openModal" (click)="presentModal()">View all</ion-card>
         </div>
       </div>
     </div>
