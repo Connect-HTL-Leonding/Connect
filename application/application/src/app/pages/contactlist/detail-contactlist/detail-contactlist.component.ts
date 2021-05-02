@@ -28,6 +28,7 @@ export class DetailContactlistComponent implements OnInit {
   dateNow = new Date();
   timeDisplayArr = [];
   timeDisplay: string = "";
+  public newMeetUp : boolean = false;
 
   constructor(public cs: ContactlistService, datePipe: DatePipe) {
     this.contactlist = cs;

@@ -65,4 +65,7 @@ export class ProfileService {
   updateUserTutorial(u: CustomUser) {
     return this.http.put(api.short + 'user/updateTutorial', u);
   }
+  skipTutorial(u: CustomUser){
+    return this.http.put(api.short + 'user/skipTutorial', u);
+  }
 }

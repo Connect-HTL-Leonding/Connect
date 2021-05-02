@@ -11,6 +11,7 @@ import org.keycloak.KeycloakPrincipal;
 import org.keycloak.representations.IDToken;
 
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.io.UnsupportedEncodingException;
@@ -125,11 +126,38 @@ public class UserService {
     public User updateTutorial() {
 
         //user-id
-        System.out.println(jwt.claim("sub"));
+        System.out.println(jwt.claim("sub") + "XDDD");
         User u = dbRepo.find(jwt.claim("sub"));
         u.setTutorialStage(u.getTutorialStage() + 1);
         return dbRepo.update(u);
     }
+
+    @PUT
+    @Path("skipTutorial")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User skipTutorial(){
+
+        System.out.println(jwt.claim("sub") + "BRUH123Bruh123");
+        User u = dbRepo.find(jwt.claim("sub"));
+        u.setTutorialStage(10);
+        System.out.println("TEST");
+        return dbRepo.update(u);
+    }
+
+    @Path("resetTutorial")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+    public String resetTutorial() {
+
+        System.out.println(jwt.claim("sub") + "Swwaaaag");
+        User u = dbRepo.find(jwt.claim("sub"));
+        u.setTutorialStage(0);
+        dbRepo.update(u);
+        return "Tutorial Reseted";
+    }
+
+
     /*
     @GET
     @Path("logout")

@@ -563,7 +563,7 @@ export class HomePage implements OnInit {
 
       console.log(this.ps.user.custom.position);
       this.ps.getUser().subscribe(data => {
-       
+
         this.ps.user.custom = data;
         this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
         console.log(this.ps.user.custom + "aslkfdlkajfdlk")
@@ -630,6 +630,7 @@ export class HomePage implements OnInit {
         this.ps.user.custom = data;
         console.log("westrzutqjhkgizfutetdzuz")
         console.log(this.ps.user);
+        var test = false;
         if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 0) {
           Showcaser.showcase("Das ist die Home Seite. Mit diesem Button wirst du dich später connecten können", this.connectButRef.nativeElement, {
             shape: "rectangle",
@@ -638,13 +639,19 @@ export class HomePage implements OnInit {
               horizontal: "center",
               vertical: "top"
             },
-            allowSkip: false,
-            close: () => {
-
-              this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
-                this.router.navigate(["profile"])
+            allowSkip: true,
+            skipText: "Skip!",
+            skip: () => {
+              this.ps.skipTutorial(this.ps.user.custom).subscribe(data => {
+                test = true;
               });
-
+            },
+            close: () => {
+              if (test) {
+                this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+                  this.router.navigate(["profile"])
+                });
+              }
             }
           });
         }
