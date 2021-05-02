@@ -9,7 +9,5 @@ export class MySkin {
         public niveau = 1,
         public selected = false,
         public showInMap = false
-    ) {
-
-    }
+    ) { }
 }

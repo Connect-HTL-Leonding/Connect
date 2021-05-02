@@ -22,17 +22,22 @@
         <h2>Suchradius</h2>
         <ion-range (mouseup)="change($event)" (touchend)="change($event)" [(ngModel)]="myskin.radius" min="1" max="10"
           step="1" pin color="secondary" id="suchradius">
+        </ion-range>
+        <div class="spacing">
           <ion-label class="range_label" slot="start">1km</ion-label>
           <ion-label class="range_label" slot="end">10km</ion-label>
-        </ion-range>
+        </div>
+
       </div>
       <div class="range_container">
         <h2>Alter</h2>
         <ion-range (mouseup)="change($event)" (touchend)="change($event)" [(ngModel)]="myskin.age" min="16" max="60" pin
           color="secondary" id="suchradius">
-          <ion-label class="range_label" slot="start">16 Jahre</ion-label>
-          <ion-label class="range_label" slot="end">60 Jahre</ion-label>
         </ion-range>
+        <div class="spacing">
+          <ion-label class="range_label" slot="start">16 Jahre</ion-label>
+          <ion-label class="range_label" slot="end">60+ Jahre</ion-label>
+        </div>
       </div>
 
       <ion-button shape="round" color="danger" class="remove" expand="block" (click)="removeSkin()">Remove</ion-button>

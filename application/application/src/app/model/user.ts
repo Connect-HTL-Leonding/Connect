@@ -7,7 +7,7 @@ export class User {
         public email: string = "",
         public firstname: string = "",
         public lastname: string = "",
-        public custom : CustomUser = new CustomUser()
+        public custom: CustomUser = new CustomUser()
     ) { }
 }
 
@@ -18,9 +18,7 @@ export class CustomUser {
         public tutorialStage: number = 0,
         public description: string = "",
         public gender: string = "",
-        public birthday : Date = null,
+        public birthday: Date = null,
         public position = new Position()
-        ) {
-
-    }
+    ) { }
 }

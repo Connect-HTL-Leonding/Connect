@@ -32,29 +32,15 @@
 
 </ion-header>
 
-
-
-
 <ion-content id="body" [fullscreen]="true">
 
-  <!--
-  <ion-buttons id="connect">
-    <ion-button>
-      <ion-icon name="cog-outline"></ion-icon>
-    </ion-button>
-  </ion-buttons>
-  -->
   <div #map id="map"></div>
 
   <div id="infowindow-content">
     <img id="place-icon" src="" />
     <span id="place-name"></span>
   </div>
-  <!--
- 
-    <div id="map_canvas">
-  </div>
-  -->
+
 </ion-content>
 <ion-footer>
 
@@ -62,20 +48,5 @@
     <img src="../../assets/connect_img/logo/connect_button.png">
   </div>
   <ion-icon id="center_map_button" (click)="centerMap()" name="locate"></ion-icon>
-  <!--
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button routerLink="/profile" routerDirection="forward">
-        <ion-icon slot="end" name="cog-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
-    <ion-buttons slot="end">
-      <ion-button routerLink="/contactlist" routerDirection="forward">
-        <ion-icon slot="start" name="chatbox-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-  -->
 
 </ion-footer>

@@ -3,6 +3,11 @@ body {
     color: var(--ion-color-primary);
 }
 
+#background {
+    height: 20vh;
+    background-color: var(--ion-color-primary)
+}
+
 
 .mid {
     display: flex;

@@ -4,6 +4,7 @@
     .range_container {
         display: flex;
         flex-direction: column;
+        margin-bottom: 10px;
 
         .range_label {
             font-size: 12px;
@@ -16,18 +17,20 @@
         ion-range {
             padding: 0;
             display: flex;
-
-            ion-label {
-                width: 55px;
-            }
         }
 
-        
+        .spacing {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
     }
 }
 
 .remove {
-    margin: 25px 50px 0;     
+    margin: 25px 50px 0;
 }
 
 ion-card-header {

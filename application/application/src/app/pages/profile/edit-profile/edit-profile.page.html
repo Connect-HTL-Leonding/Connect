@@ -13,9 +13,9 @@
 </ion-header>
 
 <ion-content fullscreen>
-  
+
   <div class="wrapper">
-    <div style="height: 150px; width: 100%; background-color:var(--ion-color-primary)"></div>
+    <div id="background"></div>
     <!--
 
     -->
@@ -26,7 +26,9 @@
           <div class="rounded">
             <img *ngIf="ps.user" class="pfp" src={{this.photoService.imgURL}}>
           </div>
-          <ion-badge class="new-photo" color="primary"><ion-icon name="camera"></ion-icon></ion-badge>
+          <ion-badge class="new-photo" color="primary">
+            <ion-icon name="camera"></ion-icon>
+          </ion-badge>
         </div>
       </div>
 
@@ -40,13 +42,15 @@
         </ion-item>
         <ion-item>
           <ion-label position="stacked" class="input-label" color="primary">Beschreibung</ion-label>
-          <ion-textarea *ngIf="ps.user" wrap="soft" autoGrow maxlength=200 placeholder="Hi my name is ..." [(ngModel)]="ps.user.custom.description">
+          <ion-textarea *ngIf="ps.user" wrap="soft" autoGrow maxlength=200 placeholder="Hi my name is ..."
+            [(ngModel)]="ps.user.custom.description" (ngModelChange)="colorButton()">
           </ion-textarea>
         </ion-item>
         <ion-item routerLink="../edit-profile-details">
           <p>Andere Details bearbeiten</p>
         </ion-item>
-        <ion-button id="save-button" shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">
+        <ion-button id="save-button" shape="round" color="primary" [disabled]="changes" expand="block"
+          (click)="updateUser(ps.user)">
           Speichern</ion-button>
       </ion-list>
 

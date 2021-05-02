@@ -21,36 +21,9 @@ export class CategoryService {
   constructor(http: HttpClient, private keyCloakService: KeycloakService) {
     this.http = http;
     this.categories = [];
-    //this.generateCategories();
   }
 
-  generateCategories(){
-
-    c = new Category();
-    c.id = 0;
-    c.title = "All";
-    
-    console.log(c)
-    this.categories.push(c);
-
-    var c = new Category();
-    
-    c.id = 1;
-    c.title = "Sport";
-    
-    console.log(c)
-    this.categories.push(c);
-
-    c = new Category();
-    
-    c.id = 2;
-    c.title = "Freizeit";
-    
-    console.log(c)
-    this.categories.push(c);
-    
-  }
-
+  //Findet Kategorie anhand des Suchbegriffs im Suchfeld
   findCategory(s: string): any{
     let foundCat = this.categories[0];
 

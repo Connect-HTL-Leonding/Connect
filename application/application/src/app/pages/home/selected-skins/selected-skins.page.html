@@ -9,7 +9,8 @@
       </ion-label>
       <ion-checkbox [(ngModel)]="mySkin.showInMap"></ion-checkbox>
     </ion-item>
-    <ion-item *ngIf="mySkinsService.selectedMySkins.length <= 0" routerLink="my-skins" (click)="popoverController.dismiss()">
+    <ion-item *ngIf="mySkinsService.selectedMySkins.length <= 0" routerLink="my-skins"
+      (click)="popoverController.dismiss()">
       <ion-label class="ion-text-wrap">
         <h2>Zuerst Skin-Favoriten zu deinem Profil hinzufügen!</h2>
       </ion-label>

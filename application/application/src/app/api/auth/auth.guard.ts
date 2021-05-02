@@ -10,7 +10,6 @@ export class AppAuthGuard extends KeycloakAuthGuard {
 
   //checked, ob Nutzer angemeldet ist, wenn nicht --> login
   isAccessAllowed(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
-    console.log("klasdjfklasjdklfjslka")
     return new Promise(async (resolve, reject) => {
 
       //wenn nicht eingeloggt --> einlogg versuch

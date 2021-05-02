@@ -16,14 +16,14 @@ import { KeycloakService } from 'keycloak-angular';
 })
 export class EditProfilePage implements OnInit {
 
-  user;
   imgURL;
- 
-  noImgs : boolean;
+  changes = true;
 
-  constructor(public ps: ProfileService,  public modalController: ModalController, public photoService: PhotoService, public keycloakService : KeycloakService) { }
+  noImgs: boolean;
 
- 
+  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService, public keycloakService: KeycloakService) { }
+
+
 
   slideOpts = {
     //initialSlide: 0,
@@ -31,6 +31,11 @@ export class EditProfilePage implements OnInit {
     slidesPerView: 1,
     speed: 400
   };
+
+  colorButton(){
+    console.log(this.changes)
+    this.changes = false;
+  }
 
   addPhotoToGallery() {
     try {
@@ -46,18 +51,17 @@ export class EditProfilePage implements OnInit {
 
 
   ngOnInit() {
-    this.user = this.keycloakService.getKeycloakInstance().userInfo;
 
-
+    this.changes = true;
 
     this.ps.getUser().subscribe(
       data => {
 
         console.log(data);
         this.ps.user.custom = data;
-        
 
-       
+
+
         this.photoService.loadPfp();
         this.photoService.loadGalleryImages();
         console.log("Images loaded.")
@@ -80,7 +84,6 @@ export class EditProfilePage implements OnInit {
     //console.log(u.desc)
     //u.desc = document.getElementById("desc").innerText;
     console.log(u.custom.description)
-
     this.ps.updateUser(u.custom).subscribe(data => {
       //nach unpdate erneutes getAll
       this.ngOnInit();
@@ -88,7 +91,7 @@ export class EditProfilePage implements OnInit {
   }
 
   async presentModal() {
-    
+
     const modal = await this.modalController.create({
       component: PhotogalleryPage
     });

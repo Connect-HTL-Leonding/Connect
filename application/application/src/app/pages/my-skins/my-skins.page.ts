@@ -170,11 +170,11 @@ export class MySkinsPage implements OnInit {
   async presentToastWithOptions(newMySkin: MySkin, msg) {
     const toast = await this.toastController.create({
       header: 'Skin ' + newMySkin.skin.title + ' ' + msg,
-      message: 'Click to Close',
+      message: 'Zum Schließen Klicken',
       position: 'top',
       buttons: [
         {
-          text: 'Done',
+          text: 'Close',
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');

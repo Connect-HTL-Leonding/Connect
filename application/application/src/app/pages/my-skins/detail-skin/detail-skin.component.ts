@@ -19,50 +19,30 @@ export class DetailSkinComponent implements OnInit {
 
   constructor(public router: Router, public ps: ProfileService) { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() { }
 
-  
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "data" changed
     if (changes['skin']) {
       console.log("fjldsj")
     }
   }
-  
 
   //Event wenn Skin löschen
   removeSkin() {
     this.deleted.emit();
   }
 
-  change(e){
+  //Change-Event
+  change(e) {
     //console.log(this.skin)
     this.updated.emit();
   }
 
-  selected(){
+  //Select-Event
+  selected() {
     this.myskin.selected = !this.myskin.selected;
     this.updated.emit();
-    /*
-    this.ps.getUser().subscribe(
-      data => {
-        console.log(data);
-        this.ps.user.custom = data;
-        console.log("westrzutqjhkgizfutetdzuz")
-        console.log(this.ps.user)
-        //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
-      }
-    )
-    if(this.ps.user.custom.tutorialStage == 5){
-      this.ps.updateUserTutorial(this.ps.user).subscribe(data => {
-        this.router.navigate(["home"])
-      });
-    } */
   }
 
 }

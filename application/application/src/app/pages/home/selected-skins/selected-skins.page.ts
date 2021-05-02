@@ -12,18 +12,20 @@ export class SelectedSkinsPage implements OnInit {
   constructor(public popoverController: PopoverController, public mySkinsService: MyskinsService) { }
 
   ngOnInit() {
+    //Selektierte (Herz-Symbol) Skins werden geholt
     this.mySkinsService.getSelectedSkins().subscribe(data => {
       this.mySkinsService.selectedMySkins = data;
     })
   }
 
-  toggle(mySkin){
+  //User will, dass Skin auf der Map angezeigt wird, oder eben nicht mehr
+  toggle(mySkin) {
     console.log(mySkin.showInMap)
     this.mySkinsService.updateSkin(mySkin).subscribe(data => {
       //nach unpdate erneutes getAll
       this.mySkinsService.getMySkins().subscribe(
         data => {
-          
+
           this.mySkinsService.myskins = data;
           this.mySkinsService.getCurrentSkin();
 

@@ -9,7 +9,5 @@ export class Skin {
         public radius = 0,
         public age = 0,
         public niveau = 0
-    ) {
-
-    }
+    ) { }
 }

@@ -1,7 +1,6 @@
-
 export class Room {
 
-    unread:boolean;
+    unread: boolean;
 
     constructor(
         public id = 0,
@@ -9,5 +8,5 @@ export class Room {
         public created: Date = new Date(),
         public updated: Date = new Date()
         //public time: IonDatetime
-    ) {}
+    ) { }
 }
