@@ -178,3 +178,8 @@ div#messageFlex {
     font-size:small;
     opacity: 0.8;
 }
+
+ion-popover.fullscreen {
+    width: 900px;
+    max-width: 100%;
+}

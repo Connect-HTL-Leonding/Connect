@@ -9,6 +9,8 @@ import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { KeycloakService } from 'keycloak-angular';
 import { api } from 'src/app/app.component';
+import { PopoverController } from '@ionic/angular';
+import { MeetupDataPage } from '../meetup-data/meetup-data.page';
 
 
 
@@ -47,7 +49,7 @@ export class ChatPage implements OnInit {
 
   
 
-  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService) {
+  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService, public popoverController: PopoverController) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
@@ -64,6 +66,21 @@ export class ChatPage implements OnInit {
     this.doConnect();    
   
   }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: MeetupDataPage,
+      cssClass : "fullscreen",
+      event: ev,
+      translucent: true
+    });
+    await popover.present();
+
+    const { role } = await popover.onDidDismiss();
+    console.log('onDidDismiss resolved with role', role);
+  }
+
+  
 
   yousent(message:Message) : boolean {
     return message.user.id == this.keycloakService.getKeycloakInstance().subject;

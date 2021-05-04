@@ -70,7 +70,11 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
+  },  {
+    path: 'meetup-data',
+    loadChildren: () => import('./pages/meetup-data/meetup-data.module').then( m => m.MeetupDataPageModule)
   }
+
 
 
 
