@@ -70,14 +70,12 @@ export class ChatPage implements OnInit {
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: MeetupDataPage,
+      componentProps: {otherUser: this.otherUser},
       cssClass : "fullscreen",
       event: ev,
       translucent: true
     });
     await popover.present();
-
-    const { role } = await popover.onDidDismiss();
-    console.log('onDidDismiss resolved with role', role);
   }
 
   
