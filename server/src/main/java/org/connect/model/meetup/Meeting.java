@@ -1,8 +1,11 @@
 package org.connect.model.meetup;
 
+import org.connect.model.user.User;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -13,6 +16,10 @@ public class Meeting implements Serializable {
     @GeneratedValue
     private long id;
     private LocalDateTime time;
+
+   @ManyToOne
+   private User creator;
+
 
     public Meeting(){
 
@@ -32,5 +39,13 @@ public class Meeting implements Serializable {
 
     public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 }
