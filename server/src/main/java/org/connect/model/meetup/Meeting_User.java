@@ -21,8 +21,18 @@ public class Meeting_User implements Serializable {
     @ManyToOne
     private User user;
 
+    private boolean accepted;
+
     public Meeting_User() {
 
+    }
+
+    public boolean isAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        this.accepted = accepted;
     }
 
     public long getId() {
