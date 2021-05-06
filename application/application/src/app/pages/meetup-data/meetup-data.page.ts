@@ -2,9 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { api } from '../../app.component'
-import { Meetup } from 'src/app/model/meetup';
+import { Meeting } from 'src/app/model/meetup';
 import {ProfileService} from '../../api/profile.service';
 import { MeetupPage } from '../meetup/meetup.page';
+import { MeetupService } from 'src/app/api/meetup.service';
 
 
 @Component({
@@ -20,11 +21,12 @@ export class MeetupDataPage implements OnInit {
   public day = null;
   public timeOfDay = null;
   public time : Date= null;
-  public meetup: Meetup;
+  public meetup: Meeting;
   public profileservice;
+  ms : MeetupService;
 
-  constructor(private popoverController: PopoverController, http: HttpClient, profileservice : ProfileService) {
-    this.http = http;
+  constructor(private popoverController: PopoverController, profileservice : ProfileService, ms:MeetupService) {
+    this.ms = ms;
     this.profileservice = profileservice;
    }
 
@@ -41,23 +43,21 @@ export class MeetupDataPage implements OnInit {
     this.time.setUTCHours(new Date(this.timeOfDay).getHours());
     this.time.setUTCMinutes(new Date(this.timeOfDay).getMinutes());
     this.time.setUTCSeconds(new Date(this.timeOfDay).getSeconds());
-    this.meetup = new Meetup(this.time, this.position);
+    this.meetup = new Meeting(this.time, this.position);
     console.log(this.meetup);
-    
-    this.http.post(api.url + 'meetup/create/', this.meetup).subscribe(data=> {
+
+    this.ms.createMeetup(this.meetup).subscribe(data=> {
       console.log(data);
       let dataForPost = {
         meeting: data,
         user_id: this.otherUser.id,
         accepted: false
       }
-      this.http.post(api.url + 'meetup/setOtherUser/', dataForPost).subscribe(data=> {
+      this.ms.setOtherUser(dataForPost).subscribe(data=> {
         console.log(data);
         this.dismissAll();
       })
-    })
-  
-   
+    })   
   }
 
   async dismissPopover() {

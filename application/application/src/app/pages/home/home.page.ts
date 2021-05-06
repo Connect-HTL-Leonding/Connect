@@ -26,6 +26,8 @@ import { MySkin } from 'src/app/model/myskin';
 import { ProfilePage } from '../profile/profile.page';
 import { KeycloakService } from 'keycloak-angular';
 import { IonicModule } from '@ionic/angular'
+import { MeetupService } from 'src/app/api/meetup.service';
+import { Meeting } from 'src/app/model/meetup';
 
 /*
 import {
@@ -53,6 +55,7 @@ export class HomePage implements OnInit {
   navigate: any;
   map: any;
   friendMarkers = [];
+  meetupMarkers = [];
   userDot: google.maps.Circle;
   skinRadi = [];
   friendProfile: ProfilePage;
@@ -81,7 +84,8 @@ export class HomePage implements OnInit {
     public contactService: ContactlistService,
     public modalController: ModalController,
     public router: Router,
-    public ts: TutorialService) {
+    public ts: TutorialService,
+    public meetupService:MeetupService) {
 
     this.sideMenu();
 
@@ -291,12 +295,12 @@ export class HomePage implements OnInit {
 
 
   //Funktion für Meetup marker
-  createMeetupMarker(source, origin) {
+  createMeetupMarker(m:Meeting) {
     var canvas = document.createElement('canvas');
     canvas.width = 35;
     canvas.height = 62;
     var ctx = canvas.getContext('2d');
-    var image1 = source;
+    var image1 = "";
     var image = new Image();
     var compositeImage;
 
@@ -335,7 +339,7 @@ export class HomePage implements OnInit {
     console.log(compositeImage)
 
     var marker = new google.maps.Marker({
-      position: origin,
+      position: m.position,
       title: "Jan",
       map: this.map,
       icon: compositeImage
@@ -353,6 +357,15 @@ export class HomePage implements OnInit {
     return null;
   }
 
+  displayMeetups() {
+    this.meetupService.getMeetups().subscribe(data => {
+      var meetups = data;
+
+      meetups.forEach((m) => {
+        this.createMeetupMarker(m);
+      })
+    }) 
+  }
 
   //iterate through friends in Friendship-Table
   displayFriends() {
@@ -577,6 +590,7 @@ export class HomePage implements OnInit {
 
           this.createMySkinRaduis();
           this.displayFriends();
+          this.displayMeetups();
 
 
 
