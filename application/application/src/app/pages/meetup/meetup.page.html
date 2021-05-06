@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <div id="toolbar">
+    <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
+    <ion-title>choose location</ion-title>
+    <ion-icon id="button" name="arrow-forward-outline" (click)="presentPopover()"></ion-icon>
+    
+  </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div #map id="map">
+    test
+  </div>
+  
+
+  <div id="infowindow-content">
+    <img id="place-icon" src="" />
+    <span id="place-name"></span>
+  </div>
+</ion-content>
+
+<ion-footer>
+
+  <!--<div id="meetup_button" (click)="presentPopover()">
+    <span>meetup details</span>
+  </div>
+  -->
+  <ion-icon id="center_map_button" (click)="centerMap()" name="locate"></ion-icon>
+
+</ion-footer>

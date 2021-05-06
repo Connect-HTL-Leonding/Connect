@@ -11,6 +11,7 @@ import { KeycloakService } from 'keycloak-angular';
 import { api } from 'src/app/app.component';
 import { PopoverController } from '@ionic/angular';
 import { MeetupDataPage } from '../meetup-data/meetup-data.page';
+import { MeetupPage } from '../meetup/meetup.page';
 
 
 
@@ -39,6 +40,7 @@ export class ChatPage implements OnInit {
   chatservice;
   wsUri;
   oauthService;
+  modal;
   public allMessages;
   public seenMessages;
   public unseenMessages;
@@ -67,18 +69,18 @@ export class ChatPage implements OnInit {
   
   }
 
-  async presentPopover(ev: any) {
-    const popover = await this.popoverController.create({
-      component: MeetupDataPage,
-      componentProps: {otherUser: this.otherUser},
-      cssClass : "fullscreen",
-      event: ev,
-      translucent: true
+  async presentModal(room:Room) {
+    this.modal = await this.modalController.create({
+      component: MeetupPage,
+      componentProps: {
+        'otherUser': this.otherUser
+      }
     });
-    await popover.present();
+    
+    this.modal.onDidDismiss().then((data => {
+    }))
+    return await this.modal.present();
   }
-
-  
 
   yousent(message:Message) : boolean {
     return message.user.id == this.keycloakService.getKeycloakInstance().subject;

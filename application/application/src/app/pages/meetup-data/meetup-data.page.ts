@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { api } from '../../app.component'
 import { Meetup } from 'src/app/model/meetup';
 import {ProfileService} from '../../api/profile.service';
+import { MeetupPage } from '../meetup/meetup.page';
 
 
 @Component({
@@ -12,6 +13,8 @@ import {ProfileService} from '../../api/profile.service';
   styleUrls: ['./meetup-data.page.scss'],
 })
 export class MeetupDataPage implements OnInit {
+
+  
 
   public http;
   public day = null;
@@ -26,6 +29,8 @@ export class MeetupDataPage implements OnInit {
    }
 
    @Input() otherUser;
+   @Input() position;
+   @Input() mp:MeetupPage;
 
   ngOnInit() {
     console.log(this.otherUser);
@@ -36,7 +41,7 @@ export class MeetupDataPage implements OnInit {
     this.time.setUTCHours(new Date(this.timeOfDay).getHours());
     this.time.setUTCMinutes(new Date(this.timeOfDay).getMinutes());
     this.time.setUTCSeconds(new Date(this.timeOfDay).getSeconds());
-    this.meetup = new Meetup(this.time);
+    this.meetup = new Meetup(this.time, this.position);
     console.log(this.meetup);
     
     this.http.post(api.url + 'meetup/create/', this.meetup).subscribe(data=> {
@@ -48,6 +53,7 @@ export class MeetupDataPage implements OnInit {
       }
       this.http.post(api.url + 'meetup/setOtherUser/', dataForPost).subscribe(data=> {
         console.log(data);
+        this.dismissAll();
       })
     })
   
@@ -56,5 +62,10 @@ export class MeetupDataPage implements OnInit {
 
   async dismissPopover() {
     await this.popoverController.dismiss();
+ 
+  }
+  async dismissAll() {
+    await this.popoverController.dismiss();
+    this.mp.dismissModal();
   }
 }
