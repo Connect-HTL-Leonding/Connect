@@ -20,7 +20,7 @@ public class Meeting_User implements Serializable {
 
     String user_id;
 
-    private boolean accepted = false;
+    private boolean accepted = true;
 
     public Meeting_User() {
 

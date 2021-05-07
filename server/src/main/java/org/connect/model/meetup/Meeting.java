@@ -9,12 +9,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Entity
+@NamedQuery(name = Meeting.FINDALL, query = "select m from Meeting m where m.creator.id = :user_id")
 public class Meeting implements Serializable {
 
     @Id
     @GeneratedValue
     private long id;
     private LocalDateTime time;
+
+    public static final String FINDALL = "Meeting.findAll";
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "meetup_position_mapping",

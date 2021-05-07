@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 public class MeetUpRepository {
@@ -34,5 +37,12 @@ public class MeetUpRepository {
     }
 
 
-
+    @Transactional
+    public List<Meeting> getMeetups(Optional user_id) {
+        List<Meeting> list;
+        TypedQuery<Meeting> query = em.createNamedQuery(Meeting.FINDALL, Meeting.class);
+        query.setParameter("user_id", user_id.get().toString());
+        list = query.getResultList();
+        return list;
+    }
 }
