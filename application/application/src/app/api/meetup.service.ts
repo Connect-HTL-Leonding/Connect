@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Meeting } from '../model/meetup';
+import { Meeting, MeetupUser } from '../model/meetup';
 import { api } from '../app.component';
 
 @Injectable({
@@ -23,7 +23,11 @@ export class MeetupService {
   }
 
   getMeetups() {
-    return this.http.get<Meeting[]>(api.url + 'meetup/getMeetups/')
+    return this.http.get<Meeting[]>(api.url + 'meetup/getMeetups/');
+  }
+
+  getMeetupUser(id) {
+    return this.http.get<MeetupUser[]>(api.url + 'meetup/getMeetupUser/' + id);
   }
 
 

@@ -27,7 +27,8 @@ import { ProfilePage } from '../profile/profile.page';
 import { KeycloakService } from 'keycloak-angular';
 import { IonicModule } from '@ionic/angular'
 import { MeetupService } from 'src/app/api/meetup.service';
-import { Meeting } from 'src/app/model/meetup';
+import { Meeting, MeetupUser } from 'src/app/model/meetup';
+import { MeetupDataShowPage } from './meetup-data-show/meetup-data-show.page';
 
 /*
 import {
@@ -295,57 +296,78 @@ export class HomePage implements OnInit {
 
 
   //Funktion für Meetup marker
-  createMeetupMarker(m:Meeting) {
-    var canvas = document.createElement('canvas');
-    canvas.width = 35;
-    canvas.height = 62;
-    var ctx = canvas.getContext('2d');
-    var image1 = "";
-    var image = new Image();
-    var compositeImage;
+  createMeetupMarker(m:Meeting, mu: MeetupUser) {
+    this.ps.findFriendUser(mu.user_id).subscribe(data => {
+      var meetupuser = data;
+      this.ps.friendCustomData(mu.user_id).subscribe(data => {
 
-    image.src = image1;
+        meetupuser.custom = data;
 
-    ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
+        var canvas = document.createElement('canvas');
+        canvas.width = 35;
+        canvas.height = 62;
+        var ctx = canvas.getContext('2d');
+        var image1 = meetupuser.custom.profilePicture;
+        var image = new Image();
+        var compositeImage;
 
-    // only draw image where mask is
-    ctx.globalCompositeOperation = 'destination-in';
+        image.src = image1;
 
-    // draw our circle mask
-    ctx.fillStyle = '#000';
-    ctx.beginPath();
-    ctx.arc(
-      14.8 + 2.4725,          // x
-      14.8 + 2.9421,          // y
-      14.8,          // radius
-      0,                  // start angle
-      2 * Math.PI         // end angle
-    );
-    ctx.fill();
+        ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
 
-    // restore to default composite operation (is draw over current image)
-    ctx.globalCompositeOperation = 'source-over';
+        // only draw image where mask is
+        ctx.globalCompositeOperation = 'destination-in';
+
+        // draw our circle mask
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(
+          14.8 + 2.4725,          // x
+          14.8 + 2.9421,          // y
+          14.8,          // radius
+          0,                  // start angle
+          2 * Math.PI         // end angle
+        );
+        ctx.fill();
+
+        // restore to default composite operation (is draw over current image)
+        ctx.globalCompositeOperation = 'source-over';
 
 
-    var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+        var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
 
 
-    ctx.fillStyle = '#db3d3d';
-    ctx.fill(path);
+        ctx.fillStyle = '#db3d3d';
+        ctx.fill(path);
 
-    compositeImage = canvas.toDataURL("image/png");
+        compositeImage = canvas.toDataURL("image/png");
 
-    canvas.remove();
-    console.log(compositeImage)
+        canvas.remove();
+        console.log(compositeImage)
 
-    var marker = new google.maps.Marker({
-      position: m.position,
-      title: "Jan",
-      map: this.map,
-      icon: compositeImage
+        var marker = new google.maps.Marker({
+          position: m.position,
+          title: mu.user_id,
+          map: this.map,
+          icon: compositeImage
+        });
+
+        marker.addListener("click", () => {
+            this.presentMeetupPopover(event, m, meetupuser);      
+        });
+      })
+    })
+  }
+
+  async presentMeetupPopover(ev: any, m, u) {
+    const popover = await this.popoverController.create({
+      component: MeetupDataShowPage,
+      componentProps: {meetup: m, user:u},
+      cssClass: 'my-custom-class',
+      event: ev,
+      translucent: true
     });
-
-
+    return await popover.present();
   }
 
 
@@ -362,7 +384,11 @@ export class HomePage implements OnInit {
       var meetups = data;
 
       meetups.forEach((m) => {
-        this.createMeetupMarker(m);
+        this.meetupService.getMeetupUser(m.id).subscribe(data => {
+          data.forEach((mu) => {
+            this.createMeetupMarker(m, mu);
+          })
+        })
       })
     }) 
   }

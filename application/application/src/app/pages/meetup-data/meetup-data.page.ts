@@ -44,7 +44,7 @@ export class MeetupDataPage implements OnInit {
     this.time.setUTCHours(new Date(this.timeOfDay).getHours());
     this.time.setUTCMinutes(new Date(this.timeOfDay).getMinutes());
     this.time.setUTCSeconds(new Date(this.timeOfDay).getSeconds());
-    this.meetup = new Meeting(this.time, this.position);
+    this.meetup = new Meeting(0, this.time, this.position);
     console.log(this.meetup);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {

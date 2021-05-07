@@ -10,10 +10,7 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.TypedQuery;
 import javax.print.attribute.standard.Media;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,5 +43,11 @@ public class MeetUpService {
     @Path("getMeetups")
     public List<Meeting> getMeetups() {
         return repo.getMeetups(jwt.claim("sub"));
+    }
+
+    @GET
+    @Path("getMeetupUser/{id}")
+    public List<Meeting_User> getMeetupUser(@PathParam("id") long id) {
+        return repo.getMeetupUser(id);
     }
 }

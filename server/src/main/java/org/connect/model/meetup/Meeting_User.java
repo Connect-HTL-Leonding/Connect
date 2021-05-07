@@ -2,18 +2,18 @@ package org.connect.model.meetup;
 
 import org.connect.model.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@NamedQuery(name = Meeting_User.FINDUSER, query = "select m from Meeting_User m where m.meeting.id = :meeting_id")
 public class Meeting_User implements Serializable {
 
     @Id
     @GeneratedValue
     private long id;
+
+    public static final String FINDUSER = "Meeting_User.findUser";
 
     @ManyToOne
     private Meeting meeting;

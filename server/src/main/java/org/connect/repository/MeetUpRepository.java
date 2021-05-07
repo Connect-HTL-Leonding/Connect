@@ -45,4 +45,13 @@ public class MeetUpRepository {
         list = query.getResultList();
         return list;
     }
+
+    @Transactional
+    public List<Meeting_User> getMeetupUser(long id) {
+        TypedQuery<Meeting_User> query = em.createNamedQuery(Meeting_User.FINDUSER, Meeting_User.class);
+        query.setParameter("meeting_id", id);
+        List<Meeting_User> list = query.getResultList();
+
+        return list;
+    }
 }
