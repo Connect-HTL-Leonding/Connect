@@ -24,6 +24,7 @@ export class MeetupDataPage implements OnInit {
   public meetup: Meeting;
   public profileservice;
   ms : MeetupService;
+  minDate: string = new Date().toISOString();
 
   constructor(private popoverController: PopoverController, profileservice : ProfileService, ms:MeetupService) {
     this.ms = ms;
@@ -47,14 +48,12 @@ export class MeetupDataPage implements OnInit {
     console.log(this.meetup);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {
-      console.log(data);
       let dataForPost = {
         meeting: data,
         user_id: this.otherUser.id,
         accepted: false
       }
       this.ms.setOtherUser(dataForPost).subscribe(data=> {
-        console.log(data);
         this.dismissAll();
       })
     })   
