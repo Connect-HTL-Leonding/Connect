@@ -2,12 +2,11 @@ package org.connect.model.meetup;
 
 import org.connect.model.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 public class Meeting implements Serializable {
@@ -16,6 +15,13 @@ public class Meeting implements Serializable {
     @GeneratedValue
     private long id;
     private LocalDateTime time;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "meetup_position_mapping",
+            joinColumns = {@JoinColumn(name = "meetup_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "latlng")
+    @Column(name = "degrees")
+    Map<String,Double> position = new HashMap<>();
 
    @ManyToOne
    private User creator;
@@ -47,5 +53,13 @@ public class Meeting implements Serializable {
 
     public void setCreator(User creator) {
         this.creator = creator;
+    }
+
+    public Map<String, Double> getPosition() {
+        return position;
+    }
+
+    public void setPosition(Map<String, Double> position) {
+        this.position = position;
     }
 }

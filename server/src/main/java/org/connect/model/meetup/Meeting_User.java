@@ -18,10 +18,9 @@ public class Meeting_User implements Serializable {
     @ManyToOne
     private Meeting meeting;
 
-    @ManyToOne
-    private User user;
+    String user_id;
 
-    private boolean accepted;
+    private boolean accepted = false;
 
     public Meeting_User() {
 
@@ -51,11 +50,11 @@ public class Meeting_User implements Serializable {
         this.meeting = meeting;
     }
 
-    public User getUser() {
-        return user;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 }

@@ -7,15 +7,15 @@
 <ion-content>
   <ion-item>
     <ion-label>Tag</ion-label>
-    <ion-datetime displayFormat="MM DD YY" placeholder=""></ion-datetime>
+    <ion-datetime [min]="minDate" max="2099-10-31" [(ngModel)]="day" displayFormat="MM DD YY" placeholder=""></ion-datetime>
   </ion-item>
   <ion-item>
     <ion-label>Uhrzeit</ion-label>
-    <ion-datetime displayFormat="HH:mm"></ion-datetime>
+    <ion-datetime max="2099-10-31" [(ngModel)]="timeOfDay" displayFormat="HH:mm"></ion-datetime>
   </ion-item>
   <div class="buttonBox">
     <ion-button (click)="dismissPopover()" fill="outline" size="small">Cancel</ion-button>
-    <ion-button size="small">Next</ion-button>
+    <ion-button (click)="createMeeting()" size="small">Finish</ion-button>
   </div>
   
 

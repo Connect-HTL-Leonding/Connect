@@ -6,6 +6,7 @@ org\connect\model\chat\MessageSeen.class
 org\connect\model\image\Image.class
 org\connect\repository\ChatRepository.class
 META-INF\panache-archive.marker
+org\connect\model\meetup\Meeting.class
 org\connect\model\chat\Room.class
 org\connect\repository\CategoryRepository.class
 org\connect\repository\MessageRepository.class
@@ -15,7 +16,10 @@ org\connect\service\ChatService.class
 WS\ChatSocket.class
 WS\ContactlistSocket.class
 org\connect\repository\UserRepository.class
+org\connect\service\MeetUpService.class
 WS\MapSocket.class
+org\connect\repository\MeetUpRepository.class
+org\connect\model\meetup\Meeting_User.class
 org\connect\service\MessageService.class
 org\connect\service\ImageService.class
 org\connect\repository\ImageRepository.class

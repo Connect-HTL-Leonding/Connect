@@ -73,6 +73,10 @@ const routes: Routes = [
   },  {
     path: 'meetup-data',
     loadChildren: () => import('./pages/meetup-data/meetup-data.module').then( m => m.MeetupDataPageModule)
+  },
+  {
+    path: 'meetup',
+    loadChildren: () => import('./pages/meetup/meetup.module').then( m => m.MeetupPageModule)
   }
 
 
