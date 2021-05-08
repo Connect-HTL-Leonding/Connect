@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ContactlistService } from 'src/app/api/contactlist.service';
+import { MeetupService } from 'src/app/api/meetup.service';
 import { User } from 'src/app/model/user';
 import { Room } from '../../../model/room';
 import { formatDate } from '@angular/common';
@@ -29,10 +30,13 @@ export class DetailContactlistComponent implements OnInit {
   timeDisplayArr = [];
   timeDisplay: string = "";
   public newMeetUp : boolean = false;
+  public ms;
 
-  constructor(public cs: ContactlistService, datePipe: DatePipe) {
+  constructor(public cs: ContactlistService, datePipe: DatePipe, ms: MeetupService) {
     this.contactlist = cs;
     this.datePipe = datePipe;
+    this.ms = ms;
+    this.newMeetUp = false;
   }
 
   ngOnInit() {
@@ -46,7 +50,12 @@ export class DetailContactlistComponent implements OnInit {
       this.user.custom = data;
       this.pfp = "data:image/png;base64," + atob(this.user.custom.profilePicture);
 
-
+      this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
+        console.log(data);
+        if(data.length != 0) {
+          this.newMeetUp = true;
+        }
+      })
 
       console.log(this.user)
       this.contactlist.getKeyUser(this.user.custom).subscribe(data => {
@@ -66,7 +75,8 @@ export class DetailContactlistComponent implements OnInit {
       });
       */
     })
-
+    
+   
   }
 
 

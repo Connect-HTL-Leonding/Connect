@@ -45,6 +45,12 @@ public class MeetUpService {
         return repo.getMeetups(jwt.claim("sub"));
     }
 
+    @POST
+    @Path("getMeetupsWithMe")
+    public List<Meeting> getMeetupsWithMe(String id) {
+        return repo.getMeetUpsWithMe(jwt.claim("sub"),id);
+    }
+
     @GET
     @Path("getMeetupUser/{id}")
     public List<Meeting_User> getMeetupUser(@PathParam("id") long id) {

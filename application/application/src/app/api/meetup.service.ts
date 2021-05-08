@@ -26,6 +26,10 @@ export class MeetupService {
     return this.http.get<Meeting[]>(api.url + 'meetup/getMeetups/');
   }
 
+  getMeetupsWithMe(id) {
+    return this.http.post<Meeting[]>(api.url + 'meetup/getMeetupsWithMe/',id);
+  }
+
   getMeetupUser(id) {
     return this.http.get<MeetupUser[]>(api.url + 'meetup/getMeetupUser/' + id);
   }
