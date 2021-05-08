@@ -12,7 +12,7 @@ import java.util.Map;
 
 @Entity
 @NamedQuery(name = Meeting.FINDALL, query = "select m from Meeting m where m.creator.id = :user_id")
-@NamedQuery(name=Meeting.FINDMEETUPSWITHME, query = "select m from Meeting m join m.mu_list mu where mu.user_id= :user_id AND m.creator.id= :creator_id ")
+@NamedQuery(name=Meeting.FINDMEETUPSWITHME, query = "select m from Meeting m join m.mu_list mu where mu.user_id= :user_id AND m.creator.id= :creator_id AND mu.status = 'pending' ")
 public class Meeting implements Serializable {
 
     @Id

@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @NamedQuery(name = Meeting_User.FINDUSER, query = "select m from Meeting_User m where m.meeting.id = :meeting_id")
+@NamedQuery(name=Meeting_User.SETSTATUS, query= "update Meeting_User mu set mu.status = :status where mu.meeting.id=:meetingId")
 public class Meeting_User implements Serializable {
 
     @Id
@@ -14,24 +15,25 @@ public class Meeting_User implements Serializable {
     private long id;
 
     public static final String FINDUSER = "Meeting_User.findUser";
+    public static final String SETSTATUS = "Meeting_User.setStatus";
 
     @ManyToOne
     private Meeting meeting;
 
     String user_id;
 
-    private boolean accepted = true;
+    private String status;
 
     public Meeting_User() {
 
     }
 
-    public boolean isAccepted() {
-        return accepted;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAccepted(boolean accepted) {
-        this.accepted = accepted;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public long getId() {

@@ -51,7 +51,7 @@ export class MeetupDataPage implements OnInit {
       let dataForPost = {
         meeting: data,
         user_id: this.otherUser.id,
-        accepted: false
+        status: "pending"
       }
       this.ms.setOtherUser(dataForPost).subscribe(data=> {
         this.dismissAll();

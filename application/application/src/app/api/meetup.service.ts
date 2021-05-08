@@ -34,5 +34,18 @@ export class MeetupService {
     return this.http.get<MeetupUser[]>(api.url + 'meetup/getMeetupUser/' + id);
   }
 
+  setStatusAccepted(meetingId) {
+    this.http.post(api.url + "meetup/setStatusA",meetingId).subscribe(data=> {
+      console.log("status set to accepted");
+    })
+  }
+
+  setStatusDeclined(meetingId) {
+    console.log(typeof(meetingId));
+    this.http.post(api.url + "meetup/setStatusD",meetingId).subscribe(data=> {
+      console.log("status set to declined");
+    })
+  }
+
 
 }
