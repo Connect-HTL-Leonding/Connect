@@ -58,6 +58,16 @@ public class MeetUpRepository {
         return list;
     }
 
+    public List<Meeting> getMeetUpFromMe(Optional user_id, String id) {
+        List<Meeting> list;
+        TypedQuery<Meeting> query = em.createNamedQuery(Meeting.FINDMEETUPSFROMME, Meeting.class);
+        query.setParameter("creator_id", user_id);
+        query.setParameter("user_id",id);
+
+        list = query.getResultList();
+        return list;
+    }
+
 
     public List<Meeting_User> getMeetupUser(long id) {
         TypedQuery<Meeting_User> query = em.createNamedQuery(Meeting_User.FINDUSER, Meeting_User.class);
