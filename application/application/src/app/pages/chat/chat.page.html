@@ -50,6 +50,11 @@
       </div>
       
     </div>  
+    <div *ngIf="myMeetUp" class="MeetUp">
+      <p>Dein MeetUp am</p>
+      <p *ngIf="myMeetUpTime">{{myMeetUpTime[2]}}.{{myMeetUpTime[1]}}.{{myMeetUpTime[0]}} um {{myMeetUpTime[3]}}:{{myMeetUpTime[4]}}</p>
+    <p>wurde <b>{{this.myMeetUpStatus}}</b></p>
+    </div>
     <div *ngIf="newMeetUp" class="MeetUp">
       <b>Let's meet up!</b>
       <p *ngIf="meetUpTime">Am {{meetUpTime[2]}}.{{meetUpTime[1]}}.{{meetUpTime[0]}} um {{meetUpTime[3]}}:{{meetUpTime[4]}}</p>
