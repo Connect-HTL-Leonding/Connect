@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {ContactlistService} from '../../api/contactlist.service'
 import { MenuController, ModalController } from '@ionic/angular';
 import { User } from '../../model/user';
@@ -14,9 +14,12 @@ import { PopoverController } from '@ionic/angular';
 import { MeetupDataPage } from '../meetup-data/meetup-data.page';
 import { MeetupPage } from '../meetup/meetup.page';
 import { Meeting } from 'src/app/model/meetup';
+import { Position } from 'src/app/model/position';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 
-
+declare var google: any;
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.page.html',
@@ -27,6 +30,9 @@ import { Meeting } from 'src/app/model/meetup';
 export class ChatPage implements OnInit {
 
   @Input() contacListWebsocket : any;
+  
+  @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
+  map: any;
 
   sendText = '';
   receiveText = '';
@@ -59,15 +65,20 @@ export class ChatPage implements OnInit {
   public myMeetUpTime;
   public meetUpAccepted;
   
+  public meetUpLocation;
+
+ 
 
   
 
-  constructor(ms: MeetupService, public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService, public popoverController: PopoverController) {
+  constructor(ms: MeetupService, public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService, public popoverController: PopoverController,public router: Router) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
     this.oauthService = os;
     this.ms = ms;
+
+    console.log(this.mapRef);
   }
   
 
@@ -77,11 +88,20 @@ export class ChatPage implements OnInit {
     this.init(this.contactlist.selectedRoom);
    
     this.getRoomName();
-    this.doConnect();    
+    this.doConnect();   
+    
+    /* Maybe Map idk it dont work
+    this.map = new google.maps.Map(this.mapRef.nativeElement, {
+      center: new Position(),
+      zoom: 18,
+      disableDefaultUI: true,
+      mapId: '2fcab7b62a0e3af9'
+    });
+    */
   
   }
 
-  async presentModal(room:Room) {
+  async presentModal() {
     this.modal = await this.modalController.create({
       component: MeetupPage,
       componentProps: {
@@ -123,8 +143,13 @@ export class ChatPage implements OnInit {
       this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
         this.meetUp = data;
         if(this.meetUp.length != 0) {
+          
           this.newMeetUp = true;
           this.meetUpTime = data[this.meetUp.length-1].time;
+          this.meetUpLocation = data[this.meetUp.length-1].position;
+
+        
+
         }
       })
       this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data=> {
@@ -172,6 +197,12 @@ export class ChatPage implements OnInit {
       });
       */
     })
+  }
+
+  showLocation(){
+    this.dismissModal();
+    this.router.navigate(["home"]);
+    this.ms.meetupPreviewObserveable.next(this.meetUpLocation);
   }
 
 

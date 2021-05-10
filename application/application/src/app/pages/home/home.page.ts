@@ -29,6 +29,7 @@ import { IonicModule } from '@ionic/angular'
 import { MeetupService } from 'src/app/api/meetup.service';
 import { Meeting, MeetupUser } from 'src/app/model/meetup';
 import { MeetupDataShowPage } from './meetup-data-show/meetup-data-show.page';
+import { ChatPage } from '../chat/chat.page';
 
 /*
 import {
@@ -66,6 +67,7 @@ export class HomePage implements OnInit {
   updateMeetup
 
   mySubscription;
+  meetupPreview;
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -99,6 +101,13 @@ export class HomePage implements OnInit {
       this.createMySkinRaduis();
     });
 
+    this.meetupPreview = this.meetupService.meetopPreviewNotify.subscribe(value => {
+      
+
+      this.map.panTo(value);
+      this.map.setZoom(18);
+    });
+    
     this.updateMeetup = this.meetupService.MeetupUpdateNotify.subscribe(value => {
 
       this.displayMeetups();
