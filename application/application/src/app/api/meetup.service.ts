@@ -10,6 +10,8 @@ import { Subject } from 'rxjs';
 export class MeetupService {
 
   http: HttpClient;
+  public meetupObservable = new Subject<any>();
+  MeetupUpdateNotify = this.meetupObservable.asObservable();
 
   public meetupPreviewObserveable = new Subject<any>();
   meetopPreviewNotify = this.meetupPreviewObserveable.asObservable();
@@ -34,14 +36,16 @@ export class MeetupService {
     return this.http.post<Meeting[]>(api.url + 'meetup/getMeetupsWithMe/',id);
   }
 
+  getMeetupsFromMe(id) {
+    return this.http.post<Meeting[]>(api.url + 'meetup/getMeetupsWithMe/',id);
+  }
+
   getMeetupUser(id) {
     return this.http.get<MeetupUser[]>(api.url + 'meetup/getMeetupUser/' + id);
   }
 
   setStatusAccepted(meetingId) {
-    this.http.post(api.url + "meetup/setStatusA",meetingId).subscribe(data=> {
-      console.log("status set to accepted");
-    })
+    return this.http.post(api.url + "meetup/setStatusA",meetingId);
   }
 
   setStatusDeclined(meetingId) {

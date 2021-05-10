@@ -95,7 +95,7 @@ export class ChatPage implements OnInit {
   
   }
 
-  async presentModal(room:Room) {
+  async presentModal() {
     this.modal = await this.modalController.create({
       component: MeetupPage,
       componentProps: {
@@ -171,10 +171,15 @@ export class ChatPage implements OnInit {
 
 
  setStatusOfMeetingA() {
-   this.ms.setStatusAccepted(this.meetUp[this.meetUp.length-1].id);
-   this.newMeetUp = false;
-   this.meetUp = null;
-   alert("MeetUp accepted! Check your map!");
+   this.dismissModal();
+    this.ms.setStatusAccepted(this.meetUp[this.meetUp.length-1].id).subscribe(data=> {
+      this.chatservice.chatSendObservable.next(this.meetUp[this.meetUp.length-1].id);
+      console.log("status set to accepted");
+      this.newMeetUp = false;
+      this.meetUp = null;
+      alert("MeetUp accepted! Check your map!");
+  });
+   
  }
 
  setStatusOfMeetingD() {

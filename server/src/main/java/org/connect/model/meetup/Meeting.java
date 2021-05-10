@@ -13,6 +13,7 @@ import java.util.Map;
 @Entity
 @NamedQuery(name = Meeting.FINDALL, query = "select m from Meeting m join m.mu_list mu where (m.creator.id = :user_id or mu.user_id = :user_id) and mu.status = 'accepted'")
 @NamedQuery(name=Meeting.FINDMEETUPSWITHME, query = "select m from Meeting m join m.mu_list mu where mu.user_id= :user_id AND m.creator.id= :creator_id AND mu.status = 'pending' ")
+@NamedQuery(name=Meeting.FINDMEETUPSFROMME, query = "select m from Meeting m join m.mu_list mu where m.creator= :creator_id AND mu.status<>'pending' AND mu.user_id= :user_id ")
 public class Meeting implements Serializable {
 
     @Id
@@ -22,6 +23,7 @@ public class Meeting implements Serializable {
 
     public static final String FINDALL = "Meeting.findAll";
     public static final String FINDMEETUPSWITHME = "Meeting.findMeetupsWithMe";
+    public static final String FINDMEETUPSFROMME = "Meeting.findMeetupsFromMe";
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "meetup_position_mapping",
