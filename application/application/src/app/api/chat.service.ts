@@ -7,6 +7,7 @@ import { api } from '../app.component';
 import {ContactlistService} from './contactlist.service';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { Camera, CameraResultType } from '@capacitor/core';
+import { Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +19,9 @@ export class ChatService {
   public selectedRoom: Room;
   public activeUser: User;
   public m: Message;
+
+  public chatSendObservable = new Subject<any>();
+  chatSendUpdateNotify = this.chatSendObservable.asObservable();
   
 
   constructor(http: HttpClient, cs: ContactlistService, private oauthService : OAuthService) {

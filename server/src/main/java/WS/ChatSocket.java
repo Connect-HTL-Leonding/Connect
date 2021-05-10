@@ -37,11 +37,11 @@ public class ChatSocket {
         rooms.put(session, roomid);
     }
 
-    /*
+/*
     @OnClose
-    public void onClose(Session session, @PathParam("roomid") String roomid, @PathParam("username") String username) {
-        sessions.remove(username);
-        broadcast("User " + username + " left");
+    public void onClose(Session session, @PathParam("id") String id) {
+        sessions.remove(id);
+        System.out.println(id + " left");
     }
 
     @OnError

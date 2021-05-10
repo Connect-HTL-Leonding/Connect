@@ -62,9 +62,8 @@ export class HomePage implements OnInit {
   friendProfile: ProfilePage;
   location: Position = new Position();
   websocket: WebSocket;
-  meetupSocker:WebSocket;
   wsUri;
-  wsUri1;
+  updateMeetup
 
   mySubscription;
 
@@ -96,19 +95,19 @@ export class HomePage implements OnInit {
     this.sideMenu();
 
     this.mySubscription = this.mySkinsService.mySkinUpdateNotify.subscribe(value => {
-      console.log("Observer schmoberver");
-      console.log(value);
-      console.log(this.skinRadi);
 
       this.createMySkinRaduis();
+    });
+
+    this.updateMeetup = this.meetupService.MeetupUpdateNotify.subscribe(value => {
+
+      this.displayMeetups();
     });
 
 
     this.ps.getUser().subscribe(
       data => {
 
-        console.log("Current user");
-        console.log(data);
         this.ps.user.custom = data;
 
 
@@ -124,8 +123,6 @@ export class HomePage implements OnInit {
         });
 
 
-        console.log("Current User:")
-        console.log(this.ps.user)
 
 
         //angemeldeter User
@@ -156,7 +153,6 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.ps.getUser().subscribe(data => {
       this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
-      this.wsUri1 = 'ws://localhost:8080/meetup/' + this.ps.user.id;
       this.doConnect();
     })
   }
@@ -167,11 +163,6 @@ export class HomePage implements OnInit {
       if (this.ps.user.custom.id != evt.data) {
         this.displayFriends();
       }
-    }
-
-    this.meetupSocker = new WebSocket(this.wsUri1);
-    this.meetupSocker.onmessage = (evt) => {
-      this.displayMeetups();
     }
 
 
@@ -191,7 +182,7 @@ export class HomePage implements OnInit {
       translucent: true
     });
 
-    popover.onDidDismiss().then(() => { this.createMySkinRaduis(); console.log("Popoveeeeeeeeeeeeeeeeeeeeer"); });
+    popover.onDidDismiss().then(() => { this.createMySkinRaduis(); });
     return await popover.present();
   }
 
@@ -278,15 +269,12 @@ export class HomePage implements OnInit {
 
       marker.addListener("click", () => {
         this.ps.findFriendUser(marker.title).subscribe(data => {
-          console.log(data)
           this.presentModal(data);
         });
       });
 
       this.friendMarkers.push(marker);
     }
-    console.log("friend MArkers")
-    console.log(this.friendMarkers);
 
   }
 
@@ -312,7 +300,6 @@ export class HomePage implements OnInit {
       var dummy = data;
       this.ps.getUser().subscribe(data => {
         if (this.ps.user.id == dummy.id) {
-          console.log("same");
           this.ps.findFriendUser(m.creator.id).subscribe(data => {
             var meetupuser = data;
             this.ps.friendCustomData(m.creator.id).subscribe(data => {
@@ -491,7 +478,6 @@ export class HomePage implements OnInit {
 
       friends.forEach((f) => {
         var u: User = new User;
-        console.log("Distance")
 
 
         if (f.user1.id == this.ps.user.id) {
@@ -610,7 +596,6 @@ export class HomePage implements OnInit {
   }
 
   centerMap() {
-    console.log("centermap");
     console.log(this.ps.user.custom.position);
     this.map.panTo(this.ps.user.custom.position);
     this.map.setZoom(18);
@@ -647,7 +632,6 @@ export class HomePage implements OnInit {
       var distance = this.calcDistance(this.location, updatedLocation);
 
       if (distance > 50) {
-        console.log("user moved");
         this.ps.updateUser(this.ps.user.custom).subscribe(data => {
           this.createMySkinRaduis();
           this.updateUserDot();
@@ -667,29 +651,19 @@ export class HomePage implements OnInit {
 
 
 
-      console.log("Resp");
-      console.log(resp.coords);
       this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
       this.location.lat = this.ps.user.custom.position.lat;
       this.location.lng = this.ps.user.custom.position.lng;
-
-      console.log(this.location);
-
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
-      console.log(this.ps.user.custom.position);
       this.ps.getUser().subscribe(data => {
 
         this.ps.user.custom = data;
         this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
-        console.log(this.ps.user.custom + "aslkfdlkajfdlk")
         this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
           this.ps.user.custom = data;
-          console.log("User sollte eig jetzt a position haben");
-          console.log(this.ps.user.custom);
-          console.log(data);
 
 
           this.createMySkinRaduis();
