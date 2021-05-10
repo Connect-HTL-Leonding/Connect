@@ -71,6 +71,9 @@ export class HomePage implements OnInit {
   // Button
   @ViewChild('connect_button', { static: false }) connectButRef: ElementRef;
 
+  // Button
+  @ViewChild('tutorial', { static: false }) tutorialRef: ElementRef;
+
   constructor(private menu: MenuController,
     private geolocation: Geolocation,
     public ps: ProfileService,
@@ -642,13 +645,12 @@ export class HomePage implements OnInit {
       data => {
         console.log(data);
         this.ps.user.custom = data;
-        console.log("westrzutqjhkgizfutetdzuz")
+        console.log("westrzutqjhkgizfutetdzuz");
         console.log(this.ps.user);
-        var test = false;
         if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 0) {
-          Showcaser.showcase("Das ist die Home Seite. Mit diesem Button wirst du dich später connecten können", this.connectButRef.nativeElement, {
-            shape: "rectangle",
-            buttonText: "Ok!",
+          Showcaser.showcase("Das ist die Home Seite. Mit diesem Button wirst du dich später connecten können", this.tutorialRef.nativeElement, {
+            
+            buttonText: "OK!",
             position: {
               horizontal: "center",
               vertical: "top"
@@ -657,20 +659,20 @@ export class HomePage implements OnInit {
             skipText: "Skip!",
             skip: () => {
               this.ps.skipTutorial(this.ps.user.custom).subscribe(data => {
-                test = true;
+                console.log("Tutorial has been skipped")
+                this.router.navigate(["home"])
               });
             },
             close: () => {
-              if (test) {
-                this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
-                  this.router.navigate(["profile"])
-                });
-              }
+              this.ps.startTutorial(this.ps.user.custom).subscribe(data => {
+                console.log("Tutorial has been started")
+                this.router.navigate(["profile"])
+              });
             }
           });
         }
-        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 5) {
-          Showcaser.showcase("Aktiviere oben rechts den Skin!", this.connectButRef.nativeElement, {
+        if (this.ps.user.custom.tutorialStage == 5) {
+          Showcaser.showcase("Aktiviere oben rechts den Skin!", this.tutorialRef.nativeElement, {
             shape: "circle",
             buttonText: "Ok!",
             position: {
@@ -695,10 +697,8 @@ export class HomePage implements OnInit {
             },
             allowSkip: false,
             close: () => {
-
-              this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+                this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
               });
-
             }
           });
         }

@@ -6,7 +6,7 @@
       <ion-card-title>{{myskin.skin.title}}</ion-card-title>
     </div>
 
-    <ion-fab-button *ngIf="!myskin.selected" color="primary" (click)="selected()">
+    <ion-fab-button *ngIf="!myskin.selected" color="primary" (click)="selected()" id="selectedBut" #selectedBut>
       <ion-icon name="heart-outline"></ion-icon>
     </ion-fab-button>
     <ion-fab-button *ngIf="myskin.selected" color="danger" (click)="selected()">

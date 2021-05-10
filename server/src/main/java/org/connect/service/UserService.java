@@ -144,6 +144,17 @@ public class UserService {
         System.out.println("TEST");
         return dbRepo.update(u);
     }
+    @PUT
+    @Path("startTutorial")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public User startTutorial(){
+        System.out.println(jwt.claim("sub") + "KEKW");
+        User u = dbRepo.find(jwt.claim("sub"));
+        u.setTutorialStage(1);
+        System.out.println("TEST22");
+        return dbRepo.update(u);
+    }
 
     @Path("resetTutorial")
     @GET

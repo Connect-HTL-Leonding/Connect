@@ -8,6 +8,8 @@ import { SkinsService } from '../../api/skins.service';
 import { Category } from '../../model/category';
 import { MySkin } from '../../model/myskin';
 import { Skin } from '../../model/skin';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-skinselection',
@@ -25,7 +27,7 @@ export class SkinselectionPage implements OnInit {
 
   @ViewChild('skinSelection', { static: false }) skinSelectionRef: ElementRef;
 
-  constructor(public ps: ProfileService, ss: SkinsService, cs: CategoryService, ms: MyskinsService, public modalCtrl: ModalController) {
+  constructor(private router: Router, public ps: ProfileService, ss: SkinsService, cs: CategoryService, ms: MyskinsService, public modalCtrl: ModalController) {
     this.skinsService = ss;
     this.categoryService = cs;
     this.mySkinService = ms;
@@ -146,11 +148,7 @@ export class SkinselectionPage implements OnInit {
         }
       )
     })
-    if (this.ps.user.custom.tutorialStage == 4) {
-      this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
-        console.log("added Skin " + this.ps.user.custom.tutorialStage);
-      });
-    }
+    
   }
 
 }

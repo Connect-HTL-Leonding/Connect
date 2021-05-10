@@ -68,4 +68,7 @@ export class ProfileService {
   skipTutorial(u: CustomUser){
     return this.http.put(api.short + 'user/skipTutorial', u);
   }
+  startTutorial(u: CustomUser){
+    return this.http.put(api.short + 'user/startTutorial', u);
+  }
 }
