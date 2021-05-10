@@ -24,6 +24,7 @@ export class MeetupDataPage implements OnInit {
   public meetup: Meeting;
   public profileservice;
   ms : MeetupService;
+  minDate: string = new Date().toISOString();
 
   constructor(private popoverController: PopoverController, profileservice : ProfileService, ms:MeetupService) {
     this.ms = ms;
@@ -43,18 +44,16 @@ export class MeetupDataPage implements OnInit {
     this.time.setUTCHours(new Date(this.timeOfDay).getHours());
     this.time.setUTCMinutes(new Date(this.timeOfDay).getMinutes());
     this.time.setUTCSeconds(new Date(this.timeOfDay).getSeconds());
-    this.meetup = new Meeting(this.time, this.position);
+    this.meetup = new Meeting(0, this.time, this.position);
     console.log(this.meetup);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {
-      console.log(data);
       let dataForPost = {
         meeting: data,
         user_id: this.otherUser.id,
-        accepted: false
+        status: "pending"
       }
       this.ms.setOtherUser(dataForPost).subscribe(data=> {
-        console.log(data);
         this.dismissAll();
       })
     })   

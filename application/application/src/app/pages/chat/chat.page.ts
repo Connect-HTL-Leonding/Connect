@@ -3,6 +3,7 @@ import {ContactlistService} from '../../api/contactlist.service'
 import { MenuController, ModalController } from '@ionic/angular';
 import { User } from '../../model/user';
 import { ChatService } from '../../api/chat.service';
+import { MeetupService } from '../../api/meetup.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Room } from '../../model/room';
 import { Message } from '../../model/message';
@@ -48,14 +49,19 @@ export class ChatPage implements OnInit {
   public pos = 0;
   public showNewMsgLine : boolean;
   public pfp;
+  public ms;
+  public newMeetUp;
+  public meetUp;
+  public meetUpTime;
 
   
 
-  constructor(public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService, public popoverController: PopoverController) {
+  constructor(ms: MeetupService, public modalController:ModalController, cl:ContactlistService, cs:ChatService, os: OAuthService, public keycloakService : KeycloakService, public popoverController: PopoverController) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
     this.oauthService = os;
+    this.ms = ms;
   }
   
 
@@ -108,6 +114,13 @@ export class ChatPage implements OnInit {
   getRoomName() {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
       this.otherUser.custom = data;
+      this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
+        this.meetUp = data;
+        if(this.meetUp.length != 0) {
+          this.newMeetUp = true;
+          this.meetUpTime = data[this.meetUp.length-1].time;
+        }
+      })
       this.pfp = "data:image/png;base64,"+atob(this.otherUser.custom.profilePicture);
       this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
         this.otherUser.id = data["id"];
@@ -124,6 +137,21 @@ export class ChatPage implements OnInit {
       */
     })
   }
+
+
+ setStatusOfMeetingA() {
+   this.ms.setStatusAccepted(this.meetUp[this.meetUp.length-1].id);
+   this.newMeetUp = false;
+   this.meetUp = null;
+   alert("MeetUp accepted! Check your map!");
+ }
+
+ setStatusOfMeetingD() {
+  this.ms.setStatusDeclined(this.meetUp[this.meetUp.length-1].id);
+  this.newMeetUp = false;
+  this.meetUp = null;
+  alert("MeetUp declined");
+}
 
   dismissModal() {
     this.websocket.close();

@@ -183,3 +183,27 @@ ion-popover.fullscreen {
     width: 900px;
     max-width: 100%;
 }
+
+.MeetUp {
+    height: 170px;
+    width: 80%;
+    margin:5px;
+    background-color: #dededede;
+    justify-self: center;
+    margin-left:auto;
+    margin-right: auto;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column wrap;
+}
+
+.buttonBox {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-flow: row nowrap;
+    height: 30px;
+    width: 100%;
+}
