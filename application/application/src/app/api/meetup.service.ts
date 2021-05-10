@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Meeting, MeetupUser } from '../model/meetup';
 import { api } from '../app.component';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,9 @@ import { api } from '../app.component';
 export class MeetupService {
 
   http: HttpClient;
+
+  public meetupPreviewObserveable = new Subject<any>();
+  meetopPreviewNotify = this.meetupPreviewObserveable.asObservable();
 
   constructor(http: HttpClient) {
     this.http = http;

@@ -29,6 +29,7 @@ import { IonicModule } from '@ionic/angular'
 import { MeetupService } from 'src/app/api/meetup.service';
 import { Meeting, MeetupUser } from 'src/app/model/meetup';
 import { MeetupDataShowPage } from './meetup-data-show/meetup-data-show.page';
+import { ChatPage } from '../chat/chat.page';
 
 /*
 import {
@@ -67,6 +68,7 @@ export class HomePage implements OnInit {
   wsUri1;
 
   mySubscription;
+  meetupPreview;
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -101,6 +103,14 @@ export class HomePage implements OnInit {
       console.log(this.skinRadi);
 
       this.createMySkinRaduis();
+    });
+
+    this.meetupPreview = this.meetupService.meetopPreviewNotify.subscribe(value => {
+      
+
+      this.map.panTo(value);
+      this.map.setZoom(18);
+      
     });
 
 
@@ -683,13 +693,11 @@ export class HomePage implements OnInit {
 
         this.ps.user.custom = data;
         this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
-        console.log(this.ps.user.custom + "aslkfdlkajfdlk")
+      
         this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
           this.ps.user.custom = data;
-          console.log("User sollte eig jetzt a position haben");
-          console.log(this.ps.user.custom);
-          console.log(data);
+         
 
 
           this.createMySkinRaduis();

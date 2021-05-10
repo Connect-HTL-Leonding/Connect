@@ -52,6 +52,16 @@
     </div>  
     <div *ngIf="newMeetUp" class="MeetUp">
       <b>Let's meet up!</b>
+      <ion-button (click)="showLocation()"><ion-icon name="location-outline"></ion-icon> Treffpunkt</ion-button>
+   
+     <!--
+<div #map id="map">
+
+test
+       </div>
+     -->
+     
+    
       <p *ngIf="meetUpTime">Am {{meetUpTime[2]}}.{{meetUpTime[1]}}.{{meetUpTime[0]}} um {{meetUpTime[3]}}:{{meetUpTime[4]}}</p>
       <div class="buttonBox">
         <ion-button (click)="setStatusOfMeetingD()" fill="outline" size="small">Decline</ion-button>

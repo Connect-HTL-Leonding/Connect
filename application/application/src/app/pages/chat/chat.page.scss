@@ -11,6 +11,11 @@
     margin-top: 15%;
     margin-left: 15%;
 }
+
+
+
+
+
 ion-content {
     overflow: hidden;
 }
@@ -197,6 +202,19 @@ ion-popover.fullscreen {
     justify-content: center;
     align-items: center;
     flex-flow: column wrap;
+
+    #map{
+
+        height: 50%;
+        width: 50%;
+  
+    
+      
+            
+            overflow: hidden;
+            background-color: var(--ion-color-tertiary);
+          
+    }
 }
 
 .buttonBox {
