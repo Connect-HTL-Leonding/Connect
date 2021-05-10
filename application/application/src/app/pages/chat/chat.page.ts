@@ -75,7 +75,7 @@ export class ChatPage implements OnInit {
   
   }
 
-  async presentModal(room:Room) {
+  async presentModal() {
     this.modal = await this.modalController.create({
       component: MeetupPage,
       componentProps: {
