@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Meeting, MeetupUser } from '../model/meetup';
 import { api } from '../app.component';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { api } from '../app.component';
 export class MeetupService {
 
   http: HttpClient;
+  public meetupObservable = new Subject<any>();
+  MeetupUpdateNotify = this.meetupObservable.asObservable();
 
   constructor(http: HttpClient) {
     this.http = http;
@@ -35,9 +38,7 @@ export class MeetupService {
   }
 
   setStatusAccepted(meetingId) {
-    this.http.post(api.url + "meetup/setStatusA",meetingId).subscribe(data=> {
-      console.log("status set to accepted");
-    })
+    return this.http.post(api.url + "meetup/setStatusA",meetingId);
   }
 
   setStatusDeclined(meetingId) {

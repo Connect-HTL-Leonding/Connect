@@ -8,6 +8,10 @@ import { LoginPage } from './pages/login/login.page';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
+import { ProfileService } from './api/profile.service';
+import { HomePage } from './pages/home/home.page';
+import { MeetupService } from './api/meetup.service';
+import { ChatService } from './api/chat.service';
 
 @Component({
   selector: 'app-root',
@@ -19,19 +23,31 @@ export class AppComponent implements OnInit{
   private loginPage = false;
   public isLoggedIn = false;
   public userProfile: KeycloakProfile | null = null;
+  websocket: WebSocket;
+  wsUri;
+  getMessage
+
+  
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    public keycloak: KeycloakService
+    public keycloak: KeycloakService,
+    public ps: ProfileService,
+    public ms: MeetupService,
+    public cs: ChatService
   ) {
     this.initializeApp();
     //this.oauthService.configure(authCodeFlowConfig);
     //this.oauthService.loadDiscoveryDocumentAndTryLogin();
     // optional
     //this.oauthService.setupAutomaticSilentRefresh();
+
+    this.getMessage = this.cs.chatSendUpdateNotify.subscribe(value => {
+      this.doSend(value);
+    });
   }
 
   initializeApp() {
@@ -51,9 +67,38 @@ export class AppComponent implements OnInit{
     if (this.isLoggedIn) {
       this.userProfile = await this.keycloak.loadUserProfile();
       console.log(this.userProfile)
+      this.ps.getUser().subscribe(data => {
+        this.ps.user.custom = data;
+        this.wsUri = 'ws://localhost:8080/meetup/' + this.ps.user.id;
+      this.doConnect();
+      })
+      
     }
   }
+
   
+
+  doConnect() {
+    this.websocket = new WebSocket(this.wsUri);
+    this.websocket.onmessage = (evt) => {
+      this.ms.meetupObservable.next(evt);
+    }
+
+    
+
+
+    /*
+    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
+    
+    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
+    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
+    */
+  }
+  
+  doSend(msg) {
+    this.websocket.send(msg);
+  }
+
 }
 
 //Zentrale Variablen
