@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { AlertController, LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { Inject } from '@angular/core';
@@ -92,7 +92,8 @@ export class HomePage implements OnInit {
     public modalController: ModalController,
     public router: Router,
     public ts: TutorialService,
-    public meetupService:MeetupService) {
+    public meetupService: MeetupService,
+    public alertController: AlertController) {
 
     this.sideMenu();
 
@@ -102,12 +103,12 @@ export class HomePage implements OnInit {
     });
 
     this.meetupPreview = this.meetupService.meetopPreviewNotify.subscribe(value => {
-      
+
 
       this.map.panTo(value);
       this.map.setZoom(18);
     });
-    
+
     this.updateMeetup = this.meetupService.MeetupUpdateNotify.subscribe(value => {
 
       this.displayMeetups();
@@ -304,7 +305,7 @@ export class HomePage implements OnInit {
 
 
   //Funktion für Meetup marker
-  createMeetupMarker(m:Meeting, mu: MeetupUser) {
+  createMeetupMarker(m: Meeting, mu: MeetupUser) {
     this.ps.findFriendUser(mu.user_id).subscribe(data => {
       var dummy = data;
       this.ps.getUser().subscribe(data => {
@@ -314,66 +315,66 @@ export class HomePage implements OnInit {
             this.ps.friendCustomData(m.creator.id).subscribe(data => {
               meetupuser.custom = data;
               var canvas = document.createElement('canvas');
-            canvas.width = 35;
-            canvas.height = 62;
-            var ctx = canvas.getContext('2d');
-            var image1 = meetupuser.custom.profilePicture;
-            var image = new Image();
-            var compositeImage;
-    
-            image.src = image1;
-    
-            ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
-    
-            // only draw image where mask is
-            ctx.globalCompositeOperation = 'destination-in';
-    
-            // draw our circle mask
-            ctx.fillStyle = '#000';
-            ctx.beginPath();
-            ctx.arc(
-              14.8 + 2.4725,          // x
-              14.8 + 2.9421,          // y
-              14.8,          // radius
-              0,                  // start angle
-              2 * Math.PI         // end angle
-            );
-            ctx.fill();
-    
-            // restore to default composite operation (is draw over current image)
-            ctx.globalCompositeOperation = 'source-over';
-    
-    
-            var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
-    
-    
-            ctx.fillStyle = '#db3d3d';
-            ctx.fill(path);
-    
-            compositeImage = canvas.toDataURL("image/png");
-    
-            canvas.remove();
-            console.log(compositeImage)
-    
-            var marker = new google.maps.Marker({
-              position: m.position,
-              title: mu.user_id,
-              map: this.map,
-              icon: compositeImage
-            });
-    
-            marker.addListener("click", () => {
-                this.presentMeetupPopover(event, m, meetupuser);      
-            });
+              canvas.width = 35;
+              canvas.height = 62;
+              var ctx = canvas.getContext('2d');
+              var image1 = meetupuser.custom.profilePicture;
+              var image = new Image();
+              var compositeImage;
+
+              image.src = image1;
+
+              ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
+
+              // only draw image where mask is
+              ctx.globalCompositeOperation = 'destination-in';
+
+              // draw our circle mask
+              ctx.fillStyle = '#000';
+              ctx.beginPath();
+              ctx.arc(
+                14.8 + 2.4725,          // x
+                14.8 + 2.9421,          // y
+                14.8,          // radius
+                0,                  // start angle
+                2 * Math.PI         // end angle
+              );
+              ctx.fill();
+
+              // restore to default composite operation (is draw over current image)
+              ctx.globalCompositeOperation = 'source-over';
+
+
+              var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+
+
+              ctx.fillStyle = '#db3d3d';
+              ctx.fill(path);
+
+              compositeImage = canvas.toDataURL("image/png");
+
+              canvas.remove();
+              console.log(compositeImage)
+
+              var marker = new google.maps.Marker({
+                position: m.position,
+                title: mu.user_id,
+                map: this.map,
+                icon: compositeImage
+              });
+
+              marker.addListener("click", () => {
+                this.presentMeetupPopover(event, m, meetupuser);
+              });
             })
           })
-        } 
+        }
         else {
           var meetupuser = dummy;
           this.ps.friendCustomData(mu.user_id).subscribe(data => {
-    
+
             meetupuser.custom = data;
-    
+
             var canvas = document.createElement('canvas');
             canvas.width = 35;
             canvas.height = 62;
@@ -381,14 +382,14 @@ export class HomePage implements OnInit {
             var image1 = meetupuser.custom.profilePicture;
             var image = new Image();
             var compositeImage;
-    
+
             image.src = image1;
-    
+
             ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
-    
+
             // only draw image where mask is
             ctx.globalCompositeOperation = 'destination-in';
-    
+
             // draw our circle mask
             ctx.fillStyle = '#000';
             ctx.beginPath();
@@ -400,43 +401,43 @@ export class HomePage implements OnInit {
               2 * Math.PI         // end angle
             );
             ctx.fill();
-    
+
             // restore to default composite operation (is draw over current image)
             ctx.globalCompositeOperation = 'source-over';
-    
-    
+
+
             var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
-    
-    
+
+
             ctx.fillStyle = '#db3d3d';
             ctx.fill(path);
-    
+
             compositeImage = canvas.toDataURL("image/png");
-    
+
             canvas.remove();
             console.log(compositeImage)
-    
+
             var marker = new google.maps.Marker({
               position: m.position,
               title: mu.user_id,
               map: this.map,
               icon: compositeImage
             });
-    
+
             marker.addListener("click", () => {
-                this.presentMeetupPopover(event, m, meetupuser);      
+              this.presentMeetupPopover(event, m, meetupuser);
             });
           })
         }
       })
-      
+
     })
   }
 
   async presentMeetupPopover(ev: any, m, u) {
     const popover = await this.popoverController.create({
       component: MeetupDataShowPage,
-      componentProps: {meetup: m, user:u},
+      componentProps: { meetup: m, user: u },
       cssClass: 'my-custom-class',
       event: ev,
       translucent: true
@@ -464,7 +465,7 @@ export class HomePage implements OnInit {
           })
         })
       })
-    }) 
+    })
   }
 
   //iterate through friends in Friendship-Table
@@ -724,6 +725,51 @@ export class HomePage implements OnInit {
 
   }
 
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Willkommen!',
+      message: 'Das erste Mal hier? <br>Möchtest Du das <strong>Tutorial</strong> starten?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+            this.ps.skipTutorial(this.ps.user.custom).subscribe(data => {
+              console.log("Tutorial has been skipped")
+              this.router.navigate(["home"])
+            });
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+            if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 0) {
+              Showcaser.showcase("Das ist die Home Seite. Das Herzstück von Connect. Doch starten wir doch einmal mit den Basics.", null, {
+                buttonText: "OK!",
+                position: {
+                  horizontal: "center",
+                  vertical: "top"
+                },
+                allowSkip: false,
+                close: () => {
+                  this.ps.startTutorial(this.ps.user.custom).subscribe(data => {
+                    console.log("Tutorial has been started")
+                    this.router.navigate(["profile"])
+                  });
+                }
+              });
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   showTutorial() {
     this.ps.getUser().subscribe(
       data => {
@@ -731,32 +777,13 @@ export class HomePage implements OnInit {
         this.ps.user.custom = data;
         console.log("westrzutqjhkgizfutetdzuz");
         console.log(this.ps.user);
-        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 0) {
-          Showcaser.showcase("Das ist die Home Seite. Mit diesem Button wirst du dich später connecten können", this.tutorialRef.nativeElement, {
-            
-            buttonText: "OK!",
-            position: {
-              horizontal: "center",
-              vertical: "top"
-            },
-            allowSkip: true,
-            skipText: "Skip!",
-            skip: () => {
-              this.ps.skipTutorial(this.ps.user.custom).subscribe(data => {
-                console.log("Tutorial has been skipped")
-                this.router.navigate(["home"])
-              });
-            },
-            close: () => {
-              this.ps.startTutorial(this.ps.user.custom).subscribe(data => {
-                console.log("Tutorial has been started")
-                this.router.navigate(["profile"])
-              });
-            }
-          });
+        if (this.ps.user.custom.tutorialStage == 0) {
+          this.presentAlertConfirm();
         }
-        if (this.ps.user.custom.tutorialStage == 5) {
-          Showcaser.showcase("Aktiviere oben rechts den Skin!", this.tutorialRef.nativeElement, {
+
+
+        if (this.ps.user.custom.tutorialStage == 6) {
+          Showcaser.showcase("Aktiviere oben rechts den Skin!", null, {
             shape: "circle",
             buttonText: "Ok!",
             position: {
@@ -771,7 +798,7 @@ export class HomePage implements OnInit {
 
           });
         }
-        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 6) {
+        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 7) {
           Showcaser.showcase("Drück auf den Connect Button um dich zu connecten", this.connectButRef.nativeElement, {
             shape: "circle",
             buttonText: "Ok!",
@@ -781,7 +808,7 @@ export class HomePage implements OnInit {
             },
             allowSkip: false,
             close: () => {
-                this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+              this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
               });
             }
           });

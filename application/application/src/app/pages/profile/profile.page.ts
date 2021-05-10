@@ -116,7 +116,7 @@ export class ProfilePage implements OnInit {
     console.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
     if (this.ps.user.custom.tutorialStage == 1) {
       console.log("Bruhhhhh" + this.profilePicRef.nativeElement);
-      Showcaser.showcase("Das ist deine Profilseite. Stelle dich hier anderen vor!", this.profilePicRef.nativeElement, {
+      Showcaser.showcase("Das hier ist dein Profil. Zurzeit noch ein bisschen leer. Du kannst etwas über dich erzählen oder Bilder hochladen. Aber wirklich nur so viel wie du willst!", this.profilePicRef.nativeElement, {
         buttonText: "Ok!",
         position: {
           horizontal: "center",

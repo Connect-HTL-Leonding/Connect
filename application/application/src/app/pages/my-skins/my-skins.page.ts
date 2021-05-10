@@ -71,20 +71,25 @@ export class MySkinsPage implements OnInit {
   }*/
 
   showTutorial() {
-    this.ps.getUser().subscribe(
-      data => {
-        console.log(data);
-        this.ps.user.custom = data;
-        console.log("westrzutqjhkgizfutetdzuz")
-        console.log(this.ps.user)
-      },
-      error1 => {
-        console.log('Error');
-      }
-    )
     console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
     if (this.ps.user.custom.tutorialStage == 2) {
-      Showcaser.showcase("Hier wirst du neue Skins finden. Mit diesen wirst du dich für alles mögliche verabreden können.", this.addSkinButRef.nativeElement, {
+      Showcaser.showcase("Hier siehst du deine ausgewählten Skins. Skins sind wichtig, um andere Menschen zu finden.", null, {
+        shape: "circle",
+        buttonText: "Ok!",
+        position: {
+          horizontal: "center",
+          vertical: "middle"
+        },
+        allowSkip: false,
+        close: () => {
+          this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+            this.ngOnInit();
+          });
+        }
+      });
+    }
+    if (this.ps.user.custom.tutorialStage == 3) {
+      Showcaser.showcase("Füge gleich einen <br>neuen Skin zu <br>deiner Sammlung hinzu!", this.addSkinButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
         position: {
@@ -99,14 +104,6 @@ export class MySkinsPage implements OnInit {
         }
       });
     }
-
-    console.log("1231231231231232132131323123")
-    console.log(this.ts.user);
-
-
-    //console.log(this.skinService);
-
-
   }
   //check
   matchesFilter(s: MySkin) {
@@ -173,6 +170,7 @@ export class MySkinsPage implements OnInit {
   updateSkin(s: MySkin) {
     this.mySkinService.updateSkin(s).subscribe(data => {
       //nach unpdate erneutes getAll
+      
       this.mySkinService.getMySkins().subscribe(
         data => {
           this.mySkinService.myskins = data;
@@ -183,6 +181,14 @@ export class MySkinsPage implements OnInit {
             this.mySkinService.getMapSkins().subscribe(data => {
               this.mySkinService.mapSkins = data;
               this.mySkinService.mySkinObserveable.next(data);
+              console.log(this.ps.user.custom.tutorialStage)
+              this.ps.getUser().subscribe(data => {
+                this.ps.user.custom = data;
+                if(this.ps.user.custom.tutorialStage == 6){
+                  this.router.navigate(["home"])
+                }
+              })
+
             })
           })
         },

@@ -62,7 +62,7 @@ export class DetailSkinComponent implements OnInit {
   }
   showTutorial(){
     console.log(this.ps.user.custom.tutorialStage)
-    if(this.ps.user.custom.tutorialStage == 4){
+    if(this.ps.user.custom.tutorialStage == 5){
       console.log("Bruhhh")
       Showcaser.showcase("Klick auf einen Skin und mach ihn dann mit dem Herz zum Favoriten", this.selectedRef.nativeElement, {
         shape: "circle",
@@ -74,6 +74,7 @@ export class DetailSkinComponent implements OnInit {
         allowSkip: false,
         close: () => {
           this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
+            console.log("finished")
           });
         }
       });

@@ -92,8 +92,8 @@ export class SkinselectionPage implements OnInit {
 
   showTutorial() {
     console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
-    if (this.ps.user.custom.tutorialStage == 3) {
-      Showcaser.showcase("Hier findest du alle verfügbaren Skins. Wähl am besten gleich mal einen aus!", this.skinSelectionRef.nativeElement, {
+    if (this.ps.user.custom.tutorialStage == 4) {
+      Showcaser.showcase("Hier findest du alle verfügbaren Skins. Wähl am besten gleich mal einen aus der zu dir passt!", null, {
         shape: "rectangle",
         buttonText: "Ok!",
         position: {
