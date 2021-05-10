@@ -52,6 +52,18 @@ public class MeetUpService {
         return repo.getMeetUpsWithMe(jwt.claim("sub"),id);
     }
 
+    @POST
+    @Path("getMeetupsFromMeA")
+    public List<Meeting> getMeetupsFromMeA(String id) {
+        return repo.getMeetUpsFromMeA(jwt.claim("sub"),id);
+    }
+
+    @POST
+    @Path("getMeetupsFromMeD")
+    public List<Meeting> getMeetupsFromMeD(String id) {
+        return repo.getMeetUpsFromMeD(jwt.claim("sub"),id);
+    }
+
     @GET
     @Path("getMeetupUser/{id}")
     public List<Meeting_User> getMeetupUser(@PathParam("id") long id) {
@@ -71,4 +83,6 @@ public class MeetUpService {
     public void setStatusD(Long MeetingId) {
         repo.setStatus(MeetingId,"declined");
     }
+
+
 }

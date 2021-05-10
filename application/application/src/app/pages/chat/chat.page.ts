@@ -13,6 +13,7 @@ import { api } from 'src/app/app.component';
 import { PopoverController } from '@ionic/angular';
 import { MeetupDataPage } from '../meetup-data/meetup-data.page';
 import { MeetupPage } from '../meetup/meetup.page';
+import { Meeting } from 'src/app/model/meetup';
 import { Position } from 'src/app/model/position';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
@@ -59,6 +60,11 @@ export class ChatPage implements OnInit {
   public newMeetUp;
   public meetUp;
   public meetUpTime;
+  public myMeetUp;
+  public myMeetUpStatus;
+  public myMeetUpTime;
+  public meetUpAccepted;
+  
   public meetUpLocation;
 
  
@@ -146,6 +152,36 @@ export class ChatPage implements OnInit {
 
         }
       })
+      this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data=> {
+        this.meetUpAccepted=data;
+        if(this.meetUpAccepted.length!=0) {
+          this.myMeetUp= true;
+          this.myMeetUpStatus = 'akzeptiert';
+          this.myMeetUpTime = this.meetUpAccepted[this.meetUpAccepted.length-1].time;
+        }
+        this.ms.getMeetupsFromMeD(this.otherUser.custom.id).subscribe(data=> {
+          
+          if(data.length!=0) {
+            
+              if(this.meetUpAccepted[this.meetUpAccepted.length-1]!=undefined) {
+                if(data[data.length-1].id>this.meetUpAccepted[this.meetUpAccepted.length-1].id) {
+                  this.myMeetUp = true;
+                  this.myMeetUpStatus = "abgelehnt";
+                  this.myMeetUpTime = data[data.length-1].time;
+                }
+              } else {
+                this.myMeetUp = true;
+                this.myMeetUpStatus = "abgelehnt";
+                this.myMeetUpTime = data[data.length-1].time;
+              }
+          
+   
+          }
+          
+        })
+      })
+
+     
       this.pfp = "data:image/png;base64,"+atob(this.otherUser.custom.profilePicture);
       this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
         this.otherUser.id = data["id"];

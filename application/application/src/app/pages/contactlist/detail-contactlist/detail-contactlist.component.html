@@ -8,13 +8,17 @@
   <ion-label id="chat-flex">
     <div id="flex">
       <h2 *ngIf="user" id="username">{{user.userName}}</h2>
-      <p *ngIf="this.unseenMessages<=0 && this.newMeetUp == false">{{this.latestMessage}}</p>
-      <p class="bold" *ngIf="this.unseenMessages>0 && this.newMeetUp == false">{{this.latestMessage}}</p>
+      <p *ngIf="this.unseenMessages<=0 && this.newMeetUp == false && !this.myMeetUp">{{this.latestMessage}}</p>
+      <p class="bold" *ngIf="this.unseenMessages>0 && this.newMeetUp == false && !this.myMeetUp">{{this.latestMessage}}</p>
       <p class="bold" *ngIf="this.newMeetUp">I wanna meet up with you!</p>
+      <p class="bold" *ngIf="this.myMeetUp && this.newMeetUp == false">Mein MeetUp wurde {{this.myMeetUpStatus}}</p>
     </div>
     <div class="rightBox">
       <p class="timeDisplay" *ngIf="this.latestMessageCreated">{{this.timeDisplay}}</p>
-      <ion-badge *ngIf="newMeetUp" class="meetUpBadge">
+      <ion-badge *ngIf="newMeetUp && this.myMeetUp == false" class="meetUpBadge">
+        <p>M</p>
+      </ion-badge>
+      <ion-badge *ngIf="myMeetUp" class="meetUpBadge">
         <p>M</p>
       </ion-badge>
     </div>

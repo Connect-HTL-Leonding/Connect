@@ -31,12 +31,17 @@ export class DetailContactlistComponent implements OnInit {
   timeDisplay: string = "";
   public newMeetUp : boolean = false;
   public ms;
+  public myMeetUp : boolean = false;
+  public myMeetUpStatus;
+  public meetUpAccepted;
+
 
   constructor(public cs: ContactlistService, datePipe: DatePipe, ms: MeetupService) {
     this.contactlist = cs;
     this.datePipe = datePipe;
     this.ms = ms;
     this.newMeetUp = false;
+    this.myMeetUp = false;
   }
 
   ngOnInit() {
@@ -51,10 +56,36 @@ export class DetailContactlistComponent implements OnInit {
       this.pfp = "data:image/png;base64," + atob(this.user.custom.profilePicture);
 
       this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
-        console.log(data);
         if(data.length != 0) {
           this.newMeetUp = true;
         }
+      })
+
+      this.ms.getMeetupsFromMeA(this.user.custom.id).subscribe(data=> {
+        this.meetUpAccepted=data;
+        if(this.meetUpAccepted.length!=0) {
+          this.myMeetUp= true;
+          this.myMeetUpStatus = 'akzeptiert';
+        }
+        this.ms.getMeetupsFromMeD(this.user.custom.id).subscribe(data=> {
+          
+          if(data.length!=0) {
+            
+              if(this.meetUpAccepted[this.meetUpAccepted.length-1]!==undefined) {
+                console.log(this.meetUpAccepted);
+                if(data[data.length-1].id>this.meetUpAccepted[this.meetUpAccepted.length-1].id) {
+                  this.myMeetUp = true;
+                  this.myMeetUpStatus = "abgelehnt";
+                }
+              } else {
+                this.myMeetUp = true;
+                this.myMeetUpStatus = "abgelehnt";
+              }
+          
+   
+          }
+          
+        })
       })
 
       console.log(this.user)

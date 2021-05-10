@@ -58,10 +58,20 @@ public class MeetUpRepository {
         return list;
     }
 
-    public List<Meeting> getMeetUpFromMe(Optional user_id, String id) {
+    public List<Meeting> getMeetUpsFromMeA(Optional user_id,String id) {
         List<Meeting> list;
-        TypedQuery<Meeting> query = em.createNamedQuery(Meeting.FINDMEETUPSFROMME, Meeting.class);
-        query.setParameter("creator_id", user_id);
+        TypedQuery<Meeting> query = em.createNamedQuery(Meeting.FINDMEETUPSFROMMEA, Meeting.class);
+        query.setParameter("creator_id",user_id.get().toString() );
+        query.setParameter("user_id",id);
+
+        list = query.getResultList();
+        return list;
+    }
+
+    public List<Meeting> getMeetUpsFromMeD(Optional user_id,String id) {
+        List<Meeting> list;
+        TypedQuery<Meeting> query = em.createNamedQuery(Meeting.FINDMEETUPSFROMMED, Meeting.class);
+        query.setParameter("creator_id",user_id.get().toString() );
         query.setParameter("user_id",id);
 
         list = query.getResultList();
