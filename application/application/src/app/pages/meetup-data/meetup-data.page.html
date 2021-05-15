@@ -8,6 +8,12 @@
     <ion-label>Uhrzeit</ion-label>
     <ion-datetime max="2099-10-31" [(ngModel)]="timeOfDay" displayFormat="HH:mm"></ion-datetime>
   </ion-item>
+  <ion-item>
+    <ion-label>Friends</ion-label>
+    <ion-select multiple="true" [(ngModel)]="selectedFriends">
+      <ion-select-option *ngFor="let friend of allFriends" [value]="friend">{{friend.username}}</ion-select-option>
+    </ion-select>
+  </ion-item>
   <div class="buttonBox">
     <ion-button (click)="dismissPopover()" fill="outline" size="small">Cancel</ion-button>
     <ion-button (click)="createMeeting()" size="small">Finish</ion-button>

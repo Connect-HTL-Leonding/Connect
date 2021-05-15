@@ -28,7 +28,6 @@ export class ContactlistPage implements OnInit {
     public profileservice: ProfileService, public keyCloakService : KeycloakService) { 
     this.contactService = cs;
     this.chatService = chatService;
-    console.log(this.contactService.activeUser);
     this.wsUri = api.ws + '/contactListSocket/' + keyCloakService.getKeycloakInstance().subject;
   }
 

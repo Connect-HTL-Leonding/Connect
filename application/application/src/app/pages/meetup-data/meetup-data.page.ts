@@ -6,6 +6,9 @@ import { Meeting } from 'src/app/model/meetup';
 import {ProfileService} from '../../api/profile.service';
 import { MeetupPage } from '../meetup/meetup.page';
 import { MeetupService } from 'src/app/api/meetup.service';
+import { FriendshipService } from 'src/app/api/friendship.service';
+import { User } from 'src/app/model/user';
+import {ContactlistService} from '../../api/contactlist.service'
 
 
 @Component({
@@ -24,10 +27,23 @@ export class MeetupDataPage implements OnInit {
   public meetup: Meeting;
   public profileservice;
   ms : MeetupService;
+  fs;
   minDate: string = new Date().toISOString();
+  public selectedFriends;
+  public allFriends = new Array();
+  public cs;
+  public keyUser = {
+      id: 0,
+      userName: "",
+      firstname: "",
+      lastname: "",
+      email: ""
+  }
 
-  constructor(private popoverController: PopoverController, profileservice : ProfileService, ms:MeetupService) {
+  constructor(private popoverController: PopoverController, profileservice : ProfileService, ms:MeetupService, friendshipService: FriendshipService, contactList: ContactlistService) {
     this.ms = ms;
+    this.cs = contactList;
+    this.fs = friendshipService;
     this.profileservice = profileservice;
    }
 
@@ -36,7 +52,28 @@ export class MeetupDataPage implements OnInit {
    @Input() mp:MeetupPage;
 
   ngOnInit() {
-    console.log(this.otherUser);
+    this.profileservice.getUser();
+    this.fs.getBefriendedUsers(this.profileservice.user).subscribe(data=> {
+      data.forEach(friendship => {
+        if(friendship.user1.id!=this.profileservice.user.id) {
+          this.cs.getKeyUser(friendship.user1).subscribe(data => {
+            this.allFriends.push(data);
+          })
+         
+        } else {
+          this.cs.getKeyUser(friendship.user2).subscribe(data => {
+            this.allFriends.push(data);
+          })
+       
+        }
+      });
+
+     console.log(this.allFriends);
+    })
+  }
+
+  setKeyUser(user) {
+  
   }
 
   public createMeeting() {
@@ -48,14 +85,17 @@ export class MeetupDataPage implements OnInit {
     console.log(this.meetup);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {
-      let dataForPost = {
-        meeting: data,
-        user_id: this.otherUser.id,
-        status: "pending"
-      }
-      this.ms.setOtherUser(dataForPost).subscribe(data=> {
-        this.dismissAll();
-      })
+      this.selectedFriends.forEach(friend => {
+        let dataForPost = {
+          meeting: data,
+          user_id: friend.id,
+          status: "pending"
+        }
+        this.ms.setOtherUser(dataForPost).subscribe(data=> {
+          this.dismissAll();
+        })
+      });
+    
     })   
   }
 

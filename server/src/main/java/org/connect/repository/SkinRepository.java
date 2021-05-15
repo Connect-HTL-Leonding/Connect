@@ -113,7 +113,8 @@ public class SkinRepository {
         Friendship f3 = new Friendship(iboTrisi,trisi,s1,LocalDateTime.now(),"cool");
         Friendship f4 = new Friendship(iboTrisi,trisi1,s1,LocalDateTime.now(),"cool");
  //       Friendship f5 = new Friendship(franz, jan, s, LocalDateTime.now(), "cool");
-
+        Friendship f5 = new Friendship(tobias,trisinger,s1,LocalDateTime.now(),"cool");
+        Friendship f6 = new Friendship(tobias,janTobi,s1,LocalDateTime.now(),"cool");
 
 
 
@@ -259,7 +260,8 @@ public class SkinRepository {
         em.persist(f2);
        // em.persist(f3);
         em.persist(f4);
-//        em.persist(f5);
+        em.persist(f5);
+        em.persist(f6);
         em.persist(trisinger);
         em.persist(janTobi);
     }
