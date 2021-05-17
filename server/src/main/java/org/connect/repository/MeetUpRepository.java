@@ -89,9 +89,11 @@ public class MeetUpRepository {
 
     @Transactional
     public void setStatus(Long meetingId,String status) {
-        Query query = em.createQuery("update Meeting_User mu set mu.status = :status where mu.meeting.id=:meetingId");
+        User u = em.find(User.class, jwt.getClaim("sub"));
+        Query query = em.createQuery("update Meeting_User mu set mu.status = :status where mu.meeting.id=:meetingId AND mu.user_id= :user_id");
         query.setParameter("status",status);
         query.setParameter("meetingId",meetingId);
+        query.setParameter("user_id",u.getId());
         int result = query.executeUpdate();
     }
 }

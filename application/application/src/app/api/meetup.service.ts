@@ -53,10 +53,7 @@ export class MeetupService {
   }
 
   setStatusDeclined(meetingId) {
-    console.log(typeof(meetingId));
-    this.http.post(api.url + "meetup/setStatusD",meetingId).subscribe(data=> {
-      console.log("status set to declined");
-    })
+   return this.http.post(api.url + "meetup/setStatusD",meetingId);
   }
 
 

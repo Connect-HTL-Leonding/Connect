@@ -143,13 +143,9 @@ export class ChatPage implements OnInit {
       this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
         this.meetUp = data;
         if(this.meetUp.length != 0) {
-          
           this.newMeetUp = true;
           this.meetUpTime = data[this.meetUp.length-1].time;
           this.meetUpLocation = data[this.meetUp.length-1].position;
-
-        
-
         }
       })
       this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data=> {
@@ -219,10 +215,13 @@ export class ChatPage implements OnInit {
  }
 
  setStatusOfMeetingD() {
-  this.ms.setStatusDeclined(this.meetUp[this.meetUp.length-1].id);
-  this.newMeetUp = false;
-  this.meetUp = null;
-  alert("MeetUp declined");
+  this.ms.setStatusDeclined(this.meetUp[this.meetUp.length-1].id).subscribe(data => {
+    this.newMeetUp = false;
+    this.meetUp = null;
+    alert("MeetUp declined");
+  });
+  
+  
 }
 
   dismissModal() {
