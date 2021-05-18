@@ -55,9 +55,9 @@
       <p *ngIf="myMeetUpTime">{{myMeetUpTime[2]}}.{{myMeetUpTime[1]}}.{{myMeetUpTime[0]}} um {{myMeetUpTime[3]}}:{{myMeetUpTime[4]}}</p>
     <p>wurde <b>{{this.myMeetUpStatus}}</b></p>
     </div>
-    <div *ngIf="newMeetUp" class="MeetUp">
+    <div *ngIf="isNewMeetUp" class="MeetUp">
       <b>Let's meet up!</b>
-      <ion-button (click)="showLocation()"><ion-icon name="location-outline"></ion-icon> Treffpunkt</ion-button>
+      <ion-button (click)="showLocation(this.currentMeetup)"><ion-icon name="location-outline"></ion-icon> Treffpunkt</ion-button>
    
      <!--
 <div #map id="map">

@@ -30,6 +30,7 @@ import { MeetupService } from 'src/app/api/meetup.service';
 import { Meeting, MeetupUser } from 'src/app/model/meetup';
 import { MeetupDataShowPage } from './meetup-data-show/meetup-data-show.page';
 import { ChatPage } from '../chat/chat.page';
+import { Room } from 'src/app/model/room';
 
 /*
 import {
@@ -58,6 +59,7 @@ export class HomePage implements OnInit {
   map: any;
   friendMarkers = [];
   meetupMarkers = [];
+  meetupPreviewMarker: google.maps.Marker;
   userDot: google.maps.Circle;
   skinRadi = [];
   friendProfile: ProfilePage;
@@ -102,10 +104,12 @@ export class HomePage implements OnInit {
       this.createMySkinRaduis();
     });
 
-    this.meetupPreview = this.meetupService.meetopPreviewNotify.subscribe(value => {
-
-
-      this.map.panTo(value);
+    this.meetupPreview = this.meetupService.meetupPreviewNotify.subscribe(value => {
+     
+      let m: Meeting = value.meetup;
+      let r: Room = value.originRoom;
+      this.createMeetupPreviewMarker(m,r);
+      this.map.panTo(m.position);
       this.map.setZoom(18);
     });
 
@@ -165,6 +169,12 @@ export class HomePage implements OnInit {
       this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
       this.doConnect();
     })
+  }
+
+  ionViewDidLeave(){
+    if(this.meetupPreviewMarker){
+    this.meetupPreviewMarker.setMap(null);
+    }
   }
 
   doConnect() {
@@ -432,6 +442,55 @@ export class HomePage implements OnInit {
       })
 
     })
+  }
+
+  createMeetupPreviewMarker(m: Meeting, r:Room) {
+   
+     
+        
+              var canvas = document.createElement('canvas');
+              canvas.width = 35;
+              canvas.height = 62;
+              var ctx = canvas.getContext('2d');
+              ctx.globalAlpha=0.5;
+             
+              var compositeImage;
+
+             
+
+              var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+
+
+              ctx.fillStyle = '#db3d3d';
+              ctx.fill(path);
+
+              compositeImage = canvas.toDataURL("image/png");
+
+              canvas.remove();
+              console.log(compositeImage)
+
+              if(this.meetupPreviewMarker != undefined){
+                this.meetupPreviewMarker.setMap(null);
+              
+              }
+            
+
+              this.meetupPreviewMarker = new google.maps.Marker({
+                position: m.position,
+                title: "Meetup Preview",
+                map: this.map,
+                icon: compositeImage
+              });
+
+              this.meetupPreviewMarker.addListener("click", () => {
+                
+                this.previewMarkerOnclick(r);
+              });
+  }
+
+  previewMarkerOnclick(r){
+    this.router.navigate(["contactlist"]);
+    this.meetupService.meetupPreviewBackObserveable.next(r);
   }
 
   async presentMeetupPopover(ev: any, m, u) {

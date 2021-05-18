@@ -14,7 +14,10 @@ export class MeetupService {
   MeetupUpdateNotify = this.meetupObservable.asObservable();
 
   public meetupPreviewObserveable = new Subject<any>();
-  meetopPreviewNotify = this.meetupPreviewObserveable.asObservable();
+  meetupPreviewNotify = this.meetupPreviewObserveable.asObservable();
+
+  public meetupPreviewBackObserveable = new Subject<any>();
+  meetupPreviewBackNotify = this.meetupPreviewBackObserveable.asObservable();
 
   constructor(http: HttpClient) {
     this.http = http;

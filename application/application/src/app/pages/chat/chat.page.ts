@@ -57,8 +57,8 @@ export class ChatPage implements OnInit {
   public showNewMsgLine : boolean;
   public pfp;
   public ms;
-  public newMeetUp;
-  public meetUp;
+  public isNewMeetUp;
+  public meetUps;
   public meetUpTime;
   public myMeetUp;
   public myMeetUpStatus;
@@ -66,6 +66,7 @@ export class ChatPage implements OnInit {
   public meetUpAccepted;
   
   public meetUpLocation;
+  public currentMeetup;
 
  
 
@@ -141,11 +142,12 @@ export class ChatPage implements OnInit {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
       this.otherUser.custom = data;
       this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
-        this.meetUp = data;
-        if(this.meetUp.length != 0) {
-          this.newMeetUp = true;
-          this.meetUpTime = data[this.meetUp.length-1].time;
-          this.meetUpLocation = data[this.meetUp.length-1].position;
+        this.meetUps = data;
+        if(this.meetUps.length != 0) {
+          this.isNewMeetUp = true;
+          this.meetUpTime = data[this.meetUps.length-1].time;
+          this.meetUpLocation = data[this.meetUps.length-1].position;
+          this.currentMeetup = data[this.meetUps.length-1];
         }
       })
       this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data=> {
@@ -195,29 +197,30 @@ export class ChatPage implements OnInit {
     })
   }
 
-  showLocation(){
+  showLocation(m : Meeting){
+    
     this.dismissModal();
     this.router.navigate(["home"]);
-    this.ms.meetupPreviewObserveable.next(this.meetUpLocation);
+    this.ms.meetupPreviewObserveable.next({"meetup":m, "originRoom":this.contactlist.selectedRoom});
   }
 
 
  setStatusOfMeetingA() {
    this.dismissModal();
-    this.ms.setStatusAccepted(this.meetUp[this.meetUp.length-1].id).subscribe(data=> {
-      this.chatservice.chatSendObservable.next(this.meetUp[this.meetUp.length-1].id);
+    this.ms.setStatusAccepted(this.meetUps[this.meetUps.length-1].id).subscribe(data=> {
+      this.chatservice.chatSendObservable.next(this.meetUps[this.meetUps.length-1].id);
       console.log("status set to accepted");
-      this.newMeetUp = false;
-      this.meetUp = null;
+      this.isNewMeetUp = false;
+      this.meetUps = null;
       alert("MeetUp accepted! Check your map!");
   });
    
  }
 
  setStatusOfMeetingD() {
-  this.ms.setStatusDeclined(this.meetUp[this.meetUp.length-1].id).subscribe(data => {
-    this.newMeetUp = false;
-    this.meetUp = null;
+  this.ms.setStatusDeclined(this.meetUps[this.meetUps.length-1].id).subscribe(data => {
+    this.isNewMeetUp = false;
+    this.meetUps = null;
     alert("MeetUp declined");
   });
   
@@ -293,6 +296,7 @@ export class ChatPage implements OnInit {
 
   init(room: Room) {
     this.showNewMsgLine = true;
+    
     this.chatservice.getAllMessages(room).subscribe(data=> {
       this.allMessages = data;
       this.chatservice.getSeenMessages(room).subscribe(data=> {

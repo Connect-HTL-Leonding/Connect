@@ -9,6 +9,7 @@ import {DetailContactlistComponent} from '../contactlist/detail-contactlist/deta
 import { ProfileService } from 'src/app/api/profile.service';
 import { KeycloakService } from 'keycloak-angular';
 import { api } from 'src/app/app.component';
+import { MeetupService } from 'src/app/api/meetup.service';
 
 @Component({
   selector: 'app-contactlist',
@@ -23,13 +24,25 @@ export class ContactlistPage implements OnInit {
   modal;
   wsUri;
   websocket;
+  meetupPreviewBack;
+
+  
 
   constructor(cs : ContactlistService, public modalController: ModalController, chatService : ChatService, 
-    public profileservice: ProfileService, public keyCloakService : KeycloakService) { 
+    public profileservice: ProfileService, public keyCloakService : KeycloakService,public meetupService: MeetupService) { 
     this.contactService = cs;
     this.chatService = chatService;
     this.wsUri = api.ws + '/contactListSocket/' + keyCloakService.getKeycloakInstance().subject;
+
+    this.meetupPreviewBack = this.meetupService.meetupPreviewBackNotify.subscribe(value => {
+     let r: Room = value;
+
+     this.presentModal(r);
+
+    });
   }
+
+ 
 
   reloadRooms() {
     this.contactService.getChats().subscribe(

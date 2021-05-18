@@ -30,7 +30,7 @@ export class ProfileService {
       this.user.lastname = data["lastName"];
       this.user.email = data["email"];
       this.user.custom.tutorialStage = data["tutorialStage"];
-      console.log(data)
+     
     });
     return this.http.get<CustomUser>(api.short + 'user/customData');
 
