@@ -223,8 +223,12 @@ export class ChatPage implements OnInit {
     this.meetUps = null;
     alert("MeetUp declined");
   });
-  
-  
+}
+
+setSeen(meetingId) {
+  this.ms.setSeen(meetingId).subscribe(data=> {
+    console.log(data);
+  })
 }
 
   dismissModal() {

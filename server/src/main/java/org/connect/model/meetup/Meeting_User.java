@@ -24,6 +24,8 @@ public class Meeting_User implements Serializable {
 
     private String status;
 
+    private Boolean isSeen;
+
     public Meeting_User() {
 
     }
@@ -58,5 +60,13 @@ public class Meeting_User implements Serializable {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public Boolean getSeen() {
+        return isSeen;
+    }
+
+    public void setSeen(Boolean seen) {
+        isSeen = seen;
     }
 }

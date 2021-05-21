@@ -59,5 +59,9 @@ export class MeetupService {
    return this.http.post(api.url + "meetup/setStatusD",meetingId);
   }
 
+  setSeen(meetingId) {
+    return this.http.post(api.url + "meetup/setSeen",meetingId);
+  }
+
 
 }

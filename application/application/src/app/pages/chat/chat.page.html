@@ -54,6 +54,7 @@
       <p>Dein MeetUp am</p>
       <p *ngIf="myMeetUpTime">{{myMeetUpTime[2]}}.{{myMeetUpTime[1]}}.{{myMeetUpTime[0]}} um {{myMeetUpTime[3]}}:{{myMeetUpTime[4]}}</p>
     <p>wurde <b>{{this.myMeetUpStatus}}</b></p>
+    <ion-button size="small">Verstanden!</ion-button>
     </div>
     <div *ngIf="isNewMeetUp" class="MeetUp">
       <b>Let's meet up!</b>

@@ -84,5 +84,12 @@ public class MeetUpService {
         repo.setStatus(MeetingId,"declined");
     }
 
+    @POST
+    @Path("setSeen")
+    @Transactional
+    public void setSeen(Long MeetingId) {
+        repo.setSeen(MeetingId);
+    }
+
 
 }

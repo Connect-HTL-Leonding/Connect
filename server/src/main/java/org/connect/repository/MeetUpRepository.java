@@ -33,8 +33,9 @@ public class MeetUpRepository {
 
     @Transactional
     public Meeting_User addEntry(Meeting_User mu) {
-      em.persist(mu);
-      return mu;
+        mu.setSeen(false);
+        em.persist(mu);
+        return mu;
     }
 
 
@@ -92,6 +93,16 @@ public class MeetUpRepository {
         User u = em.find(User.class, jwt.getClaim("sub"));
         Query query = em.createQuery("update Meeting_User mu set mu.status = :status where mu.meeting.id=:meetingId AND mu.user_id= :user_id");
         query.setParameter("status",status);
+        query.setParameter("meetingId",meetingId);
+        query.setParameter("user_id",u.getId());
+        int result = query.executeUpdate();
+    }
+
+    @Transactional
+    public void setSeen(Long meetingId) {
+        User u = em.find(User.class, jwt.getClaim("sub"));
+        Query query = em.createQuery("update Meeting_User mu set mu.isSeen = :seen where mu.meeting.id=:meetingId AND mu.user_id= :user_id");
+        query.setParameter("seen",true);
         query.setParameter("meetingId",meetingId);
         query.setParameter("user_id",u.getId());
         int result = query.executeUpdate();
