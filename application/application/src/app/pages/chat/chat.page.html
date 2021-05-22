@@ -3,38 +3,68 @@
     <div id="toolbar">
       <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
       <div id="profile">
-      <ion-avatar>
-        <img *ngIf="otherUser" id="profilepicture" src="{{pfp}}">
-      </ion-avatar>
-      <ion-label *ngIf="otherUser">
+        <ion-avatar>
+          <img *ngIf="otherUser" id="profilepicture" src="{{pfp}}">
+        </ion-avatar>
+        <ion-label *ngIf="otherUser">
           {{otherUser.userName}}
-      </ion-label>
-    </div>
-    <ion-icon id="meeting-icon" (click)="presentModal()" name="walk"></ion-icon> 
+        </ion-label>
+      </div>
+      <ion-icon id="meeting-icon" (click)="presentModal()" name="walk"></ion-icon>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div id="messageFlex">
+    <div *ngFor="let meetUp of this.meetUpsAccepted" class="MeetUp">
+      <p>Dein MeetUp am</p>
+      <p>{{meetUp.time[2]}}.{{meetUp.time[1]}}.{{meetUp.time[0]}} um
+        {{meetUp.time[3]}}:{{meetUp.time[4]}}</p>
+      <p>wurde <b>akzeptiert</b></p>
+      <ion-button (click)="setSeen(meetUp)" size="small">Verstanden!</ion-button>
+    </div>
+
+    <div *ngFor="let meetUp of this.meetUpsDeclined" class="MeetUp">
+      <p>Dein MeetUp am</p>
+      <p>{{meetUp.time[2]}}.{{meetUp.time[1]}}.{{meetUp.time[0]}} um
+        {{meetUp.time[3]}}:{{meetUp.time[4]}}</p>
+      <p>wurde <b>abgelehnt</b></p>
+      <ion-button (click)="setSeen(meetUp)" size="small">Verstanden!</ion-button>
+    </div>
+
+    <div class="MeetUp" *ngFor="let meetUp of this.meetUps">
+      <b>Let's meet up!</b>
+      <ion-button (click)="showLocation(meetUp)">
+        <ion-icon name="location-outline"></ion-icon> Treffpunkt
+      </ion-button>
+      <p>Am {{meetUp.time[2]}}.{{meetUp.time[1]}}.{{meetUp.time[0]}} um
+        {{meetUp.time[3]}}:{{meetUp.time[4]}}</p>
+      <div class="buttonBox">
+        <ion-button (click)="setStatusOfMeetingD(meetUp)" fill="outline" size="small">Decline</ion-button>
+        <ion-button (click)="setStatusOfMeetingA(meetUp)" size="small">Accept</ion-button>
+      </div>
+    </div>
+
     <div class="messageDiv" *ngFor="let message of chatservice.messages, let i = index">
-      <div class="dateBox" *ngIf="newDay(message,chatservice.messages[i-1])">{{message.created[2]}}.{{message.created[1]}}.{{message.created[0]}}</div>
+      <div class="dateBox" *ngIf="newDay(message,chatservice.messages[i-1])">
+        {{message.created[2]}}.{{message.created[1]}}.{{message.created[0]}}</div>
       <div *ngIf="yousent(message)" class="youSent">
-        <div *ngIf="imageIsNotNull(message) else youNoImage" >
+        <div *ngIf="imageIsNotNull(message) else youNoImage">
           <img class="youSentImage" src="data:image/png;base64,{{message.image}}">
           <p class="imageMessage">{{message.message}}</p>
         </div>
         <ng-template #youNoImage>
-            <p class="message">{{message.message}}</p>
-           <p *ngIf="message.message.length>29" class="timeOnWrap">{{convert(message.created)}}</p>
-            <p *ngIf="message.message.length<=29" class="time">{{convert(message.created)}}</p>
-           <!-- <p>{{message.created | date:'shortTime'}}</p> -->
+          <p class="message">{{message.message}}</p>
+          <p *ngIf="message.message.length>29" class="timeOnWrap">{{convert(message.created)}}</p>
+          <p *ngIf="message.message.length<=29" class="time">{{convert(message.created)}}</p>
+          <!-- <p>{{message.created | date:'shortTime'}}</p> -->
         </ng-template>
       </div>
       <div *ngIf="this.showNewMsgLine && this.unseenMessages> 0 && !yousent(message) && i == this.pos && i !== 0">
         <div class="newMsgBox">
           <p class="smallFont">NEW</p>
-        <div class="hline"></div>
+          <div class="hline"></div>
         </div>
       </div>
       <div *ngIf="!yousent(message)" class="otherSent">
@@ -46,37 +76,14 @@
           <p class="message">{{message.message}}</p>
           <p *ngIf="message.message.length>29" class="timeOnWrap">{{convert(message.created)}}</p>
           <p *ngIf="message.message.length<=29" class="time">{{convert(message.created)}}</p>
-      </ng-template>
+        </ng-template>
       </div>
-      
-    </div>  
-    <div *ngIf="myMeetUp" class="MeetUp">
-      <p>Dein MeetUp am</p>
-      <p *ngIf="myMeetUpTime">{{myMeetUpTime[2]}}.{{myMeetUpTime[1]}}.{{myMeetUpTime[0]}} um {{myMeetUpTime[3]}}:{{myMeetUpTime[4]}}</p>
-    <p>wurde <b>{{this.myMeetUpStatus}}</b></p>
-    <ion-button size="small">Verstanden!</ion-button>
-    </div>
-    <div *ngIf="isNewMeetUp" class="MeetUp">
-      <b>Let's meet up!</b>
-      <ion-button (click)="showLocation(this.currentMeetup)"><ion-icon name="location-outline"></ion-icon> Treffpunkt</ion-button>
-   
-     <!--
-<div #map id="map">
 
-test
-       </div>
-     -->
-     
-    
-      <p *ngIf="meetUpTime">Am {{meetUpTime[2]}}.{{meetUpTime[1]}}.{{meetUpTime[0]}} um {{meetUpTime[3]}}:{{meetUpTime[4]}}</p>
-      <div class="buttonBox">
-        <ion-button (click)="setStatusOfMeetingD()" fill="outline" size="small">Decline</ion-button>
-    <ion-button (click)="setStatusOfMeetingA()" size="small">Accept</ion-button>
-      </div>
     </div>
+
   </div>
 </ion-content>
-  
+
 <ion-footer>
   <div id="inputdiv">
     <div id="input">
@@ -86,4 +93,3 @@ test
     <ion-icon id="send" name="send" (click)="doSend()"></ion-icon>
   </div>
 </ion-footer>
-

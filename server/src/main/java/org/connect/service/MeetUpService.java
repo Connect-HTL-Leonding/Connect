@@ -87,8 +87,8 @@ public class MeetUpService {
     @POST
     @Path("setSeen")
     @Transactional
-    public void setSeen(Long MeetingId) {
-        repo.setSeen(MeetingId);
+    public void setSeen(Meeting_User mu) {
+        repo.setSeen(mu);
     }
 
 
