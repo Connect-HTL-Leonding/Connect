@@ -99,12 +99,13 @@ public class MeetUpRepository {
     }
 
     @Transactional
-    public void setSeen(Long meetingId) {
+    public void setSeen(Meeting_User mu) {
         User u = em.find(User.class, jwt.getClaim("sub"));
-        Query query = em.createQuery("update Meeting_User mu set mu.isSeen = :seen where mu.meeting.id=:meetingId AND mu.user_id= :user_id");
-        query.setParameter("seen",true);
-        query.setParameter("meetingId",meetingId);
-        query.setParameter("user_id",u.getId());
+        System.out.println(mu.getMeeting().getId());
+        System.out.println(mu.getUser_id());
+        Query query = em.createQuery("update Meeting_User mu set mu.isSeen = true where mu.meeting.id=:meetingId AND mu.user_id= :user_id");
+        query.setParameter("meetingId",mu.getMeeting().getId());
+        query.setParameter("user_id",mu.getUser_id());
         int result = query.executeUpdate();
     }
 }

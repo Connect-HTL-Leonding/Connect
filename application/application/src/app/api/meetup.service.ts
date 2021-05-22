@@ -59,8 +59,12 @@ export class MeetupService {
    return this.http.post(api.url + "meetup/setStatusD",meetingId);
   }
 
-  setSeen(meetingId) {
-    return this.http.post(api.url + "meetup/setSeen",meetingId);
+  setSeen(meeting, otherUserId) {
+    let dataForPost = {
+      meeting: meeting,
+      user_id: otherUserId,
+    }
+    return this.http.post(api.url + "meetup/setSeen",dataForPost);
   }
 
 
