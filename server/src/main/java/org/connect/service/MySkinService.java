@@ -2,6 +2,7 @@ package org.connect.service;
 
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.skin.MySkin;
+import org.connect.model.skin.Skin;
 import org.connect.model.user.User;
 import org.connect.repository.MySkinRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
@@ -45,6 +46,14 @@ public class MySkinService {
         System.out.println(identity.getPrincipal().getName());
 
         return dbRepo.findSelected(jwt.claim("sub"));
+    }
+
+    // Anzahl der Follower eines Skins
+    @Path("countFollower")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Integer countFollower(Skin skin) {
+        return dbRepo.countFollower(skin);
     }
 
     // Liste aller selektierten Skins senden

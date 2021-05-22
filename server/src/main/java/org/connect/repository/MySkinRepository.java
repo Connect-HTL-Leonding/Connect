@@ -30,6 +30,9 @@ public class MySkinRepository {
     @Transactional
     public MySkin create(MySkin myskin) {
         em.persist(myskin);
+        Skin skin = em.find(Skin.class, myskin.getSkin().getId());
+        skin.setFollower(skin.getFollower() + 1);
+        em.merge(skin);
         return myskin;
     }
 
@@ -69,6 +72,23 @@ public class MySkinRepository {
     }
 
     @Transactional
+    public Integer countFollower(Skin skin) {
+        TypedQuery<Integer> tq = this.em.createNamedQuery(MySkin.COUNTFOLLOWER, Integer.class);
+        tq.setParameter("skin", skin);
+
+        int follower = 0;
+        try {
+            follower = tq.getSingleResult();
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        System.out.println(follower);
+
+        return follower;
+    }
+
+    @Transactional
     public List<MySkin> findMapSkin(Optional id) {
         TypedQuery<MySkin> tq = this.em.createNamedQuery(MySkin.FINDMAPSKINS, MySkin.class);
         tq.setParameter("u", id.get().toString());
@@ -89,7 +109,13 @@ public class MySkinRepository {
     @Transactional
     public MySkin delete(long id) {
         MySkin s = em.find(MySkin.class, id);
+
+        Skin skin = em.find(Skin.class, s.getSkin().getId());
+        skin.setFollower(skin.getFollower() - 1);
+        em.merge(skin);
+
         em.remove(s);
+
         return s;
     }
 

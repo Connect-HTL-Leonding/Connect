@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import Showcaser from 'showcaser';
 import { ProfileService } from 'src/app/api/profile.service';
 import { SkinsService } from 'src/app/api/skins.service';
@@ -20,7 +21,7 @@ export class DetailSkinComponent implements OnInit {
   // Button
   @ViewChild('selectedBut', { static: false }) selectedRef: ElementRef;
 
-  constructor(public router: Router, public ps: ProfileService) { }
+  constructor(public router: Router, public ps: ProfileService, public alertController: AlertController) { }
 
   ngOnInit() {
     this.ps.getUser().subscribe(
@@ -35,7 +36,7 @@ export class DetailSkinComponent implements OnInit {
         console.log('Error');
       }
     )
-   }
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "data" changed
@@ -44,9 +45,36 @@ export class DetailSkinComponent implements OnInit {
     }
   }
 
+  async presentAlertConfirm(myskin : MySkin) {
+    const alert = await this.alertController.create({
+      cssClass: 'confirm-delete',
+      header: 'Achtung!',
+      message: 'Willst du wirklich <strong>' + myskin.skin.title + '</strong> <strong>löschen</strong>?<br>Alle Daten sind danach verloren!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'primary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: yes');
+          }
+        }, {
+          text: 'Delete',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Delete Okay');
+            this.deleted.emit();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   //Event wenn Skin löschen
   removeSkin() {
-    this.deleted.emit();
+    this.presentAlertConfirm(this.myskin);
   }
 
   //Change-Event
@@ -60,9 +88,9 @@ export class DetailSkinComponent implements OnInit {
     this.myskin.selected = !this.myskin.selected;
     this.updated.emit();
   }
-  showTutorial(){
+  showTutorial() {
     console.log(this.ps.user.custom.tutorialStage)
-    if(this.ps.user.custom.tutorialStage == 5){
+    if (this.ps.user.custom.tutorialStage == 5) {
       console.log("Bruhhh")
       Showcaser.showcase("Klick auf einen Skin und mach ihn dann mit dem Herz zum Favoriten", this.selectedRef.nativeElement, {
         shape: "circle",

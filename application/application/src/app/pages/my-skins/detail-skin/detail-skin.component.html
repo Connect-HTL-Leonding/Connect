@@ -20,12 +20,12 @@
     <div id="ranges">
       <div class="range_container">
         <h2>Suchradius</h2>
-        <ion-range (mouseup)="change($event)" (touchend)="change($event)" [(ngModel)]="myskin.radius" min="1" max="10"
-          step="1" pin color="secondary" id="suchradius">
+        <ion-range (mouseup)="change($event)" (touchend)="change($event)" [(ngModel)]="myskin.radius" min="0" max="100"
+          step="10" snaps pin color="secondary" id="suchradius">
         </ion-range>
         <div class="spacing">
-          <ion-label class="range_label" slot="start">1km</ion-label>
-          <ion-label class="range_label" slot="end">10km</ion-label>
+          <ion-label class="range_label" slot="start">&#060;1km</ion-label>
+          <ion-label class="range_label" slot="end">100km</ion-label>
         </div>
 
       </div>
@@ -40,7 +40,7 @@
         </div>
       </div>
 
-      <ion-button shape="round" color="danger" class="remove" expand="block" (click)="removeSkin()">Remove</ion-button>
+      <ion-button color="danger" class="remove" fill="clear" expand="block" (click)="removeSkin()">Remove</ion-button>
     </div>
     <!--
 <ion-item>
