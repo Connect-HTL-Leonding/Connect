@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ContactlistService } from '../../api/contactlist.service'
-import { MenuController, ModalController } from '@ionic/angular';
+import { MenuController, ModalController, ToastController } from '@ionic/angular';
 import { User } from '../../model/user';
 import { ChatService } from '../../api/chat.service';
 import { MeetupService } from '../../api/meetup.service';
@@ -70,7 +70,7 @@ export class ChatPage implements OnInit {
 
 
 
-  constructor(ms: MeetupService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public router: Router) {
+  constructor(ms: MeetupService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
@@ -183,7 +183,7 @@ export class ChatPage implements OnInit {
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
       }
-      alert("MeetUp accepted! Check your map!");
+      this.presentToastWithOptions("MeetUp accepted! Check your map!");
     });
 
   }
@@ -194,8 +194,26 @@ export class ChatPage implements OnInit {
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
       }
-      alert("MeetUp declined");
+      this.presentToastWithOptions("MeetUp declined");
     });
+  }
+
+  async presentToastWithOptions(msg) {
+    const toast = await this.toastController.create({
+      header: msg,
+      
+      position: 'top',
+      buttons: [
+        {
+          text: 'Close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    toast.present();
   }
 
   setSeen(meeting) {
