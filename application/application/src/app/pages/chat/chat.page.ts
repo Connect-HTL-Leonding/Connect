@@ -178,7 +178,7 @@ export class ChatPage implements OnInit {
   setStatusOfMeetingA(meetUp) {
     this.dismissModal();
     this.ms.setStatusAccepted(meetUp.id).subscribe(data => {
-      this.chatservice.chatSendObservable.next(meetUp.id);
+      this.chatservice.chatSendObservable.next("meetupAccepted:" + meetUp.id);
       console.log("status set to accepted");
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;

@@ -69,7 +69,7 @@ export class AppComponent implements OnInit{
       console.log(this.userProfile)
       this.ps.getUser().subscribe(data => {
         this.ps.user.custom = data;
-        this.wsUri = 'ws://localhost:8080/meetup/' + this.ps.user.id;
+        this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
       this.doConnect();
       })
       
@@ -81,7 +81,18 @@ export class AppComponent implements OnInit{
   doConnect() {
     this.websocket = new WebSocket(this.wsUri);
     this.websocket.onmessage = (evt) => {
-      this.ms.meetupObservable.next(evt);
+      var msg:string = evt.data;
+      var message = msg.split(":");
+      console.log(message[0]);
+      console.log(message[1]);
+      switch(message[0]) {
+        case("meetupAccepted"): this.ms.meetupObservable.next(msg[1]);
+        break;
+        case("chatMessage"):
+        break;
+        case("positionUpdate"):
+      }
+      
     }
 
     
