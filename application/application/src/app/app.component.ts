@@ -12,6 +12,7 @@ import { ProfileService } from './api/profile.service';
 import { HomePage } from './pages/home/home.page';
 import { MeetupService } from './api/meetup.service';
 import { ChatService } from './api/chat.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -83,12 +84,13 @@ export class AppComponent implements OnInit{
     this.websocket.onmessage = (evt) => {
       var msg:string = evt.data;
       var message = msg.split(":");
-      console.log(message[0]);
-      console.log(message[1]);
       switch(message[0]) {
-        case("meetupAccepted"): this.ms.meetupObservable.next(msg[1]);
+        case("meetupAccepted"): this.ms.meetupObservable.next(message[1]);
         break;
-        case("chatMessage"):
+        case("chatMessage"): this.cs.updateChatObservable.next(message[1]);
+                             if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+                               alert("messageify in roomify: " + message[1]);
+                             }
         break;
         case("positionUpdate"):
       }

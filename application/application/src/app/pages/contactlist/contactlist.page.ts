@@ -65,6 +65,8 @@ export class ContactlistPage implements OnInit {
 
   async presentModal(room: Room) {
     this.contactService.selectedRoom = room;
+    this.chatService.inRoom = true;
+    this.chatService.currentRoom = this.contactService.selectedRoom.id;
     this.modal = await this.modalController.create({
       component: ChatPage,
       componentProps: {
@@ -73,6 +75,7 @@ export class ContactlistPage implements OnInit {
     });
     this.modal.onDidDismiss().then((data => {
       this.reloadRooms();
+      this.chatService.inRoom = false;
     }))
     return await this.modal.present();
   }

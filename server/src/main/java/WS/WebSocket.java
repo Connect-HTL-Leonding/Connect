@@ -70,13 +70,32 @@ public class WebSocket {
         switch(s[0]) {
             case("meetupAccepted"):broadcastMeetup(s[1], id);;
             break;
-            case("chatMessage"):;
+            case("chatMessage"):broadcastMessage(s[1]);
             break;
             case("positionUpdate"):;
             break;
 
         }
 
+    }
+
+    private void broadcastMessage(String id) {
+        TypedQuery<String> query = em.createQuery("select rm.id from Room m join m.users rm where m.id = :id", String.class);
+        query.setParameter("id", Long.valueOf(id));
+        List<String> list = query.getResultList();
+
+        sessions.values().forEach(s -> {
+            for(String u : list) {
+                if (u.equals(users.get(s))) {
+                    String message = "chatMessage:" + id;
+                    s.getAsyncRemote().sendObject(message, result -> {
+                        if (result.getException() != null) {
+                            System.out.println("Unable to send message: " + result.getException());
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void broadcastMeetup(String message, String id) {
