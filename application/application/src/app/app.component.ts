@@ -12,6 +12,7 @@ import { ProfileService } from './api/profile.service';
 import { HomePage } from './pages/home/home.page';
 import { MeetupService } from './api/meetup.service';
 import { ChatService } from './api/chat.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -69,7 +70,7 @@ export class AppComponent implements OnInit{
       console.log(this.userProfile)
       this.ps.getUser().subscribe(data => {
         this.ps.user.custom = data;
-        this.wsUri = 'ws://localhost:8080/meetup/' + this.ps.user.id;
+        this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
       this.doConnect();
       })
       
@@ -81,7 +82,19 @@ export class AppComponent implements OnInit{
   doConnect() {
     this.websocket = new WebSocket(this.wsUri);
     this.websocket.onmessage = (evt) => {
-      this.ms.meetupObservable.next(evt);
+      var msg:string = evt.data;
+      var message = msg.split(":");
+      switch(message[0]) {
+        case("meetupAccepted"): this.ms.meetupObservable.next(message[1]);
+        break;
+        case("chatMessage"): this.cs.updateChatObservable.next(message[1]);
+                             if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+                               alert("messageify in roomify: " + message[1]);
+                             }
+        break;
+        case("positionUpdate"):
+      }
+      
     }
 
     

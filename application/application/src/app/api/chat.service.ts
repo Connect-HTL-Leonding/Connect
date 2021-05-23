@@ -19,9 +19,14 @@ export class ChatService {
   public selectedRoom: Room;
   public activeUser: User;
   public m: Message;
+  public inRoom: boolean = false;
+  public currentRoom;
 
   public chatSendObservable = new Subject<any>();
   chatSendUpdateNotify = this.chatSendObservable.asObservable();
+
+  public updateChatObservable = new Subject<any>();
+  updatechatNotify = this.updateChatObservable.asObservable();
   
 
   constructor(http: HttpClient, cs: ContactlistService, private oauthService : OAuthService) {

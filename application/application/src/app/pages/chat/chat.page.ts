@@ -36,7 +36,6 @@ export class ChatPage implements OnInit {
 
   sendText = '';
   receiveText = '';
-  websocket: WebSocket;
   receiveMessage: Message = new Message();
   i = 0;
 
@@ -46,7 +45,6 @@ export class ChatPage implements OnInit {
   public otherUser: User = new User();
   contactlist;
   chatservice;
-  wsUri;
   oauthService;
   modal;
   public allMessages;
@@ -65,7 +63,7 @@ export class ChatPage implements OnInit {
   public meetUpsAccepted;
   public meetUpsDeclined;
   public myMeetUps;
-
+  public getMessage;
 
 
 
@@ -78,16 +76,21 @@ export class ChatPage implements OnInit {
     this.ms = ms;
 
     console.log(this.mapRef);
+
+    this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
+      console.log("testify 2");
+      console.log(value);
+      if(this.chatservice.selectedRoom.id == value) {
+        this.init(this.contactlist.selectedRoom);
+      }  
+    });
   }
 
 
   ngOnInit() {
-    console.log(this.keycloakService.getUsername());
-    this.wsUri = api.ws + '/chat/' + this.chatservice.selectedRoom.id + '/' + this.keycloakService.getUsername();
     this.init(this.contactlist.selectedRoom);
 
     this.getRoomName();
-    this.doConnect();
 
     /* Maybe Map idk it dont work
     this.map = new google.maps.Map(this.mapRef.nativeElement, {
@@ -178,7 +181,7 @@ export class ChatPage implements OnInit {
   setStatusOfMeetingA(meetUp) {
     this.dismissModal();
     this.ms.setStatusAccepted(meetUp.id).subscribe(data => {
-      this.chatservice.chatSendObservable.next(meetUp.id);
+      this.chatservice.chatSendObservable.next("meetupAccepted:" + meetUp.id);
       console.log("status set to accepted");
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
@@ -228,7 +231,6 @@ export class ChatPage implements OnInit {
   }
 
   dismissModal() {
-    this.websocket.close();
     this.modalController.dismiss();
   }
 
@@ -241,7 +243,7 @@ export class ChatPage implements OnInit {
     this.chatservice.addImage(this.m).then(data => {
       console.log(data);
       this.chatservice.createMessage(data).subscribe(data => {
-        this.websocket.send(this.sendText);
+        this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
         this.sendText = "";
       })
     });
@@ -257,30 +259,13 @@ export class ChatPage implements OnInit {
       this.showNewMsgLine = false;
       this.contacListWebsocket.send(this.sendText);
       this.chatservice.createMessage(this.m).subscribe(data => {
-        this.websocket.send(this.sendText);
+        this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
         this.sendText = "";
       });
     }
   }
 
-  doConnect() {
-    this.websocket = new WebSocket(this.wsUri);
-    console.log(this.websocket);
-    this.websocket.onmessage = (evt) => {
-      this.receiveText = evt.data + '\n';
-      this.chatservice.getData().subscribe(data => {
-        this.chatservice.messages = data;
-      });
-    }
-
-
-    /*
-    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
-    
-    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
-    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
-    */
-  }
+  
 
   convert(date: number[]): string {
     let hours = "";
