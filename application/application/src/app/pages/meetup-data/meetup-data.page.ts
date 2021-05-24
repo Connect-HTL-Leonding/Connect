@@ -41,7 +41,7 @@ export class MeetupDataPage implements OnInit {
       email: ""
   }
 
-  constructor(private popoverController: PopoverController, profileservice : ProfileService, ms:MeetupService, friendshipService: FriendshipService, contactList: ContactlistService) {
+  constructor(private popoverController: PopoverController, public contactlistService : ContactlistService, profileservice : ProfileService, ms:MeetupService, friendshipService: FriendshipService, contactList: ContactlistService) {
     this.ms = ms;
     this.cs = contactList;
     this.fs = friendshipService;
@@ -96,6 +96,7 @@ export class MeetupDataPage implements OnInit {
         }
         this.ms.setOtherUser(dataForPost).subscribe(data=> {
           this.dismissAll();
+          this.contactlistService.contactlistObservable.next("contactListUpdate");
           this.ms.createMeetupObservable.next("newMeetup:" + this.selectedRoom.id);
         })
       });

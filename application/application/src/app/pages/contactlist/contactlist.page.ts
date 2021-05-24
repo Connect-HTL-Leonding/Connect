@@ -22,9 +22,8 @@ export class ContactlistPage implements OnInit {
   chatService;
   latestMessage: Message;
   modal;
-  wsUri;
-  websocket;
   meetupPreviewBack;
+  contactlistUpdate;
 
 
 
@@ -32,13 +31,16 @@ export class ContactlistPage implements OnInit {
     public profileservice: ProfileService, public keyCloakService: KeycloakService, public meetupService: MeetupService) {
     this.contactService = cs;
     this.chatService = chatService;
-    this.wsUri = api.ws + '/contactListSocket/' + keyCloakService.getKeycloakInstance().subject;
 
     this.meetupPreviewBack = this.meetupService.meetupPreviewBackNotify.subscribe(value => {
       let r: Room = value;
 
       this.presentModal(r);
 
+    });
+
+    this.contactlistUpdate = this.contactService.contactlistUpdateNotify.subscribe(value => {
+      this.reloadRooms();
     });
   }
 
@@ -54,7 +56,6 @@ export class ContactlistPage implements OnInit {
   }
 
   ngOnInit() {
-    this.doConnect();
     this.profileservice.getUser().subscribe(data => {
       this.profileservice.user.custom = data;
       this.contactService.activeUser = this.profileservice.user;
@@ -69,9 +70,6 @@ export class ContactlistPage implements OnInit {
     this.chatService.currentRoom = this.contactService.selectedRoom.id;
     this.modal = await this.modalController.create({
       component: ChatPage,
-      componentProps: {
-        'contacListWebsocket': this.contactService.websocket
-      }
     });
     this.modal.onDidDismiss().then((data => {
       this.reloadRooms();
@@ -80,15 +78,4 @@ export class ContactlistPage implements OnInit {
     return await this.modal.present();
   }
 
-  doConnect() {
-    console.log(this.wsUri)
-    this.contactService.websocket = new WebSocket(this.wsUri);
-    this.contactService.websocket.onerror = (evt) => {
-      console.log(evt.error);
-    }
-    this.contactService.websocket.onmessage = (evt) => {
-      this.reloadRooms();
-    }
-
-  }
 }

@@ -13,6 +13,7 @@ import { HomePage } from './pages/home/home.page';
 import { MeetupService } from './api/meetup.service';
 import { ChatService } from './api/chat.service';
 import { Location } from '@angular/common';
+import { ContactlistService } from './api/contactlist.service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class AppComponent implements OnInit{
   getMessage;
   newMeetup;
   positionUpdate;
+  updateContactlist;
 
   
 
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit{
     public ps: ProfileService,
     public ms: MeetupService,
     public cs: ChatService,
+    public contactlistService:ContactlistService,
     public toastController:ToastController
   ) {
     this.initializeApp();
@@ -50,6 +53,10 @@ export class AppComponent implements OnInit{
     //this.oauthService.setupAutomaticSilentRefresh();
 
     this.getMessage = this.cs.chatSendUpdateNotify.subscribe(value => {
+      this.doSend(value);
+    });
+
+    this.updateContactlist = this.contactlistService.contactlistNotify.subscribe(value => {
       this.doSend(value);
     });
 
@@ -120,6 +127,8 @@ export class AppComponent implements OnInit{
                                if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
                                  this.presentToastWithOptions("Meetup declined in room " + message[1]);
                                }
+        break;
+        case("contactListUpdate"): this.contactlistService.contactlistUpdateObservable.next("update");
         break;
       }
       

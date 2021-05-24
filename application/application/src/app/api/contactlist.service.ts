@@ -8,6 +8,7 @@ import { Message } from '../model/message';
 import { ProfileService } from './profile.service';
 import { ThrowStmt } from '@angular/compiler';
 import { KeycloakService } from 'keycloak-angular';
+import { Subject } from 'rxjs';
 
 
 @Injectable({
@@ -24,6 +25,12 @@ export class ContactlistService {
   public counter = 0;
   public activeUser;
   websocket;
+
+  public contactlistObservable = new Subject<any>();
+  contactlistNotify = this.contactlistObservable.asObservable();
+
+  public contactlistUpdateObservable = new Subject<any>();
+  contactlistUpdateNotify = this.contactlistUpdateObservable.asObservable();
 
   constructor(http: HttpClient, public ps: ProfileService, public keyCloakService : KeycloakService) {
     this.http = http;

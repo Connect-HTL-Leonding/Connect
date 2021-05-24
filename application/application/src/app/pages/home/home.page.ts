@@ -1016,7 +1016,7 @@ class ClickEventHandler {
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
     console.log('you clicked on: ' + event.latLng.toString());
-    
+    /*
     var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
     console.log(distance);
     if(distance > 50) {
@@ -1028,6 +1028,7 @@ class ClickEventHandler {
         this.meetupService.positionObservable.next("positionUpdate:" + this.ps.user.custom.id);
       });
     }
+    */
     
 
 

@@ -80,9 +80,21 @@ public class WebSocket {
             break;
             case("declineMeetup"):broadcastMessage(s[1], "declineMeetup:");;
             break;
+            case("contactListUpdate"): broadcastContactlistUpdate("contactListUpdate");
 
         }
 
+    }
+
+    private void broadcastContactlistUpdate(String message) {
+        sessions.values().forEach(s -> {
+            s.getAsyncRemote().sendObject(message, result -> {
+                if (result.getException() != null) {
+                    System.out.println("Unable to send message: " + result.getException());
+                }
+            });
+
+        });
     }
 
     private void broadcastPosition(String id) {

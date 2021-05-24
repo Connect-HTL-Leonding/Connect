@@ -29,7 +29,6 @@ declare var google: any;
 })
 export class ChatPage implements OnInit {
 
-  @Input() contacListWebsocket: any;
 
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
   map: any;
@@ -199,6 +198,7 @@ export class ChatPage implements OnInit {
     this.ms.setStatusAccepted(meetUp.id).subscribe(data => {
       this.chatservice.chatSendObservable.next("meetupAccepted:" + meetUp.id);
       this.ms.createMeetupObservable.next("acceptMeetup:" + this.chatservice.selectedRoom.id);
+      this.contactlist.contactlistObservable.next("contactListUpdate");
       console.log("status set to accepted");
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
@@ -212,6 +212,7 @@ export class ChatPage implements OnInit {
     this.dismissModal();
     this.ms.setStatusDeclined(meetUp.id).subscribe(data => {
       this.ms.createMeetupObservable.next("declineMeetup:" + this.chatservice.selectedRoom.id);
+      this.contactlist.contactlistObservable.next("contactListUpdate");
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
       }
@@ -261,6 +262,7 @@ export class ChatPage implements OnInit {
     this.chatservice.addImage(this.m).then(data => {
       console.log(data);
       this.chatservice.createMessage(data).subscribe(data => {
+        this.contactlist.contactlistObservable.next("contactListUpdate");
         this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
         this.sendText = "";
       })
@@ -275,8 +277,9 @@ export class ChatPage implements OnInit {
       this.m.updated = new Date();
       this.m.image = "";
       this.showNewMsgLine = false;
-      this.contacListWebsocket.send(this.sendText);
+      
       this.chatservice.createMessage(this.m).subscribe(data => {
+        this.contactlist.contactlistObservable.next("contactListUpdate");
         this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
         this.sendText = "";
       });
