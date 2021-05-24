@@ -54,24 +54,27 @@ export class MeetupDataPage implements OnInit {
    @Input() selectedRoom: Room;
 
   ngOnInit() {
-    this.profileservice.getUser();
-    this.fs.getBefriendedUsers(this.profileservice.user).subscribe(data=> {
-      data.forEach(friendship => {
-        if(friendship.user1.id!=this.profileservice.user.id) {
-          this.cs.getKeyUser(friendship.user1).subscribe(data => {
-            this.allFriends.push(data);
-          })
+    this.profileservice.getUser().subscribe(data => {
+      this.profileservice.user.custom = data;
+      this.fs.getBefriendedUsers(this.profileservice.user).subscribe(data=> {
+        data.forEach(friendship => {
+          if(friendship.user1.id!=this.profileservice.user.id) {
+            this.cs.getKeyUser(friendship.user1).subscribe(data => {
+              this.allFriends.push(data);
+            })
+           
+          } else {
+            this.cs.getKeyUser(friendship.user2).subscribe(data => {
+              this.allFriends.push(data);
+            })
          
-        } else {
-          this.cs.getKeyUser(friendship.user2).subscribe(data => {
-            this.allFriends.push(data);
-          })
-       
-        }
-      });
+          }
+        });
+  
+       console.log(this.allFriends);
+      })
+    });
 
-     console.log(this.allFriends);
-    })
   }
 
   setKeyUser(user) {

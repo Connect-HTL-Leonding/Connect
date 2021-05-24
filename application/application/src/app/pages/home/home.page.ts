@@ -787,23 +787,28 @@ export class HomePage implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-            console.log('Confirm Okay');
-            if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 0) {
-              Showcaser.showcase("Das ist die Home Seite. Das Herzstück von Connect. Doch starten wir doch einmal mit den Basics.", null, {
-                buttonText: "OK!",
-                position: {
-                  horizontal: "center",
-                  vertical: "top"
-                },
-                allowSkip: false,
-                close: () => {
-                  this.ps.startTutorial(this.ps.user.custom).subscribe(data => {
-                    console.log("Tutorial has been started")
-                    this.router.navigate(["profile"])
-                  });
-                }
-              });
-            }
+            this.ps.getUser().subscribe(data => {
+              this.ps.user.custom = data;
+              console.log('Confirm Okay');
+              console.log(this.ps.user.custom.tutorialStage + "sdlflsajlf")
+              if (this.ps.user.custom.tutorialStage == 0) {
+                Showcaser.showcase("Das ist die Home Seite. Das Herzstück von Connect. Doch starten wir doch einmal mit den Basics.", null, {
+                  buttonText: "OK!",
+                  position: {
+                    horizontal: "center",
+                    vertical: "top"
+                  },
+                  allowSkip: false,
+                  close: () => {
+                    this.ps.startTutorial(this.ps.user.custom).subscribe(data => {
+                      console.log("Tutorial has been started")
+                      this.router.navigate(["profile"])
+                    });
+                  }
+                });
+              }
+            })
+
           }
         }
       ]

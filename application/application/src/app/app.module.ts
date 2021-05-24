@@ -82,8 +82,7 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
           var subject = {
             subject: keycloak.getKeycloakInstance().subject
           }
-
-
+          
           const reqHeader = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + keycloak.getToken()
