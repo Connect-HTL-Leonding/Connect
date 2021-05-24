@@ -30,7 +30,7 @@ export class MeetupDataPage implements OnInit {
   ms : MeetupService;
   fs;
   minDate: string = new Date().toISOString();
-  public selectedFriends;
+  public selectedFriends = new Array();
   public allFriends = new Array();
   public cs;
   public keyUser = {

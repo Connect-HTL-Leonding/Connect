@@ -16,6 +16,6 @@
   </ion-item>
   <div class="buttonBox">
     <ion-button (click)="dismissPopover()" fill="outline" size="small">Cancel</ion-button>
-    <ion-button (click)="createMeeting()" size="small">Finish</ion-button>
+    <ion-button (click)="createMeeting()" size="small" [class.button-disabled]="(day == undefined || day == null) || (timeOfDay == undefined || timeOfDay == null) || selectedFriends.length == 0">Finish</ion-button>
   </div>
 </ion-content>
