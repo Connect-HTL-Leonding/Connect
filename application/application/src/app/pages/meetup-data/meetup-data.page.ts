@@ -9,6 +9,7 @@ import { MeetupService } from 'src/app/api/meetup.service';
 import { FriendshipService } from 'src/app/api/friendship.service';
 import { User } from 'src/app/model/user';
 import {ContactlistService} from '../../api/contactlist.service'
+import { Room } from 'src/app/model/room';
 
 
 @Component({
@@ -50,6 +51,7 @@ export class MeetupDataPage implements OnInit {
    @Input() otherUser;
    @Input() position;
    @Input() mp:MeetupPage;
+   @Input() selectedRoom: Room;
 
   ngOnInit() {
     this.profileservice.getUser();
@@ -85,6 +87,7 @@ export class MeetupDataPage implements OnInit {
     console.log(this.meetup);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {
+      
       this.selectedFriends.forEach(friend => {
         let dataForPost = {
           meeting: data,
@@ -93,6 +96,7 @@ export class MeetupDataPage implements OnInit {
         }
         this.ms.setOtherUser(dataForPost).subscribe(data=> {
           this.dismissAll();
+          this.ms.createMeetupObservable.next("newMeetup:" + this.selectedRoom.id);
         })
       });
     

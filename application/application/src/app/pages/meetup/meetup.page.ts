@@ -1,6 +1,7 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ModalController, PopoverController } from '@ionic/angular';
 import { ProfileService } from 'src/app/api/profile.service';
+import { Room } from 'src/app/model/room';
 import { User } from 'src/app/model/user';
 import { ChatPage } from '../chat/chat.page';
 import { MeetupDataPage } from '../meetup-data/meetup-data.page';
@@ -16,6 +17,7 @@ export class MeetupPage implements OnInit {
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
   map: any;
   @Input() otherUser : User;
+  @Input() selectedRoom : Room;
   userDot;
   meetupMarker: google.maps.Marker;
   
@@ -120,7 +122,7 @@ export class MeetupPage implements OnInit {
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: MeetupDataPage,
-      componentProps: {otherUser: this.otherUser, position: this.meetupMarker.getPosition(), mp: this},
+      componentProps: {otherUser: this.otherUser, position: this.meetupMarker.getPosition(), mp: this, selectedRoom: this.selectedRoom},
       cssClass : "popover",
       event: ev,
       translucent: true

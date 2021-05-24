@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform } from '@ionic/angular';
+import { Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
@@ -26,7 +26,8 @@ export class AppComponent implements OnInit{
   public userProfile: KeycloakProfile | null = null;
   websocket: WebSocket;
   wsUri;
-  getMessage
+  getMessage;
+  newMeetup;
 
   
 
@@ -38,7 +39,8 @@ export class AppComponent implements OnInit{
     public keycloak: KeycloakService,
     public ps: ProfileService,
     public ms: MeetupService,
-    public cs: ChatService
+    public cs: ChatService,
+    public toastController:ToastController
   ) {
     this.initializeApp();
     //this.oauthService.configure(authCodeFlowConfig);
@@ -47,6 +49,10 @@ export class AppComponent implements OnInit{
     //this.oauthService.setupAutomaticSilentRefresh();
 
     this.getMessage = this.cs.chatSendUpdateNotify.subscribe(value => {
+      this.doSend(value);
+    });
+
+    this.newMeetup = this.ms.createMeetupUpdateNotify.subscribe(value => {
       this.doSend(value);
     });
   }
@@ -86,16 +92,35 @@ export class AppComponent implements OnInit{
       var message = msg.split(":");
       switch(message[0]) {
         case("meetupAccepted"): this.ms.meetupObservable.next(message[1]);
+                                this.ms.showMeetupObservable.next(message[1]);
         break;
         case("chatMessage"): this.cs.updateChatObservable.next(message[1]);
                              if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                               alert("messageify in roomify: " + message[1]);
+                               this.presentToastWithOptions("new Message in room " + message[1])
                              }
         break;
         case("positionUpdate"):
+        break;
+        case("newMeetup"): console.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
+                            if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+                              this.presentToastWithOptions("new request for a meetup in room " + message[1])
+                            }
+        break;
+        case("acceptMeetup"): this.ms.showMeetupObservable.next(message[1]);
+        if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+          this.presentToastWithOptions("Meetup accepted in room " + message[1])
+        }
+        break;
+        case("declineMeetup"): this.ms.showMeetupObservable.next(message[1]);
+        if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+          this.presentToastWithOptions("Meetup declined in room " + message[1])
+        }
+        break;
       }
       
     }
+
+    
 
     
 
@@ -107,6 +132,25 @@ export class AppComponent implements OnInit{
     this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
     */
   }
+
+  async presentToastWithOptions(msg) {
+  const toast = await this.toastController.create({
+    header: "Message",
+    message: msg,
+    position: 'top',
+    duration: 2000,
+    buttons: [
+      {
+        side: 'end',
+        text: "Chat now",
+        handler: () => {
+          this.router.navigate(["contactlist"])
+        }
+      }
+    ]
+  });
+  toast.present();
+}
   
   doSend(msg) {
     this.websocket.send(msg);
