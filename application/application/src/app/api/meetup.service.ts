@@ -13,6 +13,12 @@ export class MeetupService {
   public meetupObservable = new Subject<any>();
   MeetupUpdateNotify = this.meetupObservable.asObservable();
 
+  public createMeetupObservable = new Subject<any>();
+  createMeetupUpdateNotify = this.createMeetupObservable.asObservable();
+
+  public showMeetupObservable = new Subject<any>();
+  showMeetupUpdateNotify = this.showMeetupObservable.asObservable();
+
   public meetupPreviewObserveable = new Subject<any>();
   meetupPreviewNotify = this.meetupPreviewObserveable.asObservable();
 
@@ -24,7 +30,7 @@ export class MeetupService {
   }
 
   createMeetup(m: Meeting) {
-    return this.http.post(api.url + 'meetup/create/', m);
+    return this.http.post<Meeting>(api.url + 'meetup/create/', m);
   }
 
   setOtherUser(dataForPost) {

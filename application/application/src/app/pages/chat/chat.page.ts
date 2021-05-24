@@ -64,6 +64,7 @@ export class ChatPage implements OnInit {
   public meetUpsDeclined;
   public myMeetUps;
   public getMessage;
+  public getMeetups;
 
 
 
@@ -78,12 +79,26 @@ export class ChatPage implements OnInit {
     console.log(this.mapRef);
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
-      console.log("testify 2");
       console.log(value);
       if(this.chatservice.selectedRoom.id == value) {
         this.init(this.contactlist.selectedRoom);
       }  
     });
+
+    this.getMeetups = this.ms.showMeetupUpdateNotify.subscribe(value => {
+      console.log(value);
+      if(this.chatservice.selectedRoom.id == value) {
+        this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
+          this.meetUps = data;
+        })
+        this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
+          this.meetUpsAccepted = data;
+          this.ms.getMeetupsFromMeD(this.otherUser.custom.id).subscribe(data => {
+            this.meetUpsDeclined = data;
+          })
+        })
+      }  
+    })
   }
 
 
@@ -107,7 +122,8 @@ export class ChatPage implements OnInit {
     this.modal = await this.modalController.create({
       component: MeetupPage,
       componentProps: {
-        'otherUser': this.otherUser
+        'otherUser': this.otherUser,
+        'selectedRoom': this.chatservice.selectedRoom
       }
     });
 
@@ -182,6 +198,7 @@ export class ChatPage implements OnInit {
     this.dismissModal();
     this.ms.setStatusAccepted(meetUp.id).subscribe(data => {
       this.chatservice.chatSendObservable.next("meetupAccepted:" + meetUp.id);
+      this.ms.createMeetupObservable.next("acceptMeetup:" + this.chatservice.selectedRoom.id);
       console.log("status set to accepted");
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
@@ -194,6 +211,7 @@ export class ChatPage implements OnInit {
   setStatusOfMeetingD(meetUp) {
     this.dismissModal();
     this.ms.setStatusDeclined(meetUp.id).subscribe(data => {
+      this.ms.createMeetupObservable.next("declineMeetup:" + this.chatservice.selectedRoom.id);
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
       }
