@@ -64,9 +64,9 @@ export class HomePage implements OnInit {
   skinRadi = [];
   friendProfile: ProfilePage;
   location: Position = new Position();
-  websocket: WebSocket;
   wsUri;
-  updateMeetup
+  updateMeetup;
+  positionUpdate;
 
   mySubscription;
   meetupPreview;
@@ -96,6 +96,12 @@ export class HomePage implements OnInit {
     public ts: TutorialService,
     public meetupService: MeetupService,
     public alertController: AlertController) {
+
+      this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
+        if (this.ps.user.custom.id != value) {
+          this.displayFriends();
+        }
+      });
 
     this.sideMenu();
 
@@ -166,8 +172,6 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.ps.getUser().subscribe(data => {
-      this.wsUri = 'ws://localhost:8080/map/' + this.ps.user.id;
-      this.doConnect();
     })
   }
 
@@ -175,23 +179,6 @@ export class HomePage implements OnInit {
     if(this.meetupPreviewMarker){
     this.meetupPreviewMarker.setMap(null);
     }
-  }
-
-  doConnect() {
-    this.websocket = new WebSocket(this.wsUri);
-    this.websocket.onmessage = (evt) => {
-      if (this.ps.user.custom.id != evt.data) {
-        this.displayFriends();
-      }
-    }
-
-
-    /*
-    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
-    
-    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
-    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
-    */
   }
 
   async presentPopover(ev: any) {
@@ -660,10 +647,6 @@ export class HomePage implements OnInit {
     return "#" + "00000".substring(0, 6 - c.length) + c;
   }
 
-  doSend() {
-    this.websocket.send('position updated!' + this.ps.user.userName);
-  }
-
   centerMap() {
     console.log(this.ps.user.custom.position);
     this.map.panTo(this.ps.user.custom.position);
@@ -704,7 +687,7 @@ export class HomePage implements OnInit {
         this.ps.updateUser(this.ps.user.custom).subscribe(data => {
           this.createMySkinRaduis();
           this.updateUserDot();
-          this.doSend();
+          this.meetupService.positionObservable.next("positionUpdate:" + this.ps.user.custom.id);
         })
       }
 
@@ -758,7 +741,7 @@ export class HomePage implements OnInit {
 
           //this.createMeetupMarker('../../assets/normalguy.jpg',location3);
 
-          new ClickEventHandler(this.map, location, this.ps, this);
+          new ClickEventHandler(this.map, location, this.ps, this, this.meetupService);
         })
       });
     }).catch((error) => {
@@ -995,7 +978,7 @@ class ClickEventHandler {
   e2: HTMLElement;
   eb: HTMLElement;
   e3: HTMLElement;
-  constructor(map: google.maps.Map, origin: any, ps: ProfileService, hp: HomePage) {
+  constructor(map: google.maps.Map, origin: any, ps: ProfileService, hp: HomePage, public meetupService:MeetupService) {
     this.origin = origin;
     this.map = map;
     this.ps = ps;
@@ -1033,7 +1016,7 @@ class ClickEventHandler {
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
     console.log('you clicked on: ' + event.latLng.toString());
-    /*
+    
     var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
     console.log(distance);
     if(distance > 50) {
@@ -1042,10 +1025,10 @@ class ClickEventHandler {
       this.ps.updateUser(this.ps.user.custom).subscribe(data => {
         this.hp.createMySkinRaduis();
         this.hp.updateUserDot();
-        this.hp.doSend();
+        this.meetupService.positionObservable.next("positionUpdate:" + this.ps.user.custom.id);
       });
     }
-    */
+    
 
 
     // If the event has a placeId, use it.

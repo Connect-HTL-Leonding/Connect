@@ -28,6 +28,7 @@ export class AppComponent implements OnInit{
   wsUri;
   getMessage;
   newMeetup;
+  positionUpdate;
 
   
 
@@ -53,6 +54,10 @@ export class AppComponent implements OnInit{
     });
 
     this.newMeetup = this.ms.createMeetupUpdateNotify.subscribe(value => {
+      this.doSend(value);
+    });
+
+    this.positionUpdate = this.ms.positionNotify.subscribe(value => {
       this.doSend(value);
     });
   }
@@ -96,25 +101,25 @@ export class AppComponent implements OnInit{
         break;
         case("chatMessage"): this.cs.updateChatObservable.next(message[1]);
                              if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                               this.presentToastWithOptions("new Message in room " + message[1])
+                               this.presentToastWithOptions("new Message in room " + message[1]);
                              }
         break;
-        case("positionUpdate"):
+        case("positionUpdate"): console.log(message[1]); this.ms.showPositionObservable.next(message[1]);
         break;
         case("newMeetup"): console.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
                             if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                              this.presentToastWithOptions("new request for a meetup in room " + message[1])
+                              this.presentToastWithOptions("new request for a meetup in room " + message[1]);
                             }
         break;
         case("acceptMeetup"): this.ms.showMeetupObservable.next(message[1]);
-        if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-          this.presentToastWithOptions("Meetup accepted in room " + message[1])
-        }
+                              if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+                                this.presentToastWithOptions("Meetup accepted in room " + message[1]);
+                              }
         break;
         case("declineMeetup"): this.ms.showMeetupObservable.next(message[1]);
-        if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-          this.presentToastWithOptions("Meetup declined in room " + message[1])
-        }
+                               if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+                                 this.presentToastWithOptions("Meetup declined in room " + message[1]);
+                               }
         break;
       }
       

@@ -16,6 +16,12 @@ export class MeetupService {
   public createMeetupObservable = new Subject<any>();
   createMeetupUpdateNotify = this.createMeetupObservable.asObservable();
 
+  public positionObservable = new Subject<any>();
+  positionNotify = this.positionObservable.asObservable();
+
+  public showPositionObservable = new Subject<any>();
+  showPositionNotify = this.showPositionObservable.asObservable();
+
   public showMeetupObservable = new Subject<any>();
   showMeetupUpdateNotify = this.showMeetupObservable.asObservable();
 
