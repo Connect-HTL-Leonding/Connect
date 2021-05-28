@@ -29,8 +29,6 @@ export class ProfileService {
       this.user.firstname = data["firstName"];
       this.user.lastname = data["lastName"];
       this.user.email = data["email"];
-      this.user.custom.tutorialStage = data["tutorialStage"];
-     
     });
     return this.http.get<CustomUser>(api.short + 'user/customData');
 

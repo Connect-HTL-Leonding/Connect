@@ -824,9 +824,12 @@ export class HomePage implements OnInit {
         this.ps.user.custom = data;
         console.log("westrzutqjhkgizfutetdzuz");
         console.log(this.ps.user);
+        
+        
         if (this.ps.user.custom.tutorialStage == 0) {
           this.presentAlertConfirm();
         }
+        
 
 
         if (this.ps.user.custom.tutorialStage == 6) {
