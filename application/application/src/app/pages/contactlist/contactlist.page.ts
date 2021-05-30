@@ -10,6 +10,7 @@ import { ProfileService } from 'src/app/api/profile.service';
 import { KeycloakService } from 'keycloak-angular';
 import { api } from 'src/app/app.component';
 import { MeetupService } from 'src/app/api/meetup.service';
+import {MeetUpManagerPage} from '../meet-up-manager/meet-up-manager.page';
 
 @Component({
   selector: 'app-contactlist',
@@ -76,6 +77,13 @@ export class ContactlistPage implements OnInit {
       this.chatService.inRoom = false;
     }))
     return await this.modal.present();
+  }
+
+  async presentMeetupModal() {
+    const modal = await this.modalController.create({
+      component: MeetUpManagerPage,
+    });
+    return await modal.present();
   }
 
 }
