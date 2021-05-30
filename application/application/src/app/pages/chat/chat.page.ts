@@ -17,6 +17,9 @@ import { Meeting } from 'src/app/model/meetup';
 import { Position } from 'src/app/model/position';
 import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { ProfileService } from 'src/app/api/profile.service';
+import { ProfilePage } from '../profile/profile.page';
+import { FriendPage } from '../friend/friend.page';
 
 
 declare var google: any;
@@ -68,7 +71,7 @@ export class ChatPage implements OnInit {
 
 
 
-  constructor(ms: MeetupService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router) {
+  constructor(ms: MeetupService, public ps: ProfileService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
@@ -79,14 +82,14 @@ export class ChatPage implements OnInit {
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
       console.log(value);
-      if(this.chatservice.selectedRoom.id == value) {
+      if (this.chatservice.selectedRoom.id == value) {
         this.init(this.contactlist.selectedRoom);
-      }  
+      }
     });
 
     this.getMeetups = this.ms.showMeetupUpdateNotify.subscribe(value => {
       console.log(value);
-      if(this.chatservice.selectedRoom.id == value) {
+      if (this.chatservice.selectedRoom.id == value) {
         this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
           this.meetUps = data;
         })
@@ -96,7 +99,7 @@ export class ChatPage implements OnInit {
             this.meetUpsDeclined = data;
           })
         })
-      }  
+      }
     })
   }
 
@@ -129,6 +132,28 @@ export class ChatPage implements OnInit {
     this.modal.onDidDismiss().then((data => {
     }))
     return await this.modal.present();
+  }
+
+  profileFriend(friend: User) {
+    this.ps.findFriendUser(friend.id).subscribe(data => {
+      console.log(data + "oh no");
+      this.presentFriend(data);
+    });
+  }
+
+  async presentFriend(friendKeycloak) {
+    let friend = friendKeycloak;
+    const modal = await this.modalController.create({
+      component: FriendPage,
+      componentProps: {
+        'contacListWebsocket': this.contactlist.websocket,
+        user: friend
+      }
+    });
+    modal.onDidDismiss().then((data => {
+      console.log("dismissed")
+    }))
+    return await modal.present();
   }
 
   yousent(message: Message): boolean {
@@ -223,7 +248,7 @@ export class ChatPage implements OnInit {
   async presentToastWithOptions(msg) {
     const toast = await this.toastController.create({
       header: msg,
-      
+
       position: 'top',
       buttons: [
         {
@@ -239,7 +264,7 @@ export class ChatPage implements OnInit {
   }
 
   setSeen(meeting) {
-    this.ms.setSeen(meeting,this.otherUser.custom.id).subscribe(data => {
+    this.ms.setSeen(meeting, this.otherUser.custom.id).subscribe(data => {
       this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
         this.meetUpsAccepted = data;
         this.ms.getMeetupsFromMeD(this.otherUser.custom.id).subscribe(data => {
@@ -277,7 +302,7 @@ export class ChatPage implements OnInit {
       this.m.updated = new Date();
       this.m.image = "";
       this.showNewMsgLine = false;
-      
+
       this.chatservice.createMessage(this.m).subscribe(data => {
         this.contactlist.contactlistObservable.next("contactListUpdate");
         this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
@@ -286,7 +311,7 @@ export class ChatPage implements OnInit {
     }
   }
 
-  
+
 
   convert(date: number[]): string {
     let hours = "";

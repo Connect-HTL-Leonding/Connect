@@ -2,7 +2,7 @@
   <ion-toolbar>
     <div id="toolbar">
       <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
-      <div id="profile">
+      <div id="profile" (click)="profileFriend(otherUser)">
         <ion-avatar>
           <img *ngIf="otherUser" id="profilepicture" src="{{pfp}}">
         </ion-avatar>

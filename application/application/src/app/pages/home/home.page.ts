@@ -31,6 +31,7 @@ import { Meeting, MeetupUser } from 'src/app/model/meetup';
 import { MeetupDataShowPage } from './meetup-data-show/meetup-data-show.page';
 import { ChatPage } from '../chat/chat.page';
 import { Room } from 'src/app/model/room';
+import { FriendPage } from '../friend/friend.page';
 
 /*
 import {
@@ -97,11 +98,11 @@ export class HomePage implements OnInit {
     public meetupService: MeetupService,
     public alertController: AlertController) {
 
-      this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
-        if (this.ps.user.custom.id != value) {
-          this.displayFriends();
-        }
-      });
+    this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
+      if (this.ps.user.custom.id != value) {
+        this.displayFriends();
+      }
+    });
 
     this.sideMenu();
 
@@ -111,10 +112,10 @@ export class HomePage implements OnInit {
     });
 
     this.meetupPreview = this.meetupService.meetupPreviewNotify.subscribe(value => {
-     
+
       let m: Meeting = value.meetup;
       let r: Room = value.originRoom;
-      this.createMeetupPreviewMarker(m,r);
+      this.createMeetupPreviewMarker(m, r);
       this.map.panTo(m.position);
       this.map.setZoom(18);
     });
@@ -175,9 +176,9 @@ export class HomePage implements OnInit {
     })
   }
 
-  ionViewDidLeave(){
-    if(this.meetupPreviewMarker){
-    this.meetupPreviewMarker.setMap(null);
+  ionViewDidLeave() {
+    if (this.meetupPreviewMarker) {
+      this.meetupPreviewMarker.setMap(null);
     }
   }
 
@@ -285,17 +286,17 @@ export class HomePage implements OnInit {
 
   }
 
-  async presentModal(friend: User) {
-    this.ps.user = friend;
-    this.ps.friendUser = true;
+  async presentModal(friendKeycloak) {
+    let friend : User = friendKeycloak;
     const modal = await this.modalController.create({
-      component: ProfilePage,
+      component: FriendPage,
       componentProps: {
-        'contacListWebsocket': this.contactService.websocket
+        'contacListWebsocket': this.contactService.websocket,
+        user: friend
       }
     });
     modal.onDidDismiss().then((data => {
-      this.ps.friendUser = false;
+      console.log("dismissed")
     }))
     return await modal.present();
   }
@@ -412,7 +413,7 @@ export class HomePage implements OnInit {
             compositeImage = canvas.toDataURL("image/png");
 
             canvas.remove();
-          
+
 
             var marker = new google.maps.Marker({
               position: m.position,
@@ -431,51 +432,51 @@ export class HomePage implements OnInit {
     })
   }
 
-  createMeetupPreviewMarker(m: Meeting, r:Room) {
-   
-     
-        
-              var canvas = document.createElement('canvas');
-              canvas.width = 35;
-              canvas.height = 62;
-              var ctx = canvas.getContext('2d');
-              ctx.globalAlpha=0.5;
-             
-              var compositeImage;
-
-             
-
-              var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+  createMeetupPreviewMarker(m: Meeting, r: Room) {
 
 
-              ctx.fillStyle = '#db3d3d';
-              ctx.fill(path);
 
-              compositeImage = canvas.toDataURL("image/png");
+    var canvas = document.createElement('canvas');
+    canvas.width = 35;
+    canvas.height = 62;
+    var ctx = canvas.getContext('2d');
+    ctx.globalAlpha = 0.5;
 
-              canvas.remove();
-              console.log(compositeImage)
+    var compositeImage;
 
-              if(this.meetupPreviewMarker != undefined){
-                this.meetupPreviewMarker.setMap(null);
-              
-              }
-            
 
-              this.meetupPreviewMarker = new google.maps.Marker({
-                position: m.position,
-                title: "Meetup Preview",
-                map: this.map,
-                icon: compositeImage
-              });
 
-              this.meetupPreviewMarker.addListener("click", () => {
-                
-                this.previewMarkerOnclick(r);
-              });
+    var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+
+
+    ctx.fillStyle = '#db3d3d';
+    ctx.fill(path);
+
+    compositeImage = canvas.toDataURL("image/png");
+
+    canvas.remove();
+    console.log(compositeImage)
+
+    if (this.meetupPreviewMarker != undefined) {
+      this.meetupPreviewMarker.setMap(null);
+
+    }
+
+
+    this.meetupPreviewMarker = new google.maps.Marker({
+      position: m.position,
+      title: "Meetup Preview",
+      map: this.map,
+      icon: compositeImage
+    });
+
+    this.meetupPreviewMarker.addListener("click", () => {
+
+      this.previewMarkerOnclick(r);
+    });
   }
 
-  previewMarkerOnclick(r){
+  previewMarkerOnclick(r) {
     this.router.navigate(["contactlist"]);
     this.meetupService.meetupPreviewBackObserveable.next(r);
   }
@@ -824,12 +825,12 @@ export class HomePage implements OnInit {
         this.ps.user.custom = data;
         console.log("westrzutqjhkgizfutetdzuz");
         console.log(this.ps.user);
-        
-        
+
+
         if (this.ps.user.custom.tutorialStage == 0) {
           this.presentAlertConfirm();
         }
-        
+
 
 
         if (this.ps.user.custom.tutorialStage == 6) {
@@ -986,7 +987,7 @@ class ClickEventHandler {
   e2: HTMLElement;
   eb: HTMLElement;
   e3: HTMLElement;
-  constructor(map: google.maps.Map, origin: any, ps: ProfileService, hp: HomePage, public meetupService:MeetupService) {
+  constructor(map: google.maps.Map, origin: any, ps: ProfileService, hp: HomePage, public meetupService: MeetupService) {
     this.origin = origin;
     this.map = map;
     this.ps = ps;
@@ -1037,7 +1038,7 @@ class ClickEventHandler {
       });
     }
     */
-    
+
 
 
     // If the event has a placeId, use it.

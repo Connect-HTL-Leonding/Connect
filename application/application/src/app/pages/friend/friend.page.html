@@ -1,13 +1,8 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>Profile</ion-title>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="home" (click)="dismissModal()"></ion-back-button>
-    </ion-buttons>
-    <ion-buttons *ngIf="this.ps.user" slot="end">
-      <ion-button [routerLink]="['../edit-profile']">
-        <ion-icon name="pencil"></ion-icon>
-      </ion-button>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -18,14 +13,14 @@
     <div class="container">
       <div class="mid" id="profile_pic" #profile_pic>
         <div class="pfpBox">
-          <img class="pfp" src={{this.photoService.imgURL}}>
+          <img *ngIf="this.user.custom && this.user.custom.profilePicture" class="pfp" src="{{this.user.custom.profilePicture}}">
         </div>
       </div>
-      <ion-label *ngIf="this.ps.user" class="name">{{this.ps.user.userName}}</ion-label>
+      <ion-label *ngIf="this.user" class="name">{{this.user.username}}</ion-label>
       <div class="wrap">
         <ion-label color="primary" class="desc-label">Beschreibung</ion-label>
         <div *ngIf="this.ps.user.custom">
-          <ion-input readonly *ngIf="this.ps.user.custom.description; else noDesc">{{this.ps.user.custom.description}}
+          <ion-input readonly *ngIf="this.user.custom && this.user.custom.description; else noDesc">{{this.user.custom.description}}
           </ion-input>
         </div>
 
@@ -50,12 +45,7 @@
         </div>
       </div>
 
-
-
-      <!-- 
-      <ion-button *ngIf="this.ownProfile" color="primary" size="default" shape="round"
-        [routerLink]="['../edit-profile']">Anpassen</ion-button>
--->
+      <ion-button color="danger" class="remove" fill="clear" expand="block" (click)="block()">Blockieren</ion-button>
 
     </div>
   </div>
