@@ -51,6 +51,10 @@ export class MeetupService {
     return this.http.post<Meeting[]>(api.url + 'meetup/getMeetupsWithMe/',id);
   }
 
+  getMeetupsFromMe() {
+    return this.http.get<Meeting[]>(api.url + 'meetup/getMeetupsFromMe/');
+  }
+
   getMeetupsFromMeA(id) {
     return this.http.post<Meeting[]>(api.url + 'meetup/getMeetupsFromMeA/',id);
   }

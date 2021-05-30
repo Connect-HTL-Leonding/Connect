@@ -77,6 +77,10 @@ const routes: Routes = [
   {
     path: 'meetup',
     loadChildren: () => import('./pages/meetup/meetup.module').then( m => m.MeetupPageModule)
+  },
+  {
+    path: 'meet-up-manager',
+    loadChildren: () => import('./pages/meet-up-manager/meet-up-manager.module').then( m => m.MeetUpManagerPageModule)
   }
 
 
