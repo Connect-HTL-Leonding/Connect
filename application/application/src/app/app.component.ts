@@ -108,28 +108,50 @@ export class AppComponent implements OnInit{
         break;
         case("chatMessage"): this.cs.updateChatObservable.next(message[1]);
                              if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                               this.presentToastWithOptions("new Message in room " + message[1]);
+                               this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+                                 this.ps.findFriendUser(data.id).subscribe(data => {
+                                  this.presentToastWithOptions("new Message from " + data["username"]);
+                                 })
+                               })
                              }
         break;
         case("positionUpdate"): console.log(message[1]); this.ms.showPositionObservable.next(message[1]);
         break;
         case("newMeetup"): console.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
                             if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                              this.presentToastWithOptions("new request for a meetup in room " + message[1]);
+                              this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+                                this.ps.findFriendUser(data.id).subscribe(data => {
+                                 this.presentToastWithOptions(data["username"] + " requested a meetup!");
+                                })
+                              })
                             }
         break;
         case("acceptMeetup"): this.ms.showMeetupObservable.next(message[1]);
                               if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                                this.presentToastWithOptions("Meetup accepted in room " + message[1]);
+                                this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+                                  this.ps.findFriendUser(data.id).subscribe(data => {
+                                   this.presentToastWithOptions(data["username"] + " accepted your meetup!");
+                                  })
+                                })
                               }
         break;
         case("declineMeetup"): this.ms.showMeetupObservable.next(message[1]);
                                if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                                 this.presentToastWithOptions("Meetup declined in room " + message[1]);
+                                this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+                                  this.ps.findFriendUser(data.id).subscribe(data => {
+                                   this.presentToastWithOptions(data["username"] + " declined your meetup!");
+                                  })
+                                })
                                }
         break;
         case("contactListUpdate"): this.contactlistService.contactlistUpdateObservable.next("update");
         break;
+        case("newConnect"):   this.contactlistService.contactlistUpdateObservable.next("connect");
+                               console.log(message[2]);
+                               this.ps.findFriendUser(message[2]).subscribe(data => {
+                                 this.presentToastWithOptions(data["username"] + " just connected with you!");
+                               })
+                              
       }
       
     }

@@ -81,9 +81,24 @@ public class WebSocket {
             case("declineMeetup"):broadcastMessage(s[1], "declineMeetup:");;
             break;
             case("contactListUpdate"): broadcastContactlistUpdate("contactListUpdate");
+            break;
+            case("newConnect"): broadcastNewConnect(s[1], s[2]);
 
         }
 
+    }
+
+    private void broadcastNewConnect(String id, String id2) {
+        sessions.values().forEach(s -> {
+            if(users.get(s).equals(id)) {
+                String msg = "newConnect:" + id + ":" + id2;
+                s.getAsyncRemote().sendObject(msg, result -> {
+                    if (result.getException() != null) {
+                        System.out.println("Unable to send message: " + result.getException());
+                    }
+                });
+            }
+        });
     }
 
     private void broadcastContactlistUpdate(String message) {

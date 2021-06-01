@@ -68,7 +68,7 @@ export class HomePage implements OnInit {
   wsUri;
   updateMeetup;
   positionUpdate;
-
+  connectUpdate;
   mySubscription;
   meetupPreview;
 
@@ -109,6 +109,13 @@ export class HomePage implements OnInit {
     this.mySubscription = this.mySkinsService.mySkinUpdateNotify.subscribe(value => {
 
       this.createMySkinRaduis();
+    });
+
+    this.connectUpdate = this.contactService.contactlistUpdateNotify.subscribe(value => {
+      if(value == "connect") {
+        this.displayFriends();
+      }
+      
     });
 
     this.meetupPreview = this.meetupService.meetupPreviewNotify.subscribe(value => {
@@ -922,6 +929,8 @@ export class HomePage implements OnInit {
           user = data;
           this.contactService.getKeyUser(user).subscribe(data => {
             this.presentToastWithOptions(data, "You connected with");
+            this.contactService.contactlistObservable.next("newConnect:" + user.id + ":" + this.ps.user.id);
+            this.contactService.contactlistObservable.next("contactListUpdate");
             this.displayFriends();
           })
 
