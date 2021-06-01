@@ -19,16 +19,16 @@
   <div id="messageFlex">
     <div *ngFor="let meetUp of this.meetUpsAccepted" class="MeetUp">
       <p>Dein MeetUp am</p>
-      <p>{{meetUp.time[2]}}.{{meetUp.time[1]}}.{{meetUp.time[0]}} um
-        {{meetUp.time[3]}}:{{meetUp.time[4]}}</p>
+      <p>{{meetUp.time[2] < 10 ? "0" + meetUp.time[2] : meetUp.time[2]}}.{{meetUp.time[1] < 10 ? "0" + meetUp.time[1] : meetUp.time[1]}}.{{meetUp.time[0] < 10 ? "0" + meetUp.time[0] : meetUp.time[0]}} um
+        {{meetUp.time[3] < 10 ? "0" + meetUp.time[3] : meetUp.time[3]}}:{{meetUp.time[4] < 10 ? "0" + meetUp.time[4] : meetUp.time[4]}}</p>
       <p>wurde <b>akzeptiert</b></p>
       <ion-button (click)="setSeen(meetUp)" size="small">Verstanden!</ion-button>
     </div>
 
     <div *ngFor="let meetUp of this.meetUpsDeclined" class="MeetUp">
       <p>Dein MeetUp am</p>
-      <p>{{meetUp.time[2]}}.{{meetUp.time[1]}}.{{meetUp.time[0]}} um
-        {{meetUp.time[3]}}:{{meetUp.time[4]}}</p>
+      <p>{{meetUp.time[2] < 10 ? "0" + meetUp.time[2] : meetUp.time[2]}}.{{meetUp.time[1] < 10 ? "0" + meetUp.time[1] : meetUp.time[1]}}.{{meetUp.time[0] < 10 ? "0" + meetUp.time[0] : meetUp.time[0]}} um
+        {{meetUp.time[3] < 10 ? "0" + meetUp.time[3] : meetUp.time[3]}}:{{meetUp.time[4] < 10 ? "0" + meetUp.time[4] : meetUp.time[4]}}</p>
       <p>wurde <b>abgelehnt</b></p>
       <ion-button (click)="setSeen(meetUp)" size="small">Verstanden!</ion-button>
     </div>
@@ -38,8 +38,8 @@
       <ion-button (click)="showLocation(meetUp)">
         <ion-icon name="location-outline"></ion-icon> Treffpunkt
       </ion-button>
-      <p>Am {{meetUp.time[2]}}.{{meetUp.time[1]}}.{{meetUp.time[0]}} um
-        {{meetUp.time[3]}}:{{meetUp.time[4]}}</p>
+      <p>Am {{meetUp.time[2] < 10 ? "0" + meetUp.time[2] : meetUp.time[2]}}.{{meetUp.time[1] < 10 ? "0" + meetUp.time[1] : meetUp.time[1]}}.{{meetUp.time[0] < 10 ? "0" + meetUp.time[0] : meetUp.time[0]}} um
+        {{meetUp.time[3] < 10 ? "0" + meetUp.time[3] : meetUp.time[3]}}:{{meetUp.time[4] < 10 ? "0" + meetUp.time[4] : meetUp.time[4]}}</p>
       <div class="buttonBox">
         <ion-button (click)="setStatusOfMeetingD(meetUp)" fill="outline" size="small">Decline</ion-button>
         <ion-button (click)="setStatusOfMeetingA(meetUp)" size="small">Accept</ion-button>
