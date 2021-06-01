@@ -10,11 +10,11 @@ import java.util.List;
 
 @Entity
 
-@NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f")
-@NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where f.user1 = :user or f.user2 = :user")
-@NamedQuery(name = Friendship.USERSOFFRIENDSHIPS, query = "SELECT f.user1.id, f.user2.id FROM Friendship f where f.user1 = :user or f.user2 = :user")
-@NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where (f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)")
-@NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1")
+@NamedQuery(name = Friendship.FINDALL, query = "SELECT f FROM Friendship f where f.status not like 'blocked'")
+@NamedQuery(name = Friendship.FINDFRIENDSHIPSOFUSER, query = "SELECT f FROM Friendship f where (f.user1 = :user or f.user2 = :user) and f.status not like 'blocked'")
+@NamedQuery(name = Friendship.USERSOFFRIENDSHIPS, query = "SELECT f.user1.id, f.user2.id FROM Friendship f where (f.user1 = :user or f.user2 = :user) and f.status not like 'blocked'")
+@NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where ((f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)) and f.status not like 'blocked'")
+@NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1 and f.status not like 'blocked'")
 //CONNECT
 //holt alle User, die den MySkin-Kriterien entsprechen
 //muss noch mehr überprüft werden!!!!
@@ -54,7 +54,7 @@ public class Friendship implements Serializable {
     @JoinColumn(name = "user2")
     private User user2;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "skin")
     private List<Skin> skins = new LinkedList<>();
 

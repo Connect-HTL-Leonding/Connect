@@ -48,6 +48,15 @@ public class FriendshipService {
         return dbRepo.create(you, friend, skin);
     }
 
+    @POST
+    @Path("block")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Friendship block(User friend) {
+
+        return dbRepo.block(jwt, friend);
+    }
+
     @Path("findRandom")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

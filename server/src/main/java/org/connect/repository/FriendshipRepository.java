@@ -58,6 +58,49 @@ public class FriendshipRepository {
     }
 
     @Transactional
+    public Friendship delete(User you, User friend, Skin skin) {
+
+        TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FINDFRIENDSHIPSOFUSER, Friendship.class);
+        tq.setParameter("user1", you);
+        tq.setParameter("user2", friend);
+        Friendship f = null;
+        try {
+            f = tq.getSingleResult();
+            System.out.println(f);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        if(f != null){
+            em.remove(f);
+        }
+
+        return f;
+    }
+
+    @Transactional
+    public Friendship block(JsonWebToken jwt, User friend) {
+
+        TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FIND, Friendship.class);
+        tq.setParameter("user_1", em.find(User.class, jwt.claim("sub").get().toString()));
+        tq.setParameter("user_2", friend);
+        Friendship f = null;
+        try {
+            f = tq.getSingleResult();
+            System.out.println(f);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        if(f != null){
+            f.setStatus("blocked");
+            em.persist(f);
+        }
+
+        return f;
+    }
+
+    @Transactional
     public User findRandom(List<MySkin> mySkins, Optional id) {
         User curUser = em.find(User.class, id.get().toString());
         Map<User, Skin> userSkin = new HashMap<User, Skin>();
@@ -204,4 +247,5 @@ public class FriendshipRepository {
                 .createNamedQuery(Friendship.FINDFRIENDSHIPSOFUSER, Friendship.class).setParameter("user",u)
                 .getResultList();
     }
+
 }
