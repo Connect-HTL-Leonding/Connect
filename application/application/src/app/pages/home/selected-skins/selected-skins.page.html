@@ -1,5 +1,5 @@
-<ion-content>
-  <ion-list lines="none" *ngIf="mySkinsService.selectedMySkins">
+<ion-content scrollY={{scroll}}>
+  <ion-list id="mapSkins" lines="none" *ngIf="mySkinsService.selectedMySkins">
     <ion-item *ngFor="let mySkin of mySkinsService.selectedMySkins, let i = index" (click)="toggle(mySkin)">
       <ion-avatar slot="start">
         <img src="{{mySkin.skin.image}}">

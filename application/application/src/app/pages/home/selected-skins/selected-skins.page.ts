@@ -9,6 +9,8 @@ import { MyskinsService } from 'src/app/api/myskins.service';
 })
 export class SelectedSkinsPage implements OnInit {
 
+  scroll :boolean = false;
+
   constructor(public popoverController: PopoverController, public mySkinsService: MyskinsService) { }
 
   ngOnInit() {

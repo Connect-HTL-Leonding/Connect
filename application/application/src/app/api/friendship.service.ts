@@ -55,4 +55,10 @@ export class FriendshipService {
 
   }
 
+  //Freundschaft blockieren
+  blockFriendship(friend : CustomUser) {
+    return this.http.post(api.url + 'friendship/block', friend);
+
+  }
+
 }

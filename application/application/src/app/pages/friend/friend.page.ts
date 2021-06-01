@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 import { KeycloakService } from 'keycloak-angular';
 import { PhotogalleryPage } from '../profile/photogallery/photogallery.page';
+import { FriendshipService } from 'src/app/api/friendship.service';
 
 @Component({
   selector: 'app-friend',
@@ -18,6 +19,7 @@ import { PhotogalleryPage } from '../profile/photogallery/photogallery.page';
 export class FriendPage implements OnInit {
 
   user;
+  profilePictureReady;
 
   // Button
   @ViewChild('change_button', { static: false }) changeButRef: ElementRef;
@@ -27,7 +29,14 @@ export class FriendPage implements OnInit {
   ownProfile = true;
 
 
-  constructor(public router: Router, public ts: TutorialService, public ps: ProfileService, private keyCloakService: KeycloakService, public modalController: ModalController, public photoService: PhotoService, public alertController: AlertController) {
+  constructor(public router: Router,
+    public ts: TutorialService,
+    public ps: ProfileService,
+    private keyCloakService: KeycloakService,
+    public modalController: ModalController,
+    public photoService: PhotoService,
+    public alertController: AlertController,
+    public friendshipService: FriendshipService) {
 
   }
 
@@ -42,7 +51,7 @@ export class FriendPage implements OnInit {
     console.log(this.user)
     this.ps.friendCustomData(this.user.id).subscribe(data => {
       this.photoService.loadFriendGalleryImages(data.id);
-      data.profilePicture = "data:image/png;base64," + atob(data.profilePicture);
+      this.profilePictureReady = "data:image/png;base64," + atob(data.profilePicture);
       this.user.custom = data;
     })
 
@@ -67,11 +76,14 @@ export class FriendPage implements OnInit {
             console.log('Confirm Cancel: yes');
           }
         }, {
-          text: 'Delete',
+          text: 'Blockieren',
           cssClass: 'secondary',
           handler: () => {
             console.log('Delete Okay');
             //blockieren Funktion ...
+            this.friendshipService.blockFriendship(this.user.custom).subscribe(data => {
+              console.log("blocked")
+            })
 
           }
         }

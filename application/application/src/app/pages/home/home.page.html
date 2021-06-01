@@ -1,4 +1,4 @@
-<ion-menu side="start" content-id="main-content">
+<!--<ion-menu side="start" content-id="main-content">
   <ion-header>
     <ion-toolbar translucent>
       <ion-title>Menu</ion-title>
@@ -15,14 +15,17 @@
     </ion-list>
   </ion-content>
 </ion-menu>
+-->
 
 
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>Home</ion-title>
     <ion-buttons slot="start">
-      <ion-menu-button id="main-content"></ion-menu-button>
+      <ion-button routerLink="../my-skins">
+        <ion-icon name="add-circle"></ion-icon>
+      </ion-button>
     </ion-buttons>
+    <ion-title>Home</ion-title>
     <ion-buttons slot="end" (click)="presentPopover($event)">
       <ion-button>
         <ion-icon name="albums"></ion-icon>
@@ -43,7 +46,7 @@
 
 </ion-content>
 <ion-footer>
-<div id="tutorial" #tutorial></div>
+  <div id="tutorial" #tutorial></div>
   <div id="connect_button" #connect_button (click)="connect()">
     <img src="../../assets/connect_img/logo/connect_button.png">
   </div>

@@ -1,61 +1,45 @@
-.skinselection-add-button{
+.skinselection-add-button {
     border-radius: 100%;
-   background: var(--dark-green);
-   height: 25px;
-   width: 25px;
-   float: right;
-   margin-bottom: 5%;
+    background: var(--dark-green);
+    height: 30px;
+    width: 30px;
+    float: right;
+    margin-bottom: 5%;
 }
 
-.skinselection-description{
-    width: 40vw;
-   
-}
-
-.skinselection-card ion-card-title{
-    height: 80%;
-    font-size: 70%;
-}
-.skinselection-card p{
+.skinselection-description {
     width: 95%;
-    font-size: 60%;
+    font-size: 12px;
 }
 
-.add_skin_circle {
-    max-width: 25px;
-    max-height: 25px;
-    min-width: 25px;
-    min-height: 25px;
+.skinselection-card {
+    margin: 6px;
+}
+
+.skinselection-card ion-card-title {
+    font-size: 16px;
+}
+
+.add_skin_circle, .disabled_add_skin_circle {
+    max-width: 30px;
+    max-height: 30px;
+    min-width: 30px;
+    min-height: 30px;
     border-radius: 100% 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--ion-color-light);
-    margin-bottom: 5%;
-float: right;
+    background-color: var(--ion-color-primary);
+    margin: 10px -8px 10px 0;
+    float: right;
+
     ion-icon {
         font-size: 19px;
-        color: var(--ion-color-primary);
-        --ionicon-stroke-width: 45px;
+        color: #fff;
+        --ionicon-stroke-width: 90px;
     }
 }
 
 .disabled_add_skin_circle {
     opacity: 50%;
-    max-width: 25px;
-    max-height: 25px;
-    min-width: 25px;
-    min-height: 25px;
-    border-radius: 100% 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--ion-color-light);
-    margin-bottom: 5%;
-float: right;
-    ion-icon {
-        font-size: 19px;
-        color: var(--ion-color-medium);
-        --ionicon-stroke-width: 45px;
-    }
 }

@@ -9,13 +9,17 @@
 .currentCategory {
     width: 20vw;
     background: var(--dark-green);
-
-
+    color: white;
     justify-content: center;
 }
 
+.chip {
+    font-weight: 600;
+}
 
-
+#spacer {
+    padding: 0 12px;
+}
 
 .top-elements {
     z-index: 999;

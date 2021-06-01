@@ -13,7 +13,7 @@
     <div class="container">
       <div class="mid" id="profile_pic" #profile_pic>
         <div class="pfpBox">
-          <img *ngIf="this.user.custom && this.user.custom.profilePicture" class="pfp" src="{{this.user.custom.profilePicture}}">
+          <img *ngIf="this.user.custom && this.user.custom.profilePicture" class="pfp" src="{{this.profilePictureReady}}">
         </div>
       </div>
       <ion-label *ngIf="this.user" class="name">{{this.user.username}}</ion-label>

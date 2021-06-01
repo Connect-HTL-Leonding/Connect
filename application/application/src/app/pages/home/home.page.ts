@@ -192,7 +192,7 @@ export class HomePage implements OnInit {
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: SelectedSkinsPage,
-      cssClass: 'my-custom-class',
+      cssClass: 'no-overflow',
       event: ev,
       translucent: true
     });
