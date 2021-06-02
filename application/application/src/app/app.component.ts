@@ -110,7 +110,7 @@ export class AppComponent implements OnInit{
                              if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
                                this.contactlistService.getOtherUser(message[1]).subscribe(data => {
                                  this.ps.findFriendUser(data.id).subscribe(data => {
-                                  this.presentToastWithOptions("new Message from " + data["username"]);
+                                  this.presentToastWithOptions("neue Nachricht von " + data["username"]);
                                  })
                                })
                              }
@@ -121,7 +121,7 @@ export class AppComponent implements OnInit{
                             if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
                               this.contactlistService.getOtherUser(message[1]).subscribe(data => {
                                 this.ps.findFriendUser(data.id).subscribe(data => {
-                                 this.presentToastWithOptions(data["username"] + " requested a meetup!");
+                                 this.presentToastWithOptions(data["username"] + " will sich treffen!");
                                 })
                               })
                             }
@@ -130,7 +130,7 @@ export class AppComponent implements OnInit{
                               if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
                                 this.contactlistService.getOtherUser(message[1]).subscribe(data => {
                                   this.ps.findFriendUser(data.id).subscribe(data => {
-                                   this.presentToastWithOptions(data["username"] + " accepted your meetup!");
+                                   this.presentToastWithOptions(data["username"] + " hat dein Meeting akzeptiert!");
                                   })
                                 })
                               }
@@ -139,7 +139,7 @@ export class AppComponent implements OnInit{
                                if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
                                 this.contactlistService.getOtherUser(message[1]).subscribe(data => {
                                   this.ps.findFriendUser(data.id).subscribe(data => {
-                                   this.presentToastWithOptions(data["username"] + " declined your meetup!");
+                                   this.presentToastWithOptions(data["username"] + " hat dein Meeting abgelehnt!");
                                   })
                                 })
                                }
@@ -149,7 +149,7 @@ export class AppComponent implements OnInit{
         case("newConnect"):   this.contactlistService.contactlistUpdateObservable.next("connect");
                                console.log(message[2]);
                                this.ps.findFriendUser(message[2]).subscribe(data => {
-                                 this.presentToastWithOptions(data["username"] + " just connected with you!");
+                                 this.presentToastWithOptions(data["username"] + " hat sich mit dir connected!");
                                })
                               
       }
