@@ -936,7 +936,7 @@ export class HomePage implements OnInit {
 
         } else {
           console.log(data)
-          this.presentToastWithOptions(data, "Currently nobody near you");
+          this.presentToastWithOptions(data, "Zurzeit niemand in der Nähe");
         }
 
       })
@@ -945,12 +945,12 @@ export class HomePage implements OnInit {
 
   async presentToastWithOptions(data, msg) {
     var username = "";
-    var buttonText = "Change Settings!"
-    var header = "Sorry!"
+    var buttonText = "Einstellungen ändern!"
+    var header = "'Tschuldigung!"
     if (data != null) {
       console.log("yes");
-      header = "Congratulations!"
-      buttonText = "Chat now"
+      header = "Gratulation!"
+      buttonText = "Schreib " + data["username"] + " an"
       username = data["username"];
     }
     const toast = await this.toastController.create({
