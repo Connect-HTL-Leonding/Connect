@@ -13,6 +13,7 @@ export class Meeting {
 export class MeetupUser {
     constructor(
         public id = 0,
-        public user_id = null
+        public user_id = null,
+        public status = ''
     ) {}
 }

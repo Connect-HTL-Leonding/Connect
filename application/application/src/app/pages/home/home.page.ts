@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
+import { ActionSheetController, AlertController, LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 import { AfterViewInit } from '@angular/core';
 import { Inject } from '@angular/core';
@@ -32,6 +32,7 @@ import { MeetupDataShowPage } from './meetup-data-show/meetup-data-show.page';
 import { ChatPage } from '../chat/chat.page';
 import { Room } from 'src/app/model/room';
 import { FriendPage } from '../friend/friend.page';
+import { SharePluginWeb } from '@capacitor/core';
 
 /*
 import {
@@ -96,7 +97,8 @@ export class HomePage implements OnInit {
     public router: Router,
     public ts: TutorialService,
     public meetupService: MeetupService,
-    public alertController: AlertController) {
+    public alertController: AlertController,
+    public actionSheetController: ActionSheetController) {
 
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
       if (this.ps.user.custom.id != value) {
@@ -369,7 +371,7 @@ export class HomePage implements OnInit {
               });
 
               marker.addListener("click", () => {
-                this.presentMeetupPopover(event, m, meetupuser);
+                this.meetupTeilnehmerList(event, m, meetupuser);
               });
             })
           })
@@ -430,7 +432,7 @@ export class HomePage implements OnInit {
             });
 
             marker.addListener("click", () => {
-              this.presentMeetupPopover(event, m, meetupuser);
+              this.meetupTeilnehmerList(event, m, null);
             });
           })
         }
@@ -488,15 +490,200 @@ export class HomePage implements OnInit {
     this.meetupService.meetupPreviewBackObserveable.next(r);
   }
 
-  async presentMeetupPopover(ev: any, m, u) {
-    const popover = await this.popoverController.create({
+  async presentMeetupPopover(ev: any, m : Meeting, u, buttonArray) {
+
+    /*
+({
       component: MeetupDataShowPage,
       componentProps: { meetup: m, user: u },
       cssClass: 'my-custom-class',
       event: ev,
       translucent: true
     });
+    */
+
+    let t:String[];
+    let time:string;
+    
+
+    t = m.time.toString().split(",");
+    for(var i = 0;i<t.length;i++) {
+      if(t[i].length == 1) {
+        t[i] = '0' + t[i];
+      }
+    }
+    time = t[2] + '.' + t[1] + '.' + t[0] + ' um ' + t[3] + ':' + t[4];
+
+
+
+   
+
+    const popover = await this.actionSheetController.create({
+      header: 'Meetup',
+      subHeader: time ,
+      buttons: buttonArray
+    });
     return await popover.present();
+  }
+
+  async meetupTeilnehmerList(ev: any, m : Meeting, u){
+if(u != null){
+    this.cs.getKeyUser(u.custom).subscribe(data => {
+      u.id = data["id"];
+      u.userName = data["username"];
+      u.firstname = data["firstName"];
+      u.lastname = data["lastName"];
+      u.email = data["email"];
+     
+
+      let buttonArray:any[]= [{
+        text: 'OK',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }, {
+        text: u.username,
+        cssClass: "accepted",
+        icon: 'checkmark-circle-sharp',
+        handler: () => {
+         this.presentModal(u);
+        }
+      }];
+      this.meetupService.getMeetupUser(m.id).subscribe(data => {
+    
+        data.forEach((mu, idx, array) =>{
+          console.log(mu.user_id)
+          this.ps.findFriendUser(mu.user_id).subscribe(data => {
+            let u = data;
+            this.ps.friendCustomData(mu.user_id).subscribe(custom => {
+              u.custom=custom;
+              console.log(custom)
+  
+              this.cs.getKeyUser(u.custom).subscribe(data => {
+                u.id = data["id"];
+                u.userName = data["username"];
+                u.firstname = data["firstName"];
+                u.lastname = data["lastName"];
+                u.email = data["email"];
+                console.log(mu.status)
+                let iconname;
+                switch(mu.status) { 
+                  case "accepted": { 
+                     iconname = "checkmark-circle-sharp";
+                     break; 
+                  } 
+                  case "declined": { 
+                    iconname = "close-circle-sharp";
+                     break; 
+                  } 
+                  case "pending": { 
+                    iconname = "time-sharp";
+                     break; 
+                  } 
+               } 
+               
+                if(u.id != this.ps.user.id){
+                let o = {
+                  text: u.userName,
+                  cssClass: mu.status,
+                  icon: iconname,
+                  handler: () => {
+                    this.presentModal(u);
+                  }
+                }
+                 buttonArray.push(o);
+              }
+                 if (idx === array.length - 1){ 
+                  this.presentMeetupPopover(ev,m,u,buttonArray);
+                 }
+                
+                 console.log(buttonArray)
+              })
+             
+             });
+           });
+        
+        })
+      });
+    })
+
+  }else{
+
+   
+
+    let buttonArray:any[]= [{
+      text: 'OK',
+      icon: 'close',
+      role: 'cancel',
+      handler: () => {
+        console.log('Cancel clicked');
+      }
+    }];
+    this.meetupService.getMeetupUser(m.id).subscribe(data => {
+  
+      data.forEach((mu, idx, array) =>{
+        console.log(mu.user_id)
+        this.ps.findFriendUser(mu.user_id).subscribe(data => {
+          let u = data;
+          this.ps.friendCustomData(mu.user_id).subscribe(custom => {
+            u.custom=custom;
+            console.log(custom)
+
+            this.cs.getKeyUser(u.custom).subscribe(data => {
+              u.id = data["id"];
+              u.userName = data["username"];
+              u.firstname = data["firstName"];
+              u.lastname = data["lastName"];
+              u.email = data["email"];
+              console.log(mu.status)
+              let iconname;
+              switch(mu.status) { 
+                case "accepted": { 
+                   iconname = "checkmark-circle-sharp";
+                   break; 
+                } 
+                case "declined": { 
+                  iconname = "close-circle-sharp";
+                   break; 
+                } 
+                case "pending": { 
+                  iconname = "time-sharp";
+                   break; 
+                } 
+             } 
+
+              if(u.id != this.ps.user.id){
+              let o = {
+                text: u.userName,
+                cssClass: mu.status,
+                icon: iconname,
+                handler: () => {
+                  this.presentModal(u);
+                }
+              }
+               buttonArray.push(o);
+            }
+  
+               if (idx === array.length - 1){ 
+                this.presentMeetupPopover(ev,m,u,buttonArray);
+               }
+              
+               console.log(buttonArray)
+            })
+           
+           });
+         });
+      
+      })
+    
+  })
+
+  }
+   
+    
+    
   }
 
 

@@ -122,3 +122,24 @@
     overflow: hidden !important;
 }
 
+.accepted{
+    ion-icon{
+        color: var(--ion-color-success) !important
+      }
+    color: #000 !important
+  }
+  
+  .pending{
+      ion-icon{
+        color: var(--ion-color-warning) !important
+      }
+      color: #000 !important
+  }
+  
+  .declined{
+    ion-icon{
+        color: var(--ion-color-danger) !important
+      }
+    color: #000 !important
+  }
+
