@@ -206,7 +206,7 @@ spec:
     - host: student.cloud.htl-leonding.ac.at
       http:
         paths:
-          - path: /j.donnerbauer(/|$)(.*)$
+          - path: /j.donnerbauer/backend(/|$)(.*)$
             pathType: Prefix
             backend:
               service:

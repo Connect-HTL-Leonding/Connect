@@ -1,3 +1,14 @@
 cat keycloak-ingress.yaml | \
 sed "s/KEYCLOAK_HOST/keycloak.$(minikube ip).nip.io/" | \
 kubectl apply -f -
+
+
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      proxy_set_header X-Forwarded-For $host;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection ‘upgrade’;
+      proxy_set_header Host $host;

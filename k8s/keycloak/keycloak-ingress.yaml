@@ -4,15 +4,7 @@ metadata:
   name: keycloak-ingress
   namespace: student-j-donnerbauer
   annotations:
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header X-Forwarded-For $host;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection ‘upgrade’;
-      proxy_set_header Host $host;
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
   - host: student.cloud.htl-leonding.ac.at
@@ -23,5 +15,5 @@ spec:
               name: keycloak-service
               port:
                 number: 80
-          path: /j.donnerbauer/auth(.*)$
+          path: /j.donnerbauer/auth(/|$)(.*)$
           pathType: Prefix
