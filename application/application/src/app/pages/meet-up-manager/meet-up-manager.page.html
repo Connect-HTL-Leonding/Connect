@@ -8,5 +8,20 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-card *ngFor="let m of this.meetups">
+    <ion-card-header>
+      <ion-card-title>Meetup</ion-card-title>
+    </ion-card-header>
+  
+    <ion-card-content>
+      <u>
+        <li class = "friend" *ngFor="let f of this.friends[m.id]">
+         
+       <p>{{ f.seen.username }}</p>
+       <p>{{f.status}}</p>
+          
+        </li>
+      </u>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

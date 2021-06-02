@@ -13,7 +13,7 @@ import java.util.Map;
 @Entity
 @NamedQuery(name = Meeting.FINDALL, query = "select m from Meeting m join m.mu_list mu where (m.creator.id = :user_id or mu.user_id = :user_id) and mu.status = 'accepted'")
 @NamedQuery(name=Meeting.FINDMEETUPSWITHME, query = "select m from Meeting m join m.mu_list mu where mu.user_id= :user_id AND m.creator.id= :creator_id AND mu.status = 'pending' ")
-@NamedQuery(name=Meeting.FINDMEETUPSFROMME, query = "select m from Meeting m join m.mu_list mu where m.creator.id= :creator_id")
+@NamedQuery(name=Meeting.FINDMEETUPSFROMME, query = "select m from Meeting m where m.creator.id= :creator_id")
 @NamedQuery(name=Meeting.FINDMEETUPSFROMMEA, query = "select m from Meeting m join m.mu_list mu where m.creator.id= :creator_id AND mu.status='accepted' AND mu.user_id= :user_id AND mu.isSeen = false ")
 @NamedQuery(name=Meeting.FINDMEETUPSFROMMED, query = "select m from Meeting m join m.mu_list mu where m.creator.id= :creator_id AND mu.status='declined' AND mu.user_id= :user_id AND mu.isSeen = false")
 
