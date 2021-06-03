@@ -123,7 +123,7 @@ export class MeetupPage implements OnInit {
     const popover = await this.popoverController.create({
       component: MeetupDataPage,
       componentProps: {otherUser: this.otherUser, position: this.meetupMarker.getPosition(), mp: this, selectedRoom: this.selectedRoom},
-      cssClass : "popover",
+      cssClass : "meetup_popover",
       event: ev,
       translucent: true
     });

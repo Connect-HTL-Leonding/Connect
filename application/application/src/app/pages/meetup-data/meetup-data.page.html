@@ -1,5 +1,6 @@
 
-<ion-content>
+<ion-content class="content">
+  
   <ion-item>
     <ion-label>Tag</ion-label>
     <ion-datetime [min]="minDate" max="2099-10-31" [(ngModel)]="day" displayFormat="MM DD YY" placeholder=""></ion-datetime>
@@ -15,7 +16,8 @@
     </ion-select>
   </ion-item>
   <div class="buttonBox">
-    <ion-button (click)="dismissPopover()" fill="outline" size="small">Cancel</ion-button>
-    <ion-button (click)="createMeeting()" size="small" [class.button-disabled]="(day == undefined || day == null) || (timeOfDay == undefined || timeOfDay == null) || selectedFriends.length == 0">Finish</ion-button>
+    <ion-button (click)="dismissPopover()" fill="outline" >Abbrechen</ion-button>
+    <ion-button (click)="createMeeting()"  [class.button-disabled]="(day == undefined || day == null) || (timeOfDay == undefined || timeOfDay == null) || selectedFriends.length == 0">Fertig</ion-button>
   </div>
+
 </ion-content>

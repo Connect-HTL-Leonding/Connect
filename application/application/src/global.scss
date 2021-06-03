@@ -143,3 +143,15 @@
     color: #000 !important
   }
 
+ 
+  .meetup_popover{
+      
+      --width: 70%;
+      --overflow: hidden !important;
+      .content{
+        --overflow: hidden !important;
+       
+      }
+  }
+
+
