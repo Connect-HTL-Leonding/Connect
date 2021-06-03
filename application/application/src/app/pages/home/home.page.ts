@@ -527,6 +527,11 @@ export class HomePage implements OnInit {
   }
 
   async meetupTeilnehmerList(ev: any, m : Meeting, u){
+
+  
+
+
+
 if(u != null){
     this.cs.getKeyUser(u.custom).subscribe(data => {
       u.id = data["id"];
@@ -552,7 +557,7 @@ if(u != null){
         }
       }];
       this.meetupService.getMeetupUser(m.id).subscribe(data => {
-    
+    let count = 0;
         data.forEach((mu, idx, array) =>{
           console.log(mu.user_id)
           this.ps.findFriendUser(mu.user_id).subscribe(data => {
@@ -595,7 +600,8 @@ if(u != null){
                 }
                  buttonArray.push(o);
               }
-                 if (idx === array.length - 1){ 
+              count++;
+                 if (count === array.length){ 
                   this.presentMeetupPopover(ev,m,u,buttonArray);
                  }
                 
@@ -622,7 +628,7 @@ if(u != null){
       }
     }];
     this.meetupService.getMeetupUser(m.id).subscribe(data => {
-  
+      let count = 0;
       data.forEach((mu, idx, array) =>{
         console.log(mu.user_id)
         this.ps.findFriendUser(mu.user_id).subscribe(data => {
@@ -665,8 +671,11 @@ if(u != null){
               }
                buttonArray.push(o);
             }
-  
-               if (idx === array.length - 1){ 
+            
+              count++;
+              console.log(count)
+            console.log(array.length)
+               if (count === array.length){ 
                 this.presentMeetupPopover(ev,m,u,buttonArray);
                }
               
