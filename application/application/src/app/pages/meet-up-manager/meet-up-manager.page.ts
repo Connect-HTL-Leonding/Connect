@@ -11,7 +11,7 @@ import { CustomUser, User } from '../../model/user';
 })
 export class MeetUpManagerPage implements OnInit {
 
-  meetups;
+  meetups = [];
   friends = [];
   public ms;
 

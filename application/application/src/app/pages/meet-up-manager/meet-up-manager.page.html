@@ -1,19 +1,28 @@
 <ion-header>
   <ion-toolbar>
     <div id="toolbar">
-    <ion-title>Your MeetUps</ion-title>
+    <ion-title>Your Meetups</ion-title>
     <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
     </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="noMeetups" *ngIf="this.meetups.length<1">
+    <p>Du hast noch keine Meetups erstellt!</p>
+  </div>
   <ion-card *ngFor="let m of this.meetups">
     <ion-card-header>
       <ion-card-title>Meetup</ion-card-title>
     </ion-card-header>
   
     <ion-card-content>
+      <ion-card-subtitle>Tag & Uhrzeit:</ion-card-subtitle>
+      <div>
+        <p> {{ m.time[2] }}.{{ m.time[1] }}.{{ m.time[0] }} um {{ m.time[3] }}:{{ m.time[4] }} </p>
+      </div>
+      <br>
+      <ion-card-subtitle>Freunde:</ion-card-subtitle>
       <u>
         <li class = "friend" *ngFor="let f of this.friends[m.id]">
          
