@@ -30,6 +30,7 @@ public class SkinService {
     @Path("init")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
+
     public String init() {
         dbRepo.initDB();
         return "DB initialized";

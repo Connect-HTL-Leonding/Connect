@@ -20,7 +20,7 @@ import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 
-@Path("user")
+@Path("/api/user")
 public class UserService {
 
 

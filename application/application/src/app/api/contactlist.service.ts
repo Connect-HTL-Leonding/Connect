@@ -43,7 +43,7 @@ export class ContactlistService {
   }
 
   getOtherUser(roomid) {
-    return this.http.get<CustomUser>(api.short + 'user/findOtherUser/' + roomid);
+    return this.http.get<CustomUser>(api.url + 'user/findOtherUser/' + roomid);
   }
 
   getKeyUser(u: CustomUser) {
@@ -57,7 +57,7 @@ export class ContactlistService {
   }
 
   getOtherPfp(roomid) {
-    return this.http.get(api.short + 'user/getOtherPfp/' + roomid)
+    return this.http.get(api.url + 'user/getOtherPfp/' + roomid)
   }
 
   getChats() {

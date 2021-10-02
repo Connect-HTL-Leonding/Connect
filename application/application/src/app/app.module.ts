@@ -88,7 +88,7 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
             'Authorization': 'Bearer ' + keycloak.getToken()
           });
           //Nutzer erstellen, wenn login erfolgreich (eigene db)
-          http.get<any>(api.short + 'user/login', { headers: reqHeader }).subscribe(data => {
+          http.get<any>(api.url + 'user/login', { headers: reqHeader }).subscribe(data => {
             console.log(data);
           })
         });
@@ -106,7 +106,8 @@ function initializeKeycloak(keycloak: KeycloakService, http: HttpClient) {
       config: {
         url: 'http://localhost:8010/auth',
         realm: 'connect',
-        clientId: 'connect-client'
+        clientId: 'connect-frontend',
+        
       },
       initOptions: {
         //        adapter: "cordova-native",

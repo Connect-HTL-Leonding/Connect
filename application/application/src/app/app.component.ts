@@ -20,7 +20,7 @@ import { ContactlistService } from './api/contactlist.service';
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
 
   private loginPage = false;
   public isLoggedIn = false;
@@ -32,7 +32,7 @@ export class AppComponent implements OnInit{
   positionUpdate;
   updateContactlist;
 
-  
+
 
   constructor(
     private platform: Platform,
@@ -43,8 +43,8 @@ export class AppComponent implements OnInit{
     public ps: ProfileService,
     public ms: MeetupService,
     public cs: ChatService,
-    public contactlistService:ContactlistService,
-    public toastController:ToastController
+    public contactlistService: ContactlistService,
+    public toastController: ToastController
   ) {
     this.initializeApp();
     //this.oauthService.configure(authCodeFlowConfig);
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit{
     });
   }
 
-  
+
   //Login bei Seiten-laden
   public async ngOnInit() {
     //überprüfen, ob eingeloggt
@@ -87,107 +87,111 @@ export class AppComponent implements OnInit{
       this.userProfile = await this.keycloak.loadUserProfile();
       console.log(this.userProfile)
       this.ps.getUser().subscribe(data => {
+        console.log(this.ps)
+        console.log(this.ps.user)
         this.ps.user.custom = data;
         this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
-      this.doConnect();
+        this.doConnect();
       })
-      
+
     }
   }
 
-  
+
 
   doConnect() {
     this.websocket = new WebSocket(this.wsUri);
     this.websocket.onmessage = (evt) => {
-      var msg:string = evt.data;
+      var msg: string = evt.data;
       var message = msg.split(":");
-      switch(message[0]) {
-        case("meetupAccepted"): this.ms.meetupObservable.next(message[1]);
-                                this.ms.showMeetupObservable.next(message[1]);
-        break;
-        case("chatMessage"): this.cs.updateChatObservable.next(message[1]);
-                             if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                               this.contactlistService.getOtherUser(message[1]).subscribe(data => {
-                                 this.ps.findFriendUser(data.id).subscribe(data => {
-                                  this.presentToastWithOptions("neue Nachricht von " + data["username"]);
-                                 })
-                               })
-                             }
-        break;
-        case("positionUpdate"): console.log(message[1]); this.ms.showPositionObservable.next(message[1]);
-        break;
-        case("newMeetup"): console.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
-                            if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                              this.contactlistService.getOtherUser(message[1]).subscribe(data => {
-                                this.ps.findFriendUser(data.id).subscribe(data => {
-                                 this.presentToastWithOptions(data["username"] + " will sich treffen!");
-                                })
-                              })
-                            }
-        break;
-        case("acceptMeetup"): this.ms.showMeetupObservable.next(message[1]);
-                              if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                                this.contactlistService.getOtherUser(message[1]).subscribe(data => {
-                                  this.ps.findFriendUser(data.id).subscribe(data => {
-                                   this.presentToastWithOptions(data["username"] + " hat dein Meeting akzeptiert!");
-                                  })
-                                })
-                              }
-        break;
-        case("declineMeetup"): this.ms.showMeetupObservable.next(message[1]);
-                               if(!this.cs.inRoom || this.cs.currentRoom != message[1]) {
-                                this.contactlistService.getOtherUser(message[1]).subscribe(data => {
-                                  this.ps.findFriendUser(data.id).subscribe(data => {
-                                   this.presentToastWithOptions(data["username"] + " hat dein Meeting abgelehnt!");
-                                  })
-                                })
-                               }
-        break;
-        case("contactListUpdate"): this.contactlistService.contactlistUpdateObservable.next("update");
-        break;
-        case("newConnect"):   this.contactlistService.contactlistUpdateObservable.next("connect");
-                               console.log(message[2]);
-                               this.ps.findFriendUser(message[2]).subscribe(data => {
-                                 this.presentToastWithOptions(data["username"] + " hat sich mit dir connected!");
-                               })
-                              
+      switch (message[0]) {
+        case ("meetupAccepted"): this.ms.meetupObservable.next(message[1]);
+          this.ms.showMeetupObservable.next(message[1]);
+          break;
+        case ("chatMessage"): this.cs.updateChatObservable.next(message[1]);
+          if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+            this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+              this.ps.findFriendUser(data.id).subscribe(data => {
+                this.presentToastWithOptions("neue Nachricht von " + data["username"]);
+              })
+            })
+          }
+          break;
+        case ("positionUpdate"): console.log(message[1]); this.ms.showPositionObservable.next(message[1]);
+          break;
+        case ("newMeetup"): console.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
+          if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+            this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+              this.ps.findFriendUser(data.id).subscribe(data => {
+                this.presentToastWithOptions(data["username"] + " will sich treffen!");
+              })
+            })
+          }
+          break;
+        case ("acceptMeetup"): this.ms.showMeetupObservable.next(message[1]);
+          if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+            this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+              this.ps.findFriendUser(data.id).subscribe(data => {
+                this.presentToastWithOptions(data["username"] + " hat dein Meeting akzeptiert!");
+              })
+            })
+          }
+          break;
+        case ("declineMeetup"): this.ms.showMeetupObservable.next(message[1]);
+          if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
+            this.contactlistService.getOtherUser(message[1]).subscribe(data => {
+              this.ps.findFriendUser(data.id).subscribe(data => {
+                this.presentToastWithOptions(data["username"] + " hat dein Meeting abgelehnt!");
+              })
+            })
+          }
+          break;
+        case ("contactListUpdate"): this.contactlistService.contactlistUpdateObservable.next("update");
+          break;
+        case ("newConnect"): this.contactlistService.contactlistUpdateObservable.next("connect");
+          console.log(message[2]);
+          this.ps.findFriendUser(message[2]).subscribe(data => {
+            this.presentToastWithOptions(data["username"] + " hat sich mit dir connected!");
+          })
+
       }
-      
+
     }
 
-    
-
-    
 
 
+
+
+    this.websocket.onerror = (evt) => {
+      console.log(evt.AT_TARGET);
+    };
     /*
     this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
     
-    this.websocket.onerror = (evt) => this.receiveText += 'Error\n';
+    
     this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
     */
   }
 
   async presentToastWithOptions(msg) {
-  const toast = await this.toastController.create({
-    header: "Message",
-    message: msg,
-    position: 'top',
-    duration: 2000,
-    buttons: [
-      {
-        side: 'end',
-        text: "Chat now",
-        handler: () => {
-          this.router.navigate(["contactlist"])
+    const toast = await this.toastController.create({
+      header: "Message",
+      message: msg,
+      position: 'top',
+      duration: 2000,
+      buttons: [
+        {
+          side: 'end',
+          text: "Chat now",
+          handler: () => {
+            this.router.navigate(["contactlist"])
+          }
         }
-      }
-    ]
-  });
-  toast.present();
-}
-  
+      ]
+    });
+    toast.present();
+  }
+
   doSend(msg) {
     this.websocket.send(msg);
   }

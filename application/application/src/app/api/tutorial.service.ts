@@ -21,6 +21,6 @@ export class TutorialService {
   updateUserTutorial(u: User) {
       let body = JSON.stringify(u);
       console.log(body);
-      return this.http.put(api.short + 'user/updateTutorial', u);
+      return this.http.put(api.url + 'user/updateTutorial', u);
   }
 }

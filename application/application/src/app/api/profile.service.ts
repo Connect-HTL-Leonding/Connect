@@ -30,7 +30,7 @@ export class ProfileService {
       this.user.lastname = data["lastName"];
       this.user.email = data["email"];
     });
-    return this.http.get<CustomUser>(api.short + 'user/customData');
+    return this.http.get<CustomUser>(api.url + 'user/customData');
 
   }
 
@@ -39,14 +39,14 @@ export class ProfileService {
   }
 
   friendCustomData(id) {
-    return this.http.get<CustomUser>(api.short + 'user/customData/' + id);
+    return this.http.get<CustomUser>(api.url + 'user/customData/' + id);
 
   }
 
   //update aktuellen User
   updateUser(u: CustomUser) {
     console.log(u);
-    return this.http.put<CustomUser>(api.short + 'user/update', u);
+    return this.http.put<CustomUser>(api.url + 'user/update', u);
   }
 
   //update aktuellen User (Keycloak Nutzerdaten)
@@ -61,12 +61,12 @@ export class ProfileService {
     return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject + '/reset-password', password);
   }
   updateUserTutorial(u: CustomUser) {
-    return this.http.put(api.short + 'user/updateTutorial', u);
+    return this.http.put(api.url + 'user/updateTutorial', u);
   }
   skipTutorial(u: CustomUser){
-    return this.http.put(api.short + 'user/skipTutorial', u);
+    return this.http.put(api.url + 'user/skipTutorial', u);
   }
   startTutorial(u: CustomUser){
-    return this.http.put(api.short + 'user/startTutorial', u);
+    return this.http.put(api.url + 'user/startTutorial', u);
   }
 }

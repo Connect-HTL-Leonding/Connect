@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.security.PermitAll;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -27,6 +28,7 @@ import javax.ws.rs.core.MediaType;
 
 @ServerEndpoint("/websocket/{id}")
 @ApplicationScoped
+@PermitAll
 public class WebSocket {
 
     @Inject
@@ -55,14 +57,13 @@ public class WebSocket {
         sessions.remove(id);
         System.out.println(id + " left");
     }
-/*
+
     @OnError
-    public void onError(Session session, @PathParam("roomid") String roomid, Throwable throwable, @PathParam("username") String username) {
-        sessions.remove(username);
-        broadcast("User " + username + " left on error: " + throwable);
+    public void onError(Session session, @PathParam("id") String id, Throwable throwable) {
+        System.out.println("ERROR");
     }
 
-     */
+
 
     @OnMessage
     public void onMessage(String message, @PathParam("id") String id) {
