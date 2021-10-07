@@ -103,9 +103,9 @@ public class SkinRepository {
         User iboTrisi = new User("6096ea87-37fc-4bfb-8bf3-8b16816d6349","ibo1");
 
         //Tobis User, ID bitte nich ändern
-        User tobias = new User("88db121c-4f49-42c2-8f96-5db7d3cbe75a", "tobias");
-        User trisinger = new User("8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3", "trisinger");
-        User janTobi = new User("7e375e76-dc48-4c84-94ad-ce512effc6d9", "jan");
+        User tobias = new User("0d3dcf03-9d38-4c12-af82-a9467c786db5", "tobi");
+        User trisinger = new User("ceadee37-07d9-444c-817d-b7d2d6d21a0a", "trisinger");
+        User jenninger = new User("2ad6f082-f92c-4934-9ef2-57feab03dfd6", "jenninger");
 
         Friendship f = new Friendship(susi,jan,s,LocalDateTime.now(),"cool");
         Friendship f1 = new Friendship(ibo,ibo1,s,LocalDateTime.now(),"cool");
@@ -114,7 +114,7 @@ public class SkinRepository {
         Friendship f4 = new Friendship(iboTrisi,trisi1,s1,LocalDateTime.now(),"cool");
  //       Friendship f5 = new Friendship(franz, jan, s, LocalDateTime.now(), "cool");
         Friendship f5 = new Friendship(tobias,trisinger,s1,LocalDateTime.now(),"cool");
-        Friendship f6 = new Friendship(tobias,janTobi,s1,LocalDateTime.now(),"cool");
+        Friendship f6 = new Friendship(tobias,jenninger,s1,LocalDateTime.now(),"cool");
 
 
 
@@ -143,8 +143,8 @@ public class SkinRepository {
         tobias.getPosition().put("lng",9.33);
         trisinger.getPosition().put("lat",-12.9);
         trisinger.getPosition().put("lng",-120.0);
-        janTobi.getPosition().put("lat",-156.34);
-        janTobi.getPosition().put("lng",-103.39);
+        jenninger.getPosition().put("lat",-156.34);
+        jenninger.getPosition().put("lng",-103.39);
 
 
 
@@ -180,9 +180,9 @@ public class SkinRepository {
         roomRafi1.getUsers().add(tobias);
         roomRafi1.getUsers().add(trisinger);
         
-        janTobi.getRooms().add(roomRafi2);
+        jenninger.getRooms().add(roomRafi2);
         tobias.getRooms().add(roomRafi2);
-        roomRafi2.getUsers().add(janTobi);
+        roomRafi2.getUsers().add(jenninger);
         roomRafi2.getUsers().add(tobias);
 
         // Trisi's rooms
@@ -263,7 +263,7 @@ public class SkinRepository {
         em.persist(f5);
         em.persist(f6);
         em.persist(trisinger);
-        em.persist(janTobi);
+        em.persist(jenninger);
     }
 
     // Finden einer Person über ID in der DB
