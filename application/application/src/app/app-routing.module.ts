@@ -86,7 +86,12 @@ const routes: Routes = [
   {
     path: 'meet-up-manager',
     loadChildren: () => import('./pages/meet-up-manager/meet-up-manager.module').then(m => m.MeetUpManagerPageModule)
+  },
+  {
+    path: 'skin-creator',
+    loadChildren: () => import('./pages/skin-creator/skin-creator.module').then( m => m.SkinCreatorPageModule)
   }
+
 ];
 
 @NgModule({
