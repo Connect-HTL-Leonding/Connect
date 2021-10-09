@@ -14,16 +14,29 @@ export class AppAuthGuard implements CanActivate {
       //wenn nicht eingeloggt --> einlogg versuch
       if (!this.keycloakService.authenticated) {
         console.log(this.keycloakService.authenticated)
-        this.keycloakService.login();
-        return;
+        this.keycloakService.login().add(()=>{
+          console.log("SECOND")
+          resolve(true)
+        });
+        /*
+        if (!granted) {
+          console.log("sjklfdkj")
+          this.router.navigate(['/']);
+        }
+        */
+        //return;
+      }else {
+        resolve(true);
       }
 
+      /*
       console.log('role restriction given at app-routing.module for this route', route.data.roles);
       console.log('User roles coming after login from keycloak :', this.keycloakService.roles);
       const requiredRoles = route.data.roles;
       //checked, ob Berechtigung stimmt
 
       let granted: boolean = true;
+      */
       /*
       if (!requiredRoles || requiredRoles.length === 0) {
         granted = true;
@@ -38,11 +51,7 @@ export class AppAuthGuard implements CanActivate {
       */
 
       //wenn Berechtigung nicht ausreichend --> redirect an home-seite
-      if (!granted) {
-        console.log("sjklfdkj")
-        this.router.navigate(['/']);
-      }
-      resolve(granted);
+
 
     });
   }

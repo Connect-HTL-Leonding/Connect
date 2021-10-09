@@ -20,7 +20,7 @@ export class KeycloakService {
 
   constructor(private http: HttpClient) { }
 
-  //direct grant flow
+  //direct grant flow with password
   login() {
 
     //body
@@ -60,12 +60,63 @@ export class KeycloakService {
       catch (Error) {
 
       }
-      
-
     });
-    
-    
   }
+
+    //direct grant flow with refresh token
+    refresh() {
+
+      /*
+      Method: POST
+URL: https://keycloak.example.com/auth/realms/myrealm/protocol/openid-connect/token
+Body type: x-www-form-urlencoded
+Form fields:    
+client_id : <my-client-name>
+grant_type : refresh_token
+refresh_token: <my-refresh-token>
+*/
+
+      //body
+      let body = new URLSearchParams();
+      body.set('client_id', "connect-frontend");
+      body.set('client_secret', "");
+      body.set('grant_type', "refresh_token");
+      body.set('refresh_token', localStorage.getItem("refresh_token"));
+
+  
+      //x-www-form-urlencoded
+      let options = {
+        headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+      };
+  
+      //direct grant url
+      return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+      
+      .subscribe(data => {
+  
+        this.authenticated = true;
+  
+        try {
+          console.log("LOGGED IN" + this.authenticated)
+          let tokenInfo = jwt_decode(data["access_token"])
+  
+          console.log(tokenInfo)
+          this.userid = tokenInfo["sub"];
+          this.setSession(data)
+          //this.getUser(data);
+  
+          //OLD
+          //this.getAccount(data)
+        }
+        catch (Error) {
+  
+        }
+        
+  
+      });
+      
+      
+    }
 
   private setSession(authResult) {
     console.log(authResult)

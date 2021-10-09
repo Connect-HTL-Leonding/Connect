@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
+import { EMPTY } from 'rxjs';
 import { api } from '../app.component';
 import { CustomUser, User } from "../model/user";
 import { KeycloakService } from './auth/keycloak.service';
@@ -23,14 +24,18 @@ export class ProfileService {
   getUser() {
     //Get Userinfo über aktuellen Nutzer (live)
     console.log(this.keycloak.userid + "TEST")
-    this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid).subscribe(data => {
-      this.user.id = data["id"];
-      this.user.userName = data["username"];
-      this.user.firstname = data["firstName"];
-      this.user.lastname = data["lastName"];
-      this.user.email = data["email"];
-    });
-    return this.http.get<CustomUser>(api.url + 'user/customData');
+    if (this.keycloak.userid) {
+      this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid).subscribe(data => {
+        this.user.id = data["id"];
+        this.user.userName = data["username"];
+        this.user.firstname = data["firstName"];
+        this.user.lastname = data["lastName"];
+        this.user.email = data["email"];
+      });
+      return this.http.get<CustomUser>(api.url + 'user/customData');
+    }
+
+    return EMPTY
 
   }
 

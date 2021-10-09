@@ -135,6 +135,7 @@ export class HomePage implements OnInit {
     });
 
 
+    console.log(this.keyCloakService.userid + "HOME PAGE")
     this.ps.getUser().subscribe(
       data => {
 

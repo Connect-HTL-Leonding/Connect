@@ -16,7 +16,6 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { KeycloakAngularModule, KeycloakAuthGuard, KeycloakBearerInterceptor, KeycloakService } from 'keycloak-angular';
 import { from } from 'rxjs';
 import { AppAuthGuard } from './api/auth/auth.guard';
 import { AuthInterceptor } from './api/auth/authInterceptor';
@@ -37,9 +36,7 @@ import { AuthInterceptor } from './api/auth/authInterceptor';
     OAuthModule.forRoot(),
 
     ReactiveFormsModule,
-    FormsModule,
-
-    KeycloakAngularModule
+    FormsModule
   ],
   providers: [
     StatusBar,

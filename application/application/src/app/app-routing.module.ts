@@ -8,6 +8,11 @@ import { AppAuthGuard } from './api/auth/auth.guard';
 
 const routes: Routes = [
   {
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
     path: 'home',
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule),
     canActivate: [AppAuthGuard]
@@ -33,11 +38,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/contactlist/contactlist.module').then(m => m.ContactlistPageModule),
     canActivate: [AppAuthGuard]
 
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
   },
   {
     path: 'edit-profile',
