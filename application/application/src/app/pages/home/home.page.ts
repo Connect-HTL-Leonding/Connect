@@ -24,7 +24,6 @@ import { Position } from 'src/app/model/position';
 import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
 import { MySkin } from 'src/app/model/myskin';
 import { ProfilePage } from '../profile/profile.page';
-import { KeycloakService } from 'keycloak-angular';
 import { IonicModule } from '@ionic/angular'
 import { MeetupService } from 'src/app/api/meetup.service';
 import { Meeting, MeetupUser } from 'src/app/model/meetup';
@@ -33,6 +32,7 @@ import { ChatPage } from '../chat/chat.page';
 import { Room } from 'src/app/model/room';
 import { FriendPage } from '../friend/friend.page';
 import { SharePluginWeb } from '@capacitor/core';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 
 /*
 import {
@@ -1052,7 +1052,7 @@ if(u != null){
 
           });
         }
-        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 7) {
+        if (this.ps.user.custom.id == this.keyCloakService.userid && this.ps.user.custom.tutorialStage == 7) {
           Showcaser.showcase("Drück auf den Connect Button um dich zu connecten", this.connectButRef.nativeElement, {
             shape: "circle",
             buttonText: "Ok!",

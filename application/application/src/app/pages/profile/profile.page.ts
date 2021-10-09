@@ -7,8 +7,8 @@ import { PhotoService } from "../../api/photo.service";
 import Showcaser from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 
-import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-profile',
@@ -40,7 +40,7 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.photoService.loadPfp();
     this.photoService.loadGalleryImages();
-    this.user = this.keyCloakService.getKeycloakInstance().userInfo;
+    this.user = this.keyCloakService.user;
 
     this.ps.getUser().subscribe(
       data => {
@@ -67,7 +67,7 @@ export class ProfilePage implements OnInit {
   dismissModal() {
     this.photoService.loadPfp();
     this.photoService.loadGalleryImages();
-    this.user = this.keyCloakService.getKeycloakInstance().userInfo;
+    this.user = this.keyCloakService.user;
 
     this.ps.getUser().subscribe(
       data => {

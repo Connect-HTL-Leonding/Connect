@@ -10,7 +10,6 @@ import { api } from '../app.component';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Image } from '../model/image';
-import { KeycloakService } from 'keycloak-angular';
 
 
 const { Camera, Filesystem, Storage } = Plugins;
@@ -26,7 +25,7 @@ export class PhotoService {
   public imgURL;
   http : HttpClient;
 
-  constructor(private ps: ProfileService, http: HttpClient, private keyCloakService: KeycloakService, private sanitizer: DomSanitizer) {
+  constructor(private ps: ProfileService, http: HttpClient, private sanitizer: DomSanitizer) {
     this.http = http;
   }
 

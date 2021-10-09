@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { KeycloakService } from 'keycloak-angular';
 import { api } from '../app.component';
 import { CustomUser, User } from "../model/user";
+import { KeycloakService } from './auth/keycloak.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +16,14 @@ export class ProfileService {
   friendUser: boolean = false
 
   //Konstruktor
-  constructor(http: HttpClient, private keyCloakService: KeycloakService) {
+  constructor(http: HttpClient, private keycloak: KeycloakService) {
     this.http = http
   }
 
-  //get aktuellen User
   getUser() {
     //Get Userinfo über aktuellen Nutzer (live)
-    this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject).subscribe(data => {
+    console.log(this.keycloak.userid + "TEST")
+    this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid).subscribe(data => {
       this.user.id = data["id"];
       this.user.userName = data["username"];
       this.user.firstname = data["firstName"];
@@ -57,16 +57,16 @@ export class ProfileService {
   //nicht mehr funktionsfähig ):
   updatePassword(password) {
     var body = JSON.stringify(password)
-    
-    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject + '/reset-password', password);
+
+    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid + '/reset-password', password);
   }
   updateUserTutorial(u: CustomUser) {
     return this.http.put(api.url + 'user/updateTutorial', u);
   }
-  skipTutorial(u: CustomUser){
+  skipTutorial(u: CustomUser) {
     return this.http.put(api.url + 'user/skipTutorial', u);
   }
-  startTutorial(u: CustomUser){
+  startTutorial(u: CustomUser) {
     return this.http.put(api.url + 'user/startTutorial', u);
   }
 }

@@ -4,7 +4,6 @@ import { Category } from '../model/category';
 import { Observable } from 'rxjs';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
-import { KeycloakService } from 'keycloak-angular';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +17,7 @@ export class CategoryService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, private keyCloakService: KeycloakService) {
+  constructor(http: HttpClient) {
     this.http = http;
     this.categories = [];
   }

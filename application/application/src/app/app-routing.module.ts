@@ -6,7 +6,6 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { OAuthModule } from 'angular-oauth2-oidc'
 import { AppAuthGuard } from './api/auth/auth.guard';
 
-
 const routes: Routes = [
   {
     path: 'home',

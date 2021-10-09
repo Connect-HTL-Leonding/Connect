@@ -4,7 +4,6 @@ import { ProfileService } from "../../../api/profile.service";
 import { PhotoService } from "../../../api/photo.service";
 import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from '../photogallery/photogallery.page';
-import { KeycloakService } from 'keycloak-angular';
 //import { Camera } from '@ionic-native/camera';
 //import { CameraOptions } from '@ionic-native/camera';
 
@@ -21,7 +20,7 @@ export class EditProfilePage implements OnInit {
 
   noImgs: boolean;
 
-  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService, public keycloakService: KeycloakService) { }
+  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService) { }
 
 
 
