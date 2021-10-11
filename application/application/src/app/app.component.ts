@@ -203,8 +203,8 @@ export class AppComponent implements OnInit {
 
 //Zentrale Variablen
 export const api = {
-  url: "http://localhost:8080/api/",
-  short: "http://localhost:8080/",
-  ip: "http://localhost",
-  ws: "ws://localhost:8080"
+  url: "http://192.168.1.26:8080/api/",
+  short: "http://192.168.1.26:8080/",
+  ip: "http://192.168.1.26",
+  ws: "ws://192.168.1.26:8080"
 }
