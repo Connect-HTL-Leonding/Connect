@@ -10,6 +10,7 @@ import org.connect.model.user.Friendship;
 import org.connect.model.user.User;
 import org.hibernate.query.Query;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -32,7 +33,7 @@ public class SkinRepository {
 
 
     // Initialisieren
-    //@PostConstruct
+    @PostConstruct
     @Transactional
     public void initDB() {
 
