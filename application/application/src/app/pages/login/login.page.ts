@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
-import { KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { DevinfosPage } from './devinfos/devinfos.page';
 
 @Component({
@@ -14,30 +15,24 @@ import { DevinfosPage } from './devinfos/devinfos.page';
 export class LoginPage {
 
   http: HttpClient;
+  username: String;
+  password: String;
 
-
-  isAuthenticated: Observable<boolean>;
-  isDoneLoading: Observable<boolean>;
-  canActivateProtectedRoutes: Observable<boolean>;
-
-  constructor(http: HttpClient, public keyCloakService: KeycloakService, public modalController: ModalController) {
+  constructor(http: HttpClient, public keycloak: KeycloakService, public modalController: ModalController, public router: Router) {
     this.http = http;
   }
 
-  login() { this.keyCloakService.login(); }
-  logout() { this.keyCloakService.logout(); }
-  refresh() { this.keyCloakService.updateToken(); }
-  reload() { window.location.reload(); }
-  clearStorage() { localStorage.clear(); }
+  login() {
+    if (this.username && this.password) {
+      console.log("LOGIN VERSUCH")
+      this.keycloak.login(this.username, this.password).add(() => {
+        this.username = "";
+        this.password = "";
+        this.router.navigate(["home"]);
+      });
 
-  logoutExternally() {
-    //window.open(this.keyCloakService.getKeycloakInstance());
+    }
   }
-
-  get accessToken() { return this.keyCloakService.getToken(); }
-  //get idToken() { return this.keyCloakService.getKeycloakInstance().idToken; }
-
-
 
 
   //info modal

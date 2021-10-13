@@ -14,10 +14,14 @@ export class AppAuthGuard implements CanActivate {
       //wenn nicht eingeloggt --> einlogg versuch
       if (!this.keycloakService.authenticated) {
         console.log(this.keycloakService.authenticated)
-        this.keycloakService.login().add(()=>{
+
+        this.router.navigate(["login"]);
+        /*
+        this.keycloakService.refresh().add(()=>{
           console.log("SECOND")
           resolve(true)
         });
+        */
         /*
         if (!granted) {
           console.log("sjklfdkj")

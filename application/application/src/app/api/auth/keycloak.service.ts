@@ -21,7 +21,7 @@ export class KeycloakService {
   constructor(private http: HttpClient) { }
 
   //direct grant flow with password
-  login() {
+  login(username, password) {
 
     //body
     let body = new URLSearchParams();
@@ -30,8 +30,8 @@ export class KeycloakService {
     body.set('grant_type', "password");
     body.set('scope', "openid");
 
-    body.set('username', "jan");
-    body.set('password', "geheim");
+    body.set('username', username);
+    body.set('password', password);
 
     //x-www-form-urlencoded
     let options = {
@@ -131,6 +131,7 @@ refresh_token: <my-refresh-token>
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("expires_in");
+    this.authenticated = false;
   }
 
   public isLoggedIn() {

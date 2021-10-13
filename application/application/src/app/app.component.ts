@@ -80,7 +80,7 @@ export class AppComponent implements OnInit {
     //überprüfen, ob eingeloggt
     if (!this.keycloak.isLoggedIn()) {
       console.log("NOT LOGGED IN")
-      this.keycloak.login().add(() => {
+      this.keycloak.refresh().add(() => {
         this.makeWebsocket()
       })
     }else {
@@ -203,8 +203,8 @@ export class AppComponent implements OnInit {
 
 //Zentrale Variablen
 export const api = {
-  url: "http://192.168.1.26:8080/api/",
-  short: "http://192.168.1.26:8080/",
-  ip: "http://192.168.1.26",
-  ws: "ws://192.168.1.26:8080"
+  url: "http://172.17.208.244:8080/api/",
+  short: "http://172.17.208.244:8080/",
+  ip: "http://172.17.208.244",
+  ws: "ws://172.17.208.244:8080"
 }

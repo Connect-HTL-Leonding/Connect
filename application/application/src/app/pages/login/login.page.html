@@ -11,29 +11,24 @@
       <ion-img id="logo" src="../assets/connect_img/logo/Connect_white.png"></ion-img>
     </div>
     <div id="body">
-  
+
 
       <h2>Willkommen</h2>
-      <p *ngIf="" id="text">Logge dich ein oder regestriere dich, um Teil von etwas großem zu werden!</p>
-      <ion-button *ngIf="" shape="round" color="primary" expand="block" (click)="login()">Starte dein Abenteuer</ion-button>
+      <p id="text">Logge dich ein oder regestriere dich, um Teil von etwas großem zu werden!</p>
 
-      <p *ngIf="this.isAuthenticated | async" id="text">Starte doch mit einem kleinen Tutorial, um die neue Welt zu entdecken!</p>
-      <ion-button *ngIf="this.isAuthenticated | async" shape="round" color="primary" expand="block">Starte Tutorial</ion-button>
-
-      <hr>
-      <div id="dev">
-        <div class="authenticating-loader" *ngIf="!(isDoneLoading | async)">
-          <div>Authenticating...</div>
-        </div>
-        <button (click)="presentModal()">Dev Infos</button>
-        <p>
-          <button class="btn btn-success mr-1" (click)='login()'>login</button>
-          <button class="btn btn-primary mr-1" (click)='logout()'>logout</button>
-          <button class="btn btn-link mr-1" (click)='logoutExternally()'>logout externally...</button>
-        </p>
+      <div id="container">
+        <ion-item>
+          <ion-label position="stacked">Benutzername</ion-label>
+          <ion-input clearInput [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Passwort</ion-label>
+          <ion-input clearInput type="password" [(ngModel)]="password"></ion-input>
+        </ion-item>
       </div>
 
-  
+      <ion-button shape="round" color="primary" expand="block" (click)="login()">Starte dein Abenteuer</ion-button>
+
     </div>
   </div>
 
