@@ -43,14 +43,9 @@ export class EditProfileDetailsPage implements OnInit {
   //init
   ngOnInit() {
     //getCurrentUser
-    this.ps.getUser().subscribe(
-      data => {
-        //console.log(data);
-        this.ps.user.custom = data;
+    this.ps.getUser().add(
+      () => {
         console.log(this.ps.user)
-      },
-      error => {
-        console.log('HTTP Error', error);
       }
     )
   }

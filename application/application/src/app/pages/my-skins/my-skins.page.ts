@@ -52,16 +52,9 @@ export class MySkinsPage implements OnInit {
       }
     )
 
-    this.ps.getUser().subscribe(
+    this.ps.getUser().add(
       data => {
-        console.log(data);
-        this.ps.user.custom = data;
-        console.log("westrzutqjhkgizfutetdzuz")
-        console.log(this.ps.user)
         this.showTutorial();
-      },
-      error1 => {
-        console.log('Error');
       }
     )
   }
@@ -182,8 +175,7 @@ export class MySkinsPage implements OnInit {
               this.mySkinService.mapSkins = data;
               this.mySkinService.mySkinObserveable.next(data);
               console.log(this.ps.user.custom.tutorialStage)
-              this.ps.getUser().subscribe(data => {
-                this.ps.user.custom = data;
+              this.ps.getUser().add(() => {
                 if(this.ps.user.custom.tutorialStage == 6){
                   this.router.navigate(["home"])
                 }

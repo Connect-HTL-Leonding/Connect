@@ -42,23 +42,14 @@ export class ProfilePage implements OnInit {
     this.photoService.loadGalleryImages();
     this.user = this.keyCloakService.user;
 
-    this.ps.getUser().subscribe(
-      data => {
-
-        console.log(data);
-        this.ps.user.custom = data;
-
-
-        console.log("westrzutqjhkgizfutetdzuz")
+    this.ps.getUser().add(
+      () => {
 
         console.log(this.ps.user)
         this.showTutorial();
 
 
         //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
       }
     )
 
@@ -69,11 +60,8 @@ export class ProfilePage implements OnInit {
     this.photoService.loadGalleryImages();
     this.user = this.keyCloakService.user;
 
-    this.ps.getUser().subscribe(
-      data => {
-
-        console.log(data);
-        this.ps.user.custom = data;
+    this.ps.getUser().add(
+      () => {
 
 
         console.log("westrzutqjhkgizfutetdzuz")
@@ -83,9 +71,6 @@ export class ProfilePage implements OnInit {
 
 
         //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
       }
     )
 

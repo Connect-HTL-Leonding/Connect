@@ -53,11 +53,9 @@ export class EditProfilePage implements OnInit {
 
     this.changes = true;
 
-    this.ps.getUser().subscribe(
-      data => {
+    this.ps.getUser().add(
+      () => {
 
-        console.log(data);
-        this.ps.user.custom = data;
 
 
 
@@ -70,9 +68,6 @@ export class EditProfilePage implements OnInit {
 
 
         //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
       }
     )
   }

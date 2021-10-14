@@ -99,7 +99,13 @@ export class HomePage implements OnInit {
     public meetupService: MeetupService,
     public alertController: AlertController,
     public actionSheetController: ActionSheetController) {
+  }
 
+  ngOnChanges() {
+    this.showTutorial();
+  }
+
+  ngOnInit() {
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
       if (this.ps.user.custom.id != value) {
         this.displayFriends();
@@ -136,11 +142,8 @@ export class HomePage implements OnInit {
 
 
     console.log(this.keyCloakService.userid + "HOME PAGE")
-    this.ps.getUser().subscribe(
-      data => {
-
-        this.ps.user.custom = data;
-
+    this.ps.getUser().add(
+      () => {
 
         let myPos = new Position(6.935640686097218, 51.17546707292189);
         if ("lat" in this.ps.user.custom.position) {
@@ -170,20 +173,8 @@ export class HomePage implements OnInit {
 
 
         //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
       }
     )
-  }
-
-  ngOnChanges() {
-    this.showTutorial();
-  }
-
-  ngOnInit() {
-    this.ps.getUser().subscribe(data => {
-    })
   }
 
   ionViewDidLeave() {
@@ -316,7 +307,7 @@ export class HomePage implements OnInit {
   createMeetupMarker(m: Meeting, mu: MeetupUser) {
     this.ps.findFriendUser(mu.user_id).subscribe(data => {
       var dummy = data;
-      this.ps.getUser().subscribe(data => {
+      this.ps.getUser().add(data => {
         if (this.ps.user.id == dummy.id) {
           this.ps.findFriendUser(m.creator.id).subscribe(data => {
             var meetupuser = data;
@@ -914,9 +905,8 @@ if(u != null){
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
-      this.ps.getUser().subscribe(data => {
+      this.ps.getUser().add(() => {
 
-        this.ps.user.custom = data;
         this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
         this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
@@ -992,8 +982,7 @@ if(u != null){
         }, {
           text: 'Okay',
           handler: () => {
-            this.ps.getUser().subscribe(data => {
-              this.ps.user.custom = data;
+            this.ps.getUser().add(() => {
               console.log('Confirm Okay');
               console.log(this.ps.user.custom.tutorialStage + "sdlflsajlf")
               if (this.ps.user.custom.tutorialStage == 0) {
@@ -1023,10 +1012,8 @@ if(u != null){
   }
 
   showTutorial() {
-    this.ps.getUser().subscribe(
-      data => {
-        console.log(data);
-        this.ps.user.custom = data;
+    this.ps.getUser().add(
+      () => {
         console.log("westrzutqjhkgizfutetdzuz");
         console.log(this.ps.user);
 
@@ -1068,9 +1055,6 @@ if(u != null){
             }
           });
         }
-      },
-      error1 => {
-        console.log('Error');
       }
     )
 

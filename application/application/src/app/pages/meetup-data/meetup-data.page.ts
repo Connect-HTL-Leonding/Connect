@@ -54,8 +54,7 @@ export class MeetupDataPage implements OnInit {
    @Input() selectedRoom: Room;
 
   ngOnInit() {
-    this.profileservice.getUser().subscribe(data => {
-      this.profileservice.user.custom = data;
+    this.profileservice.getUser().add(() => {
       this.fs.getBefriendedUsers(this.profileservice.user).subscribe(data=> {
         data.forEach(friendship => {
           if(friendship.user1.id!=this.profileservice.user.id) {

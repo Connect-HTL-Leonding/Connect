@@ -57,8 +57,7 @@ export class ContactlistPage implements OnInit {
   }
 
   ngOnInit() {
-    this.profileservice.getUser().subscribe(data => {
-      this.profileservice.user.custom = data;
+    this.profileservice.getUser().add(() => {
       this.contactService.activeUser = this.profileservice.user;
     });
 

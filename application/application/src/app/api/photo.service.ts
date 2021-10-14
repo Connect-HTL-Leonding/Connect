@@ -174,8 +174,7 @@ export class PhotoService {
 
       console.log(image.base64String.toString())
       this.http.put(api.url + 'image/setPfp', image.base64String.toString()).subscribe(data => {
-        this.ps.getUser().subscribe(data => {
-          this.ps.user.custom = data;
+        this.ps.getUser().add(data => {
           this.loadPfp();
         })
 

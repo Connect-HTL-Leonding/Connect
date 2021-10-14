@@ -19,11 +19,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { from } from 'rxjs';
 import { AppAuthGuard } from './api/auth/auth.guard';
 import { AuthInterceptor } from './api/auth/authInterceptor';
+import { HomePage } from './pages/home/home.page';
+import { HomePageModule } from './pages/home/home.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   entryComponents: [],
   imports: [
@@ -46,8 +48,8 @@ import { AuthInterceptor } from './api/auth/authInterceptor';
     PhotoViewer,
     AppAuthGuard,
     {
-      provide: HTTP_INTERCEPTORS, 
-      useClass: AuthInterceptor, 
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true
     }
 

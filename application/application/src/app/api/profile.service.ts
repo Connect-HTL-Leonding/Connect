@@ -32,11 +32,13 @@ export class ProfileService {
         this.user.lastname = data["lastName"];
         this.user.email = data["email"];
       });
-      return this.http.get<CustomUser>(api.url + 'user/customData');
+      return this.http.get<CustomUser>(api.url + 'user/customData').subscribe(data => {
+        console.log(data)
+        this.user.custom = data;
+      }, error => {
+        console.log(error)
+      });
     }
-
-    return EMPTY
-
   }
 
   findFriendUser(id) {

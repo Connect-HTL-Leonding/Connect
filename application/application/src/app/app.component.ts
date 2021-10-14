@@ -90,14 +90,15 @@ export class AppComponent implements OnInit {
   }
 
   makeWebsocket(){
-    this.ps.getUser().subscribe(data => {
-      console.log(this.ps)
-      console.log(this.ps.user)
-      this.ps.user.custom = data;
-      this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
-      console.log(this.wsUri)
-      this.doConnect();
-    })
+    if(this.keycloak.userid){
+      this.ps.getUser().add(()=>{
+        if(this.ps.user){
+          this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
+          console.log(this.wsUri)
+          this.doConnect();
+        }
+      })
+    }
   }
 
 
