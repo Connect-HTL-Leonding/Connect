@@ -30,6 +30,11 @@ const routes: Routes = [
 
   },
   {
+    path: 'skin-creator',
+    loadChildren: () => import('./pages/skin-creator/skin-creator.module').then( m => m.SkinCreatorPageModule),
+    canActivate: [AppAuthGuard]
+  },
+  {
     path: 'contactlist',
     loadChildren: () => import('./pages/contactlist/contactlist.module').then(m => m.ContactlistPageModule),
     canActivate: [AppAuthGuard]
@@ -86,10 +91,6 @@ const routes: Routes = [
   {
     path: 'meet-up-manager',
     loadChildren: () => import('./pages/meet-up-manager/meet-up-manager.module').then(m => m.MeetUpManagerPageModule)
-  },
-  {
-    path: 'skin-creator',
-    loadChildren: () => import('./pages/skin-creator/skin-creator.module').then( m => m.SkinCreatorPageModule)
   }
 
 ];
