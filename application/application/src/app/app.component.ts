@@ -14,6 +14,9 @@ import { ChatService } from './api/chat.service';
 import { Location } from '@angular/common';
 import { ContactlistService } from './api/contactlist.service';
 import { KeycloakService } from './api/auth/keycloak.service';
+import { switchMap } from 'rxjs/operators';
+
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-root',
@@ -76,23 +79,33 @@ export class AppComponent implements OnInit {
 
   //Login bei Seiten-laden
   public ngOnInit() {
-
+    console.log("CHECK")
     //überprüfen, ob eingeloggt
     if (!this.keycloak.isLoggedIn()) {
-      console.log("NOT LOGGED IN")
-      this.keycloak.refresh().add(() => {
+      this.keycloak.refresh().subscribe(token => {
+        this.keycloak.authenticated = true;
+
+        try {
+          let tokenInfo = jwt_decode(token["access_token"])
+
+          this.keycloak.userid = tokenInfo["sub"];
+          this.keycloak.setSession(token);
+        }
+        catch (err) {
+          console.error(err)
+        }
+        
         this.makeWebsocket()
       })
-    }else {
+    } else {
       this.makeWebsocket()
     }
-
   }
 
-  makeWebsocket(){
-    if(this.keycloak.userid){
-      this.ps.getUser().add(()=>{
-        if(this.ps.user){
+  makeWebsocket() {
+    if (this.keycloak.userid) {
+      this.ps.getUser().add(() => {
+        if (this.ps.user) {
           this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
           console.log(this.wsUri)
           this.doConnect();
@@ -204,8 +217,8 @@ export class AppComponent implements OnInit {
 
 //Zentrale Variablen
 export const api = {
-  url: "http://172.17.208.244:8080/api/",
-  short: "http://172.17.208.244:8080/",
-  ip: "http://172.17.208.244",
-  ws: "ws://172.17.208.244:8080"
+  url: "http://localhost:8080/api/",
+  short: "http://localhost:8080/",
+  ip: "http://localhost",
+  ws: "ws://localhost:8080"
 }

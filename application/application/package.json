@@ -48,6 +48,7 @@
     "moment": "^2.29.1",
     "ngx-webstorage-service": "^4.1.0",
     "rxjs": "~6.5.5",
+    "rxjs-compat": "^6.6.7",
     "showcaser": "^1.0.0",
     "tslib": "^2.2.0",
     "ws": "^7.4.5",

@@ -20,6 +20,7 @@ import { ProfileService } from 'src/app/api/profile.service';
 import { ProfilePage } from '../profile/profile.page';
 import { FriendPage } from '../friend/friend.page';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
+import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
 
 
 declare var google: any;
@@ -135,9 +136,11 @@ export class ChatPage implements OnInit {
   }
 
   profileFriend(friend: User) {
-    this.ps.findFriendUser(friend.id).subscribe(data => {
+    this.ps.findFriendUser(friend.id)
+    .subscribe(data => {
       console.log(data + "oh no");
       this.presentFriend(data);
+
     });
   }
 
@@ -303,11 +306,13 @@ export class ChatPage implements OnInit {
       this.m.image = "";
       this.showNewMsgLine = false;
 
-      this.chatservice.createMessage(this.m).subscribe(data => {
-        this.contactlist.contactlistObservable.next("contactListUpdate");
-        this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
-        this.sendText = "";
-      });
+      this.chatservice.createMessage(this.m)
+        .subscribe(data => {
+          console.log("FAIL:" + data)
+          this.contactlist.contactlistObservable.next("contactListUpdate");
+          this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
+          this.sendText = "";
+        });
     }
   }
 

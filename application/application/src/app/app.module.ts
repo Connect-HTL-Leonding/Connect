@@ -18,9 +18,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { from } from 'rxjs';
 import { AppAuthGuard } from './api/auth/auth.guard';
-import { AuthInterceptor } from './api/auth/authInterceptor';
 import { HomePage } from './pages/home/home.page';
 import { HomePageModule } from './pages/home/home.module';
+import { HttpFilter } from './api/auth/httpFilter';
+import { HttpErrorFilter } from './api/auth/httpErrorFilter';
 
 
 @NgModule({
@@ -49,7 +50,12 @@ import { HomePageModule } from './pages/home/home.module';
     AppAuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
+      useClass: HttpErrorFilter,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpFilter,
       multi: true
     }
 

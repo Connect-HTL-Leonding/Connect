@@ -33,7 +33,7 @@ export class LoginPage {
         this.username = "";
         this.password = "";
         this.router.navigate(["home"]).then(() => {
-          window.location.reload();
+          //window.location.reload();
         });
         this.app.ngOnInit();
       });

@@ -7,6 +7,9 @@ import { ProfileService } from '../profile.service';
 import jwt_decode from 'jwt-decode';
 
 import * as moment from "moment";
+import { EMPTY, Observable, of } from 'rxjs';
+import 'rxjs/add/observable/of';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +21,7 @@ export class KeycloakService {
   public user: KeycloakProfile
   public userid: String
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, public router : Router) { }
 
   //direct grant flow with password
   login(username, password) {
@@ -64,7 +67,7 @@ export class KeycloakService {
   }
 
     //direct grant flow with refresh token
-    refresh() {
+    refresh() /*: Observable<string>*/{
 
       /*
       Method: POST
@@ -91,7 +94,7 @@ refresh_token: <my-refresh-token>
   
       //direct grant url
       return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
-      
+      /*
       .subscribe(data => {
   
         this.authenticated = true;
@@ -103,23 +106,25 @@ refresh_token: <my-refresh-token>
           console.log(tokenInfo)
           this.userid = tokenInfo["sub"];
           this.setSession(data)
+          return of(localStorage.getItem("access_token"));
           //this.getUser(data);
   
           //OLD
           //this.getAccount(data)
         }
-        catch (Error) {
-  
+        catch (err) {
+          console.error(err)
         }
-        
-  
       });
-      
+
+      return EMPTY
+      */
       
     }
 
-  private setSession(authResult) {
+  setSession(authResult) {
     console.log(authResult)
+    console.log("TOKEN SET")
     const expires_in = moment().add(authResult.expires_in, 'second');
 
     localStorage.setItem('access_token', authResult.access_token);
@@ -132,6 +137,8 @@ refresh_token: <my-refresh-token>
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("expires_in");
     this.authenticated = false;
+    this.router.navigate(["login"]);
+
   }
 
   public isLoggedIn() {
