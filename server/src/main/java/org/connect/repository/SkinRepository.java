@@ -33,7 +33,7 @@ public class SkinRepository {
 
 
     // Initialisieren
-    @PostConstruct
+    //@PostConstruct
     @Transactional
     public void initDB() {
 

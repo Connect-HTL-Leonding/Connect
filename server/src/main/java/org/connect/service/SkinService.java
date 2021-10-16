@@ -32,8 +32,8 @@ public class SkinService {
     @Produces(MediaType.TEXT_PLAIN)
 
     public String init() {
-        dbRepo.initDB();
-        return "DB initialized";
+        //dbRepo.initDB();
+        return "DB initialize moved to import.sql";
     }
 
     // Liste aller Skins senden
