@@ -21,7 +21,7 @@ export class KeycloakService {
   public user: KeycloakProfile
   public userid: String
 
-  constructor(private http: HttpClient, public router : Router) { }
+  constructor(private http: HttpClient, public router: Router) { }
 
   //direct grant flow with password
   login(username, password) {
@@ -43,87 +43,45 @@ export class KeycloakService {
 
     //direct grant url
     return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
-    
-    .subscribe(data => {
 
-      this.authenticated = true;
-
-      try {
-        console.log("LOGGED IN" + this.authenticated)
-        let tokenInfo = jwt_decode(data["access_token"])
-
-        console.log(tokenInfo)
-        this.userid = tokenInfo["sub"];
-        this.setSession(data)
-        //this.getUser(data);
-
-        //OLD
-        //this.getAccount(data)
-      }
-      catch (Error) {
-
-      }
-    });
-  }
-
-    //direct grant flow with refresh token
-    refresh() /*: Observable<string>*/{
-
-      /*
-      Method: POST
-URL: https://keycloak.example.com/auth/realms/myrealm/protocol/openid-connect/token
-Body type: x-www-form-urlencoded
-Form fields:    
-client_id : <my-client-name>
-grant_type : refresh_token
-refresh_token: <my-refresh-token>
-*/
-
-      //body
-      let body = new URLSearchParams();
-      body.set('client_id', "connect-frontend");
-      body.set('client_secret', "");
-      body.set('grant_type', "refresh_token");
-      body.set('refresh_token', localStorage.getItem("refresh_token"));
-
-  
-      //x-www-form-urlencoded
-      let options = {
-        headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-      };
-  
-      //direct grant url
-      return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
-      /*
       .subscribe(data => {
-  
+
         this.authenticated = true;
-  
+
         try {
           console.log("LOGGED IN" + this.authenticated)
           let tokenInfo = jwt_decode(data["access_token"])
-  
-          console.log(tokenInfo)
+
           this.userid = tokenInfo["sub"];
           this.setSession(data)
-          return of(localStorage.getItem("access_token"));
-          //this.getUser(data);
-  
-          //OLD
-          //this.getAccount(data)
         }
-        catch (err) {
-          console.error(err)
+        catch (Error) {
+
         }
       });
+  }
 
-      return EMPTY
-      */
-      
-    }
+  //direct grant flow with refresh token
+  refresh() /*: Observable<string>*/ {
+
+    //body
+    let body = new URLSearchParams();
+    body.set('client_id', "connect-frontend");
+    body.set('client_secret', "");
+    body.set('grant_type', "refresh_token");
+    body.set('refresh_token', localStorage.getItem("refresh_token"));
+
+
+    //x-www-form-urlencoded
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+    //direct grant url
+    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+  }
 
   setSession(authResult) {
-    console.log(authResult)
     console.log("TOKEN SET")
     const expires_in = moment().add(authResult.expires_in, 'second');
 

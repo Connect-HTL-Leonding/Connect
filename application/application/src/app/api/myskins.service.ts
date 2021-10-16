@@ -26,7 +26,6 @@ export class MyskinsService {
   constructor(http: HttpClient) {
     this.http = http;
     this.myskins = [];
-    console.log("kljfdfkjsfjkald")
   }
 
   //ausgewählter Skin ändern - dynamisch

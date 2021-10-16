@@ -23,7 +23,6 @@ export class ProfileService {
 
   getUser() {
     //Get Userinfo über aktuellen Nutzer (live)
-    console.log(this.keycloak.userid + "TEST")
     if (this.keycloak.userid) {
       this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid).subscribe(data => {
         this.user.id = data["id"];
@@ -33,7 +32,6 @@ export class ProfileService {
         this.user.email = data["email"];
       });
       return this.http.get<CustomUser>(api.url + 'user/customData').subscribe(data => {
-        console.log(data)
         this.user.custom = data;
       }, error => {
         console.log(error)
@@ -52,7 +50,6 @@ export class ProfileService {
 
   //update aktuellen User
   updateUser(u: CustomUser) {
-    console.log(u);
     return this.http.put<CustomUser>(api.url + 'user/update', u);
   }
 

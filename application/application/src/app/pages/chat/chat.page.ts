@@ -308,7 +308,6 @@ export class ChatPage implements OnInit {
 
       this.chatservice.createMessage(this.m)
         .subscribe(data => {
-          console.log("FAIL:" + data)
           this.contactlist.contactlistObservable.next("contactListUpdate");
           this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
           this.sendText = "";
