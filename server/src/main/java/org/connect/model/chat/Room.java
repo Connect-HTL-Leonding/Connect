@@ -15,7 +15,9 @@ import java.util.Set;
 @Entity
 
 @NamedQueries({
-        @NamedQuery(name = Room.FINDALL, query = "SELECT r from Room r join r.users u where u.id = :u") // : (
+        @NamedQuery(name = Room.FINDALL, query = "SELECT r from Room r join r.users u where u.id=:u")
+        //@NamedQuery(name = Room.FINDALL, query = "SELECT r from Room r left join Room_Members m on (m.user_id=:u)") // : (
+        //@NamedQuery(name = Room.FINDALL, query = "SELECT r from Room r left join r.users u left join Friendship f on(f.user1.id=:u or f.user2.id = :u) where u.id = :u and f.status<>'blocked'") // : (
 })
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","users"})
 public class Room implements Serializable {
@@ -47,7 +49,6 @@ public class Room implements Serializable {
                     {@JoinColumn(name="user_id")}
     )
     private List<User> users = new LinkedList<>();
-
 
 
     public List<User> getUsers() {
