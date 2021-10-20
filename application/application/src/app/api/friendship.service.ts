@@ -10,7 +10,6 @@ import { api } from '../app.component';
 import { ProfileService } from './profile.service';
 import { Friendship } from '../model/friendship';
 import { CustomUser, User } from '../model/user';
-import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +25,7 @@ export class FriendshipService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, us: ProfileService, private keyCloakService: KeycloakService) {
+  constructor(http: HttpClient, us: ProfileService) {
     this.http = http;
     this.userService = us;
   

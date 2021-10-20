@@ -1,38 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController, LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
-import { AfterViewInit } from '@angular/core';
-import { Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
-import { MapStyle } from './mapStyle';
 import { CustomUser, User } from '../../model/user';
 
 import { ProfileService } from 'src/app/api/profile.service';
 import { FriendshipService } from 'src/app/api/friendship.service';
-
-import { MySkinsPageRoutingModule } from '../my-skins/my-skins-routing.module';
 import { MyskinsService } from 'src/app/api/myskins.service';
-import Showcaser from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
-import { Friendship } from 'src/app/model/friendship';
 import { ContactlistService } from 'src/app/api/contactlist.service';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
+
 import { Position } from 'src/app/model/position';
 import { SelectedSkinsPage } from './selected-skins/selected-skins.page';
-import { MySkin } from 'src/app/model/myskin';
 import { ProfilePage } from '../profile/profile.page';
-import { KeycloakService } from 'keycloak-angular';
-import { IonicModule } from '@ionic/angular'
 import { MeetupService } from 'src/app/api/meetup.service';
 import { Meeting, MeetupUser } from 'src/app/model/meetup';
-import { MeetupDataShowPage } from './meetup-data-show/meetup-data-show.page';
-import { ChatPage } from '../chat/chat.page';
 import { Room } from 'src/app/model/room';
 import { FriendPage } from '../friend/friend.page';
-import { SharePluginWeb } from '@capacitor/core';
+
+import Showcaser from 'showcaser'
 
 /*
 import {
@@ -99,7 +89,13 @@ export class HomePage implements OnInit {
     public meetupService: MeetupService,
     public alertController: AlertController,
     public actionSheetController: ActionSheetController) {
+  }
 
+  ngOnChanges() {
+    this.showTutorial();
+  }
+
+  ngOnInit() {
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
       if (this.ps.user.custom.id != value) {
         this.displayFriends();
@@ -114,10 +110,10 @@ export class HomePage implements OnInit {
     });
 
     this.connectUpdate = this.contactService.contactlistUpdateNotify.subscribe(value => {
-      if(value == "connect") {
+      if (value == "connect") {
         this.displayFriends();
       }
-      
+
     });
 
     this.meetupPreview = this.meetupService.meetupPreviewNotify.subscribe(value => {
@@ -134,12 +130,8 @@ export class HomePage implements OnInit {
       this.displayMeetups();
     });
 
-
-    this.ps.getUser().subscribe(
-      data => {
-
-        this.ps.user.custom = data;
-
+    this.ps.getUser().add(
+      () => {
 
         let myPos = new Position(6.935640686097218, 51.17546707292189);
         if ("lat" in this.ps.user.custom.position) {
@@ -169,20 +161,8 @@ export class HomePage implements OnInit {
 
 
         //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
       }
     )
-  }
-
-  ngOnChanges() {
-    this.showTutorial();
-  }
-
-  ngOnInit() {
-    this.ps.getUser().subscribe(data => {
-    })
   }
 
   ionViewDidLeave() {
@@ -219,7 +199,6 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.loadMap();
-    console.log(this.connectButRef.nativeElement);
   }
 
 
@@ -296,7 +275,7 @@ export class HomePage implements OnInit {
   }
 
   async presentModal(friendKeycloak) {
-    let friend : User = friendKeycloak;
+    let friend: User = friendKeycloak;
     const modal = await this.modalController.create({
       component: FriendPage,
       componentProps: {
@@ -315,7 +294,7 @@ export class HomePage implements OnInit {
   createMeetupMarker(m: Meeting, mu: MeetupUser) {
     this.ps.findFriendUser(mu.user_id).subscribe(data => {
       var dummy = data;
-      this.ps.getUser().subscribe(data => {
+      this.ps.getUser().add(data => {
         if (this.ps.user.id == dummy.id) {
           this.ps.findFriendUser(m.creator.id).subscribe(data => {
             var meetupuser = data;
@@ -490,7 +469,7 @@ export class HomePage implements OnInit {
     this.meetupService.meetupPreviewBackObserveable.next(r);
   }
 
-  async presentMeetupPopover(ev: any, m : Meeting, u, buttonArray) {
+  async presentMeetupPopover(ev: any, m: Meeting, u, buttonArray) {
 
     /*
 ({
@@ -502,13 +481,13 @@ export class HomePage implements OnInit {
     });
     */
 
-    let t:String[];
-    let time:string;
-    
+    let t: String[];
+    let time: string;
+
 
     t = m.time.toString().split(",");
-    for(var i = 0;i<t.length;i++) {
-      if(t[i].length == 1) {
+    for (var i = 0; i < t.length; i++) {
+      if (t[i].length == 1) {
         t[i] = '0' + t[i];
       }
     }
@@ -516,56 +495,127 @@ export class HomePage implements OnInit {
 
 
 
-   
+
 
     const popover = await this.actionSheetController.create({
       header: 'Meetup',
-      subHeader: time ,
+      subHeader: time,
       buttons: buttonArray
     });
     return await popover.present();
   }
 
-  async meetupTeilnehmerList(ev: any, m : Meeting, u){
-
-  
+  async meetupTeilnehmerList(ev: any, m: Meeting, u) {
 
 
 
-if(u != null){
-    this.cs.getKeyUser(u.custom).subscribe(data => {
-      u.id = data["id"];
-      u.userName = data["username"];
-      u.firstname = data["firstName"];
-      u.lastname = data["lastName"];
-      u.email = data["email"];
-     
 
-      let buttonArray:any[]= [{
+
+    if (u != null) {
+      this.cs.getKeyUser(u.custom).subscribe(data => {
+        u.id = data["id"];
+        u.userName = data["username"];
+        u.firstname = data["firstName"];
+        u.lastname = data["lastName"];
+        u.email = data["email"];
+
+
+        let buttonArray: any[] = [{
+          text: 'OK',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }, {
+          text: u.username,
+          cssClass: "accepted",
+          icon: 'checkmark-circle-sharp',
+          handler: () => {
+            this.presentModal(u);
+          }
+        }];
+        this.meetupService.getMeetupUser(m.id).subscribe(data => {
+          let count = 0;
+          data.forEach((mu, idx, array) => {
+            console.log(mu.user_id)
+            this.ps.findFriendUser(mu.user_id).subscribe(data => {
+              let u = data;
+              this.ps.friendCustomData(mu.user_id).subscribe(custom => {
+                u.custom = custom;
+                console.log(custom)
+
+                this.cs.getKeyUser(u.custom).subscribe(data => {
+                  u.id = data["id"];
+                  u.userName = data["username"];
+                  u.firstname = data["firstName"];
+                  u.lastname = data["lastName"];
+                  u.email = data["email"];
+                  console.log(mu.status)
+                  let iconname;
+                  switch (mu.status) {
+                    case "accepted": {
+                      iconname = "checkmark-circle-sharp";
+                      break;
+                    }
+                    case "declined": {
+                      iconname = "close-circle-sharp";
+                      break;
+                    }
+                    case "pending": {
+                      iconname = "time-sharp";
+                      break;
+                    }
+                  }
+
+                  if (u.id != this.ps.user.id) {
+                    let o = {
+                      text: u.userName,
+                      cssClass: mu.status,
+                      icon: iconname,
+                      handler: () => {
+                        this.presentModal(u);
+                      }
+                    }
+                    buttonArray.push(o);
+                  }
+                  count++;
+                  if (count === array.length) {
+                    this.presentMeetupPopover(ev, m, u, buttonArray);
+                  }
+
+                  console.log(buttonArray)
+                })
+
+              });
+            });
+
+          })
+        });
+      })
+
+    } else {
+
+
+
+      let buttonArray: any[] = [{
         text: 'OK',
         icon: 'close',
         role: 'cancel',
         handler: () => {
           console.log('Cancel clicked');
         }
-      }, {
-        text: u.username,
-        cssClass: "accepted",
-        icon: 'checkmark-circle-sharp',
-        handler: () => {
-         this.presentModal(u);
-        }
       }];
       this.meetupService.getMeetupUser(m.id).subscribe(data => {
-    let count = 0;
-        data.forEach((mu, idx, array) =>{
+        let count = 0;
+        data.forEach((mu, idx, array) => {
           console.log(mu.user_id)
           this.ps.findFriendUser(mu.user_id).subscribe(data => {
             let u = data;
             this.ps.friendCustomData(mu.user_id).subscribe(custom => {
-              u.custom=custom;
+              u.custom = custom;
               console.log(custom)
-  
+
               this.cs.getKeyUser(u.custom).subscribe(data => {
                 u.id = data["id"];
                 u.userName = data["username"];
@@ -574,125 +624,54 @@ if(u != null){
                 u.email = data["email"];
                 console.log(mu.status)
                 let iconname;
-                switch(mu.status) { 
-                  case "accepted": { 
-                     iconname = "checkmark-circle-sharp";
-                     break; 
-                  } 
-                  case "declined": { 
+                switch (mu.status) {
+                  case "accepted": {
+                    iconname = "checkmark-circle-sharp";
+                    break;
+                  }
+                  case "declined": {
                     iconname = "close-circle-sharp";
-                     break; 
-                  } 
-                  case "pending": { 
+                    break;
+                  }
+                  case "pending": {
                     iconname = "time-sharp";
-                     break; 
-                  } 
-               } 
-               
-                if(u.id != this.ps.user.id){
-                let o = {
-                  text: u.userName,
-                  cssClass: mu.status,
-                  icon: iconname,
-                  handler: () => {
-                    this.presentModal(u);
+                    break;
                   }
                 }
-                 buttonArray.push(o);
-              }
-              count++;
-                 if (count === array.length){ 
-                  this.presentMeetupPopover(ev,m,u,buttonArray);
-                 }
-                
-                 console.log(buttonArray)
-              })
-             
-             });
-           });
-        
-        })
-      });
-    })
 
-  }else{
-
-   
-
-    let buttonArray:any[]= [{
-      text: 'OK',
-      icon: 'close',
-      role: 'cancel',
-      handler: () => {
-        console.log('Cancel clicked');
-      }
-    }];
-    this.meetupService.getMeetupUser(m.id).subscribe(data => {
-      let count = 0;
-      data.forEach((mu, idx, array) =>{
-        console.log(mu.user_id)
-        this.ps.findFriendUser(mu.user_id).subscribe(data => {
-          let u = data;
-          this.ps.friendCustomData(mu.user_id).subscribe(custom => {
-            u.custom=custom;
-            console.log(custom)
-
-            this.cs.getKeyUser(u.custom).subscribe(data => {
-              u.id = data["id"];
-              u.userName = data["username"];
-              u.firstname = data["firstName"];
-              u.lastname = data["lastName"];
-              u.email = data["email"];
-              console.log(mu.status)
-              let iconname;
-              switch(mu.status) { 
-                case "accepted": { 
-                   iconname = "checkmark-circle-sharp";
-                   break; 
-                } 
-                case "declined": { 
-                  iconname = "close-circle-sharp";
-                   break; 
-                } 
-                case "pending": { 
-                  iconname = "time-sharp";
-                   break; 
-                } 
-             } 
-
-              if(u.id != this.ps.user.id){
-              let o = {
-                text: u.userName,
-                cssClass: mu.status,
-                icon: iconname,
-                handler: () => {
-                  this.presentModal(u);
+                if (u.id != this.ps.user.id) {
+                  let o = {
+                    text: u.userName,
+                    cssClass: mu.status,
+                    icon: iconname,
+                    handler: () => {
+                      this.presentModal(u);
+                    }
+                  }
+                  buttonArray.push(o);
                 }
-              }
-               buttonArray.push(o);
-            }
-            
-              count++;
-              console.log(count)
-            console.log(array.length)
-               if (count === array.length){ 
-                this.presentMeetupPopover(ev,m,u,buttonArray);
-               }
-              
-               console.log(buttonArray)
-            })
-           
-           });
-         });
-      
-      })
-    
-  })
 
-  }
-   
-    
-    
+                count++;
+                console.log(count)
+                console.log(array.length)
+                if (count === array.length) {
+                  this.presentMeetupPopover(ev, m, u, buttonArray);
+                }
+
+                console.log(buttonArray)
+              })
+
+            });
+          });
+
+        })
+
+      })
+
+    }
+
+
+
   }
 
 
@@ -871,9 +850,6 @@ if(u != null){
     //show LoadingScreen BITTE NICHT ENTFERNEN! danke
     //this.presentLoading();
 
-
-    console.log(this.geolocation);
-
     // This code is necessary for browser
     /*
     Environment.setEnv({
@@ -913,9 +889,8 @@ if(u != null){
       const location = new google.maps.LatLng(this.ps.user.custom.position.lat, this.ps.user.custom.position.lng);
 
 
-      this.ps.getUser().subscribe(data => {
+      this.ps.getUser().add(() => {
 
-        this.ps.user.custom = data;
         this.ps.user.custom.position = new Position(resp.coords.longitude, resp.coords.latitude);
         this.ps.updateUser(this.ps.user.custom).subscribe(data => {
 
@@ -991,8 +966,7 @@ if(u != null){
         }, {
           text: 'Okay',
           handler: () => {
-            this.ps.getUser().subscribe(data => {
-              this.ps.user.custom = data;
+            this.ps.getUser().add(() => {
               console.log('Confirm Okay');
               console.log(this.ps.user.custom.tutorialStage + "sdlflsajlf")
               if (this.ps.user.custom.tutorialStage == 0) {
@@ -1022,19 +996,12 @@ if(u != null){
   }
 
   showTutorial() {
-    this.ps.getUser().subscribe(
-      data => {
-        console.log(data);
-        this.ps.user.custom = data;
-        console.log("westrzutqjhkgizfutetdzuz");
-        console.log(this.ps.user);
-
+    this.ps.getUser().add(
+      () => {
 
         if (this.ps.user.custom.tutorialStage == 0) {
           this.presentAlertConfirm();
         }
-
-
 
         if (this.ps.user.custom.tutorialStage == 6) {
           Showcaser.showcase("Aktiviere oben rechts den Skin!", null, {
@@ -1052,7 +1019,7 @@ if(u != null){
 
           });
         }
-        if (this.ps.user.custom.id == this.keyCloakService.getKeycloakInstance().subject && this.ps.user.custom.tutorialStage == 7) {
+        if (this.ps.user.custom.id == this.keyCloakService.userid && this.ps.user.custom.tutorialStage == 7) {
           Showcaser.showcase("Drück auf den Connect Button um dich zu connecten", this.connectButRef.nativeElement, {
             shape: "circle",
             buttonText: "Ok!",
@@ -1067,9 +1034,6 @@ if(u != null){
             }
           });
         }
-      },
-      error1 => {
-        console.log('Error');
       }
     )
 
@@ -1108,7 +1072,6 @@ if(u != null){
         }
       ]
 
-    console.log(this.navigate);
   }
 
 
@@ -1221,7 +1184,6 @@ class ClickEventHandler {
     this.infowindowContent.append(this.eb);
     this.infowindowContent.append(this.e3);
     */
-    console.log(this.infowindowContent);
     this.infowindow.setContent(this.infowindowContent);
 
     // Listen for clicks on the map.

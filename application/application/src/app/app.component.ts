@@ -6,7 +6,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
 import { LoginPage } from './pages/login/login.page';
 import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
 import { KeycloakProfile } from 'keycloak-js';
 import { ProfileService } from './api/profile.service';
 import { HomePage } from './pages/home/home.page';
@@ -14,6 +13,10 @@ import { MeetupService } from './api/meetup.service';
 import { ChatService } from './api/chat.service';
 import { Location } from '@angular/common';
 import { ContactlistService } from './api/contactlist.service';
+import { KeycloakService } from './api/auth/keycloak.service';
+import { switchMap } from 'rxjs/operators';
+
+import jwt_decode from 'jwt-decode';
 
 @Component({
   selector: 'app-root',
@@ -22,9 +25,6 @@ import { ContactlistService } from './api/contactlist.service';
 })
 export class AppComponent implements OnInit {
 
-  private loginPage = false;
-  public isLoggedIn = false;
-  public userProfile: KeycloakProfile | null = null;
   websocket: WebSocket;
   wsUri;
   getMessage;
@@ -78,22 +78,39 @@ export class AppComponent implements OnInit {
 
 
   //Login bei Seiten-laden
-  public async ngOnInit() {
+  public ngOnInit() {
+    console.log("CHECK")
     //überprüfen, ob eingeloggt
-    this.isLoggedIn = await this.keycloak.isLoggedIn();
+    if (!this.keycloak.isLoggedIn()) {
+      this.keycloak.refresh().subscribe(token => {
+        this.keycloak.authenticated = true;
 
-    //wenn eingeloggt, dann Nutzerprofil laden
-    if (this.isLoggedIn) {
-      this.userProfile = await this.keycloak.loadUserProfile();
-      console.log(this.userProfile)
-      this.ps.getUser().subscribe(data => {
-        console.log(this.ps)
-        console.log(this.ps.user)
-        this.ps.user.custom = data;
-        this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
-        this.doConnect();
+        try {
+          let tokenInfo = jwt_decode(token["access_token"])
+
+          this.keycloak.userid = tokenInfo["sub"];
+          this.keycloak.setSession(token);
+        }
+        catch (err) {
+          console.error(err)
+        }
+        
+        this.makeWebsocket()
       })
+    } else {
+      this.makeWebsocket()
+    }
+  }
 
+  makeWebsocket() {
+    if (this.keycloak.userid) {
+      this.ps.getUser().add(() => {
+        if (this.ps.user) {
+          this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
+          console.log(this.wsUri)
+          this.doConnect();
+        }
+      })
     }
   }
 

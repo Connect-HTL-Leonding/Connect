@@ -20,7 +20,7 @@
     }
     
     #body {
-        padding-top: 80px;
+        padding: 80px 20px 0;
         border-radius: 100px 0 0 0;
         height: 75%;
         display: flex;
@@ -28,14 +28,8 @@
         align-items: center;
         background: var(--ion-card-background, #fff);
 
-        #text {
-            width: 80%;
-        }
-
-        #dev {
-            position: absolute;
-            bottom: 100px;
-
+        #container {
+            
         }
     }
 }

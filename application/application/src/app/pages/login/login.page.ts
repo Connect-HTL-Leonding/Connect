@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
-import { KeycloakService } from 'keycloak-angular';
 import { Observable } from 'rxjs';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
+import { api, AppComponent } from 'src/app/app.component';
+import { HomePage } from '../home/home.page';
 import { DevinfosPage } from './devinfos/devinfos.page';
 
 @Component({
@@ -13,31 +16,33 @@ import { DevinfosPage } from './devinfos/devinfos.page';
 })
 export class LoginPage {
 
-  http: HttpClient;
+  username: String;
+  password: String;
 
-
-  isAuthenticated: Observable<boolean>;
-  isDoneLoading: Observable<boolean>;
-  canActivateProtectedRoutes: Observable<boolean>;
-
-  constructor(http: HttpClient, public keyCloakService: KeycloakService, public modalController: ModalController) {
-    this.http = http;
+  constructor(public http: HttpClient,
+    public keycloak: KeycloakService,
+    public modalController: ModalController,
+    public router: Router,
+    public app: AppComponent) {
   }
 
-  login() { this.keyCloakService.login(); }
-  logout() { this.keyCloakService.logout(); }
-  refresh() { this.keyCloakService.updateToken(); }
-  reload() { window.location.reload(); }
-  clearStorage() { localStorage.clear(); }
+  login() {
+    if (this.username && this.password) {
+      console.log("LOGIN VERSUCH")
+      this.keycloak.login(this.username, this.password).add(() => {
+        this.username = "";
+        this.password = "";
+        this.http.get<any>(api.url + 'user/login').subscribe(data => {
+          console.log("LOGIN: " + data);
+          this.router.navigate(["home"]).then(() => {
+            window.location.reload();
+          });
+          this.app.ngOnInit();
+        })
+      });
 
-  logoutExternally() {
-    //window.open(this.keyCloakService.getKeycloakInstance());
+    }
   }
-
-  get accessToken() { return this.keyCloakService.getToken(); }
-  //get idToken() { return this.keyCloakService.getKeycloakInstance().idToken; }
-
-
 
 
   //info modal
