@@ -23,6 +23,7 @@ export class FriendshipService {
   public friendships: Array<Friendship>;
   userService: ProfileService;
   public user : User;
+  public blockedFriendships: Array<Friendship>
 
 
   //Konstruktor
@@ -39,6 +40,10 @@ export class FriendshipService {
 
   getBefriendedUsers(u: User){
     return this.http.get<Friendship[]>(api.url + 'friendship/findFriendshipsOfUser/' + u.id)
+  }
+
+  getBlockedUsers(u: User){
+    return this.http.get<Friendship[]>(api.url + 'friendship/findBlocked/' + u.id)
   }
 
   createFriendship(f:Friendship) {
@@ -58,7 +63,6 @@ export class FriendshipService {
   //Freundschaft blockieren
   blockFriendship(friend : CustomUser) {
     return this.http.post(api.url + 'friendship/block', friend);
-
   }
 
 }

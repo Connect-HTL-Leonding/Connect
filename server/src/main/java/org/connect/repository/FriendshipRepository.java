@@ -238,6 +238,12 @@ public class FriendshipRepository {
                 .getResultList();
     }
 
+    public List<Friendship> findBlocked(User u) {
+        // sql not done, setParamter of user is missing
+        return this.em.createNamedQuery(Friendship.FINDBLOCKED,Friendship.class)
+                .getResultList();
+    }
+
     public Friendship find(long id) {
         return em.find(Friendship.class, id);
     }
