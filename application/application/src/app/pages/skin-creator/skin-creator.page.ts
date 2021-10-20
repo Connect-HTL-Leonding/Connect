@@ -12,4 +12,10 @@ export class SkinCreatorPage implements OnInit {
   ngOnInit() {
   }
 
+
+  onFileChange(event){
+    const photo = event.target.files[0];
+    console.log(photo)
+    
+  }
 }
