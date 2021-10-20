@@ -7,10 +7,10 @@ import { ChatService } from '../../api/chat.service'
 import { Message } from 'src/app/model/message';
 import { DetailContactlistComponent } from '../contactlist/detail-contactlist/detail-contactlist.component';
 import { ProfileService } from 'src/app/api/profile.service';
-import { KeycloakService } from 'keycloak-angular';
 import { api } from 'src/app/app.component';
 import { MeetupService } from 'src/app/api/meetup.service';
 import {MeetUpManagerPage} from '../meet-up-manager/meet-up-manager.page';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 
 @Component({
   selector: 'app-contactlist',
@@ -29,7 +29,7 @@ export class ContactlistPage implements OnInit {
 
 
   constructor(cs: ContactlistService, public modalController: ModalController, chatService: ChatService,
-    public profileservice: ProfileService, public keyCloakService: KeycloakService, public meetupService: MeetupService) {
+    public profileservice: ProfileService, public meetupService: MeetupService) {
     this.contactService = cs;
     this.chatService = chatService;
 
@@ -57,8 +57,7 @@ export class ContactlistPage implements OnInit {
   }
 
   ngOnInit() {
-    this.profileservice.getUser().subscribe(data => {
-      this.profileservice.user.custom = data;
+    this.profileservice.getUser().add(() => {
       this.contactService.activeUser = this.profileservice.user;
     });
 

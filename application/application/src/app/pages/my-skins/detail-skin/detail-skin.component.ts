@@ -24,16 +24,11 @@ export class DetailSkinComponent implements OnInit {
   constructor(public router: Router, public ps: ProfileService, public alertController: AlertController) { }
 
   ngOnInit() {
-    this.ps.getUser().subscribe(
-      data => {
-        console.log(data);
-        this.ps.user.custom = data;
+    this.ps.getUser().add(
+      () => {
         console.log("westrzutqjhkgizfutetdzuz")
         console.log(this.ps.user)
         this.showTutorial();
-      },
-      error1 => {
-        console.log('Error');
       }
     )
   }
