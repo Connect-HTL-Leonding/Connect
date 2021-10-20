@@ -19,9 +19,5 @@
     <param name="onload" value="true"/>
   </feature>
 
-  <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
-   <string>We use your location for full functionality of certain app features.</string>
-</edit-config>
-
   
 </widget>

@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { MySkin } from '../model/myskin';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
-import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +22,7 @@ export class SkinsService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, cs: CategoryService, private keyCloakService: KeycloakService) {
+  constructor(http: HttpClient, cs: CategoryService) {
     this.http = http;
     this.skins = [];
     this.categoryService = cs;

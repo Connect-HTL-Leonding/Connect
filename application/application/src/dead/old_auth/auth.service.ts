@@ -176,7 +176,7 @@ export class AuthService {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
           });
-          this.http.get<any>(api.short + 'user/login', { headers: reqHeader }).subscribe(data => {
+          this.http.get<any>(api.url + 'user/login', { headers: reqHeader }).subscribe(data => {
             console.log(data);
           })
         }
