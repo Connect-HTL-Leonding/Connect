@@ -27,7 +27,11 @@
   </ion-item>
 
   
-  <input type="file" (change)="onFileChange($event)" />
+  <ion-item>
+    <ion-label position="stacked" class="input-label" color="primary">Skin image</ion-label>
+    <ion-button (click)="addImage()"  wrap="soft">Add Image</ion-button>
+    <img *ngIf="this.image" src="data:image/png;base64,{{this.image}}">
+  </ion-item>
   
 
 

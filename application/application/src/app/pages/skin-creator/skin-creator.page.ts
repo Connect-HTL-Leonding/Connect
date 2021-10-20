@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Camera, CameraResultType } from '@capacitor/core';
 
 @Component({
   selector: 'app-skin-creator',
@@ -7,15 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SkinCreatorPage implements OnInit {
 
+  public image;
   constructor() { }
 
   ngOnInit() {
   }
 
 
-  onFileChange(event){
-    const photo = event.target.files[0];
-    console.log(photo)
-    
+  async addImage(){
+    try {
+      const capturedPhoto = await Camera.getPhoto({
+        resultType: CameraResultType.Base64,
+        quality: 100,
+        allowEditing: true
+      })
+      this.image = capturedPhoto.base64String;
+    } catch (e) {
+      }
   }
 }
