@@ -24,15 +24,17 @@ UserRepository {
     @Transactional
     public User create(JsonWebToken jwt) {
         //em.find(User.class, user)
+        System.out.println(jwt + " this is my token");
+        System.out.println(jwt.claim("sub").toString());
 
         TypedQuery<User> tq = this.em.createNamedQuery(User.FINDWITHID, User.class);
-        tq.setParameter("user_id", jwt.claim("sub").get().toString());
+        tq.setParameter("user_id",jwt.claim("sub").get().toString());
         User u = null;
         try {
             u = tq.getSingleResult();
-            System.out.println(u);
+            //System.out.println(u);
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getMessage() + "help2");
         }
 
         if(u == null){

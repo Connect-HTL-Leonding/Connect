@@ -20,8 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","rooms"})
 @NamedQueries({
-        @NamedQuery(name = User.FINDWITHID, query = "SELECT u FROM User u where id = :user_id"),
-        @NamedQuery(name = User.FINDOTHERUSER, query = "SELECT u FROM User u join u.rooms where room_id = :roomid AND u.id NOT LIKE :user_id")
+        @NamedQuery(name = User.FINDWITHID, query = "SELECT u FROM User u where u.id = :user_id"),
+        @NamedQuery(name = User.FINDOTHERUSER, query = "SELECT u FROM User u join u.rooms r where r.id = :roomid AND u.id NOT LIKE :user_id")
 })
 public class User implements Serializable {
 
@@ -78,7 +78,7 @@ public class User implements Serializable {
     public User(JsonWebToken token) {
         this.id = token.claim("sub").get().toString();
         //this.userName = token.getName();
-        System.out.println(token.claim("name").get().toString());
+       // System.out.println(token.claim("name").get().toString());
         //this.firstname = token.claim("given_name").get().toString();
         //this.lastname = token.claim("family_name").get().toString();
         //this.email = token.claim("email").get().toString();
