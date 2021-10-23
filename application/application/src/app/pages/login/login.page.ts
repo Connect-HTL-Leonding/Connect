@@ -37,7 +37,7 @@ export class LoginPage {
           this.router.navigate(["home"]).then(() => {
             window.location.reload();
           });
-          this.app.ngOnInit();
+          //this.app.ngOnInit();
         })
       });
 
