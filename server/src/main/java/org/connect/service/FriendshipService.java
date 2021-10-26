@@ -77,8 +77,7 @@ public class FriendshipService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Friendship> findBlocked(@PathParam("id") String id) {
-        User user = userRepo.findUser(id);
-        return dbRepo.findBlocked(user);
+        return dbRepo.findBlocked(id);
     }
 
 

@@ -8,5 +8,12 @@
 </ion-header>
 
 <ion-content>
-  <div></div>
+  <ion-list>
+    <ion-item *ngFor="let u of this.userList">
+     {{u.username}}
+    </ion-item>
+  </ion-list>
+  <div class="empty" *ngIf="this.userList.length < 1">
+    <h3>Du hast noch niemanden blockiert.</h3>
+  </div>
 </ion-content>
