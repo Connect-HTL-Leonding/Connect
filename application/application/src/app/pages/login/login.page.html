@@ -12,22 +12,24 @@
     </div>
     <div id="body">
 
-
-      <h2>Willkommen</h2>
-      <p id="text">Logge dich ein oder regestriere dich, um Teil von etwas großem zu werden!</p>
-
       <div id="container">
-        <ion-item>
-          <ion-label position="stacked">Benutzername</ion-label>
-          <ion-input clearInput [(ngModel)]="username"></ion-input>
+        <ion-item lines="full">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <!--<ion-label position="stacked">Username</ion-label>-->
+          <ion-input clearInput [(ngModel)]="username" placeholder="max_mustermann"></ion-input>
         </ion-item>
-        <ion-item>
-          <ion-label position="stacked">Passwort</ion-label>
-          <ion-input clearInput type="password" [(ngModel)]="password"></ion-input>
+        <ion-item lines="full">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <!--<ion-label position="stacked">Password</ion-label>-->
+          <ion-input clearInput type="password" [(ngModel)]="password" placeholder="*********"></ion-input>
         </ion-item>
+
+        <ion-button shape="round" color="primary" expand="block" (click)="login()">Login</ion-button>
+
+        <p id="regis_text">Don't have an account? <b>Sign up</b></p>
       </div>
 
-      <ion-button shape="round" color="primary" expand="block" (click)="login()">Starte dein Abenteuer</ion-button>
+      <p><small>&copy; Copyright 2021, Connect GmbH</small></p>
 
     </div>
   </div>
