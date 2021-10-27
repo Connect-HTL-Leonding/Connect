@@ -11,25 +11,20 @@ export class AppAuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
 
-      //wenn nicht eingeloggt --> einlogg versuch
-      if (!this.keycloakService.authenticated) {
+      //überprüfung ob eingeloggt
+      if (!this.keycloakService.isLoggedIn()) {
         console.log(this.keycloakService.authenticated)
 
-        this.router.navigate(["login"]);
-        /*
-        this.keycloakService.refresh().add(()=>{
-          console.log("SECOND")
+        //falls nicht eingeloggt --> token refresh versuch
+        this.keycloakService.refresh().subscribe(() => {
+          this.router.navigate(["home"])
           resolve(true)
         });
-        */
-        /*
-        if (!granted) {
-          console.log("sjklfdkj")
-          this.router.navigate(['/']);
-        }
-        */
-        //return;
-      }else {
+
+        //token refresh nicht möglich --> login page
+        this.router.navigate(["login"]);
+
+      } else {
         resolve(true);
       }
 

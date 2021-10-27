@@ -20,9 +20,8 @@
   <ion-router-outlet id="content1"></ion-router-outlet>
 -->
 
-  <ion-tabs >
-    <!-- this.keycloakService.authenticated-->
-    <ion-tab-bar slot="bottom">
+  <ion-tabs>
+    <ion-tab-bar *ngIf="this.keycloak.isLoggedIn()" slot="bottom">
   
       <ion-tab-button tab="profile" id="profile_button" #profile_button>
         <ion-icon name="cog" id="cog"></ion-icon>
