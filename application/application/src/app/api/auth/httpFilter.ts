@@ -15,7 +15,7 @@ export class HttpFilter implements HttpInterceptor {
 
         //nicht bei login oder token refresh
         if (!request.url.includes('/auth/realms/connect/protocol/openid-connect/token')) {
-            const token =  localStorage.getItem('access_token');
+            const token = localStorage.getItem('access_token');
             if (token) {
                 request = request.clone({
                     setHeaders: {Authorization: 'Bearer ' + token}

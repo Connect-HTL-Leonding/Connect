@@ -88,6 +88,8 @@ export class KeycloakService {
     localStorage.setItem('access_token', authResult.access_token);
     localStorage.setItem('refresh_token', authResult.refresh_token);
     localStorage.setItem("expires_in", JSON.stringify(expires_in.valueOf()));
+
+    console.log(localStorage.getItem('refresh_token') + "HALLO")
   }
 
   logout() {
@@ -95,7 +97,9 @@ export class KeycloakService {
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("expires_in");
     this.authenticated = false;
-    this.router.navigate(["login"]);
+    this.router.navigate(["login"]).then(() => {
+      window.location.reload();
+    });
 
   }
 

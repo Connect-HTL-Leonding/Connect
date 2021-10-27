@@ -199,6 +199,7 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.loadMap();
+    console.log("LOADDDD")
   }
 
 
@@ -846,7 +847,7 @@ export class HomePage implements OnInit {
 
 
   //Map loading Funktion
-  async loadMap() {
+  loadMap() {
     //show LoadingScreen BITTE NICHT ENTFERNEN! danke
     //this.presentLoading();
 

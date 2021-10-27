@@ -35,7 +35,8 @@ export class LoginPage {
         this.http.get<any>(api.url + 'user/login').subscribe(data => {
           console.log("LOGIN: " + data);
           this.router.navigate(["home"]).then(() => {
-            window.location.reload();
+            //window.location.reload();
+            this.app.ngOnInit();
           });
           //this.app.ngOnInit();
         })

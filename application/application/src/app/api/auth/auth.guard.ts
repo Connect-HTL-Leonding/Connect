@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { KeycloakService } from './keycloak.service';
 
+import jwt_decode from 'jwt-decode';
+
 @Injectable()
 export class AppAuthGuard implements CanActivate {
   constructor(protected router: Router, public keycloakService: KeycloakService) {
@@ -16,13 +18,27 @@ export class AppAuthGuard implements CanActivate {
         console.log(this.keycloakService.authenticated)
 
         //falls nicht eingeloggt --> token refresh versuch
-        this.keycloakService.refresh().subscribe(() => {
+        this.keycloakService.refresh().subscribe(token => {
           this.router.navigate(["home"])
+          this.keycloakService.authenticated = true;
+
+          try {
+            let tokenInfo = jwt_decode(token["access_token"])
+
+            this.keycloakService.userid = tokenInfo["sub"];
+            this.keycloakService.setSession(token);
+          }
+          catch (err) {
+            console.error(err)
+          }
           resolve(true)
+        }, error => {
+          console.log("ERROR" + error.message)
+          this.router.navigate(["login"]);
         });
 
         //token refresh nicht möglich --> login page
-        this.router.navigate(["login"]);
+        //this.router.navigate(["login"]);
 
       } else {
         resolve(true);
