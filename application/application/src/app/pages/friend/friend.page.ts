@@ -7,7 +7,6 @@ import Showcaser from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 
-import { KeycloakService } from 'keycloak-angular';
 import { PhotogalleryPage } from '../profile/photogallery/photogallery.page';
 import { FriendshipService } from 'src/app/api/friendship.service';
 
@@ -32,7 +31,6 @@ export class FriendPage implements OnInit {
   constructor(public router: Router,
     public ts: TutorialService,
     public ps: ProfileService,
-    private keyCloakService: KeycloakService,
     public modalController: ModalController,
     public photoService: PhotoService,
     public alertController: AlertController,

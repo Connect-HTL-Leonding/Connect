@@ -1,6 +1,7 @@
 package org.connect.repository;
 
 import org.connect.model.chat.Room;
+import org.connect.model.meetup.Meeting;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.model.user.Friendship;
@@ -236,6 +237,15 @@ public class FriendshipRepository {
         return this.em
                 .createNamedQuery(Friendship.FINDALL, Friendship.class)
                 .getResultList();
+    }
+
+    public List<Friendship> findBlocked(String id) {
+        // sql not done, setParamter of user is missing
+        List<Friendship> list;
+        TypedQuery<Friendship> query = em.createNamedQuery(Friendship.FINDBLOCKED, Friendship.class);
+        query.setParameter("user_id", id);
+        list = query.getResultList();
+        return list;
     }
 
     public Friendship find(long id) {

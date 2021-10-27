@@ -4,7 +4,6 @@ import { ProfileService } from "../../../api/profile.service";
 import { PhotoService } from "../../../api/photo.service";
 import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from '../photogallery/photogallery.page';
-import { KeycloakService } from 'keycloak-angular';
 //import { Camera } from '@ionic-native/camera';
 //import { CameraOptions } from '@ionic-native/camera';
 
@@ -21,7 +20,7 @@ export class EditProfilePage implements OnInit {
 
   noImgs: boolean;
 
-  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService, public keycloakService: KeycloakService) { }
+  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService) { }
 
 
 
@@ -54,11 +53,9 @@ export class EditProfilePage implements OnInit {
 
     this.changes = true;
 
-    this.ps.getUser().subscribe(
-      data => {
+    this.ps.getUser().add(
+      () => {
 
-        console.log(data);
-        this.ps.user.custom = data;
 
 
 
@@ -71,9 +68,6 @@ export class EditProfilePage implements OnInit {
 
 
         //console.log(this.skinService);
-      },
-      error1 => {
-        console.log('Error');
       }
     )
   }

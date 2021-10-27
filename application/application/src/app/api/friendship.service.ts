@@ -10,7 +10,6 @@ import { api } from '../app.component';
 import { ProfileService } from './profile.service';
 import { Friendship } from '../model/friendship';
 import { CustomUser, User } from '../model/user';
-import { KeycloakService } from 'keycloak-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +20,13 @@ export class FriendshipService {
 
  
   public friendships: Array<Friendship>;
-  userService: ProfileService;
   public user : User;
+  public blockedFriendships: Array<Friendship>
 
 
   //Konstruktor
-  constructor(http: HttpClient, us: ProfileService, private keyCloakService: KeycloakService) {
-    this.http = http;
-    this.userService = us;
-  
+  constructor(http: HttpClient) {
+    this.http = http;  
   }
 
   //getAll
@@ -52,13 +49,15 @@ export class FriendshipService {
   //update
   updateFriendship(f: Friendship) {
     return this.http.put(api.url + 'friendship/update', f);
-
   }
 
   //Freundschaft blockieren
   blockFriendship(friend : CustomUser) {
     return this.http.post(api.url + 'friendship/block', friend);
+  }
 
+  getBlockedUser(id) {
+    return this.http.get<Friendship[]>(api.url + 'friendship/findBlocked/' + id);
   }
 
 }

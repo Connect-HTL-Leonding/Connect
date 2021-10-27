@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { KeycloakService } from 'keycloak-angular';
+import { EMPTY } from 'rxjs';
 import { api } from '../app.component';
 import { CustomUser, User } from "../model/user";
+import { KeycloakService } from './auth/keycloak.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,22 +17,26 @@ export class ProfileService {
   friendUser: boolean = false
 
   //Konstruktor
-  constructor(http: HttpClient, private keyCloakService: KeycloakService) {
+  constructor(http: HttpClient, private keycloak: KeycloakService) {
     this.http = http
   }
 
-  //get aktuellen User
   getUser() {
     //Get Userinfo über aktuellen Nutzer (live)
-    this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject).subscribe(data => {
-      this.user.id = data["id"];
-      this.user.userName = data["username"];
-      this.user.firstname = data["firstName"];
-      this.user.lastname = data["lastName"];
-      this.user.email = data["email"];
-    });
-    return this.http.get<CustomUser>(api.url + 'user/customData');
-
+    if (this.keycloak.userid) {
+      this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid).subscribe(data => {
+        this.user.id = data["id"];
+        this.user.userName = data["username"];
+        this.user.firstname = data["firstName"];
+        this.user.lastname = data["lastName"];
+        this.user.email = data["email"];
+      });
+      return this.http.get<CustomUser>(api.url + 'user/customData').subscribe(data => {
+        this.user.custom = data;
+      }, error => {
+        console.log(error)
+      });
+    }
   }
 
   findFriendUser(id) {
@@ -45,7 +50,6 @@ export class ProfileService {
 
   //update aktuellen User
   updateUser(u: CustomUser) {
-    console.log(u);
     return this.http.put<CustomUser>(api.url + 'user/update', u);
   }
 
@@ -57,16 +61,16 @@ export class ProfileService {
   //nicht mehr funktionsfähig ):
   updatePassword(password) {
     var body = JSON.stringify(password)
-    
-    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keyCloakService.getKeycloakInstance().subject + '/reset-password', password);
+
+    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid + '/reset-password', password);
   }
   updateUserTutorial(u: CustomUser) {
     return this.http.put(api.url + 'user/updateTutorial', u);
   }
-  skipTutorial(u: CustomUser){
+  skipTutorial(u: CustomUser) {
     return this.http.put(api.url + 'user/skipTutorial', u);
   }
-  startTutorial(u: CustomUser){
+  startTutorial(u: CustomUser) {
     return this.http.put(api.url + 'user/startTutorial', u);
   }
 }

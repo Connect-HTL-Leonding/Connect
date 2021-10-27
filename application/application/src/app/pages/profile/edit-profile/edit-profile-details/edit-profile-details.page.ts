@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { KeycloakService } from 'keycloak-angular';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { ProfileService } from '../../../../api/profile.service';
 import { User } from '../../../../model/user';
 
@@ -43,14 +43,9 @@ export class EditProfileDetailsPage implements OnInit {
   //init
   ngOnInit() {
     //getCurrentUser
-    this.ps.getUser().subscribe(
-      data => {
-        //console.log(data);
-        this.ps.user.custom = data;
+    this.ps.getUser().add(
+      () => {
         console.log(this.ps.user)
-      },
-      error => {
-        console.log('HTTP Error', error);
       }
     )
   }

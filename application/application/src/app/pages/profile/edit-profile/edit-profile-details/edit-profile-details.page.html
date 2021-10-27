@@ -66,7 +66,18 @@
       <ion-toggle [(ngModel)]="connects"></ion-toggle>
     </ion-item>
 
-    <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Save</ion-button>
+    <ion-list-header class="header">
+      Privatsphäre
+    </ion-list-header>
+    <ion-item>
+      <div class="blocked" routerLink="blocked-list">
+        <ion-label slot="start">Blockierte User</ion-label>
+      </div>
+    </ion-item>
+
+
+
+    <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Speichern</ion-button>
     <!-- 
     <ion-item-divider>
       <ion-label>Passwort</ion-label>

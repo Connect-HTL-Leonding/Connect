@@ -7,7 +7,11 @@ const routes: Routes = [
   {
     path: '',
     component: EditProfileDetailsPage
+  },  {
+    path: 'blocked-list',
+    loadChildren: () => import('./blocked-list/blocked-list.module').then( m => m.BlockedListPageModule)
   }
+
 ];
 
 @NgModule({

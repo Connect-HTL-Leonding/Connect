@@ -8,7 +8,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Room } from '../../model/room';
 import { Message } from '../../model/message';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { KeycloakService } from 'keycloak-angular';
 import { api } from 'src/app/app.component';
 import { PopoverController } from '@ionic/angular';
 import { MeetupDataPage } from '../meetup-data/meetup-data.page';
@@ -20,6 +19,8 @@ import { Subject } from 'rxjs';
 import { ProfileService } from 'src/app/api/profile.service';
 import { ProfilePage } from '../profile/profile.page';
 import { FriendPage } from '../friend/friend.page';
+import { KeycloakService } from 'src/app/api/auth/keycloak.service';
+import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
 
 
 declare var google: any;
@@ -135,9 +136,11 @@ export class ChatPage implements OnInit {
   }
 
   profileFriend(friend: User) {
-    this.ps.findFriendUser(friend.id).subscribe(data => {
+    this.ps.findFriendUser(friend.id)
+    .subscribe(data => {
       console.log(data + "oh no");
       this.presentFriend(data);
+
     });
   }
 
@@ -157,7 +160,7 @@ export class ChatPage implements OnInit {
   }
 
   yousent(message: Message): boolean {
-    return message.user.id == this.keycloakService.getKeycloakInstance().subject;
+    return message.user.id == this.keycloakService.userid;
   }
 
   imageIsNotNull(message: Message): boolean {
@@ -303,11 +306,12 @@ export class ChatPage implements OnInit {
       this.m.image = "";
       this.showNewMsgLine = false;
 
-      this.chatservice.createMessage(this.m).subscribe(data => {
-        this.contactlist.contactlistObservable.next("contactListUpdate");
-        this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
-        this.sendText = "";
-      });
+      this.chatservice.createMessage(this.m)
+        .subscribe(data => {
+          this.contactlist.contactlistObservable.next("contactListUpdate");
+          this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
+          this.sendText = "";
+        });
     }
   }
 

@@ -6,9 +6,8 @@ import { CustomUser, User } from '../model/user';
 import { api } from '../app.component';
 import { Message } from '../model/message';
 import { ProfileService } from './profile.service';
-import { ThrowStmt } from '@angular/compiler';
-import { KeycloakService } from 'keycloak-angular';
 import { Subject } from 'rxjs';
+import { KeycloakService } from './auth/keycloak.service';
 
 
 @Injectable({

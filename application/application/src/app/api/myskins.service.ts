@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { KeycloakService } from 'keycloak-angular';
 import { Observable, Subject } from 'rxjs';
 import { api } from '../app.component';
 import { MySkin } from '../model/myskin';
@@ -24,10 +23,9 @@ export class MyskinsService {
 
 
   //Konstruktor
-  constructor(http: HttpClient, private keyCloakService: KeycloakService) {
+  constructor(http: HttpClient) {
     this.http = http;
     this.myskins = [];
-    console.log("kljfdfkjsfjkald")
   }
 
   //ausgewählter Skin ändern - dynamisch

@@ -11,29 +11,35 @@
       <ion-img id="logo" src="../assets/connect_img/logo/Connect_white.png"></ion-img>
     </div>
     <div id="body">
-  
 
+<<<<<<< HEAD
       <h2>Welcome</h2>
       <p *ngIf="" id="text">Log in or register and be part of something greater!</p>
       <ion-button *ngIf="" shape="round" color="primary" expand="block" (click)="login()">Start your adventure</ion-button>
 
       <p *ngIf="this.isAuthenticated | async" id="text">Start with a short tutorial to get to know everything!</p>
       <ion-button *ngIf="this.isAuthenticated | async" shape="round" color="primary" expand="block">Start tutorial</ion-button>
+=======
+      <div id="container">
+        <ion-item lines="full">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <!--<ion-label position="stacked">Username</ion-label>-->
+          <ion-input clearInput [(ngModel)]="username" placeholder="max_mustermann"></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <!--<ion-label position="stacked">Password</ion-label>-->
+          <ion-input clearInput type="password" [(ngModel)]="password" placeholder="*********"></ion-input>
+        </ion-item>
 
-      <hr>
-      <div id="dev">
-        <div class="authenticating-loader" *ngIf="!(isDoneLoading | async)">
-          <div>Authenticating...</div>
-        </div>
-        <button (click)="presentModal()">Dev Infos</button>
-        <p>
-          <button class="btn btn-success mr-1" (click)='login()'>login</button>
-          <button class="btn btn-primary mr-1" (click)='logout()'>logout</button>
-          <button class="btn btn-link mr-1" (click)='logoutExternally()'>logout externally...</button>
-        </p>
+        <ion-button shape="round" color="primary" expand="block" (click)="login()">Login</ion-button>
+>>>>>>> 83d4d275d73220e8a86d6f024109d4226506cbf1
+
+        <p id="regis_text">Don't have an account? <b>Sign up</b></p>
       </div>
 
-  
+      <p><small>&copy; Copyright 2021, Connect GmbH</small></p>
+
     </div>
   </div>
 

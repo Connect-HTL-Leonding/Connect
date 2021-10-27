@@ -76,16 +76,11 @@ export class SkinselectionPage implements OnInit {
         console.log('Error');
       }
     )
-    this.ps.getUser().subscribe(
-      data => {
-        console.log(data);
-        this.ps.user.custom = data;
+    this.ps.getUser().add(
+      () => {
         console.log("westrzutqjhkgizfutetdzuz")
         console.log(this.ps.user)
         this.showTutorial();
-      },
-      error1 => {
-        console.log('Error');
       }
     )
   }

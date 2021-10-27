@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Blockierte User</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="edit-profile-details"></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let u of this.userList">
+     {{u.username}}
+    </ion-item>
+  </ion-list>
+  <div class="empty" *ngIf="this.userList.length < 1">
+    <h3>Du hast noch niemanden blockiert.</h3>
+  </div>
+</ion-content>
