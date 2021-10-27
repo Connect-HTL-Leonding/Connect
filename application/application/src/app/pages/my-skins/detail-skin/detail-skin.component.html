@@ -19,7 +19,7 @@
 
     <div id="ranges">
       <div class="range_container">
-        <h2>Suchradius</h2>
+        <h2>Searchradius</h2>
         <ion-range (mouseup)="change($event)" (touchend)="change($event)" [(ngModel)]="myskin.radius" min="0" max="100"
           step="10" snaps pin color="secondary" id="suchradius">
         </ion-range>
@@ -30,13 +30,13 @@
 
       </div>
       <div class="range_container">
-        <h2>Alter</h2>
+        <h2>Age</h2>
         <ion-range (mouseup)="change($event)" (touchend)="change($event)" [(ngModel)]="myskin.age" min="16" max="60" pin
           color="secondary" id="suchradius">
         </ion-range>
         <div class="spacing">
-          <ion-label class="range_label" slot="start">16 Jahre</ion-label>
-          <ion-label class="range_label" slot="end">60+ Jahre</ion-label>
+          <ion-label class="range_label" slot="start">16</ion-label>
+          <ion-label class="range_label" slot="end">60+</ion-label>
         </div>
       </div>
 

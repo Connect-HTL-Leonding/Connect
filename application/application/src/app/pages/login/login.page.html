@@ -12,6 +12,14 @@
     </div>
     <div id="body">
 
+<<<<<<< HEAD
+      <h2>Welcome</h2>
+      <p *ngIf="" id="text">Log in or register and be part of something greater!</p>
+      <ion-button *ngIf="" shape="round" color="primary" expand="block" (click)="login()">Start your adventure</ion-button>
+
+      <p *ngIf="this.isAuthenticated | async" id="text">Start with a short tutorial to get to know everything!</p>
+      <ion-button *ngIf="this.isAuthenticated | async" shape="round" color="primary" expand="block">Start tutorial</ion-button>
+=======
       <div id="container">
         <ion-item lines="full">
           <ion-icon name="person-outline" slot="start"></ion-icon>
@@ -25,6 +33,7 @@
         </ion-item>
 
         <ion-button shape="round" color="primary" expand="block" (click)="login()">Login</ion-button>
+>>>>>>> 83d4d275d73220e8a86d6f024109d4226506cbf1
 
         <p id="regis_text">Don't have an account? <b>Sign up</b></p>
       </div>

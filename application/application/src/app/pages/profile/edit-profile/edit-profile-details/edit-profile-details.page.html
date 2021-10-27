@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Profil Details</ion-title>
+    <ion-title>Profile details</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="edit-profile"></ion-back-button>
     </ion-buttons>
@@ -11,19 +11,19 @@
   <ion-list lines="full">
 
     <ion-list-header class="header">
-      Deine Daten
+     Your data
     </ion-list-header>
 
     <ion-item>
       <div class="first">
-        <ion-label slot="start">Vorname</ion-label>
+        <ion-label slot="start">First name</ion-label>
       </div>
       <ion-input *ngIf="ps.user" placeholder="Max" [(ngModel)]="ps.user.firstname"></ion-input>
     </ion-item>
 
     <ion-item>
       <div class="first">
-        <ion-label slot="start">Nachname</ion-label>
+        <ion-label slot="start">Last name</ion-label>
       </div>
       <ion-input *ngIf="ps.user" placeholder="Mustermann" [(ngModel)]="ps.user.lastname"></ion-input>
     </ion-item>
@@ -37,7 +37,7 @@
 
     <ion-item>
       <div class="first">
-        <ion-label slot="start">Geburtstag</ion-label>
+        <ion-label slot="start">Birthday</ion-label>
       </div>
       <ion-input *ngIf="ps.user" type="date" [(ngModel)]="ps.user.custom.birthday"></ion-input>
     </ion-item>
@@ -45,20 +45,20 @@
 
 
     <ion-item>
-      <ion-label class="gender_label">Geschlecht</ion-label>
+      <ion-label class="gender_label">Gender</ion-label>
       <ion-select *ngIf="ps.user" value="a" interface="popover" [(ngModel)]="ps.user.custom.gender">
-        <ion-select-option value="m">männlich</ion-select-option>
-        <ion-select-option value="f">weiblich</ion-select-option>
-        <ion-select-option value="s">andere</ion-select-option>
-        <ion-select-option value="a">keine Angabe</ion-select-option>
+        <ion-select-option value="m">male</ion-select-option>
+        <ion-select-option value="f">female</ion-select-option>
+        <ion-select-option value="s">other</ion-select-option>
+        <ion-select-option value="a">prefer not to answer</ion-select-option>
       </ion-select>
     </ion-item>
 
     <ion-list-header class="header">
-      Benachrichtigungen
+      Notifications
     </ion-list-header>
     <ion-item>
-      <ion-label class="gender_label">Nachrichten</ion-label>
+      <ion-label class="gender_label">Messages</ion-label>
       <ion-toggle [(ngModel)]="nachrichten"></ion-toggle>
     </ion-item>
     <ion-item>
@@ -105,7 +105,7 @@
 
   </form>
   -->
-    <ion-button shape="round" color="danger" expand="block" (click)="logout()">Ausloggen</ion-button>
+    <ion-button shape="round" color="danger" expand="block" (click)="logout()">Loggout</ion-button>
   </ion-list>
 
 </ion-content>
