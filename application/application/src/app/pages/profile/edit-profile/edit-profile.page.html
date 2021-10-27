@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Profil bearbeiten</ion-title>
+    <ion-title>Edit profile</ion-title>
     <ion-buttons slot="start">
       <ion-back-button defaultHref="profile"></ion-back-button>
     </ion-buttons>
@@ -34,28 +34,28 @@
 
       <ion-list class="profile-list" lines="none">
         <ion-list-header>
-          <p>Dein Profil</p>
+          <p>Your Profile</p>
         </ion-list-header>
         <ion-item>
-          <ion-label position="stacked" class="input-label" color="primary">Nutzername</ion-label>
+          <ion-label position="stacked" class="input-label" color="primary">Username</ion-label>
           <ion-input *ngIf="ps.user" disabled [(ngModel)]="ps.user.userName"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="stacked" class="input-label" color="primary">Beschreibung</ion-label>
+          <ion-label position="stacked" class="input-label" color="primary">Bio</ion-label>
           <ion-textarea *ngIf="ps.user" wrap="soft" autoGrow maxlength=200 placeholder="Hi my name is ..."
             [(ngModel)]="ps.user.custom.description" (ngModelChange)="colorButton()">
           </ion-textarea>
         </ion-item>
         <ion-item routerLink="../edit-profile-details">
-          <p>Andere Details bearbeiten</p>
+          <p>Edit other details</p>
         </ion-item>
         <ion-button id="save-button" shape="round" color="primary" [disabled]="changes" expand="block"
           (click)="updateUser(ps.user)">
-          Speichern</ion-button>
+          Save</ion-button>
       </ion-list>
 
       <ion-list-header>
-        Fotogalerie
+        Gallery
       </ion-list-header>
 
       <div class="photo-slider-con">

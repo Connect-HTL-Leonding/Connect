@@ -13,12 +13,12 @@
     <div id="body">
   
 
-      <h2>Willkommen</h2>
-      <p *ngIf="" id="text">Logge dich ein oder regestriere dich, um Teil von etwas großem zu werden!</p>
-      <ion-button *ngIf="" shape="round" color="primary" expand="block" (click)="login()">Starte dein Abenteuer</ion-button>
+      <h2>Welcome</h2>
+      <p *ngIf="" id="text">Log in or register and be part of something greater!</p>
+      <ion-button *ngIf="" shape="round" color="primary" expand="block" (click)="login()">Start your adventure</ion-button>
 
-      <p *ngIf="this.isAuthenticated | async" id="text">Starte doch mit einem kleinen Tutorial, um die neue Welt zu entdecken!</p>
-      <ion-button *ngIf="this.isAuthenticated | async" shape="round" color="primary" expand="block">Starte Tutorial</ion-button>
+      <p *ngIf="this.isAuthenticated | async" id="text">Start with a short tutorial to get to know everything!</p>
+      <ion-button *ngIf="this.isAuthenticated | async" shape="round" color="primary" expand="block">Start tutorial</ion-button>
 
       <hr>
       <div id="dev">

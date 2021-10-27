@@ -1,10 +1,10 @@
 <ion-content id="content">
-  <div>Meetup mit <div *ngFor="let ub of users; let last = last" style="display: inline;">
+  <div>Meetup with <div *ngFor="let ub of users; let last = last" style="display: inline;">
     {{ub.username}}<div *ngIf="!last" style="display: inline;">, </div>
   </div></div>
 
     
  
  
-  <p>am {{time}}</p>
+  <p>at {{time}}</p>
 </ion-content>
