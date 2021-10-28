@@ -8,30 +8,51 @@
 </ion-header>
 
 <ion-content>
+  <div class="wrapper">
+    <div class="background" >
+      <ion-button id="fotobutton" shape="round" (click)="addImage()"  >Add Image</ion-button>
+    </div>
+    <div class="container">
+     
+     
+      <div class="wrap">
+        <ion-label color="primary" class="desc-label">Skin name</ion-label>
+     
+          <ion-textarea  wrap="soft" autoGrow maxlength=200 placeholder="My Skinname">
+          </ion-textarea>
+     
+      </div>
+     
+      <div class="wrap">
+        <ion-label color="primary" class="desc-label">Description</ion-label>
+     
+          <ion-textarea  wrap="soft" autoGrow maxlength=200 placeholder="Describe your Skin">
+          </ion-textarea>
+     
+      </div>
 
-  <ion-item>
-    <ion-label position="stacked" class="input-label" color="primary">Skin name</ion-label>
-    <ion-textarea  wrap="soft" autoGrow maxlength=200 placeholder="My Skinname">
-    </ion-textarea>
-  </ion-item>
+      <div class="wrap">
+        <ion-label color="primary" class="desc-label">Mark as 18+</ion-label>
+     <br>
+        <ion-toggle></ion-toggle>
+     
+      </div>
 
-  <ion-item>
-    <ion-label position="stacked" class="input-label" color="primary">Description</ion-label>
-    <ion-textarea  wrap="soft" autoGrow maxlength=200 placeholder="Describe your Skin">
-    </ion-textarea>
-  </ion-item>
 
-  <ion-item>
-    <ion-label class="gender_label">Mark as 18+</ion-label>
-    <ion-toggle></ion-toggle>
-  </ion-item>
+    </div>
+  </div>
 
   
+
+
+  <!--
   <ion-item>
     <ion-label position="stacked" class="input-label" color="primary">Skin image</ion-label>
-    <ion-button (click)="addImage()"  wrap="soft">Add Image</ion-button>
+    
     <img *ngIf="this.image" src="data:image/png;base64,{{this.image}}">
   </ion-item>
+  -->
+
   
 
 
