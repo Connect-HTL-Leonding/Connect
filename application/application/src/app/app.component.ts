@@ -106,7 +106,7 @@ export class AppComponent implements OnInit {
     if (this.keycloak.userid) {
       this.ps.getUser().add(() => {
         if (this.ps.user) {
-          this.wsUri = 'ws://localhost:8080/websocket/' + this.ps.user.id;
+          this.wsUri = 'ws://192.168.1.26:8080/websocket/' + this.ps.user.id;
           console.log(this.wsUri)
           this.doConnect();
         }
