@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FriendshipService } from 'src/app/api/friendship.service';
 import { ProfileService } from 'src/app/api/profile.service';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-blocked-list',
@@ -17,6 +18,16 @@ export class BlockedListPage implements OnInit {
   constructor(fs: FriendshipService, ps:ProfileService) { 
     this.ps = ps;
     this.fs = fs;
+  }
+
+  unblockUser(u:User) {
+    this.ps.friendCustomData(u.id).subscribe(data => {
+      console.log(data)
+      this.fs.unblockFriendship(data).subscribe(data => {
+        console.log("unblocked")
+      })
+    })
+    
   }
 
   ngOnInit() {

@@ -102,6 +102,27 @@ public class FriendshipRepository {
     }
 
     @Transactional
+    public Friendship unblock(JsonWebToken jwt, User friend) {
+        TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FINDBLOCKED1, Friendship.class);
+        tq.setParameter("user_1", em.find(User.class, jwt.claim("sub").get().toString()));
+        tq.setParameter("user_2", friend);
+        Friendship f = null;
+        try {
+            f = tq.getSingleResult();
+            System.out.println(f);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        if(f != null){
+            f.setStatus("cool");
+            em.persist(f);
+        }
+
+        return f;
+    }
+
+    @Transactional
     public User findRandom(List<MySkin> mySkins, Optional id) {
         User curUser = em.find(User.class, id.get().toString());
         Map<User, Skin> userSkin = new HashMap<User, Skin>();

@@ -57,6 +57,14 @@ public class FriendshipService {
         return dbRepo.block(jwt, friend);
     }
 
+    @POST
+    @Path("unblock")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Friendship unblock(User friend) {
+        return dbRepo.unblock(jwt, friend);
+    }
+
     @Path("findRandom")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

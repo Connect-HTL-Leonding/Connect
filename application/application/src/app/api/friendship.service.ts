@@ -56,6 +56,10 @@ export class FriendshipService {
     return this.http.post(api.url + 'friendship/block', friend);
   }
 
+  unblockFriendship(friend : CustomUser) {
+    return this.http.post(api.url + 'friendship/unblock', friend);
+  }
+
   getBlockedUser(id) {
     return this.http.get<Friendship[]>(api.url + 'friendship/findBlocked/' + id);
   }

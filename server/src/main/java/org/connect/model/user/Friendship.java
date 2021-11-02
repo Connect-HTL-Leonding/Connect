@@ -16,6 +16,7 @@ import java.util.List;
 @NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where ((f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)) and f.status not like 'blocked'")
 @NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1 and f.status not like 'blocked'")
 @NamedQuery(name = Friendship.FINDBLOCKED, query = "SELECT f FROM Friendship f where (f.user1.id = :user_id or f.user2.id = :user_id) and f.status like 'blocked'")
+@NamedQuery(name = Friendship.FINDBLOCKED1, query = "SELECT f FROM Friendship f where ((f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)) and f.status like 'blocked'")
 
 //CONNECT
 //holt alle User, die den MySkin-Kriterien entsprechen
@@ -43,6 +44,7 @@ public class Friendship implements Serializable {
     public static final String FIND = "Friendship.find";
     public static final String FIND2 = "Friendship.find2";
     public static final String FINDBLOCKED = "Friendship.findBlocked";
+    public static final String FINDBLOCKED1 = "Friendship.findBlocked1";
 
 
     @Id

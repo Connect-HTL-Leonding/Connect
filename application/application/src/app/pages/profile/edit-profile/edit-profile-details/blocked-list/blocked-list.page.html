@@ -10,7 +10,8 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let u of this.userList">
-     {{u.username}}
+     <p>{{u.username}}</p>
+     <ion-button (click)="unblockUser(u)" slot="end">unblock</ion-button>
     </ion-item>
   </ion-list>
   <div class="empty" *ngIf="this.userList.length < 1">
