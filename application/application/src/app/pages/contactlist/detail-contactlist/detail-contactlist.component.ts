@@ -71,7 +71,6 @@ export class DetailContactlistComponent implements OnInit {
           if(data.length!=0) {
             
               if(this.meetUpAccepted[this.meetUpAccepted.length-1]!==undefined) {
-                console.log(this.meetUpAccepted);
                 if(data[data.length-1].id>this.meetUpAccepted[this.meetUpAccepted.length-1].id) {
                   this.myMeetUp = true;
                   this.myMeetUpStatus = "abgelehnt";
@@ -87,15 +86,12 @@ export class DetailContactlistComponent implements OnInit {
         })
       })
 
-      console.log(this.user)
       this.contactlist.getKeyUser(this.user.custom).subscribe(data => {
         this.user.id = data["id"];
         this.user.userName = data["username"];
         this.user.firstname = data["firstName"];
         this.user.lastname = data["lastName"];
         this.user.email = data["email"];
-        console.log(data)
-
       })
 
       /*
@@ -111,7 +107,6 @@ export class DetailContactlistComponent implements OnInit {
 
 
   getLatestMessage(room: Room) {
-    console.log("wird aufgerufen");
     this.contactlist.getLatestMessage(room).subscribe(data => {
       if (data != null) {
         this.latestMessage = data.message;
@@ -124,10 +119,8 @@ export class DetailContactlistComponent implements OnInit {
   calcTimeDisplayed(messageDate:Date) {
     // time right now
     let dateNow = new Date();
-    console.log(dateNow.toDateString());
     // get time difference in ms, convert it to minutes, round it off 
     let minDiff = Math.floor(((dateNow.getTime() - messageDate.getTime()) / 1000) / 60);
-    console.log(minDiff);
     if(minDiff<1) {
       this.timeDisplay = "Just now";
     }
@@ -165,9 +158,6 @@ export class DetailContactlistComponent implements OnInit {
         this.contactlist.unseenMessages = this.unseenMessages;
         this.contactlist.seenMessages = this.seenMessages;
         this.contactlist.allMessages = this.allMessages;
-        console.log(this.seenMessages + " seen");
-        console.log(this.allMessages + " all");
-        console.log(this.unseenMessages + " unseen")
       })
     })
   }
