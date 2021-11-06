@@ -55,7 +55,7 @@ jobs:
     - name: build supersonic native quarkus application
       run: |
         echo "graal home is $GRAALVM_HOME"
-        mvn -Pnative -Dquarkus-profile=prod -Dbase.href="/" -B package
+        mvn -Pnative -Dquarkus-profile=prod -Dbase.href="/server/" -B package
     - name: build server docker image
       run: |
         docker build server --tag ${{ env.REGISTRY }}/${{ github.repository }}-server
