@@ -79,7 +79,6 @@ export class ChatPage implements OnInit {
     this.oauthService = os;
     this.ms = ms;
 
-    console.log(this.mapRef);
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
       console.log(value);
@@ -137,11 +136,11 @@ export class ChatPage implements OnInit {
 
   profileFriend(friend: User) {
     this.ps.findFriendUser(friend.id)
-    .subscribe(data => {
-      console.log(data + "oh no");
-      this.presentFriend(data);
+      .subscribe(data => {
+        console.log(data + "oh no");
+        this.presentFriend(data);
 
-    });
+      });
   }
 
   async presentFriend(friendKeycloak) {
@@ -316,19 +315,6 @@ export class ChatPage implements OnInit {
   }
 
 
-
-  convert(date: number[]): string {
-    let hours = "";
-    let minutes = "";
-    if (date[3] <= 9) {
-      hours = "0"
-    }
-    if (date[4] <= 9) {
-      minutes = "0";
-    }
-    return `${hours}${date[3]}:${minutes}${date[4]}`;
-  }
-
   init(room: Room) {
     this.showNewMsgLine = true;
 
@@ -337,16 +323,43 @@ export class ChatPage implements OnInit {
       this.chatservice.getSeenMessages(room).subscribe(data => {
         this.seenMessages = data;
         this.unseenMessages = this.allMessages - this.seenMessages;
-        console.log(this.seenMessages + " seen");
-        console.log(this.allMessages + " all");
-        console.log(this.unseenMessages + " unseen")
         this.chatservice.getData().subscribe(data => {
           this.chatservice.messages = data;
           this.pos = this.chatservice.messages.length - this.unseenMessages;
-
         })
       })
     })
+  }
+
+  // return the date from a message in the hh:mm format, like 15:30
+  returnDateString(message: Message) {
+    let string;
+    string = new Date(message.created).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
+    return string;
+  }
+
+  returnDateWithoutTime(message:Message) {
+    let dateObj = new Date(message.created);
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    let dayString;
+    let monthString;
+
+    if(day<10) {
+      dayString = "0" + day;
+    } else {
+      dayString = day;
+    }
+
+    if(month<10) {
+      monthString = "0" + month;
+    } else {
+      monthString = month;
+    }
+
+    return dayString + "." + monthString + "." + year;
   }
 
 
