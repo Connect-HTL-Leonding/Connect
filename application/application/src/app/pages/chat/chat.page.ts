@@ -21,6 +21,7 @@ import { ProfilePage } from '../profile/profile.page';
 import { FriendPage } from '../friend/friend.page';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
+import { DateService } from 'src/app/api/date.service';
 
 
 declare var google: any;
@@ -48,6 +49,7 @@ export class ChatPage implements OnInit {
   public otherUser: User = new User();
   contactlist;
   chatservice;
+  dateservice;
   oauthService;
   modal;
   public allMessages;
@@ -72,12 +74,13 @@ export class ChatPage implements OnInit {
 
 
 
-  constructor(ms: MeetupService, public ps: ProfileService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router) {
+  constructor(ms: MeetupService, public ps: ProfileService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router, public dateService: DateService) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
     this.oauthService = os;
     this.ms = ms;
+    this.dateService = dateService;
 
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
@@ -186,6 +189,7 @@ export class ChatPage implements OnInit {
       this.otherUser.custom = data;
       this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
         this.meetUps = data;
+        console.log(data);
       })
       this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
         this.meetUpsAccepted = data;
@@ -330,38 +334,6 @@ export class ChatPage implements OnInit {
       })
     })
   }
-
-  // return the date from a message in the hh:mm format, like 15:30
-  returnDateString(message: Message) {
-    let string;
-    string = new Date(message.created).toLocaleTimeString(navigator.language, { hour: '2-digit', minute: '2-digit' });
-    return string;
-  }
-
-  returnDateWithoutTime(message:Message) {
-    let dateObj = new Date(message.created);
-    var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-
-    let dayString;
-    let monthString;
-
-    if(day<10) {
-      dayString = "0" + day;
-    } else {
-      dayString = day;
-    }
-
-    if(month<10) {
-      monthString = "0" + month;
-    } else {
-      monthString = month;
-    }
-
-    return dayString + "." + monthString + "." + year;
-  }
-
 
   newDay(message: Message, olderMessage: Message): boolean {
     let newDay = false;

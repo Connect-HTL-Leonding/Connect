@@ -3,6 +3,7 @@ import { MenuController, ModalController, ToastController } from '@ionic/angular
 import { MeetupService } from '../../api/meetup.service';
 import {ContactlistService} from '../../api/contactlist.service';
 import { CustomUser, User } from '../../model/user';
+import { DateService } from 'src/app/api/date.service';
 
 @Component({
   selector: 'app-meet-up-manager',
@@ -14,9 +15,11 @@ export class MeetUpManagerPage implements OnInit {
   meetups = [];
   friends = [];
   public ms;
+  public dateService;
 
-  constructor(public modalController: ModalController, ms: MeetupService, public contactListService : ContactlistService) {
+  constructor(public modalController: ModalController, ms: MeetupService, public contactListService : ContactlistService, public ds:DateService) {
     this.ms = ms;
+    this.dateService = ds;
   }
 
   ngOnInit() {
