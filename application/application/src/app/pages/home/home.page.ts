@@ -23,6 +23,7 @@ import { Room } from 'src/app/model/room';
 import { FriendPage } from '../friend/friend.page';
 
 import Showcaser from 'showcaser'
+import { DateService } from 'src/app/api/date.service';
 
 /*
 import {
@@ -62,6 +63,7 @@ export class HomePage implements OnInit {
   connectUpdate;
   mySubscription;
   meetupPreview;
+  dateService;
 
   //map
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
@@ -88,7 +90,9 @@ export class HomePage implements OnInit {
     public ts: TutorialService,
     public meetupService: MeetupService,
     public alertController: AlertController,
-    public actionSheetController: ActionSheetController) {
+    public actionSheetController: ActionSheetController,
+    public ds: DateService) {
+      this.dateService = ds;
   }
 
   ngOnChanges() {
@@ -482,17 +486,11 @@ export class HomePage implements OnInit {
     });
     */
 
-    let t: String[];
+    let t: Date;
     let time: string;
 
-
-    t = m.time.toString().split(",");
-    for (var i = 0; i < t.length; i++) {
-      if (t[i].length == 1) {
-        t[i] = '0' + t[i];
-      }
-    }
-    time = t[2] + '.' + t[1] + '.' + t[0] + ' um ' + t[3] + ':' + t[4];
+// ----------------------------------------------------------------------------------------------------
+    time = this.dateService.returnDateWithoutTime(m) + ' at ' + this.dateService.returnTimeString(m);
 
 
 

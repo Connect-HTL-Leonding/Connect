@@ -19,8 +19,8 @@
     <ion-card-content>
       <ion-card-subtitle>Date & Time:</ion-card-subtitle>
       <div>
-        <p>On {{m.time[2] < 10 ? "0" + m.time[2] : m.time[2]}}.{{m.time[1] < 10 ? "0" + m.time[1] : m.time[1]}}.{{m.time[0] < 10 ? "0" + m.time[0] : m.time[0]}} at
-          {{m.time[3] < 10 ? "0" + m.time[3] : m.time[3]}}:{{m.time[4] < 10 ? "0" + m.time[4] : m.time[4]}}</p>
+        <p>On {{this.dateService.returnDateWithoutTime(m)}} at
+          {{this.dateService.returnTimeString(m)}}</p>
       </div>
       <br>
       <ion-card-subtitle>Friends:</ion-card-subtitle>

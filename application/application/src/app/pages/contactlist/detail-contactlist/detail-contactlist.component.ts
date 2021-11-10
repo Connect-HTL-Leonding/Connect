@@ -26,7 +26,6 @@ export class DetailContactlistComponent implements OnInit {
   public unseenMessages;
   public datePipe: DatePipe;
   public array = [];
-  dateNow = new Date();
   timeDisplayArr = [];
   timeDisplay: string = "";
   public newMeetUp : boolean = false;
@@ -72,7 +71,6 @@ export class DetailContactlistComponent implements OnInit {
           if(data.length!=0) {
             
               if(this.meetUpAccepted[this.meetUpAccepted.length-1]!==undefined) {
-                console.log(this.meetUpAccepted);
                 if(data[data.length-1].id>this.meetUpAccepted[this.meetUpAccepted.length-1].id) {
                   this.myMeetUp = true;
                   this.myMeetUpStatus = "abgelehnt";
@@ -88,15 +86,12 @@ export class DetailContactlistComponent implements OnInit {
         })
       })
 
-      console.log(this.user)
       this.contactlist.getKeyUser(this.user.custom).subscribe(data => {
         this.user.id = data["id"];
         this.user.userName = data["username"];
         this.user.firstname = data["firstName"];
         this.user.lastname = data["lastName"];
         this.user.email = data["email"];
-        console.log(data)
-
       })
 
       /*
@@ -112,41 +107,45 @@ export class DetailContactlistComponent implements OnInit {
 
 
   getLatestMessage(room: Room) {
-    console.log("wird aufgerufen");
     this.contactlist.getLatestMessage(room).subscribe(data => {
       if (data != null) {
-        console.log(data.message);
         this.latestMessage = data.message;
         this.latestMessageCreated = data.created;
-        this.calcTimeDisplayed();
+        this.calcTimeDisplayed(new Date(data.created));
       }
     })
   }
 
-  calcTimeDisplayed() {
-    console.log(this.latestMessageCreated);
-    console.log(this.dateNow.getSeconds());
-    this.timeDisplayArr[0] = this.latestMessageCreated[2] - this.dateNow.getUTCDate();
-    this.timeDisplayArr[1] = this.latestMessageCreated[1] - (this.dateNow.getUTCMonth() + 1);
-    this.timeDisplayArr[2] = this.latestMessageCreated[0] - this.dateNow.getUTCFullYear();
-    this.timeDisplayArr[3] = this.latestMessageCreated[3] - this.dateNow.getHours();
-    this.timeDisplayArr[4] = this.latestMessageCreated[4] - this.dateNow.getMinutes();
-    this.timeDisplayArr[5] = this.latestMessageCreated[5] - this.dateNow.getSeconds();
-
-    console.log(this.timeDisplayArr);
-
-    if (this.timeDisplayArr[5] == 0) {
+  calcTimeDisplayed(messageDate:Date) {
+    // time right now
+    let dateNow = new Date();
+    // get time difference in ms, convert it to minutes, round it off 
+    let minDiff = Math.floor(((dateNow.getTime() - messageDate.getTime()) / 1000) / 60);
+    if(minDiff<1) {
       this.timeDisplay = "Just now";
     }
-
-    if (this.timeDisplayArr[5] < 0) {
-      this.timeDisplay = this.timeDisplayArr[5] * -1 + " sec. ago";
-    } if (this.timeDisplayArr[4] < 0) {
-      this.timeDisplay = this.timeDisplayArr[4] * -1 + " min. ago";
-    } if (this.timeDisplayArr[3] < 0) {
-      this.timeDisplay = this.timeDisplayArr[3] * -1 + "h ago";
-    } if (this.timeDisplayArr[0] < 0) {
-      this.timeDisplay = this.timeDisplayArr[0] * -1 + " days ago";
+    if(minDiff<60 && minDiff >= 1) {
+      if(minDiff == 1) {
+        this.timeDisplay = minDiff + " minute ago";
+      } else {
+        this.timeDisplay = minDiff + " minutes ago";
+      }
+    }
+    if(minDiff>=60) {
+      let hourDiff = Math.floor(minDiff / 60);
+      if(hourDiff == 1) {
+        this.timeDisplay = hourDiff + " hour ago";
+      } else {
+        this.timeDisplay = hourDiff + " hours ago";
+      }
+    }
+    if(minDiff>=1440) {
+      let dayDiff = Math.floor(minDiff / 1440);
+      if(dayDiff == 1) {
+        this.timeDisplay = dayDiff + " day ago";
+      } else {
+        this.timeDisplay = dayDiff + " days ago";
+      }
     }
   }
 
@@ -159,9 +158,6 @@ export class DetailContactlistComponent implements OnInit {
         this.contactlist.unseenMessages = this.unseenMessages;
         this.contactlist.seenMessages = this.seenMessages;
         this.contactlist.allMessages = this.allMessages;
-        console.log(this.seenMessages + " seen");
-        console.log(this.allMessages + " all");
-        console.log(this.unseenMessages + " unseen")
       })
     })
   }

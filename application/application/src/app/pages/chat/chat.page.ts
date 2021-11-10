@@ -21,6 +21,7 @@ import { ProfilePage } from '../profile/profile.page';
 import { FriendPage } from '../friend/friend.page';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
+import { DateService } from 'src/app/api/date.service';
 
 
 declare var google: any;
@@ -48,6 +49,7 @@ export class ChatPage implements OnInit {
   public otherUser: User = new User();
   contactlist;
   chatservice;
+  dateservice;
   oauthService;
   modal;
   public allMessages;
@@ -72,14 +74,14 @@ export class ChatPage implements OnInit {
 
 
 
-  constructor(ms: MeetupService, public ps: ProfileService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router) {
+  constructor(ms: MeetupService, public ps: ProfileService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router, public dateService: DateService) {
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
     this.oauthService = os;
     this.ms = ms;
+    this.dateService = dateService;
 
-    console.log(this.mapRef);
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
       console.log(value);
@@ -137,11 +139,11 @@ export class ChatPage implements OnInit {
 
   profileFriend(friend: User) {
     this.ps.findFriendUser(friend.id)
-    .subscribe(data => {
-      console.log(data + "oh no");
-      this.presentFriend(data);
+      .subscribe(data => {
+        console.log(data + "oh no");
+        this.presentFriend(data);
 
-    });
+      });
   }
 
   async presentFriend(friendKeycloak) {
@@ -187,6 +189,7 @@ export class ChatPage implements OnInit {
       this.otherUser.custom = data;
       this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
         this.meetUps = data;
+        console.log(data);
       })
       this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
         this.meetUpsAccepted = data;
@@ -316,19 +319,6 @@ export class ChatPage implements OnInit {
   }
 
 
-
-  convert(date: number[]): string {
-    let hours = "";
-    let minutes = "";
-    if (date[3] <= 9) {
-      hours = "0"
-    }
-    if (date[4] <= 9) {
-      minutes = "0";
-    }
-    return `${hours}${date[3]}:${minutes}${date[4]}`;
-  }
-
   init(room: Room) {
     this.showNewMsgLine = true;
 
@@ -337,18 +327,13 @@ export class ChatPage implements OnInit {
       this.chatservice.getSeenMessages(room).subscribe(data => {
         this.seenMessages = data;
         this.unseenMessages = this.allMessages - this.seenMessages;
-        console.log(this.seenMessages + " seen");
-        console.log(this.allMessages + " all");
-        console.log(this.unseenMessages + " unseen")
         this.chatservice.getData().subscribe(data => {
           this.chatservice.messages = data;
           this.pos = this.chatservice.messages.length - this.unseenMessages;
-
         })
       })
     })
   }
-
 
   newDay(message: Message, olderMessage: Message): boolean {
     let newDay = false;
