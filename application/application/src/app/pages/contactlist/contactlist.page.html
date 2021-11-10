@@ -9,6 +9,16 @@
 </ion-header>
 
 <ion-content> 
+  <ion-segment>
+    <ion-segment-button value="friends">
+      <ion-label>Direct Messages</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="enemies">
+      <ion-label>Meet-Up Chats</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <hr>
+
   <ion-list id="chats">
     <ion-item class="chat" *ngFor="let room of contactService.rooms, let i = index" (click)="presentModal(room)">
       <app-detail-contactlist [room]="room"></app-detail-contactlist>
