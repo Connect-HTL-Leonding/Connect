@@ -46,7 +46,7 @@ export class SkinsService {
 
   //create
   createSkin(s: Skin) {
-    return this.http.put(api.url + 'skin/create', s);
+    return this.http.post(api.url + 'skin/create', s);
   }
 
 }
