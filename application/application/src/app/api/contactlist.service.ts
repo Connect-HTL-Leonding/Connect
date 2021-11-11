@@ -23,6 +23,7 @@ export class ContactlistService {
   public allMessages = 0;
   public counter = 0;
   public activeUser;
+  public type = "DM";
   websocket;
 
   public contactlistObservable = new Subject<any>();
@@ -60,7 +61,7 @@ export class ContactlistService {
   }
 
   getChats() {
-    return this.http.get<Room[]>(api.url + 'chat/findAll')
+    return this.http.get<Room[]>(api.url + 'chat/findAll/DM')
   }
 
   getLatestMessage(room: Room) {
