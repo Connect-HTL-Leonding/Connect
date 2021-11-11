@@ -1079,8 +1079,6 @@ export class HomePage implements OnInit {
   connect() {
     if (this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null) {
       this.fs.connect(this.mySkinsService.mapSkins).subscribe(data => {
-        console.log(typeof (data))
-        console.log(data);
         if (data != null) {
           var user = new CustomUser();
 

@@ -85,4 +85,8 @@ export class ContactlistPage implements OnInit {
     return await modal.present();
   }
 
+  segmentChanged(ev: any) {
+    console.log('Segment changed',ev);
+  }
+
 }

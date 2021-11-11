@@ -1,9 +1,11 @@
 package org.connect.repository;
 
+import org.connect.model.chat.Room;
 import org.connect.model.meetup.Meeting;
 import org.connect.model.meetup.Meeting_User;
 import org.connect.model.user.User;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.hibernate.mapping.Any;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -28,11 +30,21 @@ public class MeetUpRepository {
         User u = em.find(User.class, jwt.getClaim("sub"));
         meeting.setCreator(u);
         em.persist(meeting);
+        Room room = new Room();
+        room.setMeeting(meeting);
+        room.setType("MU");
+        em.persist(room);
         return meeting;
     }
 
     @Transactional
     public Meeting_User addEntry(Meeting_User mu) {
+        TypedQuery<Room> query = em.createNamedQuery(Room.FINDBYMEETING, Room.class);
+        query.setParameter("meeting", mu.getMeeting());
+
+        Room r = query.getSingleResult();
+
+// TODO add room members
         mu.setSeen(false);
         em.persist(mu);
         return mu;
@@ -116,5 +128,15 @@ public class MeetUpRepository {
         query.setParameter("meetingId",mu.getMeeting().getId());
         query.setParameter("user_id",mu.getUser_id());
         int result = query.executeUpdate();
+    }
+
+    //not used rn, might be deleted
+    @Transactional
+    public void createRoom(Optional id, List<Meeting_User> userList) {
+        User curUser = em.find(User.class, id.get().toString());
+        Room room = new Room();
+        room.getUsers().add(curUser);
+        room.setType("MU");
+        em.persist(room);
     }
 }

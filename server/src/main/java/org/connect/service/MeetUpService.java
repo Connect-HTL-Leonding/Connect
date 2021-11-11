@@ -5,6 +5,7 @@ import org.connect.model.meetup.Meeting_User;
 import org.connect.model.user.User;
 import org.connect.repository.MeetUpRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.hibernate.mapping.Any;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -36,7 +37,6 @@ public class MeetUpService {
     @POST
     @Path("setOtherUser")
     public void setOtherUser(Meeting_User mu) {
-        System.out.println(mu.getMeeting().getId());
         repo.addEntry(mu);
     }
 
@@ -96,6 +96,13 @@ public class MeetUpService {
     @Transactional
     public void setSeen(Meeting_User mu) {
         repo.setSeen(mu);
+    }
+
+    @POST
+    @Path("createRoom")
+    @Transactional
+    public void createRoom(List<Meeting_User> userList) {
+        repo.createRoom(jwt.claim("sub"),userList);
     }
 
 

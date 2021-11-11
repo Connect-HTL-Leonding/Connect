@@ -9,11 +9,11 @@
 </ion-header>
 
 <ion-content> 
-  <ion-segment>
-    <ion-segment-button value="friends">
+  <ion-segment (ionChange)="segmentChanged($event)" value="DM">
+    <ion-segment-button value="DM">
       <ion-label>Direct Messages</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="enemies">
+    <ion-segment-button value="MeetUpChats">
       <ion-label>Meet-Up Chats</ion-label>
     </ion-segment-button>
   </ion-segment>

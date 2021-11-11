@@ -1,6 +1,7 @@
 package org.connect.model.meetup;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.connect.model.chat.Room;
 import org.connect.model.user.User;
 
 import javax.persistence.*;
@@ -40,6 +41,9 @@ public class Meeting implements Serializable {
 
    @ManyToOne
    private User creator;
+
+   @OneToOne
+   private Room room;
 
    @JsonIgnore
    @OneToMany(mappedBy = "meeting")
@@ -88,5 +92,13 @@ public class Meeting implements Serializable {
 
     public void setMu_list(List<Meeting_User> mu_list) {
         this.mu_list = mu_list;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }

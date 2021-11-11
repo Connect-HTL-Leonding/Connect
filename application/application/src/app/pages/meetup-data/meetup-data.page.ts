@@ -91,6 +91,7 @@ export class MeetupDataPage implements OnInit {
     this.ms.createMeetup(this.meetup).subscribe(data=> {
       
       this.selectedFriends.forEach(friend => {
+        // The same as Meeting_User in the backend
         let dataForPost = {
           meeting: data,
           user_id: friend.id,
