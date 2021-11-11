@@ -24,12 +24,13 @@ public class ChatRepository {
     public void init() {
     }
 
-    public List<Room> findAll(Optional user_id) {
+    public List<Room> findAll(Optional user_id, String type) {
 
         TypedQuery<Room> tq = this.em.createNamedQuery(Room.FINDALL, Room.class);
         TypedQuery<Friendship> tq2 = this.em.createNamedQuery(Friendship.FIND, Friendship.class);
 
         tq.setParameter("u", user_id.get().toString());
+        tq.setParameter("type", type);
 
 
         List<Room> roomList = null;
