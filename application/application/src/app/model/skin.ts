@@ -8,6 +8,8 @@ export class Skin {
         public follower = 0,
         public radius = 0,
         public age = 0,
-        public niveau = 0
+        public niveau = 0,
+        public mature = false,
+        public verified = false
     ) { }
 }

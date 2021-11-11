@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Camera, CameraResultType } from '@capacitor/core';
+import { Skin } from 'src/app/model/skin';
+import { SkinsService } from 'src/app/api/skins.service';
 
 @Component({
   selector: 'app-skin-creator',
@@ -9,7 +11,11 @@ import { Camera, CameraResultType } from '@capacitor/core';
 export class SkinCreatorPage implements OnInit {
 
   public image;
-  constructor() { }
+  public skin;
+  
+  constructor(public skinsService: SkinsService) {
+    this.skin = new Skin();
+   }
 
   ngOnInit() {
   }
@@ -25,5 +31,11 @@ export class SkinCreatorPage implements OnInit {
       this.image = capturedPhoto.base64String;
     } catch (e) {
       }
+  }
+
+  createSkin(){
+
+    console.log(this.skin)
+    this.skinsService.createSkin(this.skin);
   }
 }

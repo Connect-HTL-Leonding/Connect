@@ -34,6 +34,7 @@ public class SkinRepository {
 
     // Initialisieren
     //@PostConstruct
+    /*
     @Transactional
     public void initDB() {
 
@@ -266,6 +267,8 @@ public class SkinRepository {
         em.persist(trisinger);
         em.persist(jenninger);
     }
+
+     */
 
     // Finden einer Person über ID in der DB
     public Skin find(long id) {
