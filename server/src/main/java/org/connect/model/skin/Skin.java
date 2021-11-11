@@ -31,6 +31,8 @@ public class Skin implements Serializable {
     //private Image image;
     private String image;
     private int follower;
+    private boolean mature;
+    private boolean verified;
 
     //https://www.baeldung.com/hibernate-initialize-proxy-exception
     @ManyToMany(fetch = FetchType.EAGER)
@@ -39,11 +41,13 @@ public class Skin implements Serializable {
     public Skin() {
     }
 
-    public Skin(String title, String description, String image, int follower) {
+    public Skin(String title, String description, String image, int follower, boolean mature, boolean verified) {
         this.title = title;
         this.description = description;
         this.image = image;
         this.follower = follower;
+        this.mature = mature;
+        this.verified = verified;
     }
 
     public long getId() {
@@ -94,6 +98,23 @@ public class Skin implements Serializable {
         this.categories = categories;
     }
 
+    public boolean isMature() {
+        return mature;
+    }
+
+    public void setMature(boolean mature) {
+        this.mature = mature;
+    }
+
+    public boolean isVerified() {
+        return verified;
+    }
+
+    public void setVerified(boolean verified) {
+        this.verified = verified;
+    }
+
+
     @Override
     public String toString() {
         return "Skin{" +
@@ -103,7 +124,9 @@ public class Skin implements Serializable {
                 ", image='" + image + '\'' +
                 ", follower=" + follower + '\'' +
                 ", categories=" + categories.stream().map(Category::getTitle).collect(Collectors.toList()) + '\'' +
-                +
+                ", mature=" + mature +
+                ", verified=" + verified +
+
                 '}';
     }
 }
