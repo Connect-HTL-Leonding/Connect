@@ -44,11 +44,21 @@ public class MeetUpRepository {
         TypedQuery<User> userQuery = em.createNamedQuery(User.FINDWITHID, User.class);
         userQuery.setParameter("user_id", mu.getUser_id());
 
-        Room r = query.getSingleResult();
-        User u = userQuery.getSingleResult();
+        Room r = null;
+        User u = null;
+        try {
+            r = query.getSingleResult();
+            u = userQuery.getSingleResult();
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
         r.getUsers().add(u);
+        u.getRooms().add(r);
         mu.setSeen(false);
         em.persist(mu);
+        em.merge(u);
+        em.merge(r);
         return mu;
     }
 
