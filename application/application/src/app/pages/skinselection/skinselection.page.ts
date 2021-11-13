@@ -34,7 +34,7 @@ export class SkinselectionPage implements OnInit {
   }
 
   check(skin) {
-    if (this.currCat) {
+    if (this.currCat ) {
       var index = -1;
 
       //important
@@ -47,7 +47,7 @@ export class SkinselectionPage implements OnInit {
         }
       });
 
-      if (index !== -1 && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '')) {
+      if ((index !== -1 || this.currCat.title=="All") && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '' )) {
         return true;
       } else {
         return false;

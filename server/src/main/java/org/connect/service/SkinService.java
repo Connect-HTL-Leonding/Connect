@@ -72,6 +72,7 @@ public class SkinService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Skin createPerson(Skin skin) {
+        System.out.println("hi");
         System.out.println(skin);
         return dbRepo.create(skin);
     }
