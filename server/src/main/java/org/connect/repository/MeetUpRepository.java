@@ -28,12 +28,12 @@ public class MeetUpRepository {
     @Transactional
     public Meeting create(Meeting meeting) {
         User u = em.find(User.class, jwt.getClaim("sub"));
+        Room room = new Room("MU");
         meeting.setCreator(u);
-        em.persist(meeting);
-        Room room = new Room();
         room.setMeeting(meeting);
-        room.setType("MU");
+        room.getUsers().add(u);
         em.persist(room);
+        em.persist(meeting);
         return meeting;
     }
 
@@ -41,10 +41,12 @@ public class MeetUpRepository {
     public Meeting_User addEntry(Meeting_User mu) {
         TypedQuery<Room> query = em.createNamedQuery(Room.FINDBYMEETING, Room.class);
         query.setParameter("meeting", mu.getMeeting());
+        TypedQuery<User> userQuery = em.createNamedQuery(User.FINDWITHID, User.class);
+        userQuery.setParameter("user_id", mu.getUser_id());
 
         Room r = query.getSingleResult();
-
-// TODO add room members
+        User u = userQuery.getSingleResult();
+        r.getUsers().add(u);
         mu.setSeen(false);
         em.persist(mu);
         return mu;
@@ -128,15 +130,5 @@ public class MeetUpRepository {
         query.setParameter("meetingId",mu.getMeeting().getId());
         query.setParameter("user_id",mu.getUser_id());
         int result = query.executeUpdate();
-    }
-
-    //not used rn, might be deleted
-    @Transactional
-    public void createRoom(Optional id, List<Meeting_User> userList) {
-        User curUser = em.find(User.class, id.get().toString());
-        Room room = new Room();
-        room.getUsers().add(curUser);
-        room.setType("MU");
-        em.persist(room);
     }
 }
