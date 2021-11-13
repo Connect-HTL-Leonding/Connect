@@ -42,9 +42,6 @@ public class Meeting implements Serializable {
    @ManyToOne
    private User creator;
 
-   @OneToOne
-   private Room room;
-
    @JsonIgnore
    @OneToMany(mappedBy = "meeting")
    public List<Meeting_User> mu_list;
@@ -94,11 +91,4 @@ public class Meeting implements Serializable {
         this.mu_list = mu_list;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
 }

@@ -98,12 +98,4 @@ public class MeetUpService {
         repo.setSeen(mu);
     }
 
-    @POST
-    @Path("createRoom")
-    @Transactional
-    public void createRoom(List<Meeting_User> userList) {
-        repo.createRoom(jwt.claim("sub"),userList);
-    }
-
-
 }

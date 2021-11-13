@@ -28,7 +28,7 @@ public class Room implements Serializable {
     public static final String FINDBYMEETING = "Room.findByMeeting";
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private
     long id;
     private String type;
