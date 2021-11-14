@@ -2,7 +2,7 @@
   <ion-list id="mapSkins" lines="none" *ngIf="mySkinsService.selectedMySkins">
     <ion-item *ngFor="let mySkin of mySkinsService.selectedMySkins, let i = index" (click)="toggle(mySkin)">
       <ion-avatar slot="start">
-        <img src="{{mySkin.skin.image}}">
+        <img [src]="(mySkin.skin.image.startsWith('Li4')) ? this.myAtob(mySkin.skin.image) :'data:image/png;base64,'+mySkin.skin.image">
       </ion-avatar>
       <ion-label>
         <h2>{{mySkin.skin.title}}</h2>

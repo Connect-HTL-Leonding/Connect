@@ -9,15 +9,21 @@ import { MyskinsService } from 'src/app/api/myskins.service';
 })
 export class SelectedSkinsPage implements OnInit {
 
-  scroll :boolean = false;
+  scroll: boolean = false;
+
 
   constructor(public popoverController: PopoverController, public mySkinsService: MyskinsService) { }
 
   ngOnInit() {
+
     //Selektierte (Herz-Symbol) Skins werden geholt
     this.mySkinsService.getSelectedSkins().subscribe(data => {
       this.mySkinsService.selectedMySkins = data;
     })
+  }
+
+  myAtob(string) {
+    return atob(string);
   }
 
   //User will, dass Skin auf der Map angezeigt wird, oder eben nicht mehr

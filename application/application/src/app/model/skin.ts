@@ -4,7 +4,7 @@ export class Skin {
         public title = '',
         public description = '',
         public categories = [],
-        public image = 'http://www.lexxmuseum.com/gallery/albums/userpics/10001/test.png',
+        public image = '',
         public follower = 0,
         public radius = 0,
         public age = 0,

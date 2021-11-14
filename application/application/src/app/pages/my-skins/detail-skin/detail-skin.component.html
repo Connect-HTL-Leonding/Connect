@@ -1,5 +1,5 @@
 <ion-card *ngIf="myskin">
-  <img src="{{myskin.skin.image}}" />
+  <img [src]="(myskin.skin.image.startsWith('Li4')) ? this.myAtob(myskin.skin.image) :'data:image/png;base64,'+myskin.skin.image" />
   <ion-card-header>
     <div>
       <ion-card-subtitle>{{myskin.skin.follower}} Follower</ion-card-subtitle>

@@ -30,7 +30,7 @@ export class SkinCreatorPage implements OnInit {
         quality: 100,
         allowEditing: true
       })
-      this.image = capturedPhoto.base64String;
+      this.image = capturedPhoto.base64String.toString();
        
       this.skin.image = this.image;
     } catch (e) {
@@ -42,6 +42,7 @@ export class SkinCreatorPage implements OnInit {
     console.log(this.skin)
     this.skinsService.createSkin(this.skin).subscribe(value => {
       console.log("done creating")
+      console.log(this.image)
       this.image="";
       this.skin = new Skin();
       this.router.navigate(["my-skins"]);

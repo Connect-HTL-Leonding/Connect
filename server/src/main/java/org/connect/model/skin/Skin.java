@@ -29,7 +29,9 @@ public class Skin implements Serializable {
     private String title;
     private String description;
     //private Image image;
-    private String image;
+    //private String image;
+    @Lob
+    private byte[] image;
     private int follower;
     private boolean mature;
     private boolean verified;
@@ -41,7 +43,7 @@ public class Skin implements Serializable {
     public Skin() {
     }
 
-    public Skin(String title, String description, String image, int follower, boolean mature, boolean verified) {
+    public Skin(String title, String description, byte[] image, int follower, boolean mature, boolean verified) {
         this.title = title;
         this.description = description;
         this.image = image;
@@ -74,11 +76,11 @@ public class Skin implements Serializable {
         this.description = description;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

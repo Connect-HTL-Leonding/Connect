@@ -13,9 +13,17 @@ export class SmallSkinComponent implements OnInit {
   @Input() current: MySkin;
   @Input() selected: MySkin;
 
+imageReady = "";
+
   constructor() { }
 
   ngOnInit() {
+    if(this.myskin.skin.image.startsWith("Li4")){
+  this.imageReady=atob(this.myskin.skin.image);
+    }else{
+ this.imageReady='data:image/png;base64,'+this.myskin.skin.image;
+    }
+    
     console.log(this.current)
   }
 

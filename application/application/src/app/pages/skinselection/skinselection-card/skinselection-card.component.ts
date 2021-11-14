@@ -13,9 +13,20 @@ export class SkinselectionCardComponent implements OnInit {
   following: boolean;
   @Output() added: EventEmitter<Skin> = new EventEmitter<Skin>();
 
-  constructor(public s: SkinsService) { }
+  imageReady="";
+
+  constructor(public s: SkinsService) {
+    
+   }
 
   ngOnInit() { 
+    if(this.skin.image.startsWith("Li4")){
+  this.imageReady=atob(this.skin.image);
+    }else{
+ this.imageReady='data:image/png;base64,'+this.skin.image;
+    }
+   
+    console.log(this.imageReady);
     this.checkFollowing();
   }
 

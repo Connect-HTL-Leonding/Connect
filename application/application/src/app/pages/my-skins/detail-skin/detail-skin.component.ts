@@ -18,12 +18,21 @@ export class DetailSkinComponent implements OnInit {
   @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
   @Output() deleted: EventEmitter<Skin> = new EventEmitter<Skin>();
 
+  imageReady="";
+
   // Button
   @ViewChild('selectedBut', { static: false }) selectedRef: ElementRef;
 
   constructor(public router: Router, public ps: ProfileService, public alertController: AlertController) { }
 
   ngOnInit() {
+
+    if(this.myskin.skin.image.startsWith("Li4")){
+  this.imageReady=atob(this.myskin.skin.image);
+    }else{
+ this.imageReady='data:image/png;base64,'+this.myskin.skin.image;
+    }
+
     this.ps.getUser().add(
       () => {
         console.log("westrzutqjhkgizfutetdzuz")
@@ -36,8 +45,13 @@ export class DetailSkinComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "data" changed
     if (changes['skin']) {
+    
       console.log("fjldsj")
     }
+  }
+
+  myAtob(string){
+    return atob(string);
   }
 
   async presentAlertConfirm(myskin : MySkin) {
