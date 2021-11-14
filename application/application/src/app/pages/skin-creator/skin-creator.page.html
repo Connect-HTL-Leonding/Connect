@@ -9,7 +9,7 @@
 
 <ion-content>
   <div class="wrapper">
-    <div class="background" >
+    <div  class="background" [ngStyle]= "{'background-image': 'url(data:image/png;base64,'+ image +')'}" >
       <ion-button id="fotobutton" shape="round" (click)="addImage()"  name="image" ngDefaultControl >Add Image</ion-button>
     </div>
     <div class="container">
