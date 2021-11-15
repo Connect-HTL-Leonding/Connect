@@ -70,6 +70,7 @@ export class ChatPage implements OnInit {
   public myMeetUps;
   public getMessage;
   public getMeetups;
+  roomname;
 
 
 
@@ -187,19 +188,19 @@ export class ChatPage implements OnInit {
   getRoomName() {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
       this.otherUser.custom = data;
-      this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
-        this.meetUps = data;
-        console.log(data);
-      })
-      this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
-        this.meetUpsAccepted = data;
-        this.ms.getMeetupsFromMeD(this.otherUser.custom.id).subscribe(data => {
-          this.meetUpsDeclined = data;
+      if(this.otherUser.custom) {
+        this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
+          this.meetUps = data;
+          console.log(data);
         })
-      })
+        this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
+          this.meetUpsAccepted = data;
+          this.ms.getMeetupsFromMeD(this.otherUser.custom.id).subscribe(data => {
+            this.meetUpsDeclined = data;
+          })
+        })
 
-
-      this.pfp = "data:image/png;base64," + atob(this.otherUser.custom.profilePicture);
+        this.pfp = "data:image/png;base64," + atob(this.otherUser.custom.profilePicture);
       this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
         this.otherUser.id = data["id"];
         this.otherUser.userName = data["username"];
@@ -208,6 +209,14 @@ export class ChatPage implements OnInit {
         this.otherUser.email = data["email"];
         console.log(data)
       })
+      }
+      else {
+        this.roomname = "meetup-chat"
+      }
+      
+
+
+      
       /*
       this.contactlist.getOtherPfp(this.contactlist.selectedRoom.id).subscribe(data => {
         this.otherUser.custom.profilePicture = "data:image/png;base64," + data;
@@ -303,7 +312,7 @@ export class ChatPage implements OnInit {
 
   doSend() {
     if (this.sendText.trim().length > 0) {
-      this.m.message = this.sendText;
+      this.m.message = this.ps.user.userName + ": " + this.sendText;
       this.m.created = new Date();
       this.m.updated = new Date();
       this.m.image = "";

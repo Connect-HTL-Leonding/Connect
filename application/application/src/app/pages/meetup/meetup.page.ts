@@ -69,11 +69,13 @@ export class MeetupPage implements OnInit {
     canvas.width = 35;
     canvas.height = 62;
     var ctx = canvas.getContext('2d');
-    var image1 = this.otherUser.custom.profilePicture;
+    if(this.otherUser.custom) {
+      var image1 = this.otherUser.custom.profilePicture;
+    }
     var image = new Image();
     var compositeImage;
 
-    image.src = image1;
+    image.src = "";
 
     ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
 

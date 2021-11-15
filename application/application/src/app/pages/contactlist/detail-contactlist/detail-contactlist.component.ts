@@ -52,8 +52,11 @@ export class DetailContactlistComponent implements OnInit {
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
 
       this.user.custom = data;
-      this.pfp = "data:image/png;base64," + atob(this.user.custom.profilePicture);
+      if(this.user.custom) {
 
+      
+        this.pfp = "data:image/png;base64," + atob(this.user.custom.profilePicture);
+    
       this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
         if(data.length != 0) {
           this.newMeetUp = true;
@@ -100,9 +103,8 @@ export class DetailContactlistComponent implements OnInit {
         this.user.custom.profilePicture = "data:image/png;base64," + data;
       });
       */
+    }
     })
-    
-   
   }
 
 

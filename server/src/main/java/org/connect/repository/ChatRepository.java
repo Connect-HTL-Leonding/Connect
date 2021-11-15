@@ -34,28 +34,31 @@ public class ChatRepository {
 
 
         List<Room> roomList = null;
+        roomList = tq.getResultList();
         // Blocked users wont be shown (obviously :D)
-        try {
-            roomList = tq.getResultList();
-            for (Room r:roomList) {
-                for (User u: r.getUsers() ) {
-                    try {
-                        System.out.println(em.find(User.class,user_id.get().toString()));
-                        System.out.println(u);
-                        if(!Objects.equals(u.getId(), user_id.get().toString())) {
-                            tq2.setParameter("user_1",em.find(User.class,user_id.get().toString()));
-                            tq2.setParameter("user_2",u);
-                            tq2.getSingleResult();
-                        }
+        if(type.equals("DM")) {
+            try {
+                roomList = tq.getResultList();
+                for (Room r : roomList) {
+                    for (User u : r.getUsers()) {
+                        try {
+                            System.out.println(em.find(User.class, user_id.get().toString()));
+                            System.out.println(u);
+                            if (!Objects.equals(u.getId(), user_id.get().toString())) {
+                                tq2.setParameter("user_1", em.find(User.class, user_id.get().toString()));
+                                tq2.setParameter("user_2", u);
+                                tq2.getSingleResult();
+                            }
 
-                    } catch(Exception e) {
-                        roomList.remove(r);
-                        System.out.println(e.getMessage() + "ahhhhhhh h eeeeellp");
+                        } catch (Exception e) {
+                            roomList.remove(r);
+                            System.out.println(e.getMessage() + "ahhhhhhh h eeeeellp");
+                        }
                     }
                 }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
         }
         return roomList;
     }
