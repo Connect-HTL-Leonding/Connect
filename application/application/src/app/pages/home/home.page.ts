@@ -24,6 +24,7 @@ import { FriendPage } from '../friend/friend.page';
 
 import Showcaser from 'showcaser'
 import { DateService } from 'src/app/api/date.service';
+import { FriendPageRoutingModule } from '../friend/friend-routing.module';
 
 /*
 import {
@@ -63,6 +64,7 @@ export class HomePage implements OnInit {
   connectUpdate;
   mySubscription;
   meetupPreview;
+  blockFriend;
   dateService;
 
   //map
@@ -105,6 +107,11 @@ export class HomePage implements OnInit {
         this.displayFriends();
       }
     });
+
+    this.blockFriend = this.fs.blockedUpdateNotify.subscribe(value => {
+      console.log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
+        this.displayFriends();
+    })
 
     this.sideMenu();
 
@@ -205,7 +212,6 @@ export class HomePage implements OnInit {
     this.loadMap();
     console.log("LOADDDD")
   }
-
 
   //Funktion zum User Marker erstellen
   createUserMarker(user: User) {

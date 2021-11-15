@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Skin } from '../model/skin';
 import { Category } from '../model/category';
 import { CategoryService } from './category.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { MySkin } from '../model/myskin';
 import { OAuthService } from 'angular-oauth2-oidc';
 import { api } from '../app.component';
@@ -22,6 +22,11 @@ export class FriendshipService {
   public friendships: Array<Friendship>;
   public user : User;
   public blockedFriendships: Array<Friendship>
+  public blockedObservable = new Subject<any>();
+  blockNotify = this.blockedObservable.asObservable();
+
+  public blockedUpdateObservable = new Subject<any>();
+  blockedUpdateNotify = this.blockedUpdateObservable.asObservable();
 
 
   //Konstruktor

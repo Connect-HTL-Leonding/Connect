@@ -17,6 +17,7 @@ import { KeycloakService } from './api/auth/keycloak.service';
 import { switchMap } from 'rxjs/operators';
 
 import jwt_decode from 'jwt-decode';
+import { FriendshipService } from './api/friendship.service';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +32,7 @@ export class AppComponent implements OnInit {
   newMeetup;
   positionUpdate;
   updateContactlist;
+  block;
 
 
 
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit {
     public ps: ProfileService,
     public ms: MeetupService,
     public cs: ChatService,
+    public fs: FriendshipService,
     public contactlistService: ContactlistService,
     public toastController: ToastController
   ) {
@@ -51,6 +54,10 @@ export class AppComponent implements OnInit {
     //this.oauthService.loadDiscoveryDocumentAndTryLogin();
     // optional
     //this.oauthService.setupAutomaticSilentRefresh();
+
+    this.block = this.fs.blockNotify.subscribe(value => {
+      this.doSend(value);
+    })
 
     this.getMessage = this.cs.chatSendUpdateNotify.subscribe(value => {
       this.doSend(value);
@@ -170,7 +177,8 @@ export class AppComponent implements OnInit {
           this.ps.findFriendUser(message[2]).subscribe(data => {
             this.presentToastWithOptions(data["username"] + " hat sich mit dir connected!");
           })
-
+          break;
+        case("blocked"): this.fs.blockedUpdateObservable.next("blocked");
       }
 
     }

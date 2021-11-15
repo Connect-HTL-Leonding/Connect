@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 
 import { PhotogalleryPage } from '../profile/photogallery/photogallery.page';
 import { FriendshipService } from 'src/app/api/friendship.service';
+import { ContactlistService } from 'src/app/api/contactlist.service';
 
 @Component({
   selector: 'app-friend',
@@ -34,7 +35,8 @@ export class FriendPage implements OnInit {
     public modalController: ModalController,
     public photoService: PhotoService,
     public alertController: AlertController,
-    public friendshipService: FriendshipService) {
+    public friendshipService: FriendshipService,
+    public cs:ContactlistService) {
 
   }
 
@@ -80,6 +82,8 @@ export class FriendPage implements OnInit {
             console.log('Delete Okay');
             //blockieren Funktion ...
             this.friendshipService.blockFriendship(this.user.custom).subscribe(data => {
+              this.friendshipService.blockedObservable.next('blocked:' + this.ps.user.id + ':' + this.user.id)
+              this.cs.contactlistObservable.next('contactListUpdate');
               console.log("blocked")
             })
 

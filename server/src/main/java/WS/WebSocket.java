@@ -84,25 +84,14 @@ public class WebSocket {
             case("contactListUpdate"): broadcastContactlistUpdate("contactListUpdate");
             break;
             case("newConnect"): broadcastNewConnect(s[1], s[2]);
+            break;
+            case("blocked"): broadcastBlocked("blocked");
 
         }
 
     }
 
-    private void broadcastNewConnect(String id, String id2) {
-        sessions.values().forEach(s -> {
-            if(users.get(s).equals(id)) {
-                String msg = "newConnect:" + id + ":" + id2;
-                s.getAsyncRemote().sendObject(msg, result -> {
-                    if (result.getException() != null) {
-                        System.out.println("Unable to send message: " + result.getException());
-                    }
-                });
-            }
-        });
-    }
-
-    private void broadcastContactlistUpdate(String message) {
+    private void broadcastBlocked(String message) {
         sessions.values().forEach(s -> {
             s.getAsyncRemote().sendObject(message, result -> {
                 if (result.getException() != null) {
@@ -131,6 +120,33 @@ public class WebSocket {
         });
 
     }
+
+
+    private void broadcastNewConnect(String id, String id2) {
+        sessions.values().forEach(s -> {
+            if(users.get(s).equals(id)) {
+                String msg = "newConnect:" + id + ":" + id2;
+                s.getAsyncRemote().sendObject(msg, result -> {
+                    if (result.getException() != null) {
+                        System.out.println("Unable to send message: " + result.getException());
+                    }
+                });
+            }
+        });
+    }
+
+    private void broadcastContactlistUpdate(String message) {
+        sessions.values().forEach(s -> {
+            s.getAsyncRemote().sendObject(message, result -> {
+                if (result.getException() != null) {
+                    System.out.println("Unable to send message: " + result.getException());
+                }
+            });
+
+        });
+    }
+
+
 
     private void broadcastMessage(String id, String type) {
         TypedQuery<String> query = em.createQuery("select rm.id from Room m join m.users rm where m.id = :id", String.class);
