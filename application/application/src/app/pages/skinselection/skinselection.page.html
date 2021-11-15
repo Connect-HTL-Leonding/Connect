@@ -10,7 +10,12 @@
 <ion-content>
 
   <div class="top-elements">
+
+    <div id="searchFlex">
     <ion-searchbar [(ngModel)]="searchString"></ion-searchbar>
+      <ion-icon name="checkbox" (click)="checkVerified()" [ngStyle]="this.shouldBeVerified ? {'color': 'var(--ion-color-primary)'}: {'color':'lightgrey'}" id="verify"></ion-icon>
+    </div>
+
 
     <div id="spacer">
       <ng-container *ngFor="let category of categoryService.categories; index as i;">

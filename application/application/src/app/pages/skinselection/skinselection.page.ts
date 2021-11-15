@@ -20,7 +20,8 @@ export class SkinselectionPage implements OnInit {
 
   skinsService: SkinsService;
   categoryService: CategoryService;
-  mySkinService: MyskinsService
+  mySkinService: MyskinsService;
+  shouldBeVerified: boolean = false;
 
   currCat: Category;
   searchString = "";
@@ -35,6 +36,7 @@ export class SkinselectionPage implements OnInit {
 
   check(skin) {
     if (this.currCat ) {
+
       var index = -1;
 
       //important
@@ -47,12 +49,14 @@ export class SkinselectionPage implements OnInit {
         }
       });
 
-      if ((index !== -1 || this.currCat.title=="All") && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '' )) {
+      if ((index !== -1 || this.currCat.title=="All") && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '') && ((this.shouldBeVerified == true && skin.verified == true) || !this.shouldBeVerified)) {
         return true;
       } else {
         return false;
       }
-    }
+
+
+    } 
   }
 
   ngOnInit() {
@@ -103,6 +107,10 @@ export class SkinselectionPage implements OnInit {
         }
       });
     }
+  }
+
+  checkVerified(){
+      this.shouldBeVerified = !this.shouldBeVerified;
   }
 
   setCurrCat(c: Category) {
