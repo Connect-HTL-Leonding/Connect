@@ -97,8 +97,9 @@ export class MeetupDataPage implements OnInit {
           user_id: friend.id,
           status: "pending",
         }
+        console.log(dataForPost);
         this.ms.setOtherUser(dataForPost).subscribe(data=> {
-          this.dismissAll();
+          
           this.contactlistService.contactlistObservable.next("contactListUpdate");
           this.ms.createMeetupObservable.next("newMeetup:" + this.selectedRoom.id);
         })

@@ -62,7 +62,7 @@ INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (27, '
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (28, '2021-10-16 11:07:51.962431', 'cool', '88db121c-4f49-42c2-8f96-5db7d3cbe75a', '7e375e76-dc48-4c84-94ad-ce512effc6d9');
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (29, '2021-10-16 11:07:51.962431', 'cool', '0d3dcf03-9d38-4c12-af82-a9467c786db5', '2ad6f082-f92c-4934-9ef2-57feab03dfd6');
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (30, '2021-10-16 11:07:51.962431', 'cool', '0d3dcf03-9d38-4c12-af82-a9467c786db5', 'ceadee37-07d9-444c-817d-b7d2d6d21a0a');
-
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (31, '2021-10-16 11:07:51.962431', 'cool', 'e8da2bad-ec77-4814-ac53-a57bd4571d7c', 'b03251fb-abda-4045-838f-7808bea46601');
 
 
 INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (22, 11);

@@ -109,7 +109,6 @@ export class HomePage implements OnInit {
     });
 
     this.blockFriend = this.fs.blockedUpdateNotify.subscribe(value => {
-      console.log("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
         this.displayFriends();
     })
 

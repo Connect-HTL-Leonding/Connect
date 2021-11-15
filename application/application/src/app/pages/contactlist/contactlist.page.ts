@@ -86,7 +86,8 @@ export class ContactlistPage implements OnInit {
   }
 
   segmentChanged(ev: any) {
-    console.log('Segment changed',ev);
+    this.contactService.type = ev.detail.value;
+    this.reloadRooms();
   }
 
 }

@@ -61,7 +61,7 @@ export class ContactlistService {
   }
 
   getChats() {
-    return this.http.get<Room[]>(api.url + 'chat/findAll/DM')
+    return this.http.get<Room[]>(api.url + 'chat/findAll/' + this.type);
   }
 
   getLatestMessage(room: Room) {
