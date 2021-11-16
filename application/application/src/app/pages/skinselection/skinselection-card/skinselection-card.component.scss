@@ -43,3 +43,11 @@
 .disabled_add_skin_circle {
     opacity: 50%;
 }
+#verify{
+    position: absolute;
+    top: 1px;
+    margin-left: 2px;
+    width: 5vw;
+    height: 5vw;
+    color: var(--ion-color-primary)
+}
