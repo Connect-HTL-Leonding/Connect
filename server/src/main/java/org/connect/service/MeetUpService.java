@@ -36,7 +36,7 @@ public class MeetUpService {
 
     @POST
     @Path("setOtherUser")
-    public void setOtherUser(Meeting_User mu) {
+    public void setOtherUser(List<Meeting_User> mu) {
         repo.addEntry(mu);
     }
 

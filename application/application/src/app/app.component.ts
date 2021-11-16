@@ -137,9 +137,11 @@ export class AppComponent implements OnInit {
         this.cs.updateChatObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
-              this.ps.findFriendUser(data.id).subscribe(data => {
-                this.presentToastWithOptions("neue Nachricht von " + data["username"]);
-              })
+              if(data) {
+                this.ps.findFriendUser(data.id).subscribe(data => {
+                  this.presentToastWithOptions("neue Nachricht von " + data["username"]);
+                })
+              }
             })
           }
           break;

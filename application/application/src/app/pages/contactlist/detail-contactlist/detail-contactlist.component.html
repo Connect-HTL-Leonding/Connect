@@ -2,12 +2,15 @@
 
 <div *ngIf="userExists(user)" class="chat-user">
   
-  <ion-avatar slot="start">
-    <img *ngIf="user.custom" src={{pfp}}>
+  <ion-avatar *ngIf="user.custom" slot="start">
+    <img  src={{pfp}}>
+    
   </ion-avatar>
+  <ion-icon id="icon" color="primary" slot="start" *ngIf="!user.custom" name="location-sharp"></ion-icon>
   <ion-label id="chat-flex">
     <div id="flex">
       <h2 *ngIf="user" id="username">{{user.userName}}</h2>
+      <h2 *ngIf="!user.custom && room.meeting" id="username">meetup {{room.meeting.id}}</h2>
       <p *ngIf="this.unseenMessages<=0 && this.newMeetUp == false && !this.myMeetUp">{{this.latestMessage}}</p>
       <p class="bold" *ngIf="this.unseenMessages>0 && this.newMeetUp == false && !this.myMeetUp">{{this.latestMessage}}</p>
       <p class="bold" *ngIf="this.newMeetUp">I wanna meet up with you!</p>

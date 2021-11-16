@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler","rooms"})
 @NamedQueries({
         @NamedQuery(name = User.FINDWITHID, query = "SELECT u FROM User u where u.id = :user_id"),
-        @NamedQuery(name = User.FINDOTHERUSER, query = "SELECT u FROM User u join u.rooms r where r.id = :roomid AND u.id NOT LIKE :user_id")
+        @NamedQuery(name = User.FINDOTHERUSER, query = "SELECT u FROM User u join u.rooms r where r.id = :roomid AND r.type = 'DM' AND u.id NOT LIKE :user_id")
 })
 public class User implements Serializable {
 

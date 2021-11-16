@@ -108,6 +108,8 @@ INSERT INTO connect.Room (id, created, type, updated) VALUES (8, null, 'DM', nul
 INSERT INTO connect.Room (id, created, type, updated) VALUES (10, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (11, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (12, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (13, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (14, null, 'MU', null);
 
 
 
@@ -127,6 +129,12 @@ INSERT INTO connect.Room_Members (room_id, user_id) VALUES (12, '0d3dcf03-9d38-4
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (12, '2ad6f082-f92c-4934-9ef2-57feab03dfd6');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (11, '0d3dcf03-9d38-4c12-af82-a9467c786db5');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (11, 'ceadee37-07d9-444c-817d-b7d2d6d21a0a');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (13, 'e8da2bad-ec77-4814-ac53-a57bd4571d7c');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (13, 'b03251fb-abda-4045-838f-7808bea46601');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (14, 'e8da2bad-ec77-4814-ac53-a57bd4571d7c');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (14, 'b03251fb-abda-4045-838f-7808bea46601');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (14, 'd7be2af6-5fe9-4f53-a788-6a25a1580258');
+
 
 
 
