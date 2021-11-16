@@ -19,6 +19,7 @@ export class SkinsService {
   public skins: Array<Skin>;
   categoryService: CategoryService
   message;
+  showVerified: boolean = false;
 
 
   //Konstruktor
@@ -48,5 +49,6 @@ export class SkinsService {
   createSkin(s: Skin) {
     return this.http.post(api.url + 'skin/create', s);
   }
+  
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, PopoverController } from '@ionic/angular';
 import Showcaser from 'showcaser';
 import { ProfileService } from 'src/app/api/profile.service';
 import { CategoryService } from '../../api/category.service';
@@ -9,6 +9,7 @@ import { Category } from '../../model/category';
 import { MySkin } from '../../model/myskin';
 import { Skin } from '../../model/skin';
 import { Router } from '@angular/router';
+import { SkinsettingsPage } from '../skin-creator/skinsettings/skinsettings.page';
 
 
 @Component({
@@ -21,14 +22,13 @@ export class SkinselectionPage implements OnInit {
   skinsService: SkinsService;
   categoryService: CategoryService;
   mySkinService: MyskinsService;
-  shouldBeVerified: boolean = false;
 
   currCat: Category;
   searchString = "";
 
   @ViewChild('skinSelection', { static: false }) skinSelectionRef: ElementRef;
 
-  constructor(private router: Router, public ps: ProfileService, ss: SkinsService, cs: CategoryService, ms: MyskinsService, public modalCtrl: ModalController) {
+  constructor(private router: Router, public ps: ProfileService, ss: SkinsService, cs: CategoryService, ms: MyskinsService, public popoverController: PopoverController, public modalCtrl: ModalController) {
     this.skinsService = ss;
     this.categoryService = cs;
     this.mySkinService = ms;
@@ -49,7 +49,7 @@ export class SkinselectionPage implements OnInit {
         }
       });
 
-      if ((index !== -1 || this.currCat.title=="All") && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '') && ((this.shouldBeVerified == true && skin.verified == true) || !this.shouldBeVerified)) {
+      if ((index !== -1 || this.currCat.title=="All") && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '') && ((this.skinsService.showVerified == true && skin.verified == true) || !this.skinsService.showVerified)) {
         return true;
       } else {
         return false;
@@ -57,6 +57,17 @@ export class SkinselectionPage implements OnInit {
 
 
     } 
+  }
+
+  async presentPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: SkinsettingsPage,
+      cssClass: 'no-overflow',
+      event: ev,
+      translucent: true
+    });
+    
+    return await popover.present();
   }
 
   ngOnInit() {
@@ -109,9 +120,7 @@ export class SkinselectionPage implements OnInit {
     }
   }
 
-  checkVerified(){
-      this.shouldBeVerified = !this.shouldBeVerified;
-  }
+  
 
   setCurrCat(c: Category) {
     console.log("Cat: " + c)

@@ -12,8 +12,12 @@
   <div class="top-elements">
 
     <div id="searchFlex">
-    <ion-searchbar [(ngModel)]="searchString"></ion-searchbar>
-      <ion-icon name="checkbox" (click)="checkVerified()" [ngStyle]="this.shouldBeVerified ? {'color': 'var(--ion-color-primary)'}: {'color':'lightgrey'}" id="verify"></ion-icon>
+      <ion-searchbar [(ngModel)]="searchString"></ion-searchbar>
+      <ion-icon name="build" (click)="presentPopover($event)" id="verify">
+      </ion-icon>
+
+
+
     </div>
 
 
