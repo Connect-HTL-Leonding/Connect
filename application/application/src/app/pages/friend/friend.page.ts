@@ -58,7 +58,6 @@ export class FriendPage implements OnInit {
   }
 
   dismissModal() {
-    console.log("dismiss")
     this.modalController.dismiss();
   }
 
@@ -84,7 +83,7 @@ export class FriendPage implements OnInit {
             this.friendshipService.blockFriendship(this.user.custom).subscribe(data => {
               this.friendshipService.blockedObservable.next('blocked:' + this.ps.user.id + ':' + this.user.id)
               this.cs.contactlistObservable.next('contactListUpdate');
-              console.log("blocked")
+              this.dismissModal();
             })
 
           }

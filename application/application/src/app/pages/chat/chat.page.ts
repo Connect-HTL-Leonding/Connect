@@ -142,9 +142,7 @@ export class ChatPage implements OnInit {
   profileFriend(friend: User) {
     this.ps.findFriendUser(friend.id)
       .subscribe(data => {
-        console.log(data + "oh no");
         this.presentFriend(data);
-
       });
   }
 
@@ -158,7 +156,9 @@ export class ChatPage implements OnInit {
       }
     });
     modal.onDidDismiss().then((data => {
-      console.log("dismissed")
+      setTimeout(() => {
+        this.dismissModal();
+      }, 50);
     }))
     return await modal.present();
   }
