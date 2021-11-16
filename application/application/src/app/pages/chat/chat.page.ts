@@ -92,17 +92,18 @@ export class ChatPage implements OnInit {
     });
 
     this.getMeetups = this.ms.showMeetupUpdateNotify.subscribe(value => {
-      console.log(value);
       if (this.chatservice.selectedRoom.id == value) {
-        this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
-          this.meetUps = data;
-        })
-        this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
-          this.meetUpsAccepted = data;
-          this.ms.getMeetupsFromMeD(this.otherUser.custom.id).subscribe(data => {
-            this.meetUpsDeclined = data;
+        if (this.otherUser.custom) {
+          this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
+            this.meetUps = data;
           })
-        })
+          this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
+            this.meetUpsAccepted = data;
+            this.ms.getMeetupsFromMeD(this.otherUser.custom.id).subscribe(data => {
+              this.meetUpsDeclined = data;
+            })
+          })
+        }
       }
     })
   }
@@ -188,7 +189,7 @@ export class ChatPage implements OnInit {
   getRoomName() {
     this.contactlist.getOtherUser(this.contactlist.selectedRoom.id).subscribe(data => {
       this.otherUser.custom = data;
-      if(this.otherUser.custom) {
+      if (this.otherUser.custom) {
         this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
           this.meetUps = data;
           console.log(data);
@@ -201,22 +202,22 @@ export class ChatPage implements OnInit {
         })
 
         this.pfp = "data:image/png;base64," + atob(this.otherUser.custom.profilePicture);
-      this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
-        this.otherUser.id = data["id"];
-        this.otherUser.userName = data["username"];
-        this.otherUser.firstname = data["firstName"];
-        this.otherUser.lastname = data["lastName"];
-        this.otherUser.email = data["email"];
-        console.log(data)
-      })
+        this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
+          this.otherUser.id = data["id"];
+          this.otherUser.userName = data["username"];
+          this.otherUser.firstname = data["firstName"];
+          this.otherUser.lastname = data["lastName"];
+          this.otherUser.email = data["email"];
+          console.log(data)
+        })
       }
       else {
         this.roomname = "meetup-chat"
       }
-      
 
 
-      
+
+
       /*
       this.contactlist.getOtherPfp(this.contactlist.selectedRoom.id).subscribe(data => {
         this.otherUser.custom.profilePicture = "data:image/png;base64," + data;

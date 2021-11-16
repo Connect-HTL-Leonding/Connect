@@ -86,22 +86,18 @@ export class MeetupDataPage implements OnInit {
     this.time.setUTCMinutes(new Date(this.timeOfDay).getMinutes());
     this.time.setUTCSeconds(new Date(this.timeOfDay).getSeconds());
     this.meetup = new Meeting(0, this.time, this.position);
-    console.log(this.meetup);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {
       let dataForPost: Array<Object> = new Array();
       this.selectedFriends.forEach(friend => {
-        // The same as Meeting_User in the backend
-        
+        // The same as Meeting_User in the backend    
         dataForPost.push({
           meeting: data,
           user_id: friend.id,
           status: "pending",
         })
-        console.log(dataForPost);
       });
-      this.ms.setOtherUser(dataForPost).subscribe(data=> {
-          
+      this.ms.setOtherUser(dataForPost).subscribe(data=> {       
         this.contactlistService.contactlistObservable.next("contactListUpdate");
         this.ms.createMeetupObservable.next("newMeetup:" + this.selectedRoom.id);
       })
