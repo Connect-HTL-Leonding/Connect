@@ -1,10 +1,12 @@
 <ion-card class="skinselection-card">
 
+  
   <ion-img [src]="this.imageReady"   alt="not loading"></ion-img>
 
   <ion-card-content>
-
-    <ion-card-title>{{skin.title}}</ion-card-title>
+    
+    <ion-card-title>{{skin.title}}   <ion-icon name="checkmark-circle" *ngIf="this.skin.verified" id="verify"></ion-icon></ion-card-title>
+    
     <p class="skinselection-description">
       {{skin.description}}
     </p>

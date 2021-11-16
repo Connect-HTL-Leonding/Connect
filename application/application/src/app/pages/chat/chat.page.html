@@ -7,14 +7,14 @@
           <img  id="profilepicture" src="{{pfp}}">
           
         </ion-avatar>
-        <ion-icon color="primary" id="icon" *ngIf="!otherUser.custom" name="location-sharp"></ion-icon>
+        <ion-icon color="primary" class="icon" *ngIf="!otherUser.custom" name="location-sharp"></ion-icon>
         <ion-label *ngIf="otherUser.custom">
           {{otherUser.userName}}
         </ion-label >
         <ion-label *ngIf="!otherUser.custom && chatservice.selectedRoom.meeting">meetup {{chatservice.selectedRoom.meeting.id}}</ion-label>
       </div>
       <ion-icon *ngIf="otherUser.custom" id="meeting-icon" (click)="presentModal()" name="walk"></ion-icon>
-      <ion-icon *ngIf="!otherUser.custom" name="pin"></ion-icon>
+      <ion-icon class="icon" color="primary" *ngIf="!otherUser.custom" name="exit"></ion-icon>
     </div>
   </ion-toolbar>
 </ion-header>

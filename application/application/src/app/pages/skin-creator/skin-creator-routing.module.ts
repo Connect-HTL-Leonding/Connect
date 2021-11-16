@@ -7,6 +7,14 @@ const routes: Routes = [
   {
     path: '',
     component: SkinCreatorPage
+  },
+  {
+    path: 'skinsettings',
+    loadChildren: () => import('./skinsettings/skinsettings.module').then( m => m.SkinsettingsPageModule)
+  },
+  {
+    path: 'skinsettings',
+    loadChildren: () => import('./skinsettings/skinsettings.module').then( m => m.SkinsettingsPageModule)
   }
 ];
 

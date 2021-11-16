@@ -19,6 +19,10 @@
   </ion-segment>
   <hr>
 
+  <div *ngIf="contactService.rooms.length<1" class="center">
+  <h3>You don't have any chatrooms yet.</h3>
+  </div>
+
   <ion-list id="chats">
     <ion-item class="chat" *ngFor="let room of contactService.rooms, let i = index" (click)="presentModal(room)">
       <app-detail-contactlist [room]="room"></app-detail-contactlist>
