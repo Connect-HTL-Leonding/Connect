@@ -63,6 +63,7 @@ INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (28, '
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (29, '2021-10-16 11:07:51.962431', 'cool', '0d3dcf03-9d38-4c12-af82-a9467c786db5', '2ad6f082-f92c-4934-9ef2-57feab03dfd6');
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (30, '2021-10-16 11:07:51.962431', 'cool', '0d3dcf03-9d38-4c12-af82-a9467c786db5', 'ceadee37-07d9-444c-817d-b7d2d6d21a0a');
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (31, '2021-10-16 11:07:51.962431', 'cool', 'e8da2bad-ec77-4814-ac53-a57bd4571d7c', 'b03251fb-abda-4045-838f-7808bea46601');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (32, '2021-10-16 11:07:51.962431', 'cool', '8c34c68f-3c8f-49e6-98be-a6a8a5e82939', '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
 
 
 INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (22, 11);
@@ -110,7 +111,7 @@ INSERT INTO connect.Room (id, created, type, updated) VALUES (11, null, 'DM', nu
 INSERT INTO connect.Room (id, created, type, updated) VALUES (12, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (13, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (14, null, 'MU', null);
-
+INSERT INTO connect.Room (id, created, type, updated) VALUES (15, null, 'DM', null);
 
 
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (4, '7dfd00ec-436f-4d97-a72b-e9e82a7af50a');
@@ -134,6 +135,10 @@ INSERT INTO connect.Room_Members (room_id, user_id) VALUES (13, 'b03251fb-abda-4
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (14, 'e8da2bad-ec77-4814-ac53-a57bd4571d7c');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (14, 'b03251fb-abda-4045-838f-7808bea46601');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (14, 'd7be2af6-5fe9-4f53-a788-6a25a1580258');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (15, '8c34c68f-3c8f-49e6-98be-a6a8a5e82939');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (15, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+
+
 
 
 
