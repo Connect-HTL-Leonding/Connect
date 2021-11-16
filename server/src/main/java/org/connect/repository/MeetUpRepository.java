@@ -38,28 +38,32 @@ public class MeetUpRepository {
     }
 
     @Transactional
-    public Meeting_User addEntry(Meeting_User mu) {
-        TypedQuery<Room> query = em.createNamedQuery(Room.FINDBYMEETING, Room.class);
-        query.setParameter("meeting", mu.getMeeting());
-        TypedQuery<User> userQuery = em.createNamedQuery(User.FINDWITHID, User.class);
-        userQuery.setParameter("user_id", mu.getUser_id());
+    public List<Meeting_User> addEntry(List<Meeting_User> muList) {
+        for (Meeting_User mu : muList)  {
+            TypedQuery<Room> query = em.createNamedQuery(Room.FINDBYMEETING, Room.class);
+            query.setParameter("meeting", mu.getMeeting());
+            TypedQuery<User> userQuery = em.createNamedQuery(User.FINDWITHID, User.class);
+            userQuery.setParameter("user_id", mu.getUser_id());
+            Room r = null;
+            User u = null;
+            try {
+                r = query.getSingleResult();
+                u = userQuery.getSingleResult();
+            } catch(Exception ex) {
+                System.out.println(ex.getMessage());
+            }
 
-        Room r = null;
-        User u = null;
-        try {
-            r = query.getSingleResult();
-            u = userQuery.getSingleResult();
-        } catch(Exception ex) {
-            System.out.println(ex.getMessage());
+            r.getUsers().add(u);
+            u.getRooms().add(r);
+            mu.setSeen(false);
+            em.persist(mu);
+            em.merge(u);
+            em.merge(r);
+
         }
 
-        r.getUsers().add(u);
-        u.getRooms().add(r);
-        mu.setSeen(false);
-        em.persist(mu);
-        em.merge(u);
-        em.merge(r);
-        return mu;
+        return muList;
+
     }
 
 

@@ -89,22 +89,23 @@ export class MeetupDataPage implements OnInit {
     console.log(this.meetup);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {
-      
+      let dataForPost: Array<Object> = new Array();
       this.selectedFriends.forEach(friend => {
         // The same as Meeting_User in the backend
-        let dataForPost = {
+        
+        dataForPost.push({
           meeting: data,
           user_id: friend.id,
           status: "pending",
-        }
-        console.log(dataForPost);
-        this.ms.setOtherUser(dataForPost).subscribe(data=> {
-          
-          this.contactlistService.contactlistObservable.next("contactListUpdate");
-          this.ms.createMeetupObservable.next("newMeetup:" + this.selectedRoom.id);
         })
+        console.log(dataForPost);
       });
-    
+      this.ms.setOtherUser(dataForPost).subscribe(data=> {
+          
+        this.contactlistService.contactlistObservable.next("contactListUpdate");
+        this.ms.createMeetupObservable.next("newMeetup:" + this.selectedRoom.id);
+      })
+      this.dismissAll()
     })   
   }
 
