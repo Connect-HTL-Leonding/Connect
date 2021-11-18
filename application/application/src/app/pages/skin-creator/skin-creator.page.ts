@@ -3,6 +3,8 @@ import { Camera, CameraResultType } from '@capacitor/core';
 import { Skin } from 'src/app/model/skin';
 import { SkinsService } from 'src/app/api/skins.service';
 import { Router } from '@angular/router';
+import { CategoryService } from 'src/app/api/category.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-skin-creator',
@@ -14,12 +16,23 @@ export class SkinCreatorPage implements OnInit {
   public image;
   public skin;
   
-  constructor(public skinsService: SkinsService,private router: Router) {
+  constructor(public skinsService: SkinsService,public cs: CategoryService,private router: Router, public toastController: ToastController) {
     this.skin = new Skin();
     this.image = "";
    }
+   ngOnInit() {
+    console.log(this.skinsService);
 
-  ngOnInit() {
+    this.cs.getCategories().subscribe(
+      data => {
+        this.cs.categories = data;
+      
+      },
+      error1 => {
+        console.log('Error');
+      }
+    )
+    
   }
 
 
@@ -37,6 +50,15 @@ export class SkinCreatorPage implements OnInit {
       }
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Sorry, there was an Error. Try again later.',
+      duration: 4000
+    });
+    console.log("fjdlsjdlkdf")
+    toast.present();
+  }
+
   createSkin(){
     console.log("creating skin")
     console.log(this.skin)
@@ -46,6 +68,9 @@ export class SkinCreatorPage implements OnInit {
       this.image="";
       this.skin = new Skin();
       this.router.navigate(["my-skins"]);
+    },
+    err => {
+this.presentToast();
     });
   }
 }

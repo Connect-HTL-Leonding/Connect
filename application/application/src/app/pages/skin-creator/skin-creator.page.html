@@ -40,6 +40,20 @@
 
       <div class="wrap">
         
+  <ion-item>
+    <ion-label>Categories</ion-label>
+    <ion-select [(ngModel)]="this.skin.categories" multiple="true" cancelText="Nah" okText="Okay!">
+      <ng-container *ngFor="let category of cs.categories; index as i;">
+        <ion-select-option [value]="this.category">{{category.title}}</ion-select-option>
+      </ng-container>
+  
+     
+    </ion-select>
+  </ion-item>
+      </div>
+
+      <div class="wrap">
+        
      <br>
      <ion-button id="create-button" shape="round" color="primary"  expand="block" (click)="createSkin()">
      Create</ion-button>
