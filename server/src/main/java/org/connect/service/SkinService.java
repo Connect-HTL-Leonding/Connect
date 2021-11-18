@@ -36,6 +36,16 @@ public class SkinService {
         return "DB initialize moved to import.sql";
     }
 
+    // Initialisieren der DB
+    @Path("test")
+    @GET
+    @Produces(MediaType.TEXT_PLAIN)
+
+    public String test() {
+        //dbRepo.initDB();
+        return "success";
+    }
+
     // Liste aller Skins senden
     @Path("findAll")
     @GET
