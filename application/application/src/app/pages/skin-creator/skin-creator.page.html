@@ -32,9 +32,9 @@
       </div>
 
       <div class="wrap">
-        <ion-label color="primary" class="desc-label" [(ngModel)]="this.skin.mature" name="mature" ngDefaultControl>Mark as 18+</ion-label>
+        <ion-label color="primary" class="desc-label"  name="mature" ngDefaultControl>Mark as 18+</ion-label>
      <br>
-        <ion-toggle></ion-toggle>
+        <ion-toggle [(ngModel)]="this.skin.mature"></ion-toggle>
      
       </div>
 

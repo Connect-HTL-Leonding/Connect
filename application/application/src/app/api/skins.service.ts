@@ -19,7 +19,8 @@ export class SkinsService {
   public skins: Array<Skin>;
   categoryService: CategoryService
   message;
-  showVerified: boolean = false;
+  showVerified: boolean = true;
+  showMature: boolean = false;
 
 
   //Konstruktor

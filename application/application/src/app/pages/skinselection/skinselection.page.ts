@@ -49,7 +49,7 @@ export class SkinselectionPage implements OnInit {
         }
       });
 
-      if ((index !== -1 || this.currCat.title=="All") && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '') && ((this.skinsService.showVerified == true && skin.verified == true) || !this.skinsService.showVerified)) {
+      if ((index !== -1 || this.currCat.title=="All") && (skin.title.toUpperCase().startsWith(this.searchString.toUpperCase().trim()) || this.searchString.trim() === '') && ((this.skinsService.showVerified == true && skin.verified == true) || !this.skinsService.showVerified) && ((this.skinsService.showMature == false && skin.mature == false) || this.skinsService.showMature)) {
         return true;
       } else {
         return false;
