@@ -89,7 +89,6 @@ export class KeycloakService {
     localStorage.setItem('refresh_token', authResult.refresh_token);
     localStorage.setItem("expires_in", JSON.stringify(expires_in.valueOf()));
 
-    console.log(localStorage.getItem('refresh_token') + "HALLO")
   }
 
   logout() {
