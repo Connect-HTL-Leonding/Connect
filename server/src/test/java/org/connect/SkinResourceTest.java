@@ -7,8 +7,11 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
+import io.restassured.response.ValidatableResponse;
+import org.connect.model.skin.Skin;
 import org.connect.service.SkinService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.*;
 
 import javax.ws.rs.Path;
@@ -51,7 +54,7 @@ public class SkinResourceTest {
                         .param("client_secret", credential)
                         .param("scope", "openid")
                         .param("grant_type", "password")
-                        .param("username", "jan")
+                        .param("username", "tobi")
                         .param("password", "geheim")
                         //.header("Accept", ContentType.JSON.getAcceptHeader())
                         .when()
@@ -75,6 +78,30 @@ public class SkinResourceTest {
                 .then()
                 .statusCode(200)
                 .body(is("success"));
+    }
+
+    @Test
+    public void testFindAll() {
+       Response r = given()
+                .auth().preemptive().oauth2(accessToken)
+                .when().get("/findAll")
+                .then()
+               .extract().response();
+
+       Assertions.assertEquals("Basketball",r.jsonPath().getString("title[2]"));
+    }
+
+    @Test
+    public void testFind() {
+        // Tests to see whether the FUßball skin exists
+        Response r = given()
+                .auth().preemptive().oauth2(accessToken)
+                .when().get("/find/11")
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals(200,r.statusCode());
+        Assertions.assertEquals("Fußball",r.jsonPath().getString("title"));
     }
 
 }
