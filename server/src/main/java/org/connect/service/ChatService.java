@@ -33,8 +33,6 @@ public class ChatService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Room> findAll(@PathParam("type") String type) {
-        System.out.println(identity.getPrincipal().getName());
-
         return dbRepo.findAll(jwt.claim("sub"), type);
     }
 

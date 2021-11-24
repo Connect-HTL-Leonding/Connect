@@ -59,7 +59,7 @@ export class ChatPage implements OnInit {
   public pos = 0;
   public showNewMsgLine: boolean;
   public pfp;
-  public ms;
+  public ms: MeetupService;
   public isNewMeetUp;
   public meetUps;
   public myMeetUp;
@@ -146,6 +146,12 @@ export class ChatPage implements OnInit {
       });
   }
 
+  openMeetup(meetupid) {
+    this.ms.getMeetupById(meetupid).subscribe(data => {
+      this.showLocation(data, true);
+    })
+  }
+
   async presentFriend(friendKeycloak) {
     let friend = friendKeycloak;
     const modal = await this.modalController.create({
@@ -226,11 +232,11 @@ export class ChatPage implements OnInit {
     })
   }
 
-  showLocation(m: Meeting) {
+  showLocation(m: Meeting, isInMeetupChat) {
 
     this.dismissModal();
     this.router.navigate(["home"]);
-    this.ms.meetupPreviewObserveable.next({ "meetup": m, "originRoom": this.contactlist.selectedRoom });
+    this.ms.meetupPreviewObserveable.next({ "meetup": m, "originRoom": this.contactlist.selectedRoom, "meetupChat": isInMeetupChat });
   }
 
 

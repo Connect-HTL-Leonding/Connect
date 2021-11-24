@@ -2,36 +2,26 @@ package org.connect;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
-import io.restassured.response.ValidatableResponse;
-import org.connect.model.skin.Skin;
-import org.connect.service.SkinService;
+import org.connect.service.ChatService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.hamcrest.Matcher;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+
+import java.util.function.BooleanSupplier;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.*;
-
+import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-@TestHTTPEndpoint(SkinService.class)
-public class SkinResourceTest {
-
-
+@TestHTTPEndpoint(ChatService.class)
+public class ChatResourceTest {
     @ConfigProperty(name = "keycloak.url")
     String keycloakURL;
     @ConfigProperty(name = "quarkus.oidc.credentials.secret")
@@ -71,37 +61,22 @@ public class SkinResourceTest {
     }
 
     @Test
-    public void testTestEndpoint() {
+    public void testFindAllDM() {
         given()
                 .auth().preemptive().oauth2(accessToken)
-                .when().get("/test")
+                .when().get("/findAll/DM")
                 .then()
                 .statusCode(200)
-                .body(is("success"));
+                .body("$",hasSize(greaterThan(0)));
     }
 
     @Test
-    public void testFindAll() {
-       Response r = given()
+    public void testFindAllMU() {
+        given()
                 .auth().preemptive().oauth2(accessToken)
-                .when().get("/findAll")
+                .when().get("/findAll/MU")
                 .then()
-               .extract().response();
-
-       Assertions.assertEquals("Basketball",r.jsonPath().getString("title[2]"));
-    }
-
-    @Test
-    public void testFind() {
-        // Tests to see whether the Fußball skin exists
-        Response r = given()
-                .auth().preemptive().oauth2(accessToken)
-                .when().get("/find/11")
-                .then()
-                .extract().response();
-
-        Assertions.assertEquals(200,r.statusCode());
-        Assertions.assertEquals("Fußball",r.jsonPath().getString("title"));
+                .statusCode(200);
     }
 
 }
