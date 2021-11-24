@@ -34,7 +34,6 @@ public class ChatRepository {
 
 
         List<Room> roomList = null;
-        roomList = tq.getResultList();
         // Blocked users wont be shown (obviously :D)
         if(type.equals("DM")) {
             try {
@@ -59,7 +58,14 @@ public class ChatRepository {
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
+        } else {
+            try {
+                roomList = tq.getResultList();
+            }catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         }
+        System.out.println(roomList);
         return roomList;
     }
 }
