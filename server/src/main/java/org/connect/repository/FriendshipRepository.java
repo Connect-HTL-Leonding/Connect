@@ -244,6 +244,7 @@ public class FriendshipRepository {
             Room room = new Room();
             room.getUsers().add(curUser);
             room.getUsers().add(newFriend);
+            room.setType("DM");
             em.persist(room);
 
             return newFriend;
