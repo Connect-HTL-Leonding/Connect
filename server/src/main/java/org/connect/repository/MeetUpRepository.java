@@ -145,4 +145,9 @@ public class MeetUpRepository {
         query.setParameter("user_id",mu.getUser_id());
         int result = query.executeUpdate();
     }
+
+    public Meeting getMeetupById(Long id) {
+        Meeting m = em.find(Meeting.class, id);
+        return m;
+    }
 }

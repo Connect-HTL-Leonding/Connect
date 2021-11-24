@@ -127,10 +127,14 @@ export class HomePage implements OnInit {
     });
 
     this.meetupPreview = this.meetupService.meetupPreviewNotify.subscribe(value => {
-
       let m: Meeting = value.meetup;
       let r: Room = value.originRoom;
-      this.createMeetupPreviewMarker(m, r);
+      if(value.isInMeetupChat) {
+        this.createMeetupPreviewMarker(m, r);
+      }
+      else {
+        this.meetupTeilnehmerList(null, m, null);
+      }
       this.map.panTo(m.position);
       this.map.setZoom(18);
     });
