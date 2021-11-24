@@ -39,6 +39,21 @@
             ion-item {
                 margin-bottom: 10px;
             }
+
+            #split {
+                display: flex;
+                justify-content: space-between;
+
+                #first {
+                    flex: 39%;
+                    max-width: 39%;
+                }
+                #last {
+                    max-width: 59%;
+                    flex: 59%;
+                }
+            }
+
             ion-button {
                 margin: 50px 50px 0;
                 font-weight: bolder;

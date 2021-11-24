@@ -19,6 +19,15 @@ export class LoginPage {
   username: String;
   password: String;
 
+  reg_first: String;
+  reg_last: String;
+  reg_username: String;
+  reg_password: String;
+  reg_confirm_password: String;
+
+
+  login_toggle : boolean = true
+
   constructor(public http: HttpClient,
     public keycloak: KeycloakService,
     public modalController: ModalController,
@@ -43,6 +52,14 @@ export class LoginPage {
       });
 
     }
+  }
+
+  regis(){
+
+  }
+
+  toggleLogin() {
+    this.login_toggle = !this.login_toggle
   }
 
 
