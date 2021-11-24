@@ -22,6 +22,10 @@
 
 
     <div id="spacer">
+      <ion-chip class="chip" [ngClass]="currCat && currCat.title == allCategory.title ? 'currentCategory': 'category'"
+          (click)="setCurrCat(allCategory)">
+          <ion-label>All</ion-label>
+        </ion-chip>
       <ng-container *ngFor="let category of categoryService.categories; index as i;">
         <ion-chip class="chip" [ngClass]="currCat && currCat.title == category.title ? 'currentCategory': 'category'"
           (click)="setCurrCat(category)">
