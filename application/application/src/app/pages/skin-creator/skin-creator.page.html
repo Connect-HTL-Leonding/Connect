@@ -16,18 +16,18 @@
      
      
       <div class="wrap">
-        <ion-label color="primary" class="desc-label" id="name-label" >Skin name</ion-label>
+        <ion-label color="primary" class="desc-label" id="name-label" >Skin name <div *ngIf="this.skin.title==''" class="required">(required)</div></ion-label>
      
-          <ion-textarea  wrap="soft" autoGrow maxlength=200 placeholder="My Skinname" [(ngModel)]="this.skin.title" name="title" ngDefaultControl>
-          </ion-textarea>
+          <ion-input wrap="soft" autoGrow maxlength=200 placeholder="My Skinname" [(ngModel)]="this.skin.title" name="title" ngDefaultControl>
+          </ion-input>
      
       </div>
      
       <div class="wrap">
-        <ion-label color="primary" class="desc-label">Description</ion-label>
+        <ion-label color="primary" class="desc-label">Description <div *ngIf="this.skin.description==''" class="required">(required)</div></ion-label>
      
-          <ion-textarea  wrap="soft" autoGrow maxlength=200 placeholder="Describe your Skin" [(ngModel)]="this.skin.description" name="description" ngDefaultControl>
-          </ion-textarea>
+          <ion-input  wrap="soft" autoGrow maxlength=200 placeholder="Describe your Skin" [(ngModel)]="this.skin.description" name="description" ngDefaultControl>
+          </ion-input>
      
       </div>
 
@@ -55,7 +55,7 @@
       <div class="wrap">
         
      <br>
-     <ion-button id="create-button" shape="round" color="primary"  expand="block" (click)="createSkin()">
+     <ion-button id="create-button" shape="round" color="primary"  expand="block" (click)="createSkin()" >
      Create</ion-button>
      
       </div>

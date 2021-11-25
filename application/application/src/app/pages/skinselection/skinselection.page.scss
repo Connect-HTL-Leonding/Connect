@@ -38,10 +38,12 @@
     display: flex;
     flex-direction: row;
     margin-right: 2px;
+    
 }
 #verify{
     width: 8vw;
     height: 8vw;
     align-self: center;
-    color: var(--ion-color-primary)
+    color: var(--ion-color-primary);
+    margin-right: 10px;
 }
