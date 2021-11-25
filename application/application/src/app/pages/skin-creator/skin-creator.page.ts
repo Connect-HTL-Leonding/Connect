@@ -35,6 +35,14 @@ export class SkinCreatorPage implements OnInit {
     
   }
 
+  async presentToast() {
+    const toast = await this.toastController.create({
+      message: 'Make sure you choose an image, title and description!',
+      duration: 2000
+    });
+  
+    toast.present();
+  }
 
   async addImage(){
     try {
@@ -50,7 +58,7 @@ export class SkinCreatorPage implements OnInit {
       }
   }
 
-  async presentToast() {
+  async presentErrorToast() {
     const toast = await this.toastController.create({
       message: 'Sorry, there was an Error. Try again later.',
       duration: 4000
@@ -60,17 +68,23 @@ export class SkinCreatorPage implements OnInit {
   }
 
   createSkin(){
-    console.log("creating skin")
-    console.log(this.skin)
-    this.skinsService.createSkin(this.skin).subscribe(value => {
-      console.log("done creating")
-      console.log(this.image)
-      this.image="";
-      this.skin = new Skin();
-      this.router.navigate(["my-skins"]);
-    },
-    err => {
-this.presentToast();
-    });
-  }
+
+    if(this.image=='' || this.skin.title=='' || this.skin.description==''){
+      this.presentToast();
+    }else{
+      console.log("creating skin")
+      console.log(this.skin)
+      this.skinsService.createSkin(this.skin).subscribe(value => {
+        console.log("done creating")
+        console.log(this.image)
+        this.image="";
+        this.skin = new Skin();
+        this.router.navigate(["my-skins"]);
+      },
+      err => {
+  this.presentErrorToast();
+      });
+    }
+    }
+   
 }

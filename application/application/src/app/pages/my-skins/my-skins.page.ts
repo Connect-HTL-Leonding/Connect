@@ -125,7 +125,7 @@ export class MySkinsPage implements OnInit {
         this.ngOnInit();
         //this.presentToast();
 
-        this.presentToastWithOptions(newMySkin, "hinzugefügt");
+        this.presentToastWithOptions(newMySkin, "added");
       }
 
     });
@@ -144,7 +144,7 @@ export class MySkinsPage implements OnInit {
   async presentToastWithOptions(newMySkin: MySkin, msg) {
     const toast = await this.toastController.create({
       header: 'Skin ' + newMySkin.skin.title + ' ' + msg,
-      message: 'Zum Schließen Klicken',
+      message: 'Tap to close',
       position: 'top',
       buttons: [
         {

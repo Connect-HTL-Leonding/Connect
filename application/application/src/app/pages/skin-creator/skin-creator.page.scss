@@ -22,6 +22,11 @@ body {
   --color: var(--ion-color-primary)
 }
 
+.required{
+    color: lightcoral;
+    display: inline;
+}
+
 .mid {
     display: flex;
     justify-content: center;
