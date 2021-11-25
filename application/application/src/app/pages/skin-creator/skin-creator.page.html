@@ -42,7 +42,7 @@
         
   <ion-item>
     <ion-label>Categories</ion-label>
-    <ion-select [(ngModel)]="this.skin.categories" multiple="true" cancelText="Nah" okText="Okay!">
+    <ion-select [(ngModel)]="this.skin.categories" multiple="true" cancelText="Cancel" okText="Add">
       <ng-container *ngFor="let category of cs.categories; index as i;">
         <ion-select-option [value]="this.category">{{category.title}}</ion-select-option>
       </ng-container>
