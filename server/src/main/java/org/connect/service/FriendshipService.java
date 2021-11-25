@@ -78,6 +78,7 @@ public class FriendshipService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Friendship> find() {
+        System.out.println(dbRepo.findAll());
         return dbRepo.findAll();
     }
 

@@ -3,31 +3,39 @@ package org.connect;
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
-import org.connect.service.ChatService;
+import org.connect.model.meetup.Meeting;
+import org.connect.model.user.User;
+import org.connect.service.FriendshipService;
+import org.connect.service.MeetUpService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.junit.jupiter.api.Assertions;
+import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 
-import java.util.function.BooleanSupplier;
-
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-@TestHTTPEndpoint(ChatService.class)
-public class ChatResourceTest {
+@TestHTTPEndpoint(MeetUpService.class)
+public class MeetupResourceTest {
     @ConfigProperty(name = "keycloak.url")
     String keycloakURL;
     @ConfigProperty(name = "quarkus.oidc.credentials.secret")
     String credential;
 
     String accessToken;
+
+    @Inject
+    JsonWebToken jwt;
+
+    @Inject
+    EntityManager em;
 
     @BeforeEach
     void setup() {
@@ -61,23 +69,12 @@ public class ChatResourceTest {
     }
 
     @Test
-    public void testFindAllDM() {
+    public void testMeetupsFromMe() {
         given()
                 .auth().preemptive().oauth2(accessToken)
-                .when().get("/findAll/DM")
+                .when()
+                .get("getMeetupsFromMe")
                 .then()
-                .statusCode(200)
-                .body("$",hasSize(greaterThan(0)));
+                .statusCode(200);
     }
-
-    @Test
-    public void testFindAllMU() {
-        given()
-                .auth().preemptive().oauth2(accessToken)
-                .when().get("/findAll/MU")
-                .then()
-                .body("$",notNullValue());
-
-    }
-
 }
