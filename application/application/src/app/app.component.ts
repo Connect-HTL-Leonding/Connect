@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
   public ngOnInit() {
     console.log("CHECK")
     //überprüfen, ob eingeloggt
-    if (!this.keycloak.isLoggedIn()) {
+    if (!this.keycloak.userid) {
       this.keycloak.refresh().subscribe(token => {
         this.keycloak.authenticated = true;
 
@@ -105,6 +105,7 @@ export class AppComponent implements OnInit {
         this.makeWebsocket()
       })
     } else {
+      
       this.makeWebsocket()
     }
   }
