@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
@@ -22,17 +23,17 @@ export class LoginPage {
   reg_first: String;
   reg_last: String;
   reg_username: String;
+  reg_email: String;
   reg_password: String;
-  reg_confirm_password: String;
 
-
-  login_toggle : boolean = true
+  login_toggle: boolean = true
 
   constructor(public http: HttpClient,
     public keycloak: KeycloakService,
     public modalController: ModalController,
     public router: Router,
     public app: AppComponent) {
+
   }
 
   login() {
@@ -54,7 +55,7 @@ export class LoginPage {
     }
   }
 
-  regis(){
+  regis(ngForm: NgForm) {
 
   }
 

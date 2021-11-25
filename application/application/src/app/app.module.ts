@@ -14,7 +14,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { OAuthModule } from 'angular-oauth2-oidc';
 
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { from } from 'rxjs';
 import { AppAuthGuard } from './api/auth/auth.guard';
@@ -38,7 +38,6 @@ import { HttpErrorFilter } from './api/auth/httpErrorFilter';
     HttpClientModule,
     OAuthModule.forRoot(),
 
-    ReactiveFormsModule,
     FormsModule
   ],
   providers: [

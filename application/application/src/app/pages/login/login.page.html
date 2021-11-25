@@ -24,33 +24,43 @@
           <ion-input clearInput type="password" [(ngModel)]="password" placeholder="*********"></ion-input>
         </ion-item>
 
-        <div id="split">
-          <ion-item lines="full" *ngIf="!login_toggle" id="first">
-            <ion-label position="stacked">Firstname</ion-label>
-            <ion-input clearInput [(ngModel)]="reg_first" placeholder="Max"></ion-input>
-          </ion-item>
-          <ion-item lines="full" *ngIf="!login_toggle" id="last">
-            <ion-label position="stacked">Lastname</ion-label>
-            <ion-input clearInput [(ngModel)]="reg_last" placeholder="Muster"></ion-input>
-          </ion-item>
-        </div>
-        <ion-item lines="full" *ngIf="!login_toggle">
-          <ion-label position="stacked">Username</ion-label>
-          <ion-input clearInput [(ngModel)]="reg_username" placeholder="max_muster"></ion-input>
-        </ion-item>
-        <ion-item lines="full" *ngIf="!login_toggle">
-          <ion-label position="stacked">Password</ion-label>
-          <ion-input clearInput type="password" [(ngModel)]="reg_password" placeholder="*********"></ion-input>
-        </ion-item>
-        <ion-item lines="full" *ngIf="!login_toggle">
-          <ion-label position="stacked">Confirm Password</ion-label>
-          <ion-input clearInput type="password" [(ngModel)]="reg_confirm_password" placeholder="*********"></ion-input>
-        </ion-item>
-
         <ion-button shape="round" color="primary" expand="block" (click)="login()" *ngIf="login_toggle">Login
         </ion-button>
-        <ion-button shape="round" color="primary" expand="block" (click)="regis()" *ngIf="!login_toggle">Sign up
-        </ion-button>
+
+        <form *ngIf="!login_toggle" #f="ngForm" (ngSubmit)="regis(f)">
+          <div id="split">
+            <ion-item lines="full" id="first">
+              <ion-label position="stacked">Firstname</ion-label>
+              <ion-input ngModel name="reg_first" #firstname="ngModel" required placeholder="Max"></ion-input>
+            </ion-item>
+            <ion-item lines="full" id="last">
+              <ion-label position="stacked">Lastname</ion-label>
+              <ion-input ngModel name="reg_last" #lastname="ngModel" required placeholder="Muster"></ion-input>
+            </ion-item>
+          </div>
+          <span class="help-block" *ngIf="!firstname.valid && !lastname.valid  && firstname.touched && lastname.touched">Please enter a first and lastname</span>
+          <ion-item lines="full">
+            <ion-label position="stacked">Username</ion-label>
+            <ion-input ngModel name="reg_username" required #username="ngModel" placeholder="max_muster"></ion-input>
+          </ion-item>
+          <span class="help-block" *ngIf="!username.valid && username.touched">Please enter a username</span>
+          <ion-item lines="full">
+            <ion-label position="stacked">Email</ion-label>
+            <ion-input ngModel name="reg_email" type="email" #email="ngModel" required email
+              placeholder="max_muster"></ion-input>
+          </ion-item>
+          <span class="help-block" *ngIf="!email.valid && email.touched">Please enter valid email</span>
+          <ion-item lines="full">
+            <ion-label position="stacked">Password</ion-label>
+            <ion-input type="password" ngModel name="reg_password" #password="ngModel" required placeholder="*********">
+            </ion-input>
+          </ion-item>
+          <span class="help-block" *ngIf="!password.valid && password.touched">Please enter a password</span>
+
+          <ion-button shape="round" color="primary" expand="block" type="submit" [disabled]="!f.valid">Sign up
+          </ion-button>
+        </form>
+
 
         <p (click)="toggleLogin()" *ngIf="login_toggle" id="regis_text">Don't have an account? <b>Sign up</b></p>
         <p (click)="toggleLogin()" *ngIf="!login_toggle" id="regis_text">Already have an account? <b>Sign in</b></p>
