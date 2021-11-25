@@ -2,7 +2,10 @@ package org.connect;
 
 import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import org.connect.model.meetup.Meeting;
 import org.connect.model.user.User;
@@ -10,6 +13,7 @@ import org.connect.service.FriendshipService;
 import org.connect.service.MeetUpService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +23,8 @@ import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
@@ -76,5 +82,20 @@ public class MeetupResourceTest {
                 .get("getMeetupsFromMe")
                 .then()
                 .statusCode(200);
+    }
+
+
+    @Test
+    @Transactional
+    public void testFind() {
+        Response r = given()
+                .auth().preemptive().oauth2(accessToken)
+                .when()
+                .get("getMeetupById/50")
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals("50",r.jsonPath().getString("id"));
+
     }
 }

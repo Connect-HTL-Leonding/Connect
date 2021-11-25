@@ -105,6 +105,9 @@ INSERT INTO connect.Room (id, created, type, updated) VALUES (13, null, 'DM', nu
 INSERT INTO connect.Room (id, created, type, updated) VALUES (14, null, 'MU', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (15, null, 'DM', null);
 
+INSERT INTO connect.Meeting (id,time,creator_id) VALUES (50,null,'0d3dcf03-9d38-4c12-af82-a9467c786db5');
+
+
 
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (4, '7dfd00ec-436f-4d97-a72b-e9e82a7af50a');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (4, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
