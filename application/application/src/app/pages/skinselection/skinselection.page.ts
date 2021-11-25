@@ -26,6 +26,8 @@ export class SkinselectionPage implements OnInit {
   currCat: Category;
   searchString = "";
 
+  allCategory = new Category(0,'All');
+
   @ViewChild('skinSelection', { static: false }) skinSelectionRef: ElementRef;
 
   constructor(private router: Router, public ps: ProfileService, ss: SkinsService, cs: CategoryService, ms: MyskinsService, public popoverController: PopoverController, public modalCtrl: ModalController) {
