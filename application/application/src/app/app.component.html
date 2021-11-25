@@ -21,7 +21,7 @@
 -->
 
   <ion-tabs>
-    <ion-tab-bar *ngIf="this.keycloak.isLoggedIn()" slot="bottom">
+    <ion-tab-bar *ngIf="this.keycloak.authenticated" slot="bottom">
   
       <ion-tab-button tab="profile" id="profile_button" #profile_button>
         <ion-icon name="cog" id="cog"></ion-icon>
