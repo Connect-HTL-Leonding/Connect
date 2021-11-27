@@ -94,19 +94,19 @@ public class MeetupResourceTest {
         accessToken = jsonPathEvaluator.get("access_token");
 
 
-        System.out.println("------------ Decode JWT ------------");
+        // decode JWT
         String[] split_string = accessToken.split("\\.");
         String base64EncodedHeader = split_string[0];
         String base64EncodedBody = split_string[1];
         String base64EncodedSignature = split_string[2];
 
-        System.out.println("~~~~~~~~~ JWT Header ~~~~~~~");
+        // jwt header
         Base64 base64Url = new Base64(true);
         String header = new String(base64Url.decode(base64EncodedHeader));
         System.out.println("JWT Header : " + header);
 
 
-        System.out.println("~~~~~~~~~ JWT Body ~~~~~~~");
+        // jwt body
         String jwtBody = new String(base64Url.decode(base64EncodedBody));
         System.out.println("JWT Body : "+jwtBody);
 
