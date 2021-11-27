@@ -8,20 +8,23 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import org.connect.model.meetup.Meeting;
+import org.connect.model.meetup.Meeting_User;
 import org.connect.model.user.User;
 import org.connect.service.FriendshipService;
 import org.connect.service.MeetUpService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.jose4j.json.internal.json_simple.JSONObject;
+import org.jose4j.json.internal.json_simple.parser.JSONParser;
+import org.jose4j.json.internal.json_simple.parser.ParseException;
+import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 
+import org.apache.commons.codec.binary.Base64;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
@@ -29,6 +32,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 @TestHTTPEndpoint(MeetUpService.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MeetupResourceTest {
     @ConfigProperty(name = "keycloak.url")
     String keycloakURL;
@@ -43,8 +47,24 @@ public class MeetupResourceTest {
     @Inject
     EntityManager em;
 
-    @BeforeEach
-    void setup() {
+    private Meeting m;
+    private Meeting_User mu;
+    private Object userId;
+
+
+
+    @Transactional
+    public void insert() {
+        m = new Meeting();
+        mu = new Meeting_User();
+        mu.setUser_id(userId.toString());
+        mu.setMeeting(m);
+        em.persist(m);
+        em.persist(mu);
+    }
+
+    @BeforeAll
+    void setup() throws ParseException {
         if (accessToken != null) {
             return;
         }
@@ -72,6 +92,28 @@ public class MeetupResourceTest {
         //access_token extrahieren
         JsonPath jsonPathEvaluator = body.jsonPath();
         accessToken = jsonPathEvaluator.get("access_token");
+
+
+        System.out.println("------------ Decode JWT ------------");
+        String[] split_string = accessToken.split("\\.");
+        String base64EncodedHeader = split_string[0];
+        String base64EncodedBody = split_string[1];
+        String base64EncodedSignature = split_string[2];
+
+        System.out.println("~~~~~~~~~ JWT Header ~~~~~~~");
+        Base64 base64Url = new Base64(true);
+        String header = new String(base64Url.decode(base64EncodedHeader));
+        System.out.println("JWT Header : " + header);
+
+
+        System.out.println("~~~~~~~~~ JWT Body ~~~~~~~");
+        String jwtBody = new String(base64Url.decode(base64EncodedBody));
+        System.out.println("JWT Body : "+jwtBody);
+
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(jwtBody);
+        userId = json.get("sub");
+        insert();
     }
 
     @Test
@@ -91,19 +133,22 @@ public class MeetupResourceTest {
         Response r = given()
                 .auth().preemptive().oauth2(accessToken)
                 .when()
-                .get("getMeetupById/50")
+                .get("getMeetupById/" + m.getId())
                 .then()
                 .extract().response();
 
-        Assertions.assertEquals("50",r.jsonPath().getString("id"));
+        Assertions.assertEquals("" +m.getId(),r.jsonPath().getString("id"));
 
     }
 
     @Test
     public void testSetAccepted() {
+
+        System.out.println(m.getId());
+        System.out.println(mu.getId());
         given().
             auth().preemptive().oauth2(accessToken)
-                .body(50)
+                .body(m.getId())
                 .when()
                 .post("setStatusA")
                 .then()
@@ -112,7 +157,7 @@ public class MeetupResourceTest {
         Response r = given()
                 .auth().preemptive().oauth2(accessToken)
                 .when()
-                .get("getMeetupUser/50")
+                .get("getMeetupUser/" + m.getId())
                 .then()
                 .extract().response();
 
@@ -124,7 +169,7 @@ public class MeetupResourceTest {
     public void testSetDeclined() {
         given().
                 auth().preemptive().oauth2(accessToken)
-                .body(50)
+                .body(m.getId())
                 .when()
                 .post("setStatusD")
                 .then()
@@ -133,7 +178,7 @@ public class MeetupResourceTest {
         Response r = given()
                 .auth().preemptive().oauth2(accessToken)
                 .when()
-                .get("getMeetupUser/50")
+                .get("getMeetupUser/" + m.getId())
                 .then()
                 .extract().response();
 
