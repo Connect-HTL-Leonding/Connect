@@ -106,6 +106,7 @@ INSERT INTO connect.Room (id, created, type, updated) VALUES (14, null, 'MU', nu
 INSERT INTO connect.Room (id, created, type, updated) VALUES (15, null, 'DM', null);
 
 INSERT INTO connect.Meeting (id,time,creator_id) VALUES (50,null,'0d3dcf03-9d38-4c12-af82-a9467c786db5');
+INSERT INTO connect.Meeting_User (id,isSeen,status,user_id,meeting_id) VALUES (50,false,null,'0d3dcf03-9d38-4c12-af82-a9467c786db5',50);
 
 
 

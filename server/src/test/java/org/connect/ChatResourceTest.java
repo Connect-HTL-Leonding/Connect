@@ -5,12 +5,14 @@ import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
+import org.connect.model.chat.Room;
 import org.connect.service.ChatService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
 
 import java.util.function.BooleanSupplier;
@@ -28,6 +30,10 @@ public class ChatResourceTest {
     String credential;
 
     String accessToken;
+
+    @Inject
+    EntityManager em;
+
 
     @BeforeEach
     void setup() {

@@ -5,7 +5,6 @@ import org.connect.model.meetup.Meeting;
 import org.connect.model.meetup.Meeting_User;
 import org.connect.model.user.User;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.hibernate.mapping.Any;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,7 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -126,13 +124,13 @@ public class MeetUpRepository {
     }
 
     @Transactional
-    public void setStatus(Long meetingId,String status) {
+    public void setStatus(Long meetingId, String status) {
         User u = em.find(User.class, jwt.getClaim("sub"));
         Query query = em.createQuery("update Meeting_User mu set mu.status = :status where mu.meeting.id=:meetingId AND mu.user_id= :user_id");
         query.setParameter("status",status);
         query.setParameter("meetingId",meetingId);
         query.setParameter("user_id",u.getId());
-        int result = query.executeUpdate();
+        query.executeUpdate();
     }
 
     @Transactional

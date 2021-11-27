@@ -98,4 +98,46 @@ public class MeetupResourceTest {
         Assertions.assertEquals("50",r.jsonPath().getString("id"));
 
     }
+
+    @Test
+    public void testSetAccepted() {
+        given().
+            auth().preemptive().oauth2(accessToken)
+                .body(50)
+                .when()
+                .post("setStatusA")
+                .then()
+                .statusCode(204);
+
+        Response r = given()
+                .auth().preemptive().oauth2(accessToken)
+                .when()
+                .get("getMeetupUser/50")
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals("accepted",r.jsonPath().getString("status[0]"));
+
+    }
+
+    @Test
+    public void testSetDeclined() {
+        given().
+                auth().preemptive().oauth2(accessToken)
+                .body(50)
+                .when()
+                .post("setStatusD")
+                .then()
+                .statusCode(204);
+
+        Response r = given()
+                .auth().preemptive().oauth2(accessToken)
+                .when()
+                .get("getMeetupUser/50")
+                .then()
+                .extract().response();
+
+        Assertions.assertEquals("declined",r.jsonPath().getString("status[0]"));
+
+    }
 }
