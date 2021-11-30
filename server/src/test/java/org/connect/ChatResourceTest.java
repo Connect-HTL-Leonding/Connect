@@ -115,7 +115,6 @@ public class ChatResourceTest {
                 .when().get("/findAll/MU")
                 .then()
                 .body("$",hasSize(greaterThan(0)));
-
     }
 
 }
