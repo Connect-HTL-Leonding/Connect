@@ -88,7 +88,7 @@ export class AppComponent implements OnInit {
   public ngOnInit() {
     console.log("CHECK")
     //überprüfen, ob eingeloggt
-    if (!this.keycloak.userid) {
+    if (!this.keycloak.userid || !this.keycloak.userid.length) {
       this.keycloak.refresh().subscribe(token => {
         this.keycloak.authenticated = true;
 
@@ -101,17 +101,17 @@ export class AppComponent implements OnInit {
         catch (err) {
           console.error(err)
         }
-        
+
         this.makeWebsocket()
       })
     } else {
-      
+
       this.makeWebsocket()
     }
   }
 
   makeWebsocket() {
-    if (this.keycloak.userid) {
+    if (this.keycloak.userid || this.keycloak.userid.length) {
       this.ps.getUser().add(() => {
         if (this.ps.user) {
           this.wsUri = api.ws + '/websocket/' + this.ps.user.id;
@@ -133,12 +133,12 @@ export class AppComponent implements OnInit {
         case ("meetupAccepted"): this.ms.meetupObservable.next(message[1]);
           this.ms.showMeetupObservable.next(message[1]);
           break;
-        case ("chatMessage"): 
-        console.log(msg);
-        this.cs.updateChatObservable.next(message[1]);
+        case ("chatMessage"):
+          console.log(msg);
+          this.cs.updateChatObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
-              if(data) {
+              if (data) {
                 this.ps.findFriendUser(data.id).subscribe(data => {
                   this.presentToastWithOptions("neue Nachricht von " + data["username"]);
                 })
@@ -183,7 +183,7 @@ export class AppComponent implements OnInit {
             this.presentToastWithOptions(data["username"] + " hat sich mit dir connected!");
           })
           break;
-        case("blocked"): this.fs.blockedUpdateObservable.next("blocked");
+        case ("blocked"): this.fs.blockedUpdateObservable.next("blocked");
       }
 
     }
