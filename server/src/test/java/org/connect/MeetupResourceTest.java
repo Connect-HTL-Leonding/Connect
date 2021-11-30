@@ -42,9 +42,6 @@ public class MeetupResourceTest {
     String accessToken;
 
     @Inject
-    JsonWebToken jwt;
-
-    @Inject
     EntityManager em;
 
     private Meeting m;
@@ -96,19 +93,10 @@ public class MeetupResourceTest {
 
         // decode JWT
         String[] split_string = accessToken.split("\\.");
-        String base64EncodedHeader = split_string[0];
         String base64EncodedBody = split_string[1];
-        String base64EncodedSignature = split_string[2];
 
-        // jwt header
         Base64 base64Url = new Base64(true);
-        String header = new String(base64Url.decode(base64EncodedHeader));
-        System.out.println("JWT Header : " + header);
-
-
-        // jwt body
         String jwtBody = new String(base64Url.decode(base64EncodedBody));
-        System.out.println("JWT Body : "+jwtBody);
 
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(jwtBody);
