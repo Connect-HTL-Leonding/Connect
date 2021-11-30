@@ -94,7 +94,7 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     public actionSheetController: ActionSheetController,
     public ds: DateService) {
-      this.dateService = ds;
+    this.dateService = ds;
   }
 
   ngOnChanges() {
@@ -109,7 +109,7 @@ export class HomePage implements OnInit {
     });
 
     this.blockFriend = this.fs.blockedUpdateNotify.subscribe(value => {
-        this.displayFriends();
+      this.displayFriends();
     })
 
     this.sideMenu();
@@ -129,11 +129,21 @@ export class HomePage implements OnInit {
     this.meetupPreview = this.meetupService.meetupPreviewNotify.subscribe(value => {
       let m: Meeting = value.meetup;
       let r: Room = value.originRoom;
-      if(value.isInMeetupChat) {
+      if (value.isInMeetupChat) {
         this.createMeetupPreviewMarker(m, r);
       }
       else {
-        this.meetupTeilnehmerList(null, m, null);
+        if (this.ps.user.id == m.creator.id) {
+          this.meetupTeilnehmerList(null, m, null);
+        } else {
+          this.ps.findFriendUser(m.creator.id).subscribe(data => {
+            let meetupuser = data;
+            this.ps.friendCustomData(m.creator.id).subscribe(data => {
+              meetupuser.custom = data;
+              this.meetupTeilnehmerList(null, m, meetupuser);
+            })
+          })
+        }
       }
       this.map.panTo(m.position);
       this.map.setZoom(18);
@@ -498,7 +508,7 @@ export class HomePage implements OnInit {
     let t: Date;
     let time: string;
 
-// ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
     time = this.dateService.returnDateWithoutTime(m) + ' at ' + this.dateService.returnTimeString(m);
 
 
@@ -514,11 +524,6 @@ export class HomePage implements OnInit {
   }
 
   async meetupTeilnehmerList(ev: any, m: Meeting, u) {
-
-
-
-
-
     if (u != null) {
       this.cs.getKeyUser(u.custom).subscribe(data => {
         u.id = data["id"];
