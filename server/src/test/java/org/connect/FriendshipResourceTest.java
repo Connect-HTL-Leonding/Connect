@@ -4,12 +4,17 @@ import io.quarkus.test.common.http.TestHTTPEndpoint;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.ResponseBody;
+import org.apache.commons.codec.binary.Base64;
 import org.connect.model.user.Friendship;
 import org.connect.model.user.User;
 import org.connect.service.FriendshipService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
+import org.jose4j.json.internal.json_simple.JSONObject;
+import org.jose4j.json.internal.json_simple.parser.JSONParser;
+import org.jose4j.json.internal.json_simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
@@ -22,6 +27,7 @@ import static org.hamcrest.Matchers.*;
 
 @QuarkusTest
 @TestHTTPEndpoint(FriendshipService.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class FriendshipResourceTest {
 
     @ConfigProperty(name = "keycloak.url")
@@ -30,9 +36,27 @@ public class FriendshipResourceTest {
     String credential;
 
     String accessToken;
+    String userId;
+    Friendship f;
+    User u;
+
+    @Inject
+    EntityManager em;
+
+    @Transactional
+    void insert() {
+        f = new Friendship();
+        u = em.find(User.class,userId);
+        User u2 = new User();
+        u2.setId("9999");
+        f.setUser2(u2);
+        f.setUser1(u);
+        em.persist(u2);
+        em.persist(f);
+    }
 
     @BeforeEach
-    void setup() {
+    void setup() throws ParseException {
         if (accessToken != null) {
             return;
         }
@@ -60,6 +84,18 @@ public class FriendshipResourceTest {
         //access_token extrahieren
         JsonPath jsonPathEvaluator = body.jsonPath();
         accessToken = jsonPathEvaluator.get("access_token");
+
+        // decode JWT
+        String[] split_string = accessToken.split("\\.");
+        String base64EncodedBody = split_string[1];
+
+        Base64 base64Url = new Base64(true);
+        String jwtBody = new String(base64Url.decode(base64EncodedBody));
+
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(jwtBody);
+        userId = json.get("sub").toString();
+        insert();
     }
 
     @Test
@@ -74,11 +110,10 @@ public class FriendshipResourceTest {
 
     @Test
     public void findFriendshipsOfUser() {
-        // User got created in the import.sql
         given()
                 .auth().preemptive().oauth2(accessToken)
                 .when()
-                .get("findFriendshipsOfUser/0d3dcf03-9d38-4c12-af82-a9467c786db5")
+                .get("findFriendshipsOfUser/" + u.getId())
                 .then()
                 .body("$",hasSize(greaterThan(0)));
     }

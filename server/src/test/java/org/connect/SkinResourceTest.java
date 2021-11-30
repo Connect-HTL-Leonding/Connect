@@ -8,17 +8,22 @@ import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
 import io.restassured.response.ValidatableResponse;
+import org.apache.commons.codec.binary.Base64;
 import org.connect.model.skin.Skin;
 import org.connect.service.SkinService;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.hamcrest.Matcher;
+import org.jose4j.json.internal.json_simple.JSONObject;
+import org.jose4j.json.internal.json_simple.parser.JSONParser;
+import org.jose4j.json.internal.json_simple.parser.ParseException;
 import org.junit.jupiter.api.*;
 
-import javax.ws.rs.Path;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import static org.hamcrest.Matchers.*;
+
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
@@ -29,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @QuarkusTest
 @TestHTTPEndpoint(SkinService.class)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class SkinResourceTest {
 
 
@@ -36,11 +42,22 @@ public class SkinResourceTest {
     String keycloakURL;
     @ConfigProperty(name = "quarkus.oidc.credentials.secret")
     String credential;
-
+    String userId;
     String accessToken;
+    Skin s;
 
-    @BeforeEach
-    void setup() {
+    @Inject
+    EntityManager em;
+
+    @Transactional
+    void insert() {
+        s = new Skin();
+        s.setTitle("Coden");
+        em.persist(s);
+    }
+
+    @BeforeAll
+    void setup() throws ParseException {
         if (accessToken != null) {
             return;
         }
@@ -68,6 +85,18 @@ public class SkinResourceTest {
         //access_token extrahieren
         JsonPath jsonPathEvaluator = body.jsonPath();
         accessToken = jsonPathEvaluator.get("access_token");
+
+        // decode JWT
+        String[] split_string = accessToken.split("\\.");
+        String base64EncodedBody = split_string[1];
+
+        Base64 base64Url = new Base64(true);
+        String jwtBody = new String(base64Url.decode(base64EncodedBody));
+
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(jwtBody);
+        userId = json.get("sub").toString();
+        insert();
     }
 
     @Test
@@ -82,26 +111,24 @@ public class SkinResourceTest {
 
     @Test
     public void testFindAll() {
-       Response r = given()
+        given()
                 .auth().preemptive().oauth2(accessToken)
                 .when().get("/findAll")
                 .then()
-               .extract().response();
+                .body("$",hasSize(greaterThan(0)));
 
-       Assertions.assertEquals("Basketball",r.jsonPath().getString("title[2]"));
     }
 
     @Test
     public void testFind() {
-        // Tests to see whether the Fußball skin exists
         Response r = given()
                 .auth().preemptive().oauth2(accessToken)
-                .when().get("/find/11")
+                .when().get("/find/" + s.getId())
                 .then()
                 .extract().response();
 
         Assertions.assertEquals(200,r.statusCode());
-        Assertions.assertEquals("Fußball",r.jsonPath().getString("title"));
+        Assertions.assertEquals("Coden",r.jsonPath().getString("title"));
     }
 
 }
