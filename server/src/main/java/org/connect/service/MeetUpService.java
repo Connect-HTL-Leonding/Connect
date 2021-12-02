@@ -102,4 +102,12 @@ public class MeetUpService {
         repo.setSeen(mu);
     }
 
+    @POST
+    @Path("deleteUserFromMeetup")
+    @Transactional
+    public void deleteUserFromMeetup(Long meetupId) {
+        repo.removeUserFromMeetup(meetupId);
+    }
+
+
 }

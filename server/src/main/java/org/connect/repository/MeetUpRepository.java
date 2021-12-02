@@ -148,4 +148,15 @@ public class MeetUpRepository {
         Meeting m = em.find(Meeting.class, id);
         return m;
     }
+
+    @Transactional
+    public void removeUserFromMeetup(Long meetupId) {
+        User u = em.find(User.class, jwt.getClaim("sub"));
+        String userId = u.getId();
+        Query query = em.createQuery(
+                "DELETE FROM Meeting_User m WHERE m.meeting.id= :id AND m.user_id=:userid");
+        query.setParameter("id", meetupId);
+        query.setParameter("userid",userId);
+        query.executeUpdate();
+    }
 }

@@ -48,16 +48,24 @@ public class MeetupResourceTest {
     private Meeting_User mu;
     private Object userId;
 
+    private Meeting mForDelete;
+    private Meeting_User muForDelete;
 
 
     @Transactional
     public void insert() {
         m = new Meeting();
         mu = new Meeting_User();
+        mForDelete = new Meeting();
+        muForDelete = new Meeting_User();
         mu.setUser_id(userId.toString());
+        muForDelete.setUser_id(userId.toString());
         mu.setMeeting(m);
+        muForDelete.setMeeting(mForDelete);
         em.persist(m);
         em.persist(mu);
+        em.persist(mForDelete);
+        em.persist(muForDelete);
     }
 
     @BeforeAll
@@ -131,9 +139,6 @@ public class MeetupResourceTest {
 
     @Test
     public void testSetAccepted() {
-
-        System.out.println(m.getId());
-        System.out.println(mu.getId());
         given().
             auth().preemptive().oauth2(accessToken)
                 .body(m.getId())
@@ -172,5 +177,16 @@ public class MeetupResourceTest {
 
         Assertions.assertEquals("declined",r.jsonPath().getString("status[0]"));
 
+    }
+
+    @Test
+    public void testDeleteUserFromMeetup() {
+        given().
+                auth().preemptive().oauth2(accessToken)
+                .body(mForDelete.getId())
+                .when()
+                .post("deleteUserFromMeetup")
+                .then()
+                .statusCode(204);
     }
 }
