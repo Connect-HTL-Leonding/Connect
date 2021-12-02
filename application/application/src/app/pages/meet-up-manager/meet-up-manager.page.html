@@ -13,7 +13,9 @@
   </div>
   <ion-card *ngFor="let m of this.meetups">
     <ion-card-header>
-      <ion-card-title>Meetup</ion-card-title>
+      <ion-card-title *ngIf="m.name == null ">Meetup</ion-card-title>
+      <ion-card-title *ngIf="m.name != null ">{{m.name}}</ion-card-title>
+      
     </ion-card-header>
   
     <ion-card-content>
