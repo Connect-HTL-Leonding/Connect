@@ -10,7 +10,8 @@
   <ion-label id="chat-flex">
     <div id="flex">
       <h2 *ngIf="user" id="username">{{user.userName}}</h2>
-      <h2 *ngIf="!user.custom && room.meeting" id="username">meetup {{room.meeting.id}}</h2>
+      <h2 *ngIf="!user.custom && room.meeting && room.meeting.name != null" id="username"> {{room.meeting.name}}</h2>
+      <h2 *ngIf="!user.custom && room.meeting && room.meeting.name == null" id="username"> Meeting {{room.meeting.id}}</h2>
       <p *ngIf="this.unseenMessages<=0 && this.newMeetUp == false && !this.myMeetUp">{{this.latestMessage}}</p>
       <p class="bold" *ngIf="this.unseenMessages>0 && this.newMeetUp == false && !this.myMeetUp">{{this.latestMessage}}</p>
       <p class="bold" *ngIf="this.newMeetUp">I wanna meet up with you!</p>

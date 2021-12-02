@@ -4,6 +4,7 @@ import { Position } from "./position";
 export class Meeting {
     constructor(
         public id = 0,
+        public name : String = null,
         public time : Date = null,
         public position: Position = null,
         public creator: User = null

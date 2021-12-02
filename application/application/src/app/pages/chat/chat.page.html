@@ -12,7 +12,8 @@
       </div>
       <div *ngIf="!otherUser.custom" id="profile" (click)="openMeetup(chatservice.selectedRoom.meeting.id)">
         <ion-icon color="primary" class="icon" *ngIf="!otherUser.custom" name="location-sharp"></ion-icon>
-        <ion-label>meetup {{chatservice.selectedRoom.meeting.id}}</ion-label>
+        <ion-label *ngIf="chatservice.selectedRoom.meeting.name == null">Meetup {{chatservice.selectedRoom.meeting.id}}</ion-label>
+        <ion-label *ngIf="chatservice.selectedRoom.meeting.name != null">{{chatservice.selectedRoom.meeting.name}}</ion-label>
       </div>
       <ion-icon *ngIf="otherUser.custom" id="meeting-icon" (click)="presentModal()" name="walk"></ion-icon>
       <ion-icon *ngIf="!otherUser.custom" (click)="leaveMeetup(chatservice.selectedRoom.meeting.id)" class="icon" color="primary" name="exit"></ion-icon>

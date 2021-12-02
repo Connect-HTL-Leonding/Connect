@@ -25,6 +25,7 @@ export class MeetupDataPage implements OnInit {
   public day = null;
   public timeOfDay = null;
   public time : Date= null;
+  public meetupName : String =null;
   public meetup: Meeting;
   public profileservice;
   ms : MeetupService;
@@ -85,7 +86,7 @@ export class MeetupDataPage implements OnInit {
     this.time.setUTCHours(new Date(this.timeOfDay).getHours());
     this.time.setUTCMinutes(new Date(this.timeOfDay).getMinutes());
     this.time.setUTCSeconds(new Date(this.timeOfDay).getSeconds());
-    this.meetup = new Meeting(0, this.time, this.position);
+    this.meetup = new Meeting(0, this.meetupName, this.time, this.position);
 
     this.ms.createMeetup(this.meetup).subscribe(data=> {
       let dataForPost: Array<Object> = new Array();

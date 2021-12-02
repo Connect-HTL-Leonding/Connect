@@ -25,6 +25,7 @@ public class Meeting implements Serializable {
     @GeneratedValue
     private long id;
     private LocalDateTime time;
+    private String name;
 
     public static final String FINDALL = "Meeting.findAll";
     public static final String FINDMEETUPSWITHME = "Meeting.findMeetupsWithMe";
@@ -57,6 +58,14 @@ public class Meeting implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public LocalDateTime getTime() {
