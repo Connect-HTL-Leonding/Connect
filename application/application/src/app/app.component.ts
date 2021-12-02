@@ -88,7 +88,8 @@ export class AppComponent implements OnInit {
   public ngOnInit() {
     console.log("CHECK")
     //überprüfen, ob eingeloggt
-    if (!this.keycloak.userid || !this.keycloak.userid.length) {
+    console.log(this.keycloak.userid)
+    if (this.keycloak.userid === undefined || !this.keycloak.userid || !this.keycloak.userid.length) {
       this.keycloak.refresh().subscribe(token => {
         this.keycloak.authenticated = true;
 
@@ -97,12 +98,11 @@ export class AppComponent implements OnInit {
 
           this.keycloak.userid = tokenInfo["sub"];
           this.keycloak.setSession(token);
+          this.makeWebsocket()
         }
         catch (err) {
           console.error(err)
         }
-
-        this.makeWebsocket()
       })
     } else {
 
@@ -111,10 +111,10 @@ export class AppComponent implements OnInit {
   }
 
   makeWebsocket() {
-    if (this.keycloak.userid || this.keycloak.userid.length) {
+    if (this.keycloak.userid !== undefined && this.keycloak.userid && this.keycloak.userid.length) {
       this.ps.getUser().add(() => {
-        if (this.ps.user) {
-          this.wsUri = api.ws + '/websocket/' + this.ps.user.id;
+        if (this.keycloak.userid) {
+          this.wsUri = api.ws + '/websocket/' + this.keycloak.userid;
           console.log(this.wsUri)
           this.doConnect();
         }
