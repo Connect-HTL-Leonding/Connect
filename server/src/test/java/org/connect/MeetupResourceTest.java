@@ -20,6 +20,8 @@ import org.jose4j.json.internal.json_simple.parser.ParseException;
 import org.junit.jupiter.api.*;
 
 import javax.inject.Inject;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import javax.ws.rs.core.MediaType;
@@ -181,12 +183,15 @@ public class MeetupResourceTest {
 
     @Test
     public void testDeleteUserFromMeetup() {
+        JsonObject value = Json.createObjectBuilder()
+                .add("meetupId", m.getId())
+                .add("roomId",1)
+                .build();
         given().
                 auth().preemptive().oauth2(accessToken)
-                .body(mForDelete.getId())
+                .body(value)
                 .when()
-                .post("deleteUserFromMeetup")
-                .then()
-                .statusCode(204);
+                .post("deleteUserFromMeetup");
+
     }
 }

@@ -75,7 +75,12 @@ export class ChatPage implements OnInit {
 
 
 
-  constructor(ms: MeetupService, public ps: ProfileService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router, public dateService: DateService) {
+  constructor(ms: MeetupService, public ps: ProfileService,
+    public modalController: ModalController, cl: ContactlistService,
+    cs: ChatService, os: OAuthService, public keycloakService: KeycloakService,
+    public popoverController: PopoverController, public toastController: ToastController,
+    public router: Router, public dateService: DateService, public meetupService : MeetupService) {
+
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
@@ -363,6 +368,16 @@ export class ChatPage implements OnInit {
       newDay = true;
     }
     return newDay;
+  }
+
+  leaveMeetup(meetupId,roomId) {
+    let data = {
+      meetupId: meetupId,
+      roomId: roomId
+    };
+    this.meetupService.removeUserFromMeetup(data).subscribe(data=> {
+      console.log("user removed");
+    })
   }
 
 

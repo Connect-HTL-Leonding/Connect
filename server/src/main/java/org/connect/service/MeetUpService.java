@@ -9,6 +9,7 @@ import org.hibernate.mapping.Any;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.persistence.TypedQuery;
 import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
@@ -104,9 +105,10 @@ public class MeetUpService {
 
     @POST
     @Path("deleteUserFromMeetup")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public void deleteUserFromMeetup(Long meetupId) {
-        repo.removeUserFromMeetup(meetupId);
+    public void deleteUserFromMeetup(JsonObject data) {
+        repo.removeUserFromMeetup(data);
     }
 
 
