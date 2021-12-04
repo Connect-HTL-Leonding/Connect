@@ -378,6 +378,12 @@ export class ChatPage implements OnInit {
     })
   }
 
+  endMeetup(r: Room) {
+    this.meetupService.endMeetup(r).subscribe(data=> {
+      console.log("meetup terminated");
+    })
+  }
+
   // for leaving meetup
   async presentLeaveAlert(r: Room) {
     const alert = await this.alertController.create({
@@ -387,10 +393,7 @@ export class ChatPage implements OnInit {
         {
           text: 'Cancel',
           role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            
-          }
+          cssClass: 'secondary'
         }, {
           text: 'Leave',
           handler: () => {
@@ -418,7 +421,7 @@ export class ChatPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            
+            this.endMeetup(r);
           }
         }, {
           text: 'End Meet-Up',

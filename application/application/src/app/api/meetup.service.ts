@@ -87,8 +87,12 @@ export class MeetupService {
     return this.http.post(api.url + "meetup/setSeen",dataForPost);
   }
 
-  removeUserFromMeetup(meetupId) {
-    return this.http.post(api.url + "meetup/deleteUserFromMeetup", meetupId);
+  removeUserFromMeetup(room) {
+    return this.http.post(api.url + "meetup/deleteUserFromMeetup", room);
+  }
+
+  endMeetup(room) {
+    return this.http.post(api.url + "meetup/endMeetup", room);
   }
 
 

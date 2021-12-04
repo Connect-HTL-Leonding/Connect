@@ -111,4 +111,12 @@ public class MeetUpService {
     public void deleteUserFromMeetup(Room r) {
         repo.removeUserFromMeetup(r);
     }
+
+    @POST
+    @Path("endMeetup")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    public void endMeetup(Room r) {
+        repo.endMeetup(r);
+    }
 }

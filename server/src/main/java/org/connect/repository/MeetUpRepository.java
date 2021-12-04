@@ -161,12 +161,17 @@ public class MeetUpRepository {
         Query removeUserFromMeetup = em.createQuery(
                 "DELETE FROM Meeting_User m WHERE m.meeting.id= :id AND m.user_id=:userid");
         // Delete user from Room
-        Room room = em.find(Room.class,roomId);
-        room.getUsers().remove(u);
+        r.getUsers().remove(u);
         em.merge(r);
         removeUserFromMeetup.setParameter("id", meetupId);
         removeUserFromMeetup.setParameter("userid",userId);
         removeUserFromMeetup.executeUpdate();
 
+    }
+
+    @Transactional
+    public void endMeetup(Room r) {
+        em.remove(r.getMeeting());
+        em.remove(r);
     }
 }
