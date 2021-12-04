@@ -379,7 +379,7 @@ export class ChatPage implements OnInit {
   }
 
   // for leaving meetup
-  async presentAlert(r: Room) {
+  async presentLeaveAlert(r: Room) {
     const alert = await this.alertController.create({
       header: 'Leave this Meet-Up?',
       message: 'You are about to leave this Meet-Up. Are you sure?',
@@ -395,6 +395,34 @@ export class ChatPage implements OnInit {
           text: 'Leave',
           handler: () => {
             this.leaveMeetup(r);
+            this.dismissModal();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    
+  }
+
+   // for ending meetup
+   async presentEndAlert(r: Room) {
+    const alert = await this.alertController.create({
+      header: 'End this Meet-Up?',
+      message: 'You are about to end this Meet-Up. Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            
+          }
+        }, {
+          text: 'End Meet-Up',
+          handler: () => {
             this.dismissModal();
           }
         }

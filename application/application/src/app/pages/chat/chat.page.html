@@ -16,7 +16,8 @@
         <ion-label *ngIf="chatservice.selectedRoom.meeting.name != null">{{chatservice.selectedRoom.meeting.name}}</ion-label>
       </div>
       <ion-icon *ngIf="otherUser.custom" id="meeting-icon" (click)="presentModal()" name="walk"></ion-icon>
-      <ion-icon *ngIf="!otherUser.custom" (click)="presentAlert(chatservice.selectedRoom)" class="icon" color="primary" name="exit"></ion-icon>
+      <ion-icon *ngIf="!otherUser.custom && chatservice.selectedRoom.meeting.creator.id !== this.ps.user.id" (click)="presentLeaveAlert(chatservice.selectedRoom)" class="icon" color="primary" name="exit"></ion-icon>
+      <ion-icon *ngIf="!otherUser.custom && chatservice.selectedRoom.meeting.creator.id == this.ps.user.id" class="icon" color="primary" (click)="presentEndAlert(chatservice.selectedRoom)" name="stop-circle-outline"></ion-icon>
     </div>
   </ion-toolbar>
 </ion-header>

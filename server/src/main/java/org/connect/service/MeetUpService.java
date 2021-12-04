@@ -111,6 +111,4 @@ public class MeetUpService {
     public void deleteUserFromMeetup(Room r) {
         repo.removeUserFromMeetup(r);
     }
-
-
 }
