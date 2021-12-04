@@ -22,6 +22,7 @@ import { FriendPage } from '../friend/friend.page';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
 import { DateService } from 'src/app/api/date.service';
+import { AlertController } from '@ionic/angular';
 
 
 declare var google: any;
@@ -79,7 +80,8 @@ export class ChatPage implements OnInit {
     public modalController: ModalController, cl: ContactlistService,
     cs: ChatService, os: OAuthService, public keycloakService: KeycloakService,
     public popoverController: PopoverController, public toastController: ToastController,
-    public router: Router, public dateService: DateService, public meetupService : MeetupService) {
+    public router: Router, public dateService: DateService, public meetupService : MeetupService, 
+    public alertController: AlertController) {
 
     this.contactlist = cl;
     this.chatservice = cs;
@@ -374,6 +376,35 @@ export class ChatPage implements OnInit {
     this.meetupService.removeUserFromMeetup(r).subscribe(data=> {
       console.log("user removed");
     })
+  }
+
+  // for leaving meetup
+  async presentAlert(r: Room) {
+    const alert = await this.alertController.create({
+      header: 'Leave this Meet-Up?',
+      message: 'You are about to leave this Meet-Up. Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            
+          }
+        }, {
+          text: 'Leave',
+          handler: () => {
+            this.leaveMeetup(r);
+            this.dismissModal();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    
   }
 
 
