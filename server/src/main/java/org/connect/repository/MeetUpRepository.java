@@ -152,14 +152,18 @@ public class MeetUpRepository {
 
     @Transactional
     // removes User from Meetup and Room
-    public void removeUserFromMeetup(JsonObject data) {
-        int meetupId = data.getInt("meetupId");
-        int roomId = data.getInt("roomId");
-        System.out.println(meetupId + ", " + roomId + "HIEEERRRR!");
+    public void removeUserFromMeetup(Room r) {
+        long meetupId = r.getMeeting().getId();
+        long roomId = r.getId();
         User u = em.find(User.class, jwt.getClaim("sub"));
         String userId = u.getId();
+        // Delete user fromm Meetup
         Query removeUserFromMeetup = em.createQuery(
                 "DELETE FROM Meeting_User m WHERE m.meeting.id= :id AND m.user_id=:userid");
+        // Delete user from Room
+        Room room = em.find(Room.class,roomId);
+        room.getUsers().remove(u);
+        em.merge(r);
         removeUserFromMeetup.setParameter("id", meetupId);
         removeUserFromMeetup.setParameter("userid",userId);
         removeUserFromMeetup.executeUpdate();

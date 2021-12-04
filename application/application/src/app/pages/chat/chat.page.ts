@@ -370,12 +370,8 @@ export class ChatPage implements OnInit {
     return newDay;
   }
 
-  leaveMeetup(meetupId,roomId) {
-    let data = {
-      meetupId: meetupId,
-      roomId: roomId
-    };
-    this.meetupService.removeUserFromMeetup(data).subscribe(data=> {
+  leaveMeetup(r: Room) {
+    this.meetupService.removeUserFromMeetup(r).subscribe(data=> {
       console.log("user removed");
     })
   }

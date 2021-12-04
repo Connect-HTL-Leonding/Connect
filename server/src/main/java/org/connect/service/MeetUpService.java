@@ -1,5 +1,6 @@
 package org.connect.service;
 
+import org.connect.model.chat.Room;
 import org.connect.model.meetup.Meeting;
 import org.connect.model.meetup.Meeting_User;
 import org.connect.model.user.User;
@@ -107,8 +108,8 @@ public class MeetUpService {
     @Path("deleteUserFromMeetup")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public void deleteUserFromMeetup(JsonObject data) {
-        repo.removeUserFromMeetup(data);
+    public void deleteUserFromMeetup(Room r) {
+        repo.removeUserFromMeetup(r);
     }
 
 

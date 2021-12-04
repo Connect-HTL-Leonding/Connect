@@ -7,6 +7,7 @@ import io.restassured.http.ContentType;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseBody;
+import org.connect.model.chat.Room;
 import org.connect.model.meetup.Meeting;
 import org.connect.model.meetup.Meeting_User;
 import org.connect.model.user.User;
@@ -181,17 +182,4 @@ public class MeetupResourceTest {
 
     }
 
-    @Test
-    public void testDeleteUserFromMeetup() {
-        JsonObject value = Json.createObjectBuilder()
-                .add("meetupId", m.getId())
-                .add("roomId",1)
-                .build();
-        given().
-                auth().preemptive().oauth2(accessToken)
-                .body(value)
-                .when()
-                .post("deleteUserFromMeetup");
-
-    }
 }
