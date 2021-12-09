@@ -1,5 +1,6 @@
 package org.connect.service;
 
+import org.connect.model.chat.Room;
 import org.connect.model.meetup.Meeting;
 import org.connect.model.meetup.Meeting_User;
 import org.connect.model.user.User;
@@ -9,6 +10,7 @@ import org.hibernate.mapping.Any;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.persistence.TypedQuery;
 import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
@@ -104,10 +106,17 @@ public class MeetUpService {
 
     @POST
     @Path("deleteUserFromMeetup")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public void deleteUserFromMeetup(Long meetupId) {
-        repo.removeUserFromMeetup(meetupId);
+    public void deleteUserFromMeetup(Room r) {
+        repo.removeUserFromMeetup(r);
     }
 
-
+    @POST
+    @Path("endMeetup")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Transactional
+    public void endMeetup(Room r) {
+        repo.endMeetup(r);
+    }
 }

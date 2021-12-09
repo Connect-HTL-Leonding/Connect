@@ -22,6 +22,7 @@ import { FriendPage } from '../friend/friend.page';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
 import { DateService } from 'src/app/api/date.service';
+import { AlertController } from '@ionic/angular';
 
 
 declare var google: any;
@@ -75,7 +76,13 @@ export class ChatPage implements OnInit {
 
 
 
-  constructor(ms: MeetupService, public ps: ProfileService, public modalController: ModalController, cl: ContactlistService, cs: ChatService, os: OAuthService, public keycloakService: KeycloakService, public popoverController: PopoverController, public toastController: ToastController, public router: Router, public dateService: DateService) {
+  constructor(ms: MeetupService, public ps: ProfileService,
+    public modalController: ModalController, cl: ContactlistService,
+    cs: ChatService, os: OAuthService, public keycloakService: KeycloakService,
+    public popoverController: PopoverController, public toastController: ToastController,
+    public router: Router, public dateService: DateService, public meetupService : MeetupService, 
+    public alertController: AlertController) {
+
     this.contactlist = cl;
     this.chatservice = cs;
     this.chatservice.selectedRoom = this.contactlist.selectedRoom;
@@ -363,6 +370,72 @@ export class ChatPage implements OnInit {
       newDay = true;
     }
     return newDay;
+  }
+
+  leaveMeetup(r: Room) {
+    this.meetupService.removeUserFromMeetup(r).subscribe(data=> {
+      console.log("user removed");
+    })
+  }
+
+  endMeetup(r: Room) {
+    this.meetupService.endMeetup(r).subscribe(data=> {
+      console.log("meetup terminated");
+    })
+  }
+
+  // for leaving meetup
+  async presentLeaveAlert(r: Room) {
+    const alert = await this.alertController.create({
+      header: 'Leave this Meet-Up?',
+      message: 'You are about to leave this Meet-Up. Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary'
+        }, {
+          text: 'Leave',
+          handler: () => {
+            this.leaveMeetup(r);
+            this.dismissModal();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    
+  }
+
+   // for ending meetup
+   async presentEndAlert(r: Room) {
+    const alert = await this.alertController.create({
+      header: 'End this Meet-Up?',
+      message: 'You are about to end this Meet-Up. Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.endMeetup(r);
+          }
+        }, {
+          text: 'End Meet-Up',
+          handler: () => {
+            this.dismissModal();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    
   }
 
 
