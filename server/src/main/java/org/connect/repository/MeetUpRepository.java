@@ -39,30 +39,36 @@ public class MeetUpRepository {
     @Transactional
     public List<Meeting_User> addEntry(List<Meeting_User> muList) {
         for (Meeting_User mu : muList)  {
-            TypedQuery<Room> query = em.createNamedQuery(Room.FINDBYMEETING, Room.class);
-            query.setParameter("meeting", mu.getMeeting());
-            TypedQuery<User> userQuery = em.createNamedQuery(User.FINDWITHID, User.class);
-            userQuery.setParameter("user_id", mu.getUser_id());
-            Room r = null;
-            User u = null;
-            try {
-                r = query.getSingleResult();
-                u = userQuery.getSingleResult();
-            } catch(Exception ex) {
-                System.out.println(ex.getMessage());
-            }
 
-            r.getUsers().add(u);
-            u.getRooms().add(r);
             mu.setSeen(false);
             em.persist(mu);
-            em.merge(u);
-            em.merge(r);
+
 
         }
 
         return muList;
 
+    }
+
+    public Meeting addToMeetupRoom(Meeting meeting){
+        TypedQuery<Room> query = em.createNamedQuery(Room.FINDBYMEETING, Room.class);
+        query.setParameter("meeting", meeting);
+        TypedQuery<User> userQuery = em.createNamedQuery(User.FINDWITHID, User.class);
+        userQuery.setParameter("user_id", em.find(User.class, jwt.getClaim("sub")).getId());
+        Room r = null;
+        User u = null;
+        try {
+            r = query.getSingleResult();
+            u = userQuery.getSingleResult();
+        } catch(Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        r.getUsers().add(u);
+        u.getRooms().add(r);
+        em.merge(u);
+        em.merge(r);
+        return meeting;
     }
 
 
@@ -132,6 +138,10 @@ public class MeetUpRepository {
         query.setParameter("meetingId",meetingId);
         query.setParameter("user_id",u.getId());
         query.executeUpdate();
+
+        if(status =="accepted"){
+            addToMeetupRoom(getMeetupById(meetingId));
+        }
     }
 
     @Transactional
