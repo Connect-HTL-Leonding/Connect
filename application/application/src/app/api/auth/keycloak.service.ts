@@ -81,6 +81,37 @@ export class KeycloakService {
     return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
   }
 
+  getAdminToken() {
+    //keycloak
+    /*
+    this.http.get<any>(api.url + 'keycloak/adminToken').subscribe(data => {
+      console.log(data)
+    })
+    */
+    //body
+    let body = new URLSearchParams();
+    body.set('client_id', "admin-cli");
+    body.set('client_secret', "d98ff697-a5aa-4e21-a1ce-c038108d5891");
+    body.set('grant_type', "client_credentials");
+
+
+    //x-www-form-urlencoded
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+    };
+
+    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options);
+  }
+
+  createUser(keycloakUser, accessToken) {
+
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${accessToken}`)
+    };
+
+    return this.http.post<Object>(api.ip + ':8010/auth/admin/realms/connect/users', keycloakUser, options);
+  }
+
   setSession(authResult) {
     console.log("TOKEN SET")
     const expires_in = moment().add(authResult.expires_in, 'second');
