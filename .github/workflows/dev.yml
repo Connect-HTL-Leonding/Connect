@@ -5,7 +5,7 @@ name: build and deploy (develop)
 
 on:
   push:
-    branches: [ development ]
+    branches: [ dev ]
 
   workflow_dispatch:
     inputs:
