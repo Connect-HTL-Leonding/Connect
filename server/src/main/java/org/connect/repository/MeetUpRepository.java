@@ -8,6 +8,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -150,13 +151,27 @@ public class MeetUpRepository {
     }
 
     @Transactional
-    public void removeUserFromMeetup(Long meetupId) {
+    // removes User from Meetup and Room
+    public void removeUserFromMeetup(Room r) {
+        long meetupId = r.getMeeting().getId();
+        long roomId = r.getId();
         User u = em.find(User.class, jwt.getClaim("sub"));
         String userId = u.getId();
-        Query query = em.createQuery(
+        // Delete user fromm Meetup
+        Query removeUserFromMeetup = em.createQuery(
                 "DELETE FROM Meeting_User m WHERE m.meeting.id= :id AND m.user_id=:userid");
-        query.setParameter("id", meetupId);
-        query.setParameter("userid",userId);
-        query.executeUpdate();
+        // Delete user from Room
+        r.getUsers().remove(u);
+        em.merge(r);
+        removeUserFromMeetup.setParameter("id", meetupId);
+        removeUserFromMeetup.setParameter("userid",userId);
+        removeUserFromMeetup.executeUpdate();
+
+    }
+
+    @Transactional
+    public void endMeetup(Room r) {
+        em.remove(r.getMeeting());
+        em.remove(r);
     }
 }
