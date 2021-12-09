@@ -421,11 +421,12 @@ export class ChatPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-            this.endMeetup(r);
+           
           }
         }, {
           text: 'End Meet-Up',
           handler: () => {
+            this.endMeetup(r);
             this.dismissModal();
           }
         }

@@ -1,9 +1,7 @@
 package org.connect.model.chat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.connect.model.meetup.Meeting;
-import org.connect.model.skin.Category;
 import org.connect.model.user.User;
 
 import javax.persistence.*;
@@ -11,7 +9,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 
@@ -46,7 +43,7 @@ public class Room implements Serializable {
         setType(type);
     }
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.PERSIST,CascadeType.DETACH})
     @JoinTable(
             name= "Room_Members",
             joinColumns =
@@ -59,6 +56,10 @@ public class Room implements Serializable {
 
     public List<User> getUsers() {
         return users;
+    }
+
+    public boolean deleteUser(User u) {
+        return this.getUsers().remove(u);
     }
 
     public void setUsers(List<User> users) {

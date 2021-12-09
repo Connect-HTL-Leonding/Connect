@@ -157,21 +157,27 @@ public class MeetUpRepository {
         long roomId = r.getId();
         User u = em.find(User.class, jwt.getClaim("sub"));
         String userId = u.getId();
-        // Delete user fromm Meetup
+        // Delete user from Meetup
         Query removeUserFromMeetup = em.createQuery(
                 "DELETE FROM Meeting_User m WHERE m.meeting.id= :id AND m.user_id=:userid");
-        // Delete user from Room
-        r.getUsers().remove(u);
-        em.merge(r);
         removeUserFromMeetup.setParameter("id", meetupId);
         removeUserFromMeetup.setParameter("userid",userId);
         removeUserFromMeetup.executeUpdate();
-
+        // Delete user from Room
+        System.out.println(r.getUsers().size() + "HIER");
+        r.getUsers().remove(u);
+        em.merge(r);
+        em.flush();
     }
 
     @Transactional
     public void endMeetup(Room r) {
-        em.remove(r.getMeeting());
-        em.remove(r);
+        long meetupId = r.getMeeting().getId();
+        Query removeUserFromMeetup = em.createQuery(
+                "DELETE FROM Meeting_User m WHERE m.meeting.id= :id");
+        removeUserFromMeetup.setParameter("id", meetupId);
+        removeUserFromMeetup.executeUpdate();
+        em.remove(em.contains(r.getMeeting()) ? r.getMeeting() : em.merge(r.getMeeting()));
+        em.remove(em.contains(r) ? r : em.merge(r));
     }
 }
