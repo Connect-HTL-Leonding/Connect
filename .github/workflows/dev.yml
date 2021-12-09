@@ -40,6 +40,7 @@ jobs:
 
     - name: build quarkus application
       run: |
+        pwd
         mvn -Dmaven.test.skip=true -Dquarkus.package.type=uber-jar -Dquarkus-profile=prod -Dbase.href="/" -B package
       working-directory: server
 
