@@ -5,7 +5,7 @@ After=docker.service
 
 [Service]
 WorkingDirectory=/usr/local/bin/application
-ExecStart=docker-compose up --build
+ExecStart=docker-compose up --force-recreate --build
 ExecStop=docker-compose down
 TimeoutStartSec=0
 Restart=on-failure
