@@ -55,7 +55,7 @@ public class User implements Serializable {
     @Lob
     private byte[] profilePicture;
 
-    @ManyToMany(mappedBy = "users",cascade={CascadeType.ALL})
+    @ManyToMany(mappedBy = "users")
     private List<Room> rooms = new LinkedList<>();
 
     public User() {

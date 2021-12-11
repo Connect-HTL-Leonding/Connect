@@ -43,7 +43,7 @@ public class Room implements Serializable {
         setType(type);
     }
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade={CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name= "Room_Members",
             joinColumns =

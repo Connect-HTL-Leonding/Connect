@@ -186,8 +186,9 @@ public class MeetUpRepository {
     }
 
     @Transactional
-    public void endMeetup(Room r) {
-        long meetupId = r.getMeeting().getId();
+    public void endMeetup(Room room) {
+        long meetupId = room.getMeeting().getId();
+        Room r = em.find(Room.class,room.getId());
         Query removeUserFromMeetup = em.createQuery(
                 "DELETE FROM Meeting_User m WHERE m.meeting.id= :id");
         removeUserFromMeetup.setParameter("id", meetupId);
@@ -197,6 +198,7 @@ public class MeetUpRepository {
         r.getMeeting().getPosition().remove(r.getMeeting().getId());
 
         // delete meeting and room
+
         em.remove(em.contains(r.getMeeting()) ? r.getMeeting() : em.merge(r.getMeeting()));
         em.remove(em.contains(r) ? r : em.merge(r));
     }
