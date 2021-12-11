@@ -43,10 +43,13 @@ jobs:
         pwd
         mvn -Dmaven.test.skip=true -Dquarkus.package.type=uber-jar -Dquarkus-profile=prod -Dbase.href="/" -B package
       working-directory: server
+      
+    - name: convert github repository name to lowercase
+      run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
     - name: build appsrv docker image
       run: |
-        docker build --file docker/Dockerfile.jvm server --tag ${{ env.REGISTRY }}/${{ github.repository }}-server
+        docker build --file docker/Dockerfile.jvm server --tag ${{ env.REGISTRY }}/${{ IMAGE_REPOSITORY }}-server
 #      working-directory: server      
 #
 #    - name: Log in to the Container registry
