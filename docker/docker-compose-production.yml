@@ -32,9 +32,7 @@ services:
       - 3307
 
   keycloak:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: leo-keycloak
     environment:
 #        KEYCLOAK_IMPORT: /opt/jboss/keycloak/realm-config/realm.json
       DB_VENDOR: MYSQL
