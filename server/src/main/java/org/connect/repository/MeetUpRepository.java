@@ -165,8 +165,7 @@ public class MeetUpRepository {
         removeUserFromMeetup.executeUpdate();
         // Delete user from Room
         System.out.println(r.getUsers().size() + "HIER");
-        r.getUsers().remove(u);
-        em.merge(r);
+        r.getUsers().remove(em.contains(u) ? u : em.merge(u));
         em.flush();
     }
 
@@ -177,6 +176,11 @@ public class MeetUpRepository {
                 "DELETE FROM Meeting_User m WHERE m.meeting.id= :id");
         removeUserFromMeetup.setParameter("id", meetupId);
         removeUserFromMeetup.executeUpdate();
+
+        //delete from map
+        r.getMeeting().getPosition().remove(r.getMeeting().getId());
+
+        // delete meeting and room
         em.remove(em.contains(r.getMeeting()) ? r.getMeeting() : em.merge(r.getMeeting()));
         em.remove(em.contains(r) ? r : em.merge(r));
     }
