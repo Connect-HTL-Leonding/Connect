@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: keycloak
       MYSQL_USER: keycloak
       MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
     ports:
      - 3306:3306
     expose:
@@ -26,6 +27,7 @@ services:
       MYSQL_DATABASE: connect
       MYSQL_USER: connect
       MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
     ports:
      - 3307:3306
     expose:
@@ -33,16 +35,6 @@ services:
 
   keycloak:
     image: leo-keycloak
-    environment:
-#        KEYCLOAK_IMPORT: /opt/jboss/keycloak/realm-config/realm.json
-      DB_VENDOR: MYSQL
-      DB_ADDR: db_keycloak
-      DB_DATABASE: keycloak
-      DB_USER: keycloak
-      DB_PASSWORD: password
-      KEYCLOAK_USER: admin
-      KEYCLOAK_PASSWORD: Pa55w0rd
-      KEYCLOAK_STATISTICS: all
     ports:
       - 8010:8080
     expose:
