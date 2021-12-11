@@ -69,31 +69,28 @@ jobs:
 #        docker push ${{ env.REGISTRY }}/${{ github.repository }}-nginx
 #      working-directory: distribution/${{ env.DISTRIBUTION_FOLDER }}        
 #
-#    - name: install ssh key
-#      uses: caberger/install-ssh-key@v1.0
-#      with:
-#        ssh-private-key:  ${{ secrets.SSH_SERVER_PRIVATE_KEY }}
-#        user: ${{ secrets.SERVER_USER }}
-#        server: ${{ secrets.SERVER }}
-#        alias: server
-#
-#    - name: convert github repository name to lowercase
-#      run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-#
-#    - name: enable ssh login for debugging...
-#      uses: mxschmitt/action-tmate@v3
-#      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug == 'enabled' }}        
-#
-#    - name: deploy to server  
-#      working-directory: distribution
-#      run: |
-#        ssh server "rm -rf ~/dist && mkdir -p ~/dist"
-#        scp -r *.sh server/ server:~/dist/
-#        scp docker-compose-production.yml server:~/dist
-#        ssh server "chmod +x ~/dist/*.sh"
-#        echo "running installation on server..."
-#        ssh server "cd ~/dist && sudo ./install.sh ${{ github.actor }} ${{ secrets.REGISTRY_ACCESS_TOKEN }} ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }} ${{ secrets.SERVER_USER }}"
-#        echo "done $(date)"
+    - name: install ssh key
+      uses: caberger/install-ssh-key@v1.0
+      with:
+        ssh-private-key:  ${{ secrets.SSH_SERVER_PRIVATE_KEY }}
+        user: ${{ secrets.SERVER_USER }}
+        server: ${{ secrets.SERVER }}
+        alias: server
+
+    - name: enable ssh login for debugging...
+      uses: mxschmitt/action-tmate@v3
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug == 'enabled' }}        
+
+    - name: deploy to server  
+      working-directory: docker
+      run: |
+        ssh server "rm -rf ~/dist && mkdir -p ~/dist"
+        scp -r *.sh server/ server:~/dist/
+        scp docker-compose-production.yml server:~/dist
+        ssh server "chmod +x ~/dist/*.sh"
+        echo "running installation on server..."
+        ssh server "cd ~/dist && sudo ./install.sh ${{ github.actor }} ${{ secrets.REGISTRY_ACCESS_TOKEN }} ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }} ${{ secrets.SERVER_USER }}"
+        echo "done $(date)"
 
   bye:
     needs:
