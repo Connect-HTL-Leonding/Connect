@@ -163,8 +163,11 @@ public class MeetUpRepository {
     @Transactional
     // removes User from Meetup and Room
     public void removeUserFromMeetup(Room r) {
-        long meetupId = r.getMeeting().getId();
-        long roomId = r.getId();
+
+        Room room = em.find(Room.class,r.getId());
+
+        long meetupId = room.getMeeting().getId();
+        long roomId = room.getId();
         User u = em.find(User.class, jwt.getClaim("sub"));
         String userId = u.getId();
         // Delete user from Meetup
@@ -174,9 +177,12 @@ public class MeetUpRepository {
         removeUserFromMeetup.setParameter("userid",userId);
         removeUserFromMeetup.executeUpdate();
         // Delete user from Room
-        System.out.println(r.getUsers().size() + "HIER");
-        r.getUsers().remove(em.contains(u) ? u : em.merge(u));
         em.flush();
+        for (User user:
+             r.getUsers()) {
+            System.out.println(user.getId() + "HHHHHHHHHHHHHHHHHHHHHHHH");
+        }
+        //room.getUsers().remove(u);
     }
 
     @Transactional

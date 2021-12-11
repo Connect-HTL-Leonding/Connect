@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController, ModalController, ToastController } from '@ionic/angular';
+import { AlertController, MenuController, ModalController, ToastController } from '@ionic/angular';
 import { MeetupService } from '../../api/meetup.service';
 import {ContactlistService} from '../../api/contactlist.service';
 import { CustomUser, User } from '../../model/user';
 import { DateService } from 'src/app/api/date.service';
+import { Room } from 'src/app/model/room';
 
 @Component({
   selector: 'app-meet-up-manager',
@@ -17,7 +18,9 @@ export class MeetUpManagerPage implements OnInit {
   public ms;
   public dateService;
 
-  constructor(public modalController: ModalController, ms: MeetupService, public contactListService : ContactlistService, public ds:DateService) {
+  constructor(public modalController: ModalController, ms: MeetupService, 
+    public contactListService : ContactlistService, public ds:DateService,
+    public alertController: AlertController) {
     this.ms = ms;
     this.dateService = ds;
   }
@@ -46,10 +49,40 @@ export class MeetUpManagerPage implements OnInit {
     this.modalController.dismiss();
   }
 
-
-
-  test() {
-    console.log("test");
+  endMeetup(r: Room) {
+    this.ms.endMeetup(r).subscribe(data=> {
+      console.log("meetup terminated");
+    })
   }
 
+   // for ending meetup
+   async presentEndAlert(r) {
+     console.log(r);
+    const alert = await this.alertController.create({
+      header: 'End this Meet-Up?',
+      message: 'You are about to end this Meet-Up. Are you sure?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+           
+          }
+        }, {
+          text: 'End Meet-Up',
+          handler: () => {
+            //this.endMeetup(r);
+            console.log(r);
+            this.dismissModal();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+    const { role } = await alert.onDidDismiss();
+    
+  }
 }
