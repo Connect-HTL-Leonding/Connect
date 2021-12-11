@@ -1,11 +1,12 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://aberger.at/blog/2021/05/29/cloud-startproject.html
+#test
 
 name: build and deploy (develop)
 
 on:
   push:
-    branches: [ development ]
+    branches: [ dev ]
 
   workflow_dispatch:
     inputs:
@@ -25,7 +26,7 @@ jobs:
     - uses: actions/setup-java@v2
       with:
         distribution: 'adopt'
-        java-version: '11'
+        java-version: '15'
 
     - uses: actions/checkout@v2
 
@@ -40,54 +41,71 @@ jobs:
 
     - name: build quarkus application
       run: |
+        pwd
         mvn -Dmaven.test.skip=true -Dquarkus.package.type=uber-jar -Dquarkus-profile=prod -Dbase.href="/" -B package
+      working-directory: server
+      
+    - name: convert github repository name to lowercase
+      run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-#    - name: build appsrv docker image
-#      run: |
-#        docker build --file appsrv/Dockerfile.jvm appsrv --tag ${{ env.REGISTRY }}/${{ github.repository }}-appsrv
-#      working-directory: distribution/${{ env.DISTRIBUTION_FOLDER }}        
-#
-#    - name: Log in to the Container registry
-#      uses: docker/login-action@v1
-#      with:
-#        registry: ${{ env.REGISTRY }}
-#        username: ${{ github.actor }}
-#        password: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
-#
-#    - name: push appsrv docker image
-#      run: |
-#        docker push ${{ env.REGISTRY }}/${{ github.repository }}-appsrv
-#      working-directory: distribution/${{ env.DISTRIBUTION_FOLDER }}        
+    - name: build quarkus docker image
+      run: |
+        docker build --file docker/Dockerfile.jvm . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-server
+      working-directory: server     
+      
+    - name: build keycloak docker image
+      run: |
+        pwd
+        docker build . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-keycloak
+      working-directory: docker
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+
+    - name: push quarkus docker image
+      run: |
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-server
+      working-directory: server   
+      
+    - name: push keycloak docker image
+      run: |
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-keycloak
+      working-directory: docker
+      
+      
 #    - name: push nginx docker image
 #      run: |
 #        docker push ${{ env.REGISTRY }}/${{ github.repository }}-nginx
 #      working-directory: distribution/${{ env.DISTRIBUTION_FOLDER }}        
 #
-#    - name: install ssh key
-#      uses: caberger/install-ssh-key@v1.0
-#      with:
-#        ssh-private-key:  ${{ secrets.SSH_SERVER_PRIVATE_KEY }}
-#        user: ${{ secrets.SERVER_USER }}
-#        server: ${{ secrets.SERVER }}
-#        alias: server
-#
-#    - name: convert github repository name to lowercase
-#      run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-#
-#    - name: enable ssh login for debugging...
-#      uses: mxschmitt/action-tmate@v3
-#      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug == 'enabled' }}        
-#
-#    - name: deploy to server  
-#      working-directory: distribution
-#      run: |
-#        ssh server "rm -rf ~/dist && mkdir -p ~/dist"
-#        scp -r *.sh server/ server:~/dist/
-#        scp docker-compose-production.yml server:~/dist
-#        ssh server "chmod +x ~/dist/*.sh"
-#        echo "running installation on server..."
-#        ssh server "cd ~/dist && sudo ./install.sh ${{ github.actor }} ${{ secrets.REGISTRY_ACCESS_TOKEN }} ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }} ${{ secrets.SERVER_USER }}"
-#        echo "done $(date)"
+    - name: install ssh key
+      uses: caberger/install-ssh-key@v1.0
+      with:
+        ssh-private-key:  ${{ secrets.SSH_SERVER_PRIVATE_KEY }}
+        user: ${{ secrets.SERVER_USER }}
+        server: ${{ secrets.SERVER }}
+        alias: server
+
+    - name: enable ssh login for debugging...
+      uses: mxschmitt/action-tmate@v3
+      if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.debug == 'enabled' }}        
+
+    - name: deploy to server  
+      working-directory: docker
+      run: |
+        ssh server "rm -rf ~/dist && mkdir -p ~/dist"
+        scp -r *.sh server/ server:~/dist/
+        scp docker-compose-production.yml server:~/dist
+        scp Dockerfile server:~/dist
+        scp -r realm/ server:~/dist
+        ssh server "chmod +x ~/dist/*.sh"
+        echo "running installation on server..."
+        ssh server "cd ~/dist && sudo ./install.sh ${{ github.actor }} ${{ secrets.REGISTRY_ACCESS_TOKEN }} ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }} ${{ secrets.SERVER_USER }}"
+        echo "done $(date)"
 
   bye:
     needs:
