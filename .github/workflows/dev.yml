@@ -89,6 +89,7 @@ jobs:
         scp -r *.sh server/ server:~/dist/
         scp docker-compose-production.yml server:~/dist
         scp Dockerfile server:~/dist
+        scp -r realm/ server:~/dist
         ssh server "chmod +x ~/dist/*.sh"
         echo "running installation on server..."
         ssh server "cd ~/dist && sudo ./install.sh ${{ github.actor }} ${{ secrets.REGISTRY_ACCESS_TOKEN }} ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }} ${{ secrets.SERVER_USER }}"
