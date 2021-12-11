@@ -65,6 +65,18 @@ jobs:
         docker push ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-server
       working-directory: server   
       
+    - name: build keycloak docker image
+      run: |
+        pwd
+        docker build . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-keycloak
+      working-directory: docker
+      
+    - name: push keycloak docker image
+      run: |
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-keycloak
+      working-directory: docker
+      
+      
 #    - name: push nginx docker image
 #      run: |
 #        docker push ${{ env.REGISTRY }}/${{ github.repository }}-nginx
