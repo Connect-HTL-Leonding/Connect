@@ -1,5 +1,6 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://aberger.at/blog/2021/05/29/cloud-startproject.html
+#test
 
 name: build and deploy (develop)
 
@@ -87,6 +88,8 @@ jobs:
         ssh server "rm -rf ~/dist && mkdir -p ~/dist"
         scp -r *.sh server/ server:~/dist/
         scp docker-compose-production.yml server:~/dist
+        scp Dockerfile server:~/dist
+        scp -r realm/ server:~/dist
         ssh server "chmod +x ~/dist/*.sh"
         echo "running installation on server..."
         ssh server "cd ~/dist && sudo ./install.sh ${{ github.actor }} ${{ secrets.REGISTRY_ACCESS_TOKEN }} ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }} ${{ secrets.SERVER_USER }}"
