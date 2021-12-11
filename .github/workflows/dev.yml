@@ -49,7 +49,7 @@ jobs:
 
     - name: build appsrv docker image
       run: |
-        docker build --file docker/Dockerfile.jvm server --tag ${{ env.REGISTRY }}/${{ IMAGE_REPOSITORY }}-server
+        docker build --file docker/Dockerfile.jvm server --tag ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-server
 #      working-directory: server      
 #
 #    - name: Log in to the Container registry
