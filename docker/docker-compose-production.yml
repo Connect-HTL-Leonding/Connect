@@ -1,0 +1,79 @@
+version: '3.5'
+
+services:
+  db_keycloak:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - mysql_keycloak:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: keycloak
+      MYSQL_USER: keycloak
+      MYSQL_PASSWORD: password
+    ports:
+     - 3306:3306
+    expose:
+      - 3306
+
+  db_connect:
+    image: mysql:5.7
+    restart: always
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: connect
+      MYSQL_USER: connect
+      MYSQL_PASSWORD: password
+    ports:
+     - 3307:3306
+    expose:
+      - 3307
+
+  keycloak:
+    image: leo-keycloak
+    environment:
+#        KEYCLOAK_IMPORT: /opt/jboss/keycloak/realm-config/realm.json
+      DB_VENDOR: MYSQL
+      DB_ADDR: db_keycloak
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: password
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: Pa55w0rd
+      KEYCLOAK_STATISTICS: all
+    ports:
+      - 8010:8080
+    expose:
+      - 8010
+    volumes:
+      - keycloak_data:/var/lib/keycloak/data
+      - ./realm/cache/disable-theme-cache.cli:/opt/jboss/startup-scripts/disable-theme-cache.cli
+      - ./realm/properties/profile.properties:/opt/jboss/keycloak/standalone/configuration/profile.properties
+      - ./realm/theme/login.ftl:/opt/jboss/keycloak/themes/base/login/login.ftl
+      - ./realm/theme/register.ftl:/opt/jboss/keycloak/themes/base/login/register.ftl
+      - ./realm/theme/template.ftl:/opt/jboss/keycloak/themes/base/login/template.ftl
+      - ./realm/theme/login.css:/opt/jboss/keycloak/themes/custom/login/resources/css/login.css
+      - ./realm/theme/Connect_Logo_Positv_Negativ.png:/opt/jboss/keycloak/themes/custom/login/resources/img/Connect_Logo_Positv_Negativ.png
+    depends_on:
+      - db_keycloak
+
+  server:
+    image: leo-server
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+    depends_on:
+      - db_connect
+      - keycloak
+
+volumes:
+  mysql_keycloak:
+  mysql_data:
+  keycloak_data:
