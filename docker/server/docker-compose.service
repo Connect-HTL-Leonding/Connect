@@ -5,7 +5,6 @@ After=docker.service
 
 [Service]
 WorkingDirectory=/usr/local/bin/application
-ExecStartPre=docker-compose build --pull
 ExecStart=docker-compose up
 ExecStop=docker-compose down
 TimeoutStartSec=0

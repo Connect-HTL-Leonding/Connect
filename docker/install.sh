@@ -70,7 +70,7 @@ docker rmi -f $(docker images -q)
 echo $ACCESS_TOKEN | docker login -u $GITHUB_USER --password-stdin ghcr.io
 
 docker image ls
-docker-compose pull
+docker-compose build --pull
 
 if [[ $REBOOT -eq 0 ]]
 then
