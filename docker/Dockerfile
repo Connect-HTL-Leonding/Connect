@@ -1,6 +1,6 @@
 FROM jboss/keycloak:12.0.4
 
-COPY realm-export.json /tmp/my-realm.json
+COPY ./realm/realm-export.json /tmp/my-realm.json
 
 ENV -Dkycloak.profile.upload_scripts=enabled
 ENV DB_VENDOR MYSQL
