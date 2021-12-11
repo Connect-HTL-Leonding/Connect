@@ -11,6 +11,7 @@ services:
       MYSQL_DATABASE: keycloak
       MYSQL_USER: keycloak
       MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
     ports:
      - 3306:3306
     expose:
@@ -26,6 +27,7 @@ services:
       MYSQL_DATABASE: connect
       MYSQL_USER: connect
       MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
     ports:
      - 3307:3306
     expose:
