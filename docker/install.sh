@@ -40,7 +40,7 @@ fi
 pushd $DESTINATION
 cp -r $SCRIPT_DIR/* .
 
-if [[ ! -f $SERVICE_SCRIPT_DESTINATION ]]
+if [[  -f $SERVICE_SCRIPT_DESTINATION ]]
 then
     echo "installing $SERVICE_SCRIPT_DESTINATION..."
     cp $SCRIPT_DIR/server/*.service $SERVICE_SCRIPT_DESTINATION
