@@ -2,7 +2,7 @@
 
 RUNNER=$(ls *-runner.jar)
 
-while ! nc -vz localhost 3307; do
+while ! nc -z db_connect 3307; do
     echo "waiting for godot..."
     sleep 1
 done
