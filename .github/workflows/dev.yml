@@ -47,22 +47,23 @@ jobs:
     - name: convert github repository name to lowercase
       run: echo "IMAGE_REPOSITORY=$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-    - name: build appsrv docker image
+    - name: build quarkus docker image
       run: |
         docker build --file docker/Dockerfile.jvm . --tag ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-server
       working-directory: server      
-#
-#    - name: Log in to the Container registry
-#      uses: docker/login-action@v1
-#      with:
-#        registry: ${{ env.REGISTRY }}
-#        username: ${{ github.actor }}
-#        password: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
-#
-#    - name: push appsrv docker image
-#      run: |
-#        docker push ${{ env.REGISTRY }}/${{ github.repository }}-appsrv
-#      working-directory: distribution/${{ env.DISTRIBUTION_FOLDER }}        
+
+    - name: Log in to the Container registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.REGISTRY_ACCESS_TOKEN }}
+
+    - name: push quarkus docker image
+      run: |
+        docker push ${{ env.REGISTRY }}/${{ env.IMAGE_REPOSITORY }}-server
+      working-directory: server   
+      
 #    - name: push nginx docker image
 #      run: |
 #        docker push ${{ env.REGISTRY }}/${{ github.repository }}-nginx
