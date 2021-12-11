@@ -44,10 +44,10 @@ jobs:
         mvn -Dmaven.test.skip=true -Dquarkus.package.type=uber-jar -Dquarkus-profile=prod -Dbase.href="/" -B package
       working-directory: server
 
-#    - name: build appsrv docker image
-#      run: |
-#        docker build --file appsrv/Dockerfile.jvm appsrv --tag ${{ env.REGISTRY }}/${{ github.repository }}-appsrv
-#      working-directory: distribution/${{ env.DISTRIBUTION_FOLDER }}        
+    - name: build appsrv docker image
+      run: |
+        docker build --file docker/Dockerfile.jvm server --tag ${{ env.REGISTRY }}/${{ github.repository }}-server
+#      working-directory: server      
 #
 #    - name: Log in to the Container registry
 #      uses: docker/login-action@v1
