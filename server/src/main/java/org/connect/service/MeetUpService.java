@@ -109,7 +109,8 @@ public class MeetUpService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
     public void deleteUserFromMeetup(Room r) {
-        //repo.removeUserFromMeetup(r);
+
+        repo.removeUserFromMeetup(r);
     }
 
     @POST

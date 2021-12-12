@@ -81,7 +81,7 @@ export class ChatPage implements OnInit {
     cs: ChatService, os: OAuthService, public keycloakService: KeycloakService,
     public popoverController: PopoverController, public toastController: ToastController,
     public router: Router, public dateService: DateService, public meetupService : MeetupService, 
-    public alertController: AlertController) {
+    public alertController: AlertController, public contactService: ContactlistService) {
 
     this.contactlist = cl;
     this.chatservice = cs;
@@ -399,6 +399,12 @@ export class ChatPage implements OnInit {
           handler: () => {
             this.leaveMeetup(r);
             this.dismissModal();
+            this.contactService.getChats().subscribe(
+              data => {
+                this.contactService.rooms = data;
+                console.log(this.contactService.rooms);
+              }
+            )
           }
         }
       ]

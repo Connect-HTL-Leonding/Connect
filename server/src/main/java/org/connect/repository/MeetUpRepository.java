@@ -13,6 +13,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -166,6 +168,13 @@ public class MeetUpRepository {
 
         Room room = em.find(Room.class,r.getId());
 
+        room.setUsers(new LinkedList<User>(new HashSet<>(room.getUsers())));
+
+        for (User user:
+                room.getUsers()) {
+            System.out.println(user.getId() + "UUUUUUUUUUUUUUUUUUUU");
+        }
+
         long meetupId = room.getMeeting().getId();
         long roomId = room.getId();
         User u = em.find(User.class, jwt.getClaim("sub"));
@@ -179,10 +188,10 @@ public class MeetUpRepository {
         // Delete user from Room
         em.flush();
         for (User user:
-             r.getUsers()) {
+             room.getUsers()) {
             System.out.println(user.getId() + "HHHHHHHHHHHHHHHHHHHHHHHH");
         }
-        //room.getUsers().remove(u);
+        room.getUsers().remove(u);
     }
 
     @Transactional
