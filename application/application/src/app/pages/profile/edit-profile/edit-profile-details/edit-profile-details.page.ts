@@ -12,40 +12,45 @@ import { User } from '../../../../model/user';
 })
 export class EditProfileDetailsPage implements OnInit {
 
-  passwort: FormGroup;
+  //passwort: FormGroup;
   nachrichten: boolean = false;
   connects: boolean = false;
+  password: string | undefined
 
   //Konstruktor
-  constructor(public ps: ProfileService, private keyCloakService : KeycloakService, private router: Router, private fb: FormBuilder) {
+  constructor(public ps: ProfileService, private keyCloakService: KeycloakService, private router: Router, private fb: FormBuilder) {
+    /*
     this.passwort = this.fb.group({
       password: new FormControl('', Validators.compose([
         Validators.required,
-        //Validators.minLength(8),
+        // Validators.minLength(8),
         // Validators.maxLength(20),
         // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}$')
       ])),
       newPassword: new FormControl('', Validators.compose([
         Validators.required,
-        //Validators.minLength(8),
+        // Validators.minLength(8),
         // Validators.maxLength(20),
         // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}$')
       ])),
       confirmation: new FormControl('', Validators.compose([
         Validators.required,
-        //Validators.minLength(8),
+        // Validators.minLength(8),
         // Validators.maxLength(20),
         // Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}$')
       ])),
     });
+    */
   }
 
   //init
   ngOnInit() {
     //getCurrentUser
+    this.password = ""
     this.ps.getUser().add(
       () => {
         console.log(this.ps.user)
+        
       }
     )
   }
@@ -77,22 +82,41 @@ export class EditProfileDetailsPage implements OnInit {
       this.ps.updateUser(u.custom).subscribe(data => {
         //return ist aktualisierter User
         console.log(data)
-        this.ngOnInit();
+
+        if (this.password) {
+          this.keyCloakService.getAdminToken().subscribe(data_access => {
+            console.log(data_access)
+            this.keyCloakService.changePassword(u.custom, data_access["access_token"], this.password).subscribe(data_password => {
+              console.log(data_password)
+            }, error => {
+              console.log(error)
+            }, () => {
+              this.ngOnInit();
+              console.log("reset");
+              
+            })
+          })
+        } else {
+          this.ngOnInit();
+        }
       });
     },
       error => {
         console.log('HTTP Error', error);
       });
+
+
   }
 
+  /*
   updatePasswort() {
-    if (this.passwort.valid) {
+    if (this.passwort) {
       console.log("Form Submitted!");
       //{ "type": "password", "temporary": false, "value": "my-new-password" }
       var json = {
         "type": "password",
         "temporary": false,
-        "value": this.passwort.get("confirmation").value
+        "value": this.passwort
       }
 
       console.log(json)
@@ -100,8 +124,7 @@ export class EditProfileDetailsPage implements OnInit {
       //Update von Keycloak Daten
       this.ps.updatePassword(json).subscribe();
     }
-
-
   }
+  */
 
 }
