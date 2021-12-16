@@ -55,18 +55,11 @@ export class EditProfilePage implements OnInit {
 
     this.ps.getUser().add(
       () => {
-
-
-
-
         this.photoService.loadPfp();
         this.photoService.loadGalleryImages();
         console.log("Images loaded.")
 
         console.log(this.ps.user)
-
-
-
         //console.log(this.skinService);
       }
     )

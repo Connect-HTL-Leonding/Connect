@@ -11,7 +11,7 @@
   <ion-list lines="full">
 
     <ion-list-header class="header">
-     Your data
+      Your data
     </ion-list-header>
 
     <ion-item>
@@ -54,6 +54,14 @@
       </ion-select>
     </ion-item>
 
+    <ion-item>
+      <div class="first">
+        <ion-label slot="start">Password</ion-label>
+      </div>
+      <ion-input *ngIf="ps.user" type="password" placeholder="change password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <!--
     <ion-list-header class="header">
       Notifications
     </ion-list-header>
@@ -65,20 +73,20 @@
       <ion-label class="gender_label">Connects</ion-label>
       <ion-toggle [(ngModel)]="connects"></ion-toggle>
     </ion-item>
+    -->
 
     <ion-list-header class="header">
       Privatsphäre
     </ion-list-header>
-    <ion-item>
-      <div class="blocked" routerLink="blocked-list">
+    <ion-item routerLink="blocked-list">
+      <div class="blocked" >
         <ion-label slot="start">Blockierte User</ion-label>
       </div>
     </ion-item>
 
-
-
     <ion-button shape="round" color="primary" expand="block" (click)="updateUser(ps.user)">Speichern</ion-button>
-    <!-- 
+
+    <!--
     <ion-item-divider>
       <ion-label>Passwort</ion-label>
 
@@ -89,22 +97,22 @@
 
       <ion-item>
         <ion-label position="stacked">Aktuelles Passwort</ion-label>
-        <ion-input *ngIf="ps.user"  formControlName="password" type="password" id="password"></ion-input>
+        <ion-input *ngIf="ps.user" formControlName="password" type="password" id="password"></ion-input>
       </ion-item>
-  
+
       <ion-item>
         <ion-label position="stacked">Neues Passwort</ion-label>
         <ion-input *ngIf="ps.user" type="password" formControlName="newPassword" id="newPassword"></ion-input>
       </ion-item>
-  
+
       <ion-item>
         <ion-label position="stacked">Neues Passwort wiederholen</ion-label>
         <ion-input *ngIf="ps.user" type="password" formControlName="confirmation" id="confirm"></ion-input>
       </ion-item>
       <ion-button shape="round" color="warning" expand="block" type="submit">Passwort ändern</ion-button>
 
-  </form>
-  -->
+    </form>
+    -->
     <ion-button shape="round" color="danger" expand="block" (click)="logout()">Loggout</ion-button>
   </ion-list>
 

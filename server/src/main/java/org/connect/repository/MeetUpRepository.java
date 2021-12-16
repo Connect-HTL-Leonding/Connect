@@ -168,12 +168,8 @@ public class MeetUpRepository {
 
         Room room = em.find(Room.class,r.getId());
 
+        // to eliminate duplicates
         room.setUsers(new LinkedList<User>(new HashSet<>(room.getUsers())));
-
-        for (User user:
-                room.getUsers()) {
-            System.out.println(user.getId() + "UUUUUUUUUUUUUUUUUUUU");
-        }
 
         long meetupId = room.getMeeting().getId();
         long roomId = room.getId();
@@ -187,10 +183,6 @@ public class MeetUpRepository {
         removeUserFromMeetup.executeUpdate();
         // Delete user from Room
         em.flush();
-        for (User user:
-             room.getUsers()) {
-            System.out.println(user.getId() + "HHHHHHHHHHHHHHHHHHHHHHHH");
-        }
         room.getUsers().remove(u);
     }
 

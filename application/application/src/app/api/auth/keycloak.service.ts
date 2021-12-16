@@ -103,6 +103,23 @@ export class KeycloakService {
     return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options);
   }
 
+  changePassword(keycloakUser, accessToken, password) {
+
+    let body = {
+      "type": "password",
+      "temporary": false,
+      "value": password
+    }
+
+    console.log(accessToken)
+
+    let optionss = {
+      headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${accessToken}`)
+    };
+
+    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + keycloakUser.id + '/reset-password', body, optionss);
+  }
+
   createUser(keycloakUser, accessToken) {
 
     let options = {

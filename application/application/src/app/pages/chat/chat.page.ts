@@ -399,12 +399,6 @@ export class ChatPage implements OnInit {
           handler: () => {
             this.leaveMeetup(r);
             this.dismissModal();
-            this.contactService.getChats().subscribe(
-              data => {
-                this.contactService.rooms = data;
-                console.log(this.contactService.rooms);
-              }
-            )
           }
         }
       ]

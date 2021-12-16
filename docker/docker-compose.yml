@@ -29,7 +29,7 @@ services:
   keycloak:
       build:
         context: .
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile_local
       ports:
         - 8010:8080
       volumes:
