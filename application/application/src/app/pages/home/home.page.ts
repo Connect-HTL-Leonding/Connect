@@ -129,7 +129,7 @@ export class HomePage implements OnInit {
     this.meetupPreview = this.meetupService.meetupPreviewNotify.subscribe(value => {
       let m: Meeting = value.meetup;
       let r: Room = value.originRoom;
-      if (value.isInMeetupChat) {
+      if (!value.meetupChat) {
         this.createMeetupPreviewMarker(m, r);
       }
       else {
