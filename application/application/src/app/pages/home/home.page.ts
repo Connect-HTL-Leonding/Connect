@@ -376,6 +376,7 @@ export class HomePage implements OnInit {
               marker.addListener("click", () => {
                 this.meetupTeilnehmerList(event, m, meetupuser);
               });
+              this.meetupMarkers.push(marker);
             })
           })
         }
@@ -437,6 +438,7 @@ export class HomePage implements OnInit {
             marker.addListener("click", () => {
               this.meetupTeilnehmerList(event, m, null);
             });
+            this.meetupMarkers.push(marker);
           })
         }
       })
@@ -698,6 +700,10 @@ export class HomePage implements OnInit {
 
   displayMeetups() {
     this.meetupService.getMeetups().subscribe(data => {
+      this.meetupMarkers.forEach((m:google.maps.Marker)=>{
+          m.setMap(null);
+      })
+      this.meetupMarkers.splice(0,this.meetupMarkers.length-1)
       var meetups = data;
 
       meetups.forEach((m) => {

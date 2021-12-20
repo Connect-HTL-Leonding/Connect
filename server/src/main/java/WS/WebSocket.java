@@ -1,9 +1,11 @@
 package WS;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.chat.Message;
+import org.connect.model.chat.Room;
 import org.connect.model.meetup.Meeting;
 import org.connect.model.user.Friendship;
 import org.connect.model.user.User;
+import org.connect.repository.MeetUpRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import java.time.LocalDateTime;
@@ -33,6 +35,9 @@ public class WebSocket {
 
     @Inject
     JsonWebToken jwt;
+
+    @Inject
+    MeetUpRepository meetUpRepository;
 
     @Inject
     SecurityIdentity identity;
@@ -70,6 +75,8 @@ public class WebSocket {
         String[] s = message.split(":");
         switch(s[0]) {
             case("meetupAccepted"):broadcastMeetup(s[1], id);;
+            break;
+            case("meetupEnded"):broadcastUsersOfMeetup(s[1]);
             break;
             case("chatMessage"):broadcastMessage(s[1], "chatMessage:");
             break;
@@ -177,6 +184,36 @@ public class WebSocket {
                     String msg = "meetupAccepted:" + message;
                     System.out.println(msg);
                     s.getAsyncRemote().sendObject(msg, result -> {
+                        if (result.getException() != null) {
+                            System.out.println("Unable to send message: " + result.getException());
+                        }
+                    });
+                }
+            }
+
+        });
+
+    }
+    private void broadcastUsersOfMeetup(String message) {
+        System.out.println("dingdingding");
+        TypedQuery<Object[]> query = em.createQuery("select m.creator.id, mu.user_id from Meeting m join m.mu_list mu where m.id = :id ", Object[].class);
+        query.setParameter("id", Long.valueOf(message));
+        List<Object[]> list = query.getResultList();
+
+        TypedQuery<Room> query2 = em.createQuery("select r from Room r where r.meeting.id = :id ", Room.class);
+        query2.setParameter("id", Long.valueOf(message));
+       Room room = query2.getSingleResult();
+
+        meetUpRepository.endMeetup(room);
+        broadcastContactlistUpdate("contactListUpdate");
+        sessions.values().forEach(s -> {
+            for(Object[] o : list) {
+                if(o[0].equals(users.get(s)) || o[1].equals(users.get(s))) {
+                    String msg = "meetupAccepted:" + message;
+                    System.out.println(msg);
+                    s.getAsyncRemote().sendObject(msg, result -> {
+                        System.out.println("Message an:");
+                        System.out.println(s.toString());
                         if (result.getException() != null) {
                             System.out.println("Unable to send message: " + result.getException());
                         }

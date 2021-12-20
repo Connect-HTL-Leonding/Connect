@@ -188,6 +188,8 @@ public class MeetUpRepository {
 
     @Transactional
     public void endMeetup(Room room) {
+
+
         long meetupId = room.getMeeting().getId();
         Room r = em.find(Room.class,room.getId());
         Query removeUserFromMeetup = em.createQuery(
@@ -202,5 +204,7 @@ public class MeetUpRepository {
 
         em.remove(em.contains(r.getMeeting()) ? r.getMeeting() : em.merge(r.getMeeting()));
         em.remove(em.contains(r) ? r : em.merge(r));
+        System.out.println("Deleted: "+r.toString());
+
     }
 }

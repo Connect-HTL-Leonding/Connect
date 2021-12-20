@@ -374,14 +374,17 @@ export class ChatPage implements OnInit {
 
   leaveMeetup(r: Room) {
     this.meetupService.removeUserFromMeetup(r).subscribe(data=> {
+      this.ms.meetupObservable.next("")
       console.log("user removed");
     })
   }
 
   endMeetup(r: Room) {
-    this.meetupService.endMeetup(r).subscribe(data=> {
+    
+      this.chatservice.chatSendObservable.next("meetupEnded:" + r.meeting.id);
+      
       console.log("meetup terminated");
-    })
+    
   }
 
   // for leaving meetup
