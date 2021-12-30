@@ -150,7 +150,7 @@ export class HomePage implements OnInit {
     });
 
     this.updateMeetup = this.meetupService.MeetupUpdateNotify.subscribe(value => {
-
+     
       this.displayMeetups();
     });
 
@@ -705,10 +705,11 @@ export class HomePage implements OnInit {
       })
       this.meetupMarkers.splice(0,this.meetupMarkers.length-1)
       var meetups = data;
-
+   
       meetups.forEach((m) => {
         this.meetupService.getMeetupUser(m.id).subscribe(data => {
           data.forEach((mu) => {
+           
             this.createMeetupMarker(m, mu);
           })
         })

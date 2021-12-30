@@ -102,6 +102,7 @@ export class MeetupDataPage implements OnInit {
         this.contactlistService.contactlistObservable.next("contactListUpdate");
         this.ms.createMeetupObservable.next("newMeetup:" + this.selectedRoom.id);
       })
+      this.ms.meetupObservable.next("")
       this.dismissAll()
     })   
   }
