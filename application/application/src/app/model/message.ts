@@ -9,6 +9,6 @@ export class Message {
         public image = "",
         public updated: Date = new Date(),
         public room: Room = null,
-        public user: User = null
+        public user: CustomUser = null
     ) { }
 }

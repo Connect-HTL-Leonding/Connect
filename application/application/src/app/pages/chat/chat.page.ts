@@ -73,6 +73,7 @@ export class ChatPage implements OnInit {
   public getMeetups;
   roomname;
 
+  usernames;
 
 
 
@@ -89,6 +90,7 @@ export class ChatPage implements OnInit {
     this.oauthService = os;
     this.ms = ms;
     this.dateService = dateService;
+    this.usernames=new Map();
 
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
@@ -177,6 +179,7 @@ export class ChatPage implements OnInit {
   }
 
   yousent(message: Message): boolean {
+   
     return message.user.id == this.keycloakService.userid;
   }
 
@@ -326,7 +329,7 @@ export class ChatPage implements OnInit {
 
   doSend() {
     if (this.sendText.trim().length > 0) {
-      this.m.message = this.ps.user.userName + ": " + this.sendText;
+      this.m.message = this.sendText;
       this.m.created = new Date();
       this.m.updated = new Date();
       this.m.image = "";
@@ -353,6 +356,17 @@ export class ChatPage implements OnInit {
         this.chatservice.getData().subscribe(data => {
           this.chatservice.messages = data;
           this.pos = this.chatservice.messages.length - this.unseenMessages;
+          
+          this.chatservice.messages.forEach((message:Message) => {
+            if(!this.usernames.has(message.user.id)){
+              this.ps.findFriendUser(message.user.id).subscribe(data=>{
+                this.usernames.set(message.user.id,data["username"]);
+                console.log(this.usernames)
+              })
+              
+            }
+          });
+         
         })
       })
     })

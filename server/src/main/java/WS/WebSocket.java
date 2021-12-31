@@ -195,7 +195,7 @@ public class WebSocket {
 
     }
     private void broadcastUsersOfMeetup(String message) {
-        System.out.println("dingdingding");
+
         TypedQuery<Object[]> query = em.createQuery("select m.creator.id, mu.user_id from Meeting m join m.mu_list mu where m.id = :id ", Object[].class);
         query.setParameter("id", Long.valueOf(message));
         List<Object[]> list = query.getResultList();
