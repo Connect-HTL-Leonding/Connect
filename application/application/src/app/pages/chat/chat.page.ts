@@ -23,6 +23,7 @@ import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
 import { DateService } from 'src/app/api/date.service';
 import { AlertController } from '@ionic/angular';
+import { MeetupOverviewPage } from '../meetup-overview/meetup-overview.page';
 
 
 declare var google: any;
@@ -81,7 +82,7 @@ export class ChatPage implements OnInit {
     public modalController: ModalController, cl: ContactlistService,
     cs: ChatService, os: OAuthService, public keycloakService: KeycloakService,
     public popoverController: PopoverController, public toastController: ToastController,
-    public router: Router, public dateService: DateService, public meetupService : MeetupService, 
+    public router: Router, public dateService: DateService, public meetupService: MeetupService,
     public alertController: AlertController, public contactService: ContactlistService) {
 
     this.contactlist = cl;
@@ -90,7 +91,7 @@ export class ChatPage implements OnInit {
     this.oauthService = os;
     this.ms = ms;
     this.dateService = dateService;
-    this.usernames=new Map();
+    this.usernames = new Map();
 
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
@@ -148,6 +149,19 @@ export class ChatPage implements OnInit {
     return await this.modal.present();
   }
 
+  async presentMeetupModal() {
+    this.modal = await this.modalController.create({
+      component: MeetupOverviewPage,
+      componentProps: {
+        'selectedRoom': this.chatservice.selectedRoom
+      }
+    });
+
+    this.modal.onDidDismiss().then((data => {
+    }))
+    return await this.modal.present();
+  }
+
   profileFriend(friend: User) {
     this.ps.findFriendUser(friend.id)
       .subscribe(data => {
@@ -179,7 +193,7 @@ export class ChatPage implements OnInit {
   }
 
   yousent(message: Message): boolean {
-   
+
     return message.user.id == this.keycloakService.userid;
   }
 
@@ -243,9 +257,12 @@ export class ChatPage implements OnInit {
   }
 
   showLocation(m: Meeting, isInMeetupChat) {
+    /*
     this.dismissModal();
     this.router.navigate(["home"]);
     this.ms.meetupPreviewObserveable.next({ "meetup": m, "originRoom": this.contactlist.selectedRoom, "meetupChat": isInMeetupChat });
+    */
+    this.presentMeetupModal();
   }
 
 
@@ -355,17 +372,17 @@ export class ChatPage implements OnInit {
         this.chatservice.getData().subscribe(data => {
           this.chatservice.messages = data;
           this.pos = this.chatservice.messages.length - this.unseenMessages;
-          
-          this.chatservice.messages.forEach((message:Message) => {
-            if(!this.usernames.has(message.user.id)){
-              this.ps.findFriendUser(message.user.id).subscribe(data=>{
-                this.usernames.set(message.user.id,data["username"]);
+
+          this.chatservice.messages.forEach((message: Message) => {
+            if (!this.usernames.has(message.user.id)) {
+              this.ps.findFriendUser(message.user.id).subscribe(data => {
+                this.usernames.set(message.user.id, data["username"]);
                 console.log(this.usernames)
               })
-              
+
             }
           });
-         
+
         })
       })
     })
@@ -386,18 +403,18 @@ export class ChatPage implements OnInit {
   }
 
   leaveMeetup(r: Room) {
-    this.meetupService.removeUserFromMeetup(r).subscribe(data=> {
+    this.meetupService.removeUserFromMeetup(r).subscribe(data => {
       this.ms.meetupObservable.next("")
       console.log("user removed");
     })
   }
 
   endMeetup(r: Room) {
-    
-      this.chatservice.chatSendObservable.next("meetupEnded:" + r.meeting.id);
-      
-      console.log("meetup terminated");
-    
+
+    this.chatservice.chatSendObservable.next("meetupEnded:" + r.meeting.id);
+
+    console.log("meetup terminated");
+
   }
 
   // for leaving meetup
@@ -423,11 +440,11 @@ export class ChatPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    
+
   }
 
-   // for ending meetup
-   async presentEndAlert(r: Room) {
+  // for ending meetup
+  async presentEndAlert(r: Room) {
     const alert = await this.alertController.create({
       header: 'End this Meet-Up?',
       message: 'You are about to end this Meet-Up. Are you sure?',
@@ -437,7 +454,7 @@ export class ChatPage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: () => {
-           
+
           }
         }, {
           text: 'End Meet-Up',
@@ -452,7 +469,7 @@ export class ChatPage implements OnInit {
     await alert.present();
 
     const { role } = await alert.onDidDismiss();
-    
+
   }
 
 

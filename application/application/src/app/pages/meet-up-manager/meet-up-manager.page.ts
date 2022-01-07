@@ -33,9 +33,10 @@ export class MeetUpManagerPage implements OnInit {
         this.ms.getMeetupUser(meetup.id).subscribe(meetUpUsers => {
          meetUpUsers.forEach((value,index) => {
           this.contactListService.getKeyUserWithId(meetUpUsers[index].user_id).subscribe(data => {
+            // this just saves the user on the property seen, idk why, probably had a reason at some point
             meetUpUsers[index].seen = data;
+
             this.friends[meetup.id] = meetUpUsers;
-            console.log(this.friends[meetup.id]);
           })
            
          });

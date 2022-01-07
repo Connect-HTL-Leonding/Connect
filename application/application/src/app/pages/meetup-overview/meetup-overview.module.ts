@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MeetupoverviewPageRoutingModule } from './meetupoverview-routing.module';
+import { MeetupOverviewPageRoutingModule } from './meetup-overview-routing.module';
 
-import { MeetupoverviewPage } from './meetupoverview.page';
+import { MeetupOverviewPage } from './meetup-overview.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MeetupoverviewPageRoutingModule
+    MeetupOverviewPageRoutingModule
   ],
-  declarations: [MeetupoverviewPage]
+  declarations: [MeetupOverviewPage]
 })
-export class MeetupoverviewPageModule {}
+export class MeetupOverviewPageModule {}
