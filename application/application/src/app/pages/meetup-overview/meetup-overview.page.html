@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-title>Meetup</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="dismissModal()">Close</ion-button>
+      <ion-button (click)="dismissModal(false)">Close</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,13 +11,21 @@
   <div class="wrapper">
     <div class="background"></div>
     <div class="container">
-      <div class="mid" id="profile_pic">
-        <div class="pfpBox">
-          <img class="pfp">
+      <br>
+      <br>
+      <div class="titleBox">
+      <ion-label *ngIf="this.meetup.name == null " class="name">Meetup {{this.meetup.id}}</ion-label>
+      <ion-label *ngIf="this.meetup.name != null " class="name">{{this.meetup.name}} </ion-label>
+      <ion-icon color="primary" (click)="showOnMap()" class="icon" name="earth-outline"></ion-icon>
+      </div>
+
+      <div class="wrap">
+        <ion-label color="primary" class="desc-label">Date & Time</ion-label>
+        <div>
+          <p>On {{this.dateService.returnDateWithoutTime(this.meetup)}} at
+            {{this.dateService.returnTimeString(this.meetup)}}</p>
         </div>
       </div>
-      <ion-label *ngIf="this.meetup.name == null " class="name">Meetup {{this.meetup.id}}</ion-label>
-      <ion-label *ngIf="this.meetup.name == null " class="name">{{this.meetup.name}}</ion-label>
 
       <div class="wrap">
         <ion-label color="primary" class="desc-label">Members</ion-label>
@@ -29,11 +37,23 @@
             <p>{{f.status}}</p>
           </div>
         </div>
-
-
-
-
+        <div class="low-opacity" *ngIf="this.friends && this.friends.length<1">There is nobody in this meetup except you! :(</div>
       </div>
+
+      <div class="buttonBox">
+      <div class="space-between">
+      <ion-button
+      *ngIf="chatService.selectedRoom.meeting.creator.id == this.ps.user.id"
+       (click)="presentEndAlert(this.room)" fill="outline" >End Meetup</ion-button>
+
+       <ion-button
+       *ngIf="chatService.selectedRoom.meeting.creator.id != this.ps.user.id"
+        (click)="presentLeaveAlert(this.room)" fill="outline" >Leave Meetup</ion-button>
+       
+      <ion-button >Add friends</ion-button>
+      </div>
+      </div>
+
     </div>
   </div>
 

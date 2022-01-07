@@ -48,10 +48,7 @@ body {
 
 
 .name {
-    text-align: center;
-    position: relative;
     font-weight: bold;
-    padding: 6px 0 36px;
     font-size: 1.7em;
 }
 
@@ -66,6 +63,12 @@ body {
 
 .wrap {
     width: 100%;
+    padding: 0 24px;
+    margin-bottom: 36px;
+}
+
+.buttonBox {
+    width: 90%;
     padding: 0 24px;
     margin-bottom: 36px;
 }
@@ -98,4 +101,20 @@ ion-toolbar {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
+}
+.low-opacity {
+    opacity: 0.7;
+    margin-top: 10px;
+}
+
+.icon {
+    margin-left: 10px;
+    margin-right:10px;
+    font-size: 32px;
+}
+
+.titleBox {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
 }

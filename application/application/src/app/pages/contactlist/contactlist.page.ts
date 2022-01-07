@@ -70,6 +70,7 @@ export class ContactlistPage implements OnInit {
     this.chatService.currentRoom = this.contactService.selectedRoom.id;
     this.modal = await this.modalController.create({
       component: ChatPage,
+      id: "chatPage"
     });
     this.modal.onDidDismiss().then((data => {
       this.reloadRooms();
