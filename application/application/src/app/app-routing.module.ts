@@ -90,7 +90,11 @@ const routes: Routes = [
   {
     path: 'meet-up-manager',
     loadChildren: () => import('./pages/meet-up-manager/meet-up-manager.module').then(m => m.MeetUpManagerPageModule)
+  },  {
+    path: 'meetupoverview',
+    loadChildren: () => import('./pages/meetupoverview/meetupoverview.module').then( m => m.MeetupoverviewPageModule)
   }
+
 
 ];
 
