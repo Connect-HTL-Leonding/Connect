@@ -1,6 +1,6 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ContactlistService } from '../../api/contactlist.service'
-import { MenuController, ModalController, ToastController } from '@ionic/angular';
+import { IonContent, MenuController, ModalController, ToastController } from '@ionic/angular';
 import { User } from '../../model/user';
 import { ChatService } from '../../api/chat.service';
 import { MeetupService } from '../../api/meetup.service';
@@ -36,7 +36,8 @@ declare var google: any;
 })
 export class ChatPage implements OnInit {
 
-
+  @ViewChild('messageFlex') private messageFlex: ElementRef;
+  @ViewChild(IonContent) content: IonContent;
   @ViewChild('map', { read: ElementRef, static: false }) mapRef: ElementRef;
   map: any;
 
@@ -83,7 +84,8 @@ export class ChatPage implements OnInit {
     cs: ChatService, os: OAuthService, public keycloakService: KeycloakService,
     public popoverController: PopoverController, public toastController: ToastController,
     public router: Router, public dateService: DateService, public meetupService: MeetupService,
-    public alertController: AlertController, public contactService: ContactlistService) {
+    public alertController: AlertController, public contactService: ContactlistService,
+    public _zone: NgZone) {
 
     this.contactlist = cl;
     this.chatservice = cs;
@@ -97,7 +99,7 @@ export class ChatPage implements OnInit {
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
       console.log(value);
       if (this.chatservice.selectedRoom.id == value) {
-        this.init(this.contactlist.selectedRoom);
+        this.init(this.contactlist.selectedRoom, true);
       }
     });
 
@@ -118,10 +120,24 @@ export class ChatPage implements OnInit {
     })
   }
 
+  /*
+  ngAfterViewInit(): void {
+    var container = document.getElementById("messageFlex");           
+    container.scrollTop = container.scrollHeight; 
+
+    //this.messageFlex.scrollToBottom()
+    this._zone.run(() => {
+      setTimeout(() => {
+        this.messageFlex.scrollToBottom(300);
+      });
+    }); 
+    //this.messageFlex.nativeElement.scrollTop = Math.max(0, this.messageFlex.nativeElement.scrollHeight - this.messageFlex.nativeElement.offsetHeight);
+  }
+  */
+
 
   ngOnInit() {
-    this.init(this.contactlist.selectedRoom);
-
+    this.init(this.contactlist.selectedRoom, false);
     this.getRoomName();
 
     /* Maybe Map idk it dont work
@@ -361,7 +377,7 @@ export class ChatPage implements OnInit {
   }
 
 
-  init(room: Room) {
+  init(room: Room, scroll) {
     this.showNewMsgLine = true;
 
     this.chatservice.getAllMessages(room).subscribe(data => {
@@ -383,10 +399,40 @@ export class ChatPage implements OnInit {
             }
           });
 
+          if (scroll) {
+            this.updateScroll();
+          }
+
+          /*
+          console.log(document.querySelectorAll(".messageDiv:last-child"))
+          console.log(document.getElementById("messageFlex"))
+
+          var elem = document.getElementById('messageFlex');
+          console.log(elem.scrollTop)
+          console.log(elem.scrollHeight)
+
+          elem.scrollTop = elem.scrollHeight;
+          */
+          /*
+           try {
+             console.log(this.messageFlex.nativeElement.scrollTop);
+             console.log(this.messageFlex.nativeElement.scrollHeight);
+             this.messageFlex.nativeElement.scrollTop = Math.max(0, this.messageFlex.nativeElement.scrollHeight - this.messageFlex.nativeElement.offsetHeight);
+             console.log(this.messageFlex.nativeElement.scrollTop);
+             
+           } catch (err) { }
+ */
         })
       })
     })
   }
+
+  updateScroll() {
+    if (this.content.scrollToBottom) {
+      this.content.scrollToBottom(500);
+    }
+  }
+
 
   newDay(message: Message, olderMessage: Message): boolean {
     let newDay = false;

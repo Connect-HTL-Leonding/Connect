@@ -23,7 +23,7 @@
 </ion-header>
 
 <ion-content>
-  <div id="messageFlex">
+  <div id="messageFlex" #messageFlex>
     <div *ngFor="let meetUp of this.meetUpsAccepted" class="MeetUp">
       <p>Meetup on</p>
       <p>{{this.dateService.returnDateWithoutTime(meetUp)}} at
