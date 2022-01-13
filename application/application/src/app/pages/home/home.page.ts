@@ -150,7 +150,7 @@ export class HomePage implements OnInit {
     });
 
     this.updateMeetup = this.meetupService.MeetupUpdateNotify.subscribe(value => {
-     
+
       this.displayMeetups();
     });
 
@@ -514,11 +514,13 @@ export class HomePage implements OnInit {
     time = this.dateService.returnDateWithoutTime(m) + ' at ' + this.dateService.returnTimeString(m);
 
 
-
-
+    let name = ""+ m.name;
+    if(!m.name) {
+     name = 'Meetup ' + m.id;
+    } 
 
     const popover = await this.actionSheetController.create({
-      header: 'Meetup',
+      header: name,
       subHeader: time,
       buttons: buttonArray
     });
@@ -700,16 +702,16 @@ export class HomePage implements OnInit {
 
   displayMeetups() {
     this.meetupService.getMeetups().subscribe(data => {
-      this.meetupMarkers.forEach((m:google.maps.Marker)=>{
-          m.setMap(null);
+      this.meetupMarkers.forEach((m: google.maps.Marker) => {
+        m.setMap(null);
       })
-      this.meetupMarkers.splice(0,this.meetupMarkers.length-1)
+      this.meetupMarkers.splice(0, this.meetupMarkers.length - 1)
       var meetups = data;
-   
+
       meetups.forEach((m) => {
         this.meetupService.getMeetupUser(m.id).subscribe(data => {
           data.forEach((mu) => {
-           
+
             this.createMeetupMarker(m, mu);
           })
         })
