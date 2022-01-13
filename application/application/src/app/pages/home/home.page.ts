@@ -539,7 +539,6 @@ export class HomePage implements OnInit {
 
         let buttonArray: any[] = [{
           text: 'OK',
-          icon: 'close',
           role: 'cancel',
           handler: () => {
             console.log('Cancel clicked');
@@ -617,7 +616,6 @@ export class HomePage implements OnInit {
 
       let buttonArray: any[] = [{
         text: 'OK',
-        icon: 'close',
         role: 'cancel',
         handler: () => {
           console.log('Cancel clicked');
