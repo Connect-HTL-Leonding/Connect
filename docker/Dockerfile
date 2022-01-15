@@ -11,7 +11,7 @@ ENV DB_PASSWORD password
 ENV KEYCLOAK_USER admin
 ENV KEYCLOAK_PASSWORD Pa55w0rd
 ENV KEYCLOAK_STATISTICS all
-ENV PROXY_ADDRESS_FORWARDING="true"
+ENV PROXY_ADDRESS_FORWARDING true
 
 ENV KEYCLOAK_IMPORT /tmp/my-realm.json -Dkeycloak.profile.feature.upload_scripts=enabled
   
