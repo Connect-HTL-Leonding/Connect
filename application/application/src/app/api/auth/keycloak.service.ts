@@ -144,7 +144,7 @@ export class KeycloakService {
     localStorage.removeItem("refresh_token");
     localStorage.removeItem("expires_in");
     this.authenticated = false;
-    this.router.navigate(["login"]).then(() => {
+    this.router.navigate(["home"]).then(() => {
       window.location.reload();
     });
 

@@ -61,7 +61,7 @@ export class EditProfileDetailsPage implements OnInit {
     this.keyCloakService.logout();
     //redirect to login, weil autamtischer redirect nicht immer funktioniert
     //bessere Lösung ist willkommen
-    this.router.navigate(["/login"]);
+    //this.router.navigate(["home"]);
   }
 
   updateUser(u: User) {
