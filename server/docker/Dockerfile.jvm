@@ -1,6 +1,6 @@
 FROM adoptopenjdk:jdk
 
-RUN apt update && apt install -y netcat && apt clean
+RUN apt update && apt install -y netcat && apt install -y curl && apt clean
 RUN mkdir /usr/local/bin/application
 COPY target/*.jar /usr/local/bin/application/
 COPY docker/scripts/*.sh /usr/local/bin/application/
