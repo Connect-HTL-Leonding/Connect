@@ -4,6 +4,7 @@ RUNNER=$(ls *-runner.jar)
 
 while ! nc -z db_connect 3306 && ! nc -z keycloak 8080; do
     echo "waiting for godot..."
+    nc -v keycloak 8080
     sleep 1
 done
 
