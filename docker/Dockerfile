@@ -11,7 +11,11 @@ ENV DB_PASSWORD password
 ENV KEYCLOAK_USER admin
 ENV KEYCLOAK_PASSWORD Pa55w0rd
 ENV KEYCLOAK_STATISTICS all
+ENV PROXY_ADDRESS_FORWARDING true
 
-ENV KEYCLOAK_IMPORT /tmp/my-realm.json -Dkeycloak.profile.feature.upload_scripts=enabled
+#ENV KEYCLOAK_IMPORT /tmp/my-realm.json -Dkeycloak.profile.feature.upload_scripts=enabled
+
+CMD ["-Dkeycloak.migration.action=import", "-Dkeycloak.migration.provider=singleFile", "-Dkeycloak.migration.file=/tmp/my-realm.json", "-Dkeycloak.migration.strategy=IGNORE_EXISTING", "-Dkeycloak.profile.feature.upload_scripts=enabled"]
+
   
 RUN cp -r /opt/jboss/keycloak/themes/keycloak /opt/jboss/keycloak/themes/custom
