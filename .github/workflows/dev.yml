@@ -38,6 +38,13 @@ jobs:
         key: ${{ runner.os }}-build-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-build-m2-
+          
+    - name: build ionic application
+      run: |
+        npm install -g @ionic/cli
+        npm install
+        ionic build
+      working-directory: application/application
 
     - name: build quarkus application
       run: |
