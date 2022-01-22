@@ -243,5 +243,5 @@ export const api = {
   url: "https://oracle.connecttheapp.com/api/",
   short: "http://localhost:8080/",
   ip: "https://oracle.connecttheapp.com",
-  ws: "wss://oracle.connecttheapp.com/api"
+  ws: "wss://oracle.connecttheapp.com"
 }
