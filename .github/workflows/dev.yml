@@ -126,7 +126,7 @@ jobs:
       working-directory: docker
       run: |
         ssh server "rm -rf ~/dist && mkdir -p ~/dist"
-        scp -r ./html/* server:~/var/www/html/ 
+        scp -r ./html/* server:/var/www/html/ 
         scp -r *.sh server/ server:~/dist/
         scp docker-compose-production.yml server:~/dist
         scp Dockerfile server:~/dist
