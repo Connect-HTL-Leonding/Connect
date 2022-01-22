@@ -39,11 +39,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-build-m2-
           
-    - name: cache node_modules (application/application)
-      uses: actions/cache@v2
-      with:
-        path: './application/application/node_modules'
-        key: ${{ runner.os }}-www-node-modules-v0.0.2-${{ hashFiles('./application/application/package.json') }}
+#    - name: cache node_modules (application/application)
+#      uses: actions/cache@v2
+#      with:
+#        path: './application/application/node_modules'
+#        key: ${{ runner.os }}-www-node-modules-v0.0.2-${{ hashFiles('./application/application/package.json') }}
         
     - name: install nodejs
       uses: actions/setup-node@v2
@@ -126,6 +126,8 @@ jobs:
       working-directory: docker
       run: |
         ssh server "rm -rf ~/dist && mkdir -p ~/dist"
+        scp -r ./html server:~/dist/
+        ssh server "sudo rm -rf /usr/share/nginx/html/* && sudo mv -v ~/dist/html/* /usr/share/nginx/html/"
         scp -r *.sh server/ server:~/dist/
         scp docker-compose-production.yml server:~/dist
         scp Dockerfile server:~/dist
