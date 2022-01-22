@@ -60,6 +60,12 @@ jobs:
       run: |
         ionic build
       working-directory: application/application
+      
+    - name: deploy to docker folder
+      run: |
+        chmod +x copy-www.sh
+        ./copy-www.sh
+      working-directory: docker
 
     - name: build quarkus application
       run: |
