@@ -42,7 +42,7 @@ export class KeycloakService {
     };
 
     //direct grant url
-    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
   }
 
   //grant-type: urn:ietf:params:oauth:grant-type:uma-ticket
@@ -63,7 +63,7 @@ export class KeycloakService {
     };
 
     //direct grant url
-    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
 
       .subscribe(data => {
 
@@ -99,7 +99,7 @@ export class KeycloakService {
     };
 
     //direct grant url
-    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
   }
 
   getAdminToken() {
@@ -121,7 +121,7 @@ export class KeycloakService {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };
 
-    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options);
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options);
   }
 
   changePassword(keycloakUser, accessToken, password) {
@@ -138,7 +138,7 @@ export class KeycloakService {
       headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${accessToken}`)
     };
 
-    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + keycloakUser.id + '/reset-password', body, optionss);
+    return this.http.put(api.ip + '/auth/admin/realms/connect/users/' + keycloakUser.id + '/reset-password', body, optionss);
   }
 
   createUser(keycloakUser, accessToken) {
@@ -147,7 +147,7 @@ export class KeycloakService {
       headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${accessToken}`)
     };
 
-    return this.http.post<Object>(api.ip + ':8010/auth/admin/realms/connect/users', keycloakUser, options);
+    return this.http.post<Object>(api.ip + '/auth/admin/realms/connect/users', keycloakUser, options);
   }
 
   setSession(authResult) {

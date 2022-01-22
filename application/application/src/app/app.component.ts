@@ -228,10 +228,20 @@ export class AppComponent implements OnInit {
 
 }
 
-//Zentrale Variablen
+//Zentrale Variablen lokal
+/*
 export const api = {
   url: "http://localhost:8080/api/",
   short: "http://localhost:8080/",
-  ip: "http://localhost",
+  ip: "http://localhost:8010",
   ws: "ws://localhost:8080"
+}
+*/
+
+//Zentrale Variablen prod
+export const api = {
+  url: "https://oracle.connecttheapp.com/api/",
+  short: "http://localhost:8080/",
+  ip: "https://oracle.connecttheapp.com",
+  ws: "ws://oracle.connecttheapp.com/api"
 }
