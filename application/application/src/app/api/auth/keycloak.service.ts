@@ -43,6 +43,27 @@ export class KeycloakService {
 
     //direct grant url
     return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+  }
+
+  //grant-type: urn:ietf:params:oauth:grant-type:uma-ticket
+  //audience: connect-client
+  //zuvor geholtes access-token wird verwendet um weiteres access-token zu holen
+  //wird für quarkus-keycloak maven plugin benötigt
+  //https://stackoverflow.com/questions/64073855/how-to-get-requesting-party-token-rpt-by-api-in-keycloak
+  uma(token) {
+
+    //body
+    let body = new URLSearchParams();
+    body.set('audience', "connect-client");
+    body.set('grant_type', "urn:ietf:params:oauth:grant-type:uma-ticket");
+
+    //x-www-form-urlencoded
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization', `Bearer ${token}`)
+    };
+
+    //direct grant url
+    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
 
       .subscribe(data => {
 
