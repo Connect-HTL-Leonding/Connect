@@ -127,7 +127,7 @@ jobs:
       run: |
         ssh server "rm -rf ~/dist && mkdir -p ~/dist"
         scp -r ./html server:~/dist/
-        ssh server "sudo mv -v ~/dist/html/* /usr/share/nginx/html/"
+        ssh server "sudo rm -rf /usr/share/nginx/html/* && sudo mv -v ~/dist/html/* /usr/share/nginx/html/"
         scp -r *.sh server/ server:~/dist/
         scp docker-compose-production.yml server:~/dist
         scp Dockerfile server:~/dist
