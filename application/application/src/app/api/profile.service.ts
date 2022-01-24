@@ -24,7 +24,7 @@ export class ProfileService {
   getUser() {
     //Get Userinfo über aktuellen Nutzer (live)
     if (this.keycloak.userid) {
-      this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid).subscribe(data => {
+      this.http.get<Object>(api.ip + '/auth/admin/realms/connect/users/' + this.keycloak.userid).subscribe(data => {
         this.user.id = data["id"];
         this.user.userName = data["username"];
         this.user.firstname = data["firstName"];
@@ -40,7 +40,7 @@ export class ProfileService {
   }
 
   findFriendUser(id) {
-    return this.http.get<User>(api.ip + ':8010/auth/admin/realms/connect/users/' + id);
+    return this.http.get<User>(api.ip + '/auth/admin/realms/connect/users/' + id);
   }
 
   friendCustomData(id) {
@@ -55,14 +55,14 @@ export class ProfileService {
 
   //update aktuellen User (Keycloak Nutzerdaten)
   updateKeycloakUser(u) {
-    return this.http.post(api.ip + ':8010/auth/realms/connect/account/', u);
+    return this.http.post(api.ip + '/auth/realms/connect/account/', u);
   }
 
   //nicht mehr funktionsfähig ):
   updatePassword(password) {
     var body = JSON.stringify(password)
 
-    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + this.keycloak.userid + '/reset-password', password);
+    return this.http.put(api.ip + '/auth/admin/realms/connect/users/' + this.keycloak.userid + '/reset-password', password);
   }
   updateUserTutorial(u: CustomUser) {
     return this.http.put(api.url + 'user/updateTutorial', u);

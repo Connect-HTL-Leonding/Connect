@@ -4,7 +4,7 @@ import { api } from 'src/app/app.component';
 
 //thx to https://github.com/jeroenheijmans/sample-angular-oauth2-oidc-with-auth-guards
 export const authConfig: AuthConfig = {
-  issuer: api.ip + ':8010/auth/realms/connect',
+  issuer: api.ip + '/auth/realms/connect',
   redirectUri: window.location.origin + '/login',
   clientId: 'connect-client',
   //responseType: 'code',
