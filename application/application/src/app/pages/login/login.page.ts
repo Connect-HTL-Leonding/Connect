@@ -10,6 +10,8 @@ import { api, AppComponent } from 'src/app/app.component';
 import { HomePage } from '../home/home.page';
 import { DevinfosPage } from './devinfos/devinfos.page';
 
+import jwt_decode from 'jwt-decode';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -34,16 +36,24 @@ export class LoginPage {
   login() {
     if (this.username && this.password) {
       console.log("LOGIN VERSUCH")
-      this.keycloak.login(this.username, this.password).add(() => {
-        this.username = "";
-        this.password = "";
-        this.http.get<any>(api.url + 'user/login').subscribe(data => {
-          console.log("LOGIN: " + data);
-          this.router.navigate(["home"]).then(() => {
-            //window.location.reload();
-            this.app.ngOnInit();
-          });
-          //this.app.ngOnInit();
+      this.keycloak.login(this.username, this.password).subscribe((data) => {
+        try {
+          let tokenInfo = jwt_decode(data["access_token"])
+        }
+        catch (error) {
+          console.log(error);
+        }
+        this.keycloak.uma(data["access_token"]).add(() => {
+          this.username = "";
+          this.password = "";
+          this.http.get<any>(api.url + 'user/login').subscribe(data => {
+            console.log("LOGIN: " + data);
+            this.router.navigate(["home"]).then(() => {
+              //window.location.reload();
+              this.app.ngOnInit();
+            });
+            //this.app.ngOnInit();
+          })
         })
       });
 

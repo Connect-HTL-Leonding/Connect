@@ -38,6 +38,34 @@ jobs:
         key: ${{ runner.os }}-build-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-build-m2-
+          
+    - name: cache node_modules (application/application)
+      uses: actions/cache@v2
+      with:
+        path: './application/application/node_modules'
+        key: ${{ runner.os }}-www-node-modules-v0.0.2-${{ hashFiles('./application/application/package.json') }}
+        
+    - name: install nodejs
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        
+    - name: install node dependencies
+      run: |
+        npm install -g @ionic/cli
+        npm install
+      working-directory: application/application
+          
+    - name: build ionic application
+      run: |
+        ionic build
+      working-directory: application/application
+      
+    - name: deploy to docker folder
+      run: |
+        chmod +x copy-www.sh
+        ./copy-www.sh
+      working-directory: docker
 
     - name: build quarkus application
       run: |
@@ -98,6 +126,8 @@ jobs:
       working-directory: docker
       run: |
         ssh server "rm -rf ~/dist && mkdir -p ~/dist"
+        scp -r ./html server:~/dist/
+        ssh server "sudo rm -rf /usr/share/nginx/html/* && sudo mv -v ~/dist/html/* /usr/share/nginx/html/"
         scp -r *.sh server/ server:~/dist/
         scp docker-compose-production.yml server:~/dist
         scp Dockerfile server:~/dist
@@ -112,4 +142,4 @@ jobs:
       - build
     runs-on: ubuntu-latest
     steps:
-      - run: echo "done"
+      - run: echo "done!"
