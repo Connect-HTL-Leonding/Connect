@@ -186,9 +186,7 @@ export class ChatPage implements OnInit {
   }
 
   openMeetup(meetupid) {
-    this.ms.getMeetupById(meetupid).subscribe(data => {
-      this.showLocation(data, true);
-    })
+   this.presentMeetupModal();
   }
 
   async presentFriend(friendKeycloak) {
@@ -273,12 +271,12 @@ export class ChatPage implements OnInit {
   }
 
   showLocation(m: Meeting, isInMeetupChat) {
-    /*
+    
     this.dismissModal();
     this.router.navigate(["home"]);
     this.ms.meetupPreviewObserveable.next({ "meetup": m, "originRoom": this.contactlist.selectedRoom, "meetupChat": isInMeetupChat });
-    */
-    this.presentMeetupModal();
+    
+    //this.presentMeetupModal();
   }
 
 
