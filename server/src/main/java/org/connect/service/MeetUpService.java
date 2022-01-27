@@ -49,6 +49,12 @@ public class MeetUpService {
     }
 
     @GET
+    @Path("getCreator")
+    public User getCreator(long meetUpId) {
+        return repo.getCreator(meetUpId);
+    }
+
+    @GET
     @Path("getMeetupById/{id}")
     public Meeting getMeetupById(@PathParam("id") Long id) { return repo.getMeetupById(id); }
 

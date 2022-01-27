@@ -83,6 +83,11 @@ public class MeetUpRepository {
         return list;
     }
 
+    public User getCreator(Long meetUpId) {
+       return null;
+    }
+
+
 
     public List<Meeting> getMeetUpsWithMe(Optional user_id, String id) {
         List<Meeting> list;

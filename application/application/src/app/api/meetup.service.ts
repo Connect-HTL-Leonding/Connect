@@ -95,5 +95,9 @@ export class MeetupService {
     return this.http.post(api.url + "meetup/endMeetup", room);
   }
 
+  getCreatorOfMeetup(id) {
+    return this.http.post(api.url + "meetup/getCreator",id);
+  }
+
 
 }
