@@ -48,7 +48,7 @@ public class MeetUpService {
         return repo.getMeetups(jwt.claim("sub"));
     }
 
-    @GET
+    @POST
     @Path("getCreator")
     public User getCreator(long meetUpId) {
         return repo.getCreator(meetUpId);

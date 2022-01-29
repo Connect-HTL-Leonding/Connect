@@ -84,7 +84,8 @@ public class MeetUpRepository {
     }
 
     public User getCreator(Long meetUpId) {
-       return null;
+        Meeting m = em.find(Meeting.class,meetUpId);
+        return m.getCreator();
     }
 
 
