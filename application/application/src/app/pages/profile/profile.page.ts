@@ -45,7 +45,7 @@ export class ProfilePage implements OnInit {
     this.ps.getUser().add(
       () => {
 
-        console.log(this.ps.user)
+        console.log(this.ps.user.custom.id)
         this.showTutorial();
 
 
@@ -66,7 +66,7 @@ export class ProfilePage implements OnInit {
 
         console.log("westrzutqjhkgizfutetdzuz")
 
-        console.log(this.ps.user)
+        console.log(this.ps.user.custom.id)
 
 
 

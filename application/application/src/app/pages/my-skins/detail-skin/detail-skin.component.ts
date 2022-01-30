@@ -36,7 +36,7 @@ export class DetailSkinComponent implements OnInit {
     this.ps.getUser().add(
       () => {
         console.log("westrzutqjhkgizfutetdzuz")
-        console.log(this.ps.user)
+        console.log(this.ps.user.custom.id)
         this.showTutorial();
       }
     )

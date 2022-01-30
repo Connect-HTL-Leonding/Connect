@@ -59,7 +59,7 @@ export class EditProfilePage implements OnInit {
         this.photoService.loadGalleryImages();
         console.log("Images loaded.")
 
-        console.log(this.ps.user)
+        console.log(this.ps.user.custom.id)
         //console.log(this.skinService);
       }
     )

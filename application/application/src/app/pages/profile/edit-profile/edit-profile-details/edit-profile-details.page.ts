@@ -49,7 +49,7 @@ export class EditProfileDetailsPage implements OnInit {
     this.password = ""
     this.ps.getUser().add(
       () => {
-        console.log(this.ps.user)
+        console.log(this.ps.user.custom.id)
         
       }
     )
