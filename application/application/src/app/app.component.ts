@@ -126,7 +126,10 @@ export class AppComponent implements OnInit {
 
   doConnect() {
     this.websocket = new WebSocket(this.wsUri);
+
     this.websocket.onmessage = (evt) => {
+      console.log(this.websocket.readyState);
+
       var msg: string = evt.data;
       var message = msg.split(":");
       switch (message[0]) {
@@ -185,7 +188,6 @@ export class AppComponent implements OnInit {
           break;
         case ("blocked"): this.fs.blockedUpdateObservable.next("blocked");
       }
-
     }
 
 
@@ -195,12 +197,19 @@ export class AppComponent implements OnInit {
     this.websocket.onerror = (evt) => {
       console.log(evt.AT_TARGET);
     };
-    /*
-    this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
-    
-    
-    this.websocket.onclose = (evt) => this.receiveText += 'Websocket closed\n';
-    */
+
+    this.websocket.onopen = (evt) => {
+      console.log("OPENED");
+
+      this.doSend("HALLO!")
+    };
+
+
+    this.websocket.onclose = (evt) => {
+      console.log("CLOSED");
+      //this.doConnect();
+    };
+
   }
 
   async presentToastWithOptions(msg) {
@@ -222,7 +231,22 @@ export class AppComponent implements OnInit {
     toast.present();
   }
 
-  doSend(msg) {
+  async doSend(msg) {
+    
+    if (this.websocket.readyState === 3) {
+      this.websocket.close();
+      //console.log("SEAS " + this.websocket.readyState);
+      this.doConnect()
+      
+    }
+    // wait until new connection is open
+    while (this.websocket.readyState !== 1) {
+      await new Promise(r => setTimeout(r, 250));
+    }
+
+    console.log(this.websocket.readyState);
+    
+
     this.websocket.send(msg);
   }
 
