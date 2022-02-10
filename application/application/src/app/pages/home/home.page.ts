@@ -25,6 +25,7 @@ import { FriendPage } from '../friend/friend.page';
 import Showcaser from 'showcaser'
 import { DateService } from 'src/app/api/date.service';
 import { FriendPageRoutingModule } from '../friend/friend-routing.module';
+import { GhostmodePage } from './ghostmode/ghostmode.page';
 
 /*
 import {
@@ -687,6 +688,17 @@ export class HomePage implements OnInit {
 
 
 
+  }
+
+  async presentGhostPopover(ev: any) {
+    const popover = await this.popoverController.create({
+      component: GhostmodePage,
+      cssClass: 'no-overflow',
+      event: ev,
+      translucent: true
+    });
+    
+    return await popover.present();
   }
 
 
