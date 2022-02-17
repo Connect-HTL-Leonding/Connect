@@ -7,6 +7,7 @@ import { DateService } from 'src/app/api/date.service';
 import { MeetupService } from 'src/app/api/meetup.service';
 import { ProfileService } from 'src/app/api/profile.service';
 import { Room } from 'src/app/model/room';
+import { User } from 'src/app/model/user';
 
 @Component({
   selector: 'app-meetup-overview',
@@ -22,6 +23,8 @@ export class MeetupOverviewPage implements OnInit {
   public meetup = this.chatService.selectedRoom.meeting;
   public room = this.chatService.selectedRoom;
   public friends = null;
+  public creator;
+  public activeUser;
 
   ngOnInit() {
     // gets user from the seleted meetup
@@ -34,6 +37,13 @@ export class MeetupOverviewPage implements OnInit {
       });
       this.friends = meetUpUsers;
       console.log(this.friends);
+    })
+
+    this.ms.getCreatorOfMeetup(this.meetup.id).subscribe((data: User)=> {
+     this.contactListService.getKeyUserWithId(data.id).subscribe(data=> {
+        this.creator = data;
+       this.activeUser= this.contactListService.activeUser;
+     })
     })
 
   }

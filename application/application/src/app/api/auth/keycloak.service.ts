@@ -2,12 +2,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { KeycloakProfile, KeycloakRoles } from 'keycloak-js';
 import { api } from 'src/app/app.component';
-import { ProfileService } from '../profile.service';
 
 import jwt_decode from 'jwt-decode';
 
 import * as moment from "moment";
-import { EMPTY, Observable, of } from 'rxjs';
 import 'rxjs/add/observable/of';
 import { Router } from '@angular/router';
 
@@ -16,33 +14,66 @@ import { Router } from '@angular/router';
 })
 export class KeycloakService {
 
+  //Boolean true, wenn Benutzer angemeldet
   public authenticated: boolean = false;
-  public roles: KeycloakRoles;
-  public user: KeycloakProfile
+
+  //Benutzer-ID
   public userid: String
 
+  //Keycloak
+  public roles: KeycloakRoles;
+  public user: KeycloakProfile
+
+  //Konstruktor
   constructor(private http: HttpClient, public router: Router) { }
 
+
   //direct grant flow with password
+  //Keycloak über REST-API ansprechen
   login(username, password) {
 
-    //body
+    //body bauen
+    //Aufbau in offizieller Keycloak-Doku zu finden
     let body = new URLSearchParams();
     body.set('client_id', "connect-frontend");
     body.set('client_secret', "");
     body.set('grant_type', "password");
     body.set('scope', "openid");
 
+    //Übergebene User-Credentials in Body einbauen
     body.set('username', username);
     body.set('password', password);
 
     //x-www-form-urlencoded
+    //Keycloak verlangt danach
     let options = {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };
 
     //direct grant url
-    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+  }
+
+  //UMA Permission Token!
+  //grant-type: urn:ietf:params:oauth:grant-type:uma-ticket
+  //audience: connect-client
+  //zuvor geholtes access-token wird verwendet um weiteres access-token zu holen
+  //wird für quarkus-keycloak maven plugin benötigt
+  //https://stackoverflow.com/questions/64073855/how-to-get-requesting-party-token-rpt-by-api-in-keycloak
+  uma(token) {
+
+    //body
+    let body = new URLSearchParams();
+    body.set('audience', "connect-client");
+    body.set('grant_type', "urn:ietf:params:oauth:grant-type:uma-ticket");
+
+    //x-www-form-urlencoded + Bearer Token
+    let options = {
+      headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization', `Bearer ${token}`)
+    };
+
+    //direct grant url
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
 
       .subscribe(data => {
 
@@ -62,7 +93,7 @@ export class KeycloakService {
   }
 
   //direct grant flow with refresh token
-  refresh() /*: Observable<string>*/ {
+  refresh() {
 
     //body
     let body = new URLSearchParams();
@@ -78,16 +109,12 @@ export class KeycloakService {
     };
 
     //direct grant url
-    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options)
   }
 
+  //Admin-Token holen für zB. Passwort ändern
   getAdminToken() {
-    //keycloak
-    /*
-    this.http.get<any>(api.url + 'keycloak/adminToken').subscribe(data => {
-      console.log(data)
-    })
-    */
+
     //body
     let body = new URLSearchParams();
     body.set('client_id', "admin-cli");
@@ -100,35 +127,41 @@ export class KeycloakService {
       headers: new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
     };
 
-    return this.http.post<Object>(api.ip + ':8010/auth/realms/connect/protocol/openid-connect/token', body.toString(), options);
+    return this.http.post<Object>(api.ip + '/auth/realms/connect/protocol/openid-connect/token', body.toString(), options);
   }
 
+  //Passwort ändern
   changePassword(keycloakUser, accessToken, password) {
 
+    //Body Aufbau in offizieller Keycloak-Doku zu finden
     let body = {
       "type": "password",
       "temporary": false,
       "value": password
     }
 
-    console.log(accessToken)
+    //console.log(accessToken)
 
     let optionss = {
       headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${accessToken}`)
     };
 
-    return this.http.put(api.ip + ':8010/auth/admin/realms/connect/users/' + keycloakUser.id + '/reset-password', body, optionss);
+    return this.http.put(api.ip + '/auth/admin/realms/connect/users/' + keycloakUser.id + '/reset-password', body, optionss);
   }
 
+  //Keycloak-User erstellen
   createUser(keycloakUser, accessToken) {
 
     let options = {
       headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${accessToken}`)
     };
 
-    return this.http.post<Object>(api.ip + ':8010/auth/admin/realms/connect/users', keycloakUser, options);
+    return this.http.post<Object>(api.ip + '/auth/admin/realms/connect/users', keycloakUser, options);
   }
 
+  //Session erstellen
+  //Access + Refresh Token setzen
+  //+ Exipre-Date
   setSession(authResult) {
     console.log("TOKEN SET")
     const expires_in = moment().add(authResult.expires_in, 'second');
@@ -139,6 +172,9 @@ export class KeycloakService {
 
   }
 
+  //Session beenden
+  //Tokens löschen
+  //Windows reloaden um App zurückzusetzen
   logout() {
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
@@ -147,9 +183,9 @@ export class KeycloakService {
     this.router.navigate(["home"]).then(() => {
       window.location.reload();
     });
-
   }
 
+  //Überprüfen ob Token abgelaufen ist
   public isLoggedIn() {
     return this.userid != null && moment().isBefore(this.getExpiration());
   }

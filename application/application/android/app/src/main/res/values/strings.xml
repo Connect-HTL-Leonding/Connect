@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">application</string>
-    <string name="title_activity_main">application</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="app_name">Connect</string>
+    <string name="title_activity_main">Connect</string>
+    <string name="package_name">htl.leonding.connect</string>
+    <string name="custom_url_scheme">htl.leonding.connect</string>
 </resources>

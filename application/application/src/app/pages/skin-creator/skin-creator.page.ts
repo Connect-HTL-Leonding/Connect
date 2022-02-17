@@ -73,7 +73,7 @@ export class SkinCreatorPage implements OnInit {
       this.presentToast();
     }else{
       console.log("creating skin")
-      console.log(this.skin)
+      console.log(this.skin.id + "AMOGUS")
       this.skinsService.createSkin(this.skin).subscribe(value => {
         console.log("done creating")
         console.log(this.image)

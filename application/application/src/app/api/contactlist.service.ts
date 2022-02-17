@@ -48,12 +48,12 @@ export class ContactlistService {
 
   getKeyUser(u: CustomUser) {
    
-    return this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + u.id);
+    return this.http.get<Object>(api.ip + '/auth/admin/realms/connect/users/' + u.id);
   }
 
   getKeyUserWithId(id) {
    
-    return this.http.get<Object>(api.ip + ':8010/auth/admin/realms/connect/users/' + id);
+    return this.http.get<Object>(api.ip + '/auth/admin/realms/connect/users/' + id);
   }
 
   getOtherPfp(roomid) {

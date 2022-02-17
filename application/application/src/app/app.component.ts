@@ -3,18 +3,12 @@ import { Component, OnInit } from '@angular/core';
 import { Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { AuthConfig, OAuthService } from 'angular-oauth2-oidc';
-import { LoginPage } from './pages/login/login.page';
 import { Router } from '@angular/router';
-import { KeycloakProfile } from 'keycloak-js';
 import { ProfileService } from './api/profile.service';
-import { HomePage } from './pages/home/home.page';
 import { MeetupService } from './api/meetup.service';
 import { ChatService } from './api/chat.service';
-import { Location } from '@angular/common';
 import { ContactlistService } from './api/contactlist.service';
 import { KeycloakService } from './api/auth/keycloak.service';
-import { switchMap } from 'rxjs/operators';
 
 import jwt_decode from 'jwt-decode';
 import { FriendshipService } from './api/friendship.service';
@@ -49,12 +43,18 @@ export class AppComponent implements OnInit {
     public contactlistService: ContactlistService,
     public toastController: ToastController
   ) {
+
+    //IONIC Setup
     this.initializeApp();
+
+    //OLD!
     //this.oauthService.configure(authCodeFlowConfig);
     //this.oauthService.loadDiscoveryDocumentAndTryLogin();
     // optional
     //this.oauthService.setupAutomaticSilentRefresh();
 
+
+    //WEBSOCKETS
     this.block = this.fs.blockNotify.subscribe(value => {
       this.doSend(value);
     })
@@ -76,6 +76,7 @@ export class AppComponent implements OnInit {
     });
   }
 
+  //IONIC Setup
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -86,18 +87,25 @@ export class AppComponent implements OnInit {
 
   //Login bei Seiten-laden
   public ngOnInit() {
-    console.log("CHECK")
+    console.log("CHECK if logged in")
+    //console.log(this.keycloak.userid)
+
     //überprüfen, ob eingeloggt
-    console.log(this.keycloak.userid)
     if (this.keycloak.userid === undefined || !this.keycloak.userid || !this.keycloak.userid.length) {
+      //Falls nicht bereits eingeloggt --> Token Refresh
       this.keycloak.refresh().subscribe(token => {
+        //Benutzer nach Token refresh anmelden
         this.keycloak.authenticated = true;
 
         try {
+          //Userid aus JWT Token extrahieren
           let tokenInfo = jwt_decode(token["access_token"])
-
           this.keycloak.userid = tokenInfo["sub"];
+
+          //Access und Refresh Token abspeichern
           this.keycloak.setSession(token);
+
+          //Websocket-Connections herstellen
           this.makeWebsocket()
         }
         catch (err) {
@@ -106,16 +114,25 @@ export class AppComponent implements OnInit {
       })
     } else {
 
+      //Benutzer bereits eingeloggt
+      //Websocket-Connections herstellen
       this.makeWebsocket()
     }
   }
 
+  //Websocket-Connection erstellen
   makeWebsocket() {
     if (this.keycloak.userid !== undefined && this.keycloak.userid && this.keycloak.userid.length) {
+
+      //Aktuell angemeldeten User holen (aus eigener Datenbank)
       this.ps.getUser().add(() => {
+
+        //Websocket-Connection mit Userid erstellen
         if (this.keycloak.userid) {
           this.wsUri = api.ws + '/websocket/' + this.keycloak.userid;
           console.log(this.wsUri)
+
+          //Websocket-Connection erstellen
           this.doConnect();
         }
       })
@@ -125,14 +142,22 @@ export class AppComponent implements OnInit {
 
 
   doConnect() {
+
+    //Websocket-Connection erstellen (mit Uri /websocket/userid)
     this.websocket = new WebSocket(this.wsUri);
+
+    //Websocket onmessage
     this.websocket.onmessage = (evt) => {
+
       var msg: string = evt.data;
+
       var message = msg.split(":");
+
       switch (message[0]) {
         case ("meetupAccepted"): this.ms.meetupObservable.next(message[1]);
           this.ms.showMeetupObservable.next(message[1]);
           break;
+
         case ("chatMessage"):
           console.log(msg);
           this.cs.updateChatObservable.next(message[1]);
@@ -146,8 +171,10 @@ export class AppComponent implements OnInit {
             })
           }
           break;
+
         case ("positionUpdate"): console.log(message[1]); this.ms.showPositionObservable.next(message[1]);
           break;
+
         case ("newMeetup"): console.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
@@ -157,6 +184,7 @@ export class AppComponent implements OnInit {
             })
           }
           break;
+
         case ("acceptMeetup"): this.ms.showMeetupObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
@@ -166,6 +194,7 @@ export class AppComponent implements OnInit {
             })
           }
           break;
+
         case ("declineMeetup"): this.ms.showMeetupObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
@@ -175,26 +204,28 @@ export class AppComponent implements OnInit {
             })
           }
           break;
+
         case ("contactListUpdate"): this.contactlistService.contactlistUpdateObservable.next("update");
           break;
+
         case ("newConnect"): this.contactlistService.contactlistUpdateObservable.next("connect");
           console.log(message[2]);
           this.ps.findFriendUser(message[2]).subscribe(data => {
             this.presentToastWithOptions(data["username"] + " hat sich mit dir connected!");
           })
           break;
+
         case ("blocked"): this.fs.blockedUpdateObservable.next("blocked");
       }
 
     }
 
-
-
-
-
+    //Websocket-onerror
     this.websocket.onerror = (evt) => {
       console.log(evt.AT_TARGET);
     };
+
+    //Aktuell nicht in Verwendung
     /*
     this.websocket.onopen = (evt) => this.receiveText += 'Websocket connected\n';
     
@@ -203,6 +234,8 @@ export class AppComponent implements OnInit {
     */
   }
 
+  //Bei Erhalten einer neuen Chatnachricht wird oben ein neuer Toast erstellt mit der Nachricht
+  //"CHAT NOW"
   async presentToastWithOptions(msg) {
     const toast = await this.toastController.create({
       header: "Message",
@@ -222,16 +255,29 @@ export class AppComponent implements OnInit {
     toast.present();
   }
 
+  //Nachricht mittels Websocket schicken
   doSend(msg) {
     this.websocket.send(msg);
   }
 
 }
 
-//Zentrale Variablen
+//Zentrale Variablen lokal
 export const api = {
   url: "http://localhost:8080/api/",
   short: "http://localhost:8080/",
-  ip: "http://localhost",
+  ip: "http://localhost:8010",
   ws: "ws://localhost:8080"
 }
+
+
+
+//Zentrale Variablen prod
+/*
+export const api = {
+  url: "https://oracle.connecttheapp.com/api/",
+  short: "http://localhost:8080/",
+  ip: "https://oracle.connecttheapp.com",
+  ws: "wss://oracle.connecttheapp.com"
+}
+*/

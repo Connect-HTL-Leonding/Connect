@@ -48,6 +48,12 @@ public class MeetUpService {
         return repo.getMeetups(jwt.claim("sub"));
     }
 
+    @POST
+    @Path("getCreator")
+    public User getCreator(long meetUpId) {
+        return repo.getCreator(meetUpId);
+    }
+
     @GET
     @Path("getMeetupById/{id}")
     public Meeting getMeetupById(@PathParam("id") Long id) { return repo.getMeetupById(id); }

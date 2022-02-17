@@ -83,6 +83,12 @@ public class MeetUpRepository {
         return list;
     }
 
+    public User getCreator(Long meetUpId) {
+        Meeting m = em.find(Meeting.class,meetUpId);
+        return m.getCreator();
+    }
+
+
 
     public List<Meeting> getMeetUpsWithMe(Optional user_id, String id) {
         List<Meeting> list;

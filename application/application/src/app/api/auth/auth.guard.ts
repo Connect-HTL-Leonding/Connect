@@ -37,13 +37,11 @@ export class AppAuthGuard implements CanActivate {
           this.router.navigate(["login"]);
         });
 
-        //token refresh nicht möglich --> login page
-        //this.router.navigate(["login"]);
-
       } else {
         resolve(true);
       }
 
+      //VERALTET!
       /*
       console.log('role restriction given at app-routing.module for this route', route.data.roles);
       console.log('User roles coming after login from keycloak :', this.keycloakService.roles);
@@ -66,8 +64,6 @@ export class AppAuthGuard implements CanActivate {
       */
 
       //wenn Berechtigung nicht ausreichend --> redirect an home-seite
-
-
     });
   }
 }

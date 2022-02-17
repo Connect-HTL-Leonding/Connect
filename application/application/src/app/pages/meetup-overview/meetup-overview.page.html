@@ -14,9 +14,9 @@
       <br>
       <br>
       <div class="titleBox">
-      <ion-label *ngIf="this.meetup.name == null " class="name">Meetup {{this.meetup.id}}</ion-label>
-      <ion-label *ngIf="this.meetup.name != null " class="name">{{this.meetup.name}} </ion-label>
-      <ion-icon color="primary" (click)="showOnMap()" class="icon" name="earth-outline"></ion-icon>
+        <ion-label *ngIf="this.meetup.name == null " class="name">Meetup {{this.meetup.id}}</ion-label>
+        <ion-label *ngIf="this.meetup.name != null " class="name">{{this.meetup.name}} </ion-label>
+        <ion-icon color="primary" (click)="showOnMap()" class="icon" name="earth-outline"></ion-icon>
       </div>
 
       <div class="wrap">
@@ -37,21 +37,29 @@
             <p>{{f.status}}</p>
           </div>
         </div>
-        <div class="low-opacity" *ngIf="this.friends && this.friends.length<1">There is nobody in this meetup except you! :(</div>
+        <div class="low-opacity" *ngIf="this.friends && this.friends.length<1">There is nobody in this meetup except
+          you! :(</div>
+      </div>
+
+      <div class="wrap">
+        <ion-label color="primary" class="desc-label">Creator</ion-label>
+        <div *ngIf="creator">
+          <p>{{ creator.username }}
+            <span *ngIf="creator.id == activeUser.id"> (you)</span>
+          </p> 
+        </div>
       </div>
 
       <div class="buttonBox">
-      <div class="space-between">
-      <ion-button
-      *ngIf="chatService.selectedRoom.meeting.creator.id == this.ps.user.id"
-       (click)="presentEndAlert(this.room)" fill="outline" >End Meetup</ion-button>
+        <div class="space-between">
+          <ion-button *ngIf="chatService.selectedRoom.meeting.creator.id == this.ps.user.id"
+            (click)="presentEndAlert(this.room)" fill="outline">End Meetup</ion-button>
 
-       <ion-button
-       *ngIf="chatService.selectedRoom.meeting.creator.id != this.ps.user.id"
-        (click)="presentLeaveAlert(this.room)" fill="outline" >Leave Meetup</ion-button>
-       
-      <ion-button >Add friends</ion-button>
-      </div>
+          <ion-button *ngIf="chatService.selectedRoom.meeting.creator.id != this.ps.user.id"
+            (click)="presentLeaveAlert(this.room)" fill="outline">Leave Meetup</ion-button>
+
+          <ion-button>Add friends</ion-button>
+        </div>
       </div>
 
     </div>
