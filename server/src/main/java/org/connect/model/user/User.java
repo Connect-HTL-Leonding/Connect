@@ -35,6 +35,8 @@ public class User implements Serializable {
     //private String lastname;
 
     private char gender;
+    private boolean hideLocation;
+    private boolean blockConnect;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_position_mapping",
@@ -145,6 +147,21 @@ public class User implements Serializable {
         this.profilePicture = profilePicture;
     }
 
+    public boolean isHideLocation() {
+        return hideLocation;
+    }
+
+    public void setHideLocation(boolean hideLocation) {
+        this.hideLocation = hideLocation;
+    }
+
+    public boolean isBlockConnect() {
+        return blockConnect;
+    }
+
+    public void setBlockConnect(boolean blockConnect) {
+        this.blockConnect = blockConnect;
+    }
 
     public int getTutorialStage() { return tutorialStage; }
 
@@ -160,6 +177,8 @@ public class User implements Serializable {
                 ", birthday=" + birthday +
                 ", rooms=" + rooms +
                 ", tutorial=" + tutorialStage +
+                ", blockConnect=" + blockConnect +
+                ", hideLocation=" + hideLocation +
                 '}';
     }
 

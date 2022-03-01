@@ -94,6 +94,7 @@ export class HomePage implements OnInit {
     public meetupService: MeetupService,
     public alertController: AlertController,
     public actionSheetController: ActionSheetController,
+    public profileService : ProfileService,
     public ds: DateService) {
     this.dateService = ds;
   }
@@ -697,6 +698,9 @@ export class HomePage implements OnInit {
       event: ev,
       translucent: true
     });
+    popover.onDidDismiss().then(() => { this.profileService.updateUser(this.profileService.user.custom).subscribe(()=>{
+      console.log("updated wuhu")
+    }); });
     
     return await popover.present();
   }
@@ -752,19 +756,23 @@ export class HomePage implements OnInit {
 
 
         if (f.user1.id == this.ps.user.id) {
+          if(!f.user2.hideLocation){
+            this.cs.getKeyUser(f.user2).subscribe(data => {
+              u.id = data["id"];
+              u.userName = data["username"];
+              u.firstname = data["firstName"];
+              u.lastname = data["lastName"];
+              u.email = data["email"];
+              u.custom = f.user2
+  
+              this.createUserMarker(u);
+            })
+          }
 
-          this.cs.getKeyUser(f.user2).subscribe(data => {
-            u.id = data["id"];
-            u.userName = data["username"];
-            u.firstname = data["firstName"];
-            u.lastname = data["lastName"];
-            u.email = data["email"];
-            u.custom = f.user2
-
-            this.createUserMarker(u);
-          })
+        
 
         } else {
+          if(!f.user1.hideLocation){
           this.cs.getKeyUser(f.user1).subscribe(data => {
             u.id = data["id"];
             u.userName = data["username"];
@@ -775,7 +783,7 @@ export class HomePage implements OnInit {
 
             this.createUserMarker(u);
           })
-
+        }
         }
 
 
@@ -1110,7 +1118,7 @@ export class HomePage implements OnInit {
 
 
   connect() {
-    if (this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null) {
+    if (this.mySkinsService.mapSkins != undefined && this.mySkinsService.mapSkins != null && !this.profileService.user.custom.blockConnect) {
       this.fs.connect(this.mySkinsService.mapSkins).subscribe(data => {
         if (data != null) {
           var user = new CustomUser();

@@ -114,6 +114,7 @@ public class UserService {
     public User update(User user) {
 
         //user-id
+        System.out.println("Updating:");
         System.out.println(user);
 
         return dbRepo.update(user);

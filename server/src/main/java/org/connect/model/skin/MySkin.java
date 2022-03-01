@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("my")
 @NamedQuery(name = MySkin.FINDALL, query = "SELECT ms FROM MySkin ms where user_id = :u")
-@NamedQuery(name = MySkin.FINDSPECIFIC, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.skin.id = :skin")
+@NamedQuery(name = MySkin.FINDSPECIFIC, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.skin.id = :skin" )
 @NamedQuery(name = MySkin.FINDSELECTED, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.selected = true")
 @NamedQuery(name = MySkin.FINDMAPSKINS, query = "SELECT ms FROM MySkin ms where user_id = :u and ms.selected = true and ms.showInMap = true")
 @NamedQuery(name = MySkin.COUNTFOLLOWER, query = "SELECT count(ms) from MySkin ms where ms.skin = :skin")

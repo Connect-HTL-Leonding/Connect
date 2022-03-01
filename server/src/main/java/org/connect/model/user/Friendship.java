@@ -35,7 +35,7 @@ import java.util.List;
 @NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT distinct u FROM User u join MySkin ms on(ms.user.id = u.id) " +
         "where ms.skin.id = :mySkinSkin_id " +
         "and ms.age <= :age and ms.niveau <= :niveau " +
-        "and u <> :user_1")
+        "and u <> :user_1 and u.blockConnect = false")
 public class Friendship implements Serializable {
 
     public static final String FINDALL = "Friendship.findAll";

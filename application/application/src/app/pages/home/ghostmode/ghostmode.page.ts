@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfileService } from 'src/app/api/profile.service';
 
 @Component({
   selector: 'app-ghostmode',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GhostmodePage implements OnInit {
 
-  constructor() { }
+  constructor(public profileservice : ProfileService) { }
 
   ngOnInit() {
   }
 
+  hidePosition(){
+     
+  }
+
+  blockConnect(){
+  
+    
+  }
 }

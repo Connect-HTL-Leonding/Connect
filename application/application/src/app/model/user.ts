@@ -19,6 +19,8 @@ export class CustomUser {
         public description: string = "",
         public gender: string = "",
         public birthday: Date = null,
-        public position = new Position()
+        public position = new Position(),
+        public hideLocation : boolean = false,
+        public blockConnect : boolean = false
     ) { }
 }

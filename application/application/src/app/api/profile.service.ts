@@ -16,6 +16,8 @@ export class ProfileService {
   user: User = new User();
   friendUser: boolean = false
 
+
+
   //Konstruktor
   constructor(http: HttpClient, private keycloak: KeycloakService) {
     this.http = http
@@ -50,6 +52,8 @@ export class ProfileService {
 
   //update aktuellen User
   updateUser(u: CustomUser) {
+    console.log("updating: ")
+    console.log(u)
     return this.http.put<CustomUser>(api.url + 'user/update', u);
   }
 
