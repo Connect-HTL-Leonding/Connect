@@ -17,11 +17,11 @@
   <div class="wrapper">
     <div id="background"></div>
     <div class="container">
-      <div class="mid" (click)="loadFromStorage()">
+      <div class="mid" (click)="updatePfp()">
 
         <div class="pfpBox">
           <div class="rounded">
-            <img *ngIf="ps.user" class="pfp" src={{this.photoService.imgURL}}>
+            <img *ngIf="ps.user" class="pfp" [src]="this.imgURL" >
           </div>
           <ion-badge class="new-photo" color="primary">
             <ion-icon name="camera"></ion-icon>

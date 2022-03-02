@@ -54,7 +54,7 @@ export class DetailContactlistComponent implements OnInit {
       this.user.custom = data;
       if(this.user.custom) {
 
-      
+      console.log(this.user.custom.profilePicture);
         this.pfp = "data:image/png;base64," + atob(this.user.custom.profilePicture);
     
       this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
