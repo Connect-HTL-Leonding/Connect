@@ -237,9 +237,9 @@ public class FriendshipRepository {
         if(randomNumber != null){
 
             User newFriend = userList.get(randomNumber);
-            //Skin sameSkin = userSkin.get(newFriend);
-
-            create(curUser, newFriend, null);
+           Skin sameSkin = userSkin.get(newFriend);
+            System.out.println(sameSkin);
+            create(curUser, newFriend, sameSkin);
 
             Room room = new Room();
             room.getUsers().add(curUser);
