@@ -203,6 +203,7 @@ public class FriendshipRepository {
                 TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FIND, Friendship.class);
                 tq.setParameter("user_1", user);
                 tq.setParameter("user_2", curUser);
+                System.out.println("TESGSGASFASDF");
 
 
                 try {
@@ -277,6 +278,17 @@ public class FriendshipRepository {
         return this.em
                 .createNamedQuery(Friendship.FINDFRIENDSHIPSOFUSER, Friendship.class).setParameter("user",u)
                 .getResultList();
+    }
+
+    @Transactional
+    public Friendship findWithUsers(String userid1, String userid2){
+
+        TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FINDWITHID, Friendship.class);
+        tq.setParameter("userid_1", userid1);
+        tq.setParameter("userid_2", userid2);
+
+        return tq.getSingleResult();
+        //return tq.getResultList();
     }
 
 }

@@ -8,7 +8,6 @@ import org.connect.model.user.User;
 import org.connect.repository.FriendshipRepository;
 import org.connect.repository.UserRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.jboss.resteasy.annotations.cache.NoCache;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
@@ -95,6 +94,13 @@ public class FriendshipService {
     @Produces(MediaType.APPLICATION_JSON)
     public Friendship find(@PathParam("id") long id) {
         return dbRepo.find(id);
+    }
+
+    @Path("findWithUsers/{userid1}/{userid2}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Friendship findWithUsers(@PathParam("userid1") String userid1, @PathParam("userid2") String userid2) {
+        return dbRepo.findWithUsers(userid1, userid2);
     }
 
     @Path("findFriendshipsOfUser/{userId}")

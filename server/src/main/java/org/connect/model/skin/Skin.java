@@ -1,9 +1,6 @@
 package org.connect.model.skin;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;

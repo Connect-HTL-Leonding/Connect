@@ -18,9 +18,9 @@ export class FriendshipService {
 
   http: HttpClient;
 
- 
+
   public friendships: Array<Friendship>;
-  public user : User;
+  public user: User;
   public blockedFriendships: Array<Friendship>
   public blockedObservable = new Subject<any>();
   blockNotify = this.blockedObservable.asObservable();
@@ -31,7 +31,7 @@ export class FriendshipService {
 
   //Konstruktor
   constructor(http: HttpClient) {
-    this.http = http;  
+    this.http = http;
   }
 
   //getAll
@@ -39,15 +39,20 @@ export class FriendshipService {
     return this.http.get<Friendship[]>(api.url + 'friendship/findAll')
   }
 
-  getBefriendedUsers(u: User){
+  //getFriendshipWithUsers
+  getFriendshipsWithUsers(user1, user2) {
+    return this.http.get<Friendship>(api.url + 'friendship/findWithUsers/' + user1 + '/' + user2)
+  }
+
+  getBefriendedUsers(u: User) {
     return this.http.get<Friendship[]>(api.url + 'friendship/findFriendshipsOfUser/' + u.id)
   }
 
-  createFriendship(f:Friendship) {
+  createFriendship(f: Friendship) {
     return this.http.post(api.url + 'friendship/create/', f);
   }
 
-  connect(mySkins : Array<MySkin>) {
+  connect(mySkins: Array<MySkin>) {
     return this.http.post<CustomUser>(api.url + 'friendship/findRandom', mySkins);
   }
 
@@ -57,11 +62,11 @@ export class FriendshipService {
   }
 
   //Freundschaft blockieren
-  blockFriendship(friend : CustomUser) {
+  blockFriendship(friend: CustomUser) {
     return this.http.post(api.url + 'friendship/block', friend);
   }
 
-  unblockFriendship(friend : CustomUser) {
+  unblockFriendship(friend: CustomUser) {
     return this.http.post(api.url + 'friendship/unblock', friend);
   }
 
