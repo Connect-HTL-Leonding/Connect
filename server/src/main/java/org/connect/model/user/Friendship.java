@@ -61,7 +61,7 @@ public class Friendship implements Serializable {
     @JoinColumn(name = "user2")
     private User user2;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "skin")
     private List<Skin> skins = new LinkedList<>();
 

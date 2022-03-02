@@ -123,7 +123,7 @@ public class MessageResourceTest {
     public void testCreate() {
         Message message = new Message();
         message.setRoom(r);
-        System.out.println(r.getId());
+        //DEBUGSystem.out.println(r.getId());
         given()
                 .auth().preemptive().oauth2(accessToken)
                 .param("message", message)

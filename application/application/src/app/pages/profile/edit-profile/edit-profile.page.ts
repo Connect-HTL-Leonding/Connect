@@ -32,7 +32,7 @@ export class EditProfilePage implements OnInit {
   };
 
   colorButton(){
-    console.log(this.changes)
+    //DEBUGconsole.log(this.changes)
     this.changes = false;
   }
 
@@ -57,10 +57,10 @@ export class EditProfilePage implements OnInit {
       () => {
         this.photoService.loadPfp();
         this.photoService.loadGalleryImages();
-        console.log("Images loaded.")
+        //DEBUGconsole.log("Images loaded.")
 
-        console.log(this.ps.user)
-        //console.log(this.skinService);
+        //DEBUGconsole.log(this.ps.user)
+        ////DEBUGconsole.log(this.skinService);
       }
     )
   }
@@ -68,9 +68,9 @@ export class EditProfilePage implements OnInit {
 
   updateUser(u: User) {
     //u.username = document.getElementById("username").innerText;
-    //console.log(u.desc)
+    ////DEBUGconsole.log(u.desc)
     //u.desc = document.getElementById("desc").innerText;
-    console.log(u.custom.description)
+    //DEBUGconsole.log(u.custom.description)
     this.ps.updateUser(u.custom).subscribe(data => {
       //nach unpdate erneutes getAll
       this.ngOnInit();

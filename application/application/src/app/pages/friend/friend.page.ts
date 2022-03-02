@@ -48,7 +48,7 @@ export class FriendPage implements OnInit {
   };
 
   ngOnInit() {
-    console.log(this.user)
+    //DEBUGconsole.log(this.user)
     this.ps.friendCustomData(this.user.id).subscribe(data => {
       this.photoService.loadFriendGalleryImages(data.id);
       this.profilePictureReady = "data:image/png;base64," + atob(data.profilePicture);
@@ -72,13 +72,13 @@ export class FriendPage implements OnInit {
           role: 'cancel',
           cssClass: 'primary',
           handler: (blah) => {
-            console.log('Confirm Cancel: yes');
+            //DEBUGconsole.log('Confirm Cancel: yes');
           }
         }, {
           text: 'Blockieren',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Delete Okay');
+            //DEBUGconsole.log('Delete Okay');
             //blockieren Funktion ...
             this.friendshipService.blockFriendship(this.user.custom).subscribe(data => {
               this.friendshipService.blockedObservable.next('blocked:' + this.ps.user.id + ':' + this.user.id)

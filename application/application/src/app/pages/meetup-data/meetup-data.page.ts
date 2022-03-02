@@ -71,7 +71,7 @@ export class MeetupDataPage implements OnInit {
           }
         });
   
-       console.log(this.allFriends);
+       //DEBUGconsole.log(this.allFriends);
       })
     });
 

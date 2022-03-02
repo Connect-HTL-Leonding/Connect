@@ -51,7 +51,7 @@ export class ContactlistPage implements OnInit {
     this.contactService.getChats().subscribe(
       data => {
         this.contactService.rooms = data;
-        console.log(this.contactService.rooms);
+        //DEBUGconsole.log(this.contactService.rooms);
       }
     )
   }

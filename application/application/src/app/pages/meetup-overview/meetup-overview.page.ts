@@ -36,7 +36,7 @@ export class MeetupOverviewPage implements OnInit {
 
       });
       this.friends = meetUpUsers;
-      console.log(this.friends);
+      //DEBUGconsole.log(this.friends);
     })
 
     this.ms.getCreatorOfMeetup(this.meetup.id).subscribe((data: User)=> {
@@ -55,7 +55,7 @@ export class MeetupOverviewPage implements OnInit {
   leaveMeetup(r: Room) {
     this.meetupService.removeUserFromMeetup(r).subscribe(data => {
       this.ms.meetupObservable.next("")
-      console.log("user removed");
+      //DEBUGconsole.log("user removed");
     })
   }
 
@@ -63,7 +63,7 @@ export class MeetupOverviewPage implements OnInit {
 
     this.chatService.chatSendObservable.next("meetupEnded:" + r.meeting.id);
 
-    console.log("meetup terminated");
+    //DEBUGconsole.log("meetup terminated");
 
   }
 

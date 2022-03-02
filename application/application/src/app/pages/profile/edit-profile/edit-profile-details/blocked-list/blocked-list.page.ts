@@ -25,7 +25,7 @@ export class BlockedListPage implements OnInit {
 
   unblockUser(u:User) {
     this.ps.friendCustomData(u.id).subscribe(data => {
-      console.log(data)
+      //DEBUGconsole.log(data)
       this.fs.unblockFriendship(data).subscribe(data => {
         this.userList = []
         this.cs.contactlistObservable.next("contactListUpdate");

@@ -82,9 +82,9 @@ export class PhotoService {
       } else {
        
       }
-      console.log(images);
+      //DEBUGconsole.log(images);
       //for(let photo of this.photos) {
-        //console.log(photo.id);
+        ////DEBUGconsole.log(photo.id);
       //}
     }
     }) 
@@ -105,9 +105,9 @@ export class PhotoService {
       } else {
        
       }
-      console.log(images);
+      //DEBUGconsole.log(images);
       //for(let photo of this.photos) {
-        //console.log(photo.id);
+        ////DEBUGconsole.log(photo.id);
       //}
     }
     }) 
@@ -142,7 +142,9 @@ export class PhotoService {
     try {
       var base64data;
       const image = await Camera.getPhoto({
-        quality: 100,
+        quality: 10,
+        width: 50,
+        height: 50,
         allowEditing: true,
         resultType: CameraResultType.Base64
       })
@@ -158,7 +160,6 @@ export class PhotoService {
       const blob = new Blob([arr], { type: 'image/png' });
       //const formData = new FormData();
       //formData.append('file',blob)
-      console.log(image.base64String);
     
 
 

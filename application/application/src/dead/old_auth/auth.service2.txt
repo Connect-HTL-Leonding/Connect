@@ -129,7 +129,7 @@ export class AuthService {
         newTokens.iat = (new Date().getTime() / 1000) - 10;
         return this.storage.set(StorageKeys.OAUTH_TOKENS, newTokens)
       })
-      .catch((reason) => console.log(reason))
+      .catch((reason) => //DEBUGconsole.log(reason))
   }
 
   createPostRequest(uri, body, headers) {

@@ -45,11 +45,11 @@ export class ProfilePage implements OnInit {
     this.ps.getUser().add(
       () => {
 
-        console.log(this.ps.user)
+        //DEBUGconsole.log(this.ps.user)
         this.showTutorial();
 
 
-        //console.log(this.skinService);
+        ////DEBUGconsole.log(this.skinService);
       }
     )
 
@@ -64,13 +64,13 @@ export class ProfilePage implements OnInit {
       () => {
 
 
-        console.log("westrzutqjhkgizfutetdzuz")
+        //DEBUGconsole.log("westrzutqjhkgizfutetdzuz")
 
-        console.log(this.ps.user)
+        //DEBUGconsole.log(this.ps.user)
 
 
 
-        //console.log(this.skinService);
+        ////DEBUGconsole.log(this.skinService);
       }
     )
 
@@ -81,9 +81,9 @@ export class ProfilePage implements OnInit {
   //}
 
   showTutorial() {
-    console.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
+    //DEBUGconsole.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
     if (this.ps.user.custom.tutorialStage == 1) {
-      console.log("Bruhhhhh" + this.profilePicRef.nativeElement);
+      //DEBUGconsole.log("Bruhhhhh" + this.profilePicRef.nativeElement);
       Showcaser.showcase("Das hier ist dein Profil. Zurzeit noch ein bisschen leer. Du kannst etwas über dich erzählen oder Bilder hochladen. Aber wirklich nur so viel wie du willst!", this.profilePicRef.nativeElement, {
         buttonText: "Ok!",
         position: {

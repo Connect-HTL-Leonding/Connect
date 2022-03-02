@@ -87,8 +87,8 @@ export class AppComponent implements OnInit {
 
   //Login bei Seiten-laden
   public ngOnInit() {
-    console.log("CHECK if logged in")
-    //console.log(this.keycloak.userid)
+    //DEBUGconsole.log("CHECK if logged in")
+    ////DEBUGconsole.log(this.keycloak.userid)
 
     //überprüfen, ob eingeloggt
     if (this.keycloak.userid === undefined || !this.keycloak.userid || !this.keycloak.userid.length) {
@@ -130,7 +130,7 @@ export class AppComponent implements OnInit {
         //Websocket-Connection mit Userid erstellen
         if (this.keycloak.userid) {
           this.wsUri = api.ws + '/websocket/' + this.keycloak.userid;
-          console.log(this.wsUri)
+          //DEBUGconsole.log(this.wsUri)
 
           //Websocket-Connection erstellen
           this.doConnect();
@@ -159,7 +159,7 @@ export class AppComponent implements OnInit {
           break;
 
         case ("chatMessage"):
-          console.log(msg);
+          //DEBUGconsole.log(msg);
           this.cs.updateChatObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
@@ -172,10 +172,10 @@ export class AppComponent implements OnInit {
           }
           break;
 
-        case ("positionUpdate"): console.log(message[1]); this.ms.showPositionObservable.next(message[1]);
+        case ("positionUpdate"): //DEBUGconsole.log(message[1]); this.ms.showPositionObservable.next(message[1]);
           break;
 
-        case ("newMeetup"): console.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
+        case ("newMeetup"): //DEBUGconsole.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
               this.ps.findFriendUser(data.id).subscribe(data => {
@@ -209,7 +209,7 @@ export class AppComponent implements OnInit {
           break;
 
         case ("newConnect"): this.contactlistService.contactlistUpdateObservable.next("connect");
-          console.log(message[2]);
+          //DEBUGconsole.log(message[2]);
           this.ps.findFriendUser(message[2]).subscribe(data => {
             this.presentToastWithOptions(data["username"] + " hat sich mit dir connected!");
           })
@@ -222,7 +222,7 @@ export class AppComponent implements OnInit {
 
     //Websocket-onerror
     this.websocket.onerror = (evt) => {
-      console.log(evt.AT_TARGET);
+      //DEBUGconsole.log(evt.AT_TARGET);
     };
 
     //Aktuell nicht in Verwendung

@@ -26,7 +26,7 @@ export class CategoryService {
   findCategory(s: string): any{
     let foundCat = this.categories[0];
 
-    console.log(this.categories)
+    //DEBUGconsole.log(this.categories)
 
     this.categories.forEach(c =>{
       
