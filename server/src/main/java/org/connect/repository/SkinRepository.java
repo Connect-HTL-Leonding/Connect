@@ -283,9 +283,9 @@ public class SkinRepository {
         MySkin s = null;
         try {
              s = tq.getSingleResult();
-            System.out.println(s);
+            //DEBUGSystem.out.println(s);
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
 

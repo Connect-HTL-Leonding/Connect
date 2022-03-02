@@ -26,7 +26,7 @@ export class SkinselectionCardComponent implements OnInit {
  this.imageReady='data:image/png;base64,'+this.skin.image;
     }
    
-    console.log(this.imageReady);
+    //DEBUGconsole.log(this.imageReady);
     this.checkFollowing();
   }
 
@@ -40,7 +40,7 @@ export class SkinselectionCardComponent implements OnInit {
     if (this.following == null) {
       this.s.check(this.skin.id).subscribe(data => {
         var ms: MySkin = data;
-        console.log(ms);
+        //DEBUGconsole.log(ms);
         if(ms){
           this.following = true;
         }else {

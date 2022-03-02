@@ -97,7 +97,7 @@ export class ChatPage implements OnInit {
 
 
     this.getMessage = this.chatservice.updatechatNotify.subscribe(value => {
-      console.log(value);
+      //DEBUGconsole.log(value);
       if (this.chatservice.selectedRoom.id == value) {
         this.init(this.contactlist.selectedRoom, true);
       }
@@ -236,7 +236,7 @@ export class ChatPage implements OnInit {
       if (this.otherUser.custom) {
         this.ms.getMeetupsWithMe(this.otherUser.custom.id).subscribe(data => {
           this.meetUps = data;
-          console.log(data);
+          //DEBUGconsole.log(data);
         })
         this.ms.getMeetupsFromMeA(this.otherUser.custom.id).subscribe(data => {
           this.meetUpsAccepted = data;
@@ -252,7 +252,7 @@ export class ChatPage implements OnInit {
           this.otherUser.firstname = data["firstName"];
           this.otherUser.lastname = data["lastName"];
           this.otherUser.email = data["email"];
-          console.log(data)
+          //DEBUGconsole.log(data)
         })
       }
       else {
@@ -286,7 +286,7 @@ export class ChatPage implements OnInit {
       this.chatservice.chatSendObservable.next("meetupAccepted:" + meetUp.id);
       this.ms.createMeetupObservable.next("acceptMeetup:" + this.chatservice.selectedRoom.id);
       this.contactlist.contactlistObservable.next("contactListUpdate");
-      console.log("status set to accepted");
+      //DEBUGconsole.log("status set to accepted");
       if (this.meetUps.length < 1) {
         this.isNewMeetUp = false;
       }
@@ -317,7 +317,7 @@ export class ChatPage implements OnInit {
           text: 'Close',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //DEBUGconsole.log('Cancel clicked');
           }
         }
       ]
@@ -347,7 +347,7 @@ export class ChatPage implements OnInit {
     this.m.updated = new Date();
     this.m.image = "";
     this.chatservice.addImage(this.m).then(data => {
-      console.log(data);
+      //DEBUGconsole.log(data);
       this.chatservice.createMessage(data).subscribe(data => {
         this.contactlist.contactlistObservable.next("contactListUpdate");
         this.chatservice.chatSendObservable.next("chatMessage:" + this.chatservice.selectedRoom.id);
@@ -391,7 +391,7 @@ export class ChatPage implements OnInit {
             if (!this.usernames.has(message.user.id)) {
               this.ps.findFriendUser(message.user.id).subscribe(data => {
                 this.usernames.set(message.user.id, data["username"]);
-                console.log(this.usernames)
+                //DEBUGconsole.log(this.usernames)
               })
 
             }
@@ -402,21 +402,21 @@ export class ChatPage implements OnInit {
           }
 
           /*
-          console.log(document.querySelectorAll(".messageDiv:last-child"))
-          console.log(document.getElementById("messageFlex"))
+          //DEBUGconsole.log(document.querySelectorAll(".messageDiv:last-child"))
+          //DEBUGconsole.log(document.getElementById("messageFlex"))
 
           var elem = document.getElementById('messageFlex');
-          console.log(elem.scrollTop)
-          console.log(elem.scrollHeight)
+          //DEBUGconsole.log(elem.scrollTop)
+          //DEBUGconsole.log(elem.scrollHeight)
 
           elem.scrollTop = elem.scrollHeight;
           */
           /*
            try {
-             console.log(this.messageFlex.nativeElement.scrollTop);
-             console.log(this.messageFlex.nativeElement.scrollHeight);
+             //DEBUGconsole.log(this.messageFlex.nativeElement.scrollTop);
+             //DEBUGconsole.log(this.messageFlex.nativeElement.scrollHeight);
              this.messageFlex.nativeElement.scrollTop = Math.max(0, this.messageFlex.nativeElement.scrollHeight - this.messageFlex.nativeElement.offsetHeight);
-             console.log(this.messageFlex.nativeElement.scrollTop);
+             //DEBUGconsole.log(this.messageFlex.nativeElement.scrollTop);
              
            } catch (err) { }
  */
@@ -449,7 +449,7 @@ export class ChatPage implements OnInit {
   leaveMeetup(r: Room) {
     this.meetupService.removeUserFromMeetup(r).subscribe(data => {
       this.ms.meetupObservable.next("")
-      console.log("user removed");
+      //DEBUGconsole.log("user removed");
     })
   }
 
@@ -457,7 +457,7 @@ export class ChatPage implements OnInit {
 
     this.chatservice.chatSendObservable.next("meetupEnded:" + r.meeting.id);
 
-    console.log("meetup terminated");
+    //DEBUGconsole.log("meetup terminated");
 
   }
 

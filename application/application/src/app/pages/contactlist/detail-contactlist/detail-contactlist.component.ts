@@ -98,7 +98,7 @@ export class DetailContactlistComponent implements OnInit {
       })
 
       /*
-      console.log(atob(this.user.custom.profilePicture));
+      //DEBUGconsole.log(atob(this.user.custom.profilePicture));
       this.contactlist.getOtherPfp(this.room.id).subscribe(data => {
         this.user.custom.profilePicture = "data:image/png;base64," + data;
       });

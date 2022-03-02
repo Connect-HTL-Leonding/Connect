@@ -53,19 +53,19 @@ public class WebSocket {
         users.put(session, id);
 
         sessions.values().forEach(s -> {
-            System.out.println("id: " + users.get(s));
+            //DEBUGSystem.out.println("id: " + users.get(s));
         });
     }
 
     @OnClose
     public void onClose(Session session, @PathParam("id") String id) {
         sessions.remove(id);
-        System.out.println(id + " left");
+        //DEBUGSystem.out.println(id + " left");
     }
 
     @OnError
     public void onError(Session session, @PathParam("id") String id, Throwable throwable) {
-        System.out.println("ERROR");
+        //DEBUGSystem.out.println("ERROR");
     }
 
 
@@ -102,7 +102,7 @@ public class WebSocket {
         sessions.values().forEach(s -> {
             s.getAsyncRemote().sendObject(message, result -> {
                 if (result.getException() != null) {
-                    System.out.println("Unable to send message: " + result.getException());
+                    //DEBUGSystem.out.println("Unable to send message: " + result.getException());
                 }
             });
 
@@ -119,7 +119,7 @@ public class WebSocket {
                     String message = "positionUpdate:" + id;
                     s.getAsyncRemote().sendObject(message, result -> {
                         if (result.getException() != null) {
-                            System.out.println("Unable to send message: " + result.getException());
+                            //DEBUGSystem.out.println("Unable to send message: " + result.getException());
                         }
                     });
                 }
@@ -135,7 +135,7 @@ public class WebSocket {
                 String msg = "newConnect:" + id + ":" + id2;
                 s.getAsyncRemote().sendObject(msg, result -> {
                     if (result.getException() != null) {
-                        System.out.println("Unable to send message: " + result.getException());
+                        //DEBUGSystem.out.println("Unable to send message: " + result.getException());
                     }
                 });
             }
@@ -146,7 +146,7 @@ public class WebSocket {
         sessions.values().forEach(s -> {
             s.getAsyncRemote().sendObject(message, result -> {
                 if (result.getException() != null) {
-                    System.out.println("Unable to send message: " + result.getException());
+                    //DEBUGSystem.out.println("Unable to send message: " + result.getException());
                 }
             });
 
@@ -166,7 +166,7 @@ public class WebSocket {
                     String message = type + id;
                     s.getAsyncRemote().sendObject(message, result -> {
                         if (result.getException() != null) {
-                            System.out.println("Unable to send message: " + result.getException());
+                            //DEBUGSystem.out.println("Unable to send message: " + result.getException());
                         }
                     });
                 }
@@ -182,10 +182,10 @@ public class WebSocket {
             for(Object[] o : list) {
                 if(o[0].equals(users.get(s)) || o[1].equals(users.get(s))) {
                     String msg = "meetupAccepted:" + message;
-                    System.out.println(msg);
+                    //DEBUGSystem.out.println(msg);
                     s.getAsyncRemote().sendObject(msg, result -> {
                         if (result.getException() != null) {
-                            System.out.println("Unable to send message: " + result.getException());
+                            //DEBUGSystem.out.println("Unable to send message: " + result.getException());
                         }
                     });
                 }
@@ -210,12 +210,12 @@ public class WebSocket {
             for(Object[] o : list) {
                 if(o[0].equals(users.get(s)) || o[1].equals(users.get(s))) {
                     String msg = "meetupAccepted:" + message;
-                    System.out.println(msg);
+                    //DEBUGSystem.out.println(msg);
                     s.getAsyncRemote().sendObject(msg, result -> {
-                        System.out.println("Message an:");
-                        System.out.println(s.toString());
+                        //DEBUGSystem.out.println("Message an:");
+                        //DEBUGSystem.out.println(s.toString());
                         if (result.getException() != null) {
-                            System.out.println("Unable to send message: " + result.getException());
+                            //DEBUGSystem.out.println("Unable to send message: " + result.getException());
                         }
                     });
                 }

@@ -15,7 +15,7 @@ export class AppAuthGuard implements CanActivate {
 
       //überprüfung ob eingeloggt
       if (!this.keycloakService.isLoggedIn()) {
-        console.log(this.keycloakService.authenticated)
+        //DEBUGconsole.log(this.keycloakService.authenticated)
 
         //falls nicht eingeloggt --> token refresh versuch
         this.keycloakService.refresh().subscribe(token => {
@@ -33,7 +33,7 @@ export class AppAuthGuard implements CanActivate {
           }
           resolve(true)
         }, error => {
-          console.log("ERROR" + error.message)
+          //DEBUGconsole.log("ERROR" + error.message)
           this.router.navigate(["login"]);
         });
 
@@ -43,8 +43,8 @@ export class AppAuthGuard implements CanActivate {
 
       //VERALTET!
       /*
-      console.log('role restriction given at app-routing.module for this route', route.data.roles);
-      console.log('User roles coming after login from keycloak :', this.keycloakService.roles);
+      //DEBUGconsole.log('role restriction given at app-routing.module for this route', route.data.roles);
+      //DEBUGconsole.log('User roles coming after login from keycloak :', this.keycloakService.roles);
       const requiredRoles = route.data.roles;
       //checked, ob Berechtigung stimmt
 

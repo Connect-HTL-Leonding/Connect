@@ -55,7 +55,7 @@ public class MessageRepository {
                 setToSeen(RoomId, m, jwt.claim("sub").get().toString());
             }
         }catch(Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return ms;
     }
@@ -80,7 +80,7 @@ public class MessageRepository {
                 em.persist(ms);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
        }
     }
@@ -94,7 +94,7 @@ public class MessageRepository {
            count = tq.getSingleResult();
            return count;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return count;
     }
@@ -106,10 +106,10 @@ public class MessageRepository {
         long count = 0;
         try {
             count = tq.getSingleResult();
-            System.out.println(count);
+            //DEBUGSystem.out.println(count);
             return count;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return count;
     }
@@ -126,7 +126,7 @@ public class MessageRepository {
             ms = tq.getResultList();
             latestMessage = ms.get(ms.size() - 1);
         }catch(Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return latestMessage;
     }

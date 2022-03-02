@@ -40,7 +40,7 @@ public class ImageRepository {
             }
 
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return URLs;
     } */
@@ -52,11 +52,11 @@ public class ImageRepository {
         List<Image> tail = null;
         try {
             images = tq.getResultList();
-            System.out.println(images);
+            //DEBUGSystem.out.println(images);
             tail = images.subList(Math.max(images.size() - 4, 0), images.size());
-            System.out.println(tail);
+            //DEBUGSystem.out.println(tail);
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return tail;
     }
@@ -68,11 +68,11 @@ public class ImageRepository {
         List<Image> tail = null;
         try {
             images = tq.getResultList();
-            System.out.println(images);
+            //DEBUGSystem.out.println(images);
             tail = images.subList(Math.max(images.size() - 4, 0), images.size());
-            System.out.println(tail);
+            //DEBUGSystem.out.println(tail);
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return tail;
     }
@@ -84,7 +84,7 @@ public class ImageRepository {
         try {
             images = tq.getResultList();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return images;
     }
@@ -96,7 +96,7 @@ public class ImageRepository {
         try {
             images = tq.getResultList();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return images;
     }

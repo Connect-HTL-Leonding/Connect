@@ -49,7 +49,7 @@ export class EditProfileDetailsPage implements OnInit {
     this.password = ""
     this.ps.getUser().add(
       () => {
-        console.log(this.ps.user)
+        //DEBUGconsole.log(this.ps.user)
         
       }
     )
@@ -81,18 +81,18 @@ export class EditProfileDetailsPage implements OnInit {
       //Update von eigener Datenbank
       this.ps.updateUser(u.custom).subscribe(data => {
         //return ist aktualisierter User
-        console.log(data)
+        //DEBUGconsole.log(data)
 
         if (this.password) {
           this.keyCloakService.getAdminToken().subscribe(data_access => {
-            console.log(data_access)
+            //DEBUGconsole.log(data_access)
             this.keyCloakService.changePassword(u.custom, data_access["access_token"], this.password).subscribe(data_password => {
-              console.log(data_password)
+              //DEBUGconsole.log(data_password)
             }, error => {
-              console.log(error)
+              //DEBUGconsole.log(error)
             }, () => {
               this.ngOnInit();
-              console.log("reset");
+              //DEBUGconsole.log("reset");
               
             })
           })
@@ -102,7 +102,7 @@ export class EditProfileDetailsPage implements OnInit {
       });
     },
       error => {
-        console.log('HTTP Error', error);
+        //DEBUGconsole.log('HTTP Error', error);
       });
 
 
@@ -111,7 +111,7 @@ export class EditProfileDetailsPage implements OnInit {
   /*
   updatePasswort() {
     if (this.passwort) {
-      console.log("Form Submitted!");
+      //DEBUGconsole.log("Form Submitted!");
       //{ "type": "password", "temporary": false, "value": "my-new-password" }
       var json = {
         "type": "password",
@@ -119,7 +119,7 @@ export class EditProfileDetailsPage implements OnInit {
         "value": this.passwort
       }
 
-      console.log(json)
+      //DEBUGconsole.log(json)
 
       //Update von Keycloak Daten
       this.ps.updatePassword(json).subscribe();

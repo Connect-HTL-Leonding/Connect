@@ -46,10 +46,10 @@ public class MySkinRepository {
         try {
             ms = tq.getResultList();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        System.out.println(ms);
+        //DEBUGSystem.out.println(ms);
 
         return ms;
     }
@@ -63,10 +63,10 @@ public class MySkinRepository {
         try {
             ms = tq.getResultList();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        System.out.println(ms);
+        //DEBUGSystem.out.println(ms);
 
         return ms;
     }
@@ -80,10 +80,10 @@ public class MySkinRepository {
         try {
             follower = tq.getSingleResult();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        System.out.println(follower);
+        //DEBUGSystem.out.println(follower);
 
         return follower;
     }
@@ -97,10 +97,10 @@ public class MySkinRepository {
         try {
             ms = tq.getResultList();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        System.out.println(ms);
+        //DEBUGSystem.out.println(ms);
 
         return ms;
     }

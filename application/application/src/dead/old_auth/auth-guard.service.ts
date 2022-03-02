@@ -16,6 +16,8 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot,
   ): Observable<boolean> {
     return this.authService.canActivateProtectedRoutes$
-      .pipe(tap(x => console.log('You tried to go to ' + state.url + ' and this guard said ' + x)));
+      .pipe(tap(x => 
+        console.log('You tried to go to ' + state.url + ' and this guard said ' + x)
+        ));
   }
 }

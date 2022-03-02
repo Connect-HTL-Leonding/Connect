@@ -63,7 +63,7 @@ public class MeetUpRepository {
             r = query.getSingleResult();
             u = userQuery.getSingleResult();
         } catch(Exception ex) {
-            System.out.println(ex.getMessage());
+            //DEBUGSystem.out.println(ex.getMessage());
         }
 
         r.getUsers().add(u);
@@ -155,8 +155,8 @@ public class MeetUpRepository {
     @Transactional
     public void setSeen(Meeting_User mu) {
         User u = em.find(User.class, jwt.getClaim("sub"));
-        System.out.println(mu.getMeeting().getId());
-        System.out.println(mu.getUser_id());
+        //DEBUGSystem.out.println(mu.getMeeting().getId());
+        //DEBUGSystem.out.println(mu.getUser_id());
         Query query = em.createQuery("update Meeting_User mu set mu.isSeen = true where mu.meeting.id=:meetingId AND mu.user_id= :user_id");
         query.setParameter("meetingId",mu.getMeeting().getId());
         query.setParameter("user_id",mu.getUser_id());
@@ -210,7 +210,7 @@ public class MeetUpRepository {
 
         em.remove(em.contains(r.getMeeting()) ? r.getMeeting() : em.merge(r.getMeeting()));
         em.remove(em.contains(r) ? r : em.merge(r));
-        System.out.println("Deleted: "+r.toString());
+        //DEBUGSystem.out.println("Deleted: "+r.toString());
 
     }
 }
