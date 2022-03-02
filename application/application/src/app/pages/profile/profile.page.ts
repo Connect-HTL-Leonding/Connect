@@ -8,6 +8,7 @@ import Showcaser from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 export class ProfilePage implements OnInit {
 
   user;
+  public imgURL;
 
   // Button
   @ViewChild('change_button', { static: false }) changeButRef: ElementRef;
@@ -26,8 +28,22 @@ export class ProfilePage implements OnInit {
   @ViewChild('profile_pic', { static: false }) profilePicRef: ElementRef;
 
 
-  constructor(public router: Router, public ts: TutorialService, public ps: ProfileService, private keyCloakService: KeycloakService, public modalController: ModalController, public photoService: PhotoService) {
+  constructor(public router: Router, public ts: TutorialService, public ps: ProfileService, private keyCloakService: KeycloakService, public modalController: ModalController, public photoService: PhotoService
+    , private sanitizer: DomSanitizer) {
 
+  }
+
+  loadPfp() {
+    this.photoService.loadPfp().subscribe(blob=> {
+      if(blob!=undefined) {
+        this.imgURL = this.photoService.DOMSanitizer(blob);
+      } else {
+        this.imgURL = this.photoService.getDefaultPfp().subscribe(data=> {
+          this.imgURL = this.photoService.DOMSanitizer(data);
+        })
+      }
+      
+    })
   }
 
   slideOpts = {
@@ -37,8 +53,14 @@ export class ProfilePage implements OnInit {
     speed: 400
   };
 
+  ionViewWillEnter(){
+    this.loadPfp();
+    this.photoService.loadGalleryImages();
+   }
+
+
   ngOnInit() {
-    this.photoService.loadPfp();
+    this.loadPfp();
     this.photoService.loadGalleryImages();
     this.user = this.keyCloakService.user;
 

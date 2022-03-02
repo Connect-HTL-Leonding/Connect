@@ -8,6 +8,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.Transient;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -59,6 +60,12 @@ public class ImageRepository {
             //DEBUGSystem.out.println(e.getMessage());
         }
         return tail;
+    }
+
+    public byte[] getDefaultPfp() {
+    TypedQuery<Image> q = em.createNamedQuery(Image.GETDEFAULTPFP,Image.class);
+    Image i = q.getSingleResult();
+    return i.getImg();
     }
 
     public List<Image> getFriendImgURLs(String id) {

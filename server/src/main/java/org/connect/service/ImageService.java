@@ -67,7 +67,7 @@ public class ImageService {
     @GET
     @Path("getPfp")
     /*@Produces(MediaType.TEXT_PLAIN)*/
-    public byte[] getPfp() throws UnsupportedEncodingException {
+    public byte[] getPfp(){
         User u = getUser();
 
             return u.getProfilePicture();
@@ -99,6 +99,12 @@ public class ImageService {
     public List<Image> getImages() {
         List<Image> images = iRepo.getImgURLs(jwt);
         return images;
+    }
+
+    @GET
+    @Path("getDefaultPfp")
+    public byte[] getDefaultPfp() {
+        return iRepo.getDefaultPfp();
     }
 
     @GET

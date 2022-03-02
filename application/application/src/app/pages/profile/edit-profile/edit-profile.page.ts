@@ -6,6 +6,8 @@ import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from '../photogallery/photogallery.page';
 //import { Camera } from '@ionic-native/camera';
 //import { CameraOptions } from '@ionic-native/camera';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 
 @Component({
@@ -20,7 +22,8 @@ export class EditProfilePage implements OnInit {
 
   noImgs: boolean;
 
-  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService) { }
+  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService,
+    private sanitizer: DomSanitizer) { }
 
 
 
@@ -44,8 +47,24 @@ export class EditProfilePage implements OnInit {
     }
   }
 
-  loadFromStorage() {
-    this.photoService.updatePfp();
+  async updatePfp() {
+    (await this.photoService.updatePfp()).subscribe(data=>{
+      this.loadPfp();
+    });
+  }
+
+  loadPfp() {
+    this.photoService.loadPfp().subscribe(blob=> {
+      if(blob!=undefined) {
+        this.imgURL = this.photoService.DOMSanitizer(blob);
+      }
+      else {
+        this.imgURL = this.photoService.getDefaultPfp().subscribe(data=> {
+          this.imgURL = this.photoService.DOMSanitizer(data);
+        })
+      }
+      
+    })
   }
 
 
@@ -55,7 +74,7 @@ export class EditProfilePage implements OnInit {
 
     this.ps.getUser().add(
       () => {
-        this.photoService.loadPfp();
+        this.loadPfp();
         this.photoService.loadGalleryImages();
         //DEBUGconsole.log("Images loaded.")
 

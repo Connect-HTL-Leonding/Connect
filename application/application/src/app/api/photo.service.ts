@@ -61,9 +61,16 @@ export class PhotoService {
       responseType: 'text' as const
     }; */
 
-    this.http.get(api.url + 'image/getPfp').subscribe(data => {
-      this.blobToBase64String(data);
-    })
+   /* this.http.get(api.url + 'image/getPfp').subscribe(data => {
+     // this.blobToBase64String(data);
+    }) */
+
+    return this.http.get(api.url + 'image/getPfp', {responseType: 'blob'})
+  };
+
+  DOMSanitizer(blob) {
+    var urlCreator = window.URL;
+    return this.sanitizer.bypassSecurityTrustUrl(urlCreator.createObjectURL(blob));
   }
 
 
@@ -136,16 +143,19 @@ export class PhotoService {
 
 
 
-  
+  public getDefaultPfp() {
+   return this.http.get(api.url + "image/getDefaultPfp",{responseType: 'blob'});
+  }
 
   public async updatePfp() {
+    var blob;
     try {
       var base64data;
       const image = await Camera.getPhoto({
         quality: 10,
         width: 50,
         height: 50,
-        allowEditing: true,
+       // allowEditing: true,
         resultType: CameraResultType.Base64
       })
       
@@ -157,7 +167,7 @@ export class PhotoService {
         bytes[x] = rawData.charCodeAt(x);
       }
       const arr = new Uint8Array(bytes);
-      const blob = new Blob([arr], { type: 'image/png' });
+      blob = new Blob([arr], { type: 'image/png' });
       //const formData = new FormData();
       //formData.append('file',blob)
     
@@ -165,15 +175,11 @@ export class PhotoService {
 
     
 
-      this.http.put(api.url + 'image/setPfp', blob).subscribe(data => {
-        this.ps.getUser().add(data => {
-          this.loadPfp();
-        })
-
-      })
 
     } catch (e) {
     }
+    return this.http.put(api.url + 'image/setPfp', blob);
+
 
   }
 
