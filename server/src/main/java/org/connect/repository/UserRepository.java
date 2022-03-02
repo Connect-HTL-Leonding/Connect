@@ -1,7 +1,5 @@
 package org.connect.repository;
 
-import org.connect.model.skin.MySkin;
-import org.connect.model.skin.Skin;
 import org.connect.model.user.User;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 
@@ -9,7 +7,6 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
@@ -24,17 +21,17 @@ UserRepository {
     @Transactional
     public User create(JsonWebToken jwt) {
         //em.find(User.class, user)
-        System.out.println(jwt + " this is my token");
-        System.out.println(jwt.claim("sub").toString());
+        //DEBUGSystem.out.println(jwt + " this is my token");
+        //DEBUGSystem.out.println(jwt.claim("sub").toString());
 
         TypedQuery<User> tq = this.em.createNamedQuery(User.FINDWITHID, User.class);
         tq.setParameter("user_id",jwt.claim("sub").get().toString());
         User u = null;
         try {
             u = tq.getSingleResult();
-            //System.out.println(u);
+            ////DEBUGSystem.out.println(u);
         }catch (Exception e) {
-            System.out.println(e.getMessage() + "help2");
+            //DEBUGSystem.out.println(e.getMessage() + "help2");
         }
 
         if(u == null){
@@ -55,10 +52,10 @@ UserRepository {
         try {
             u = tq.getSingleResult();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        System.out.println(u);
+        //DEBUGSystem.out.println(u);
         return u;
     }
 

@@ -36,7 +36,7 @@ export class ProfileService {
       return this.http.get<CustomUser>(api.url + 'user/customData').subscribe(data => {
         this.user.custom = data;
       }, error => {
-        console.log(error)
+        //DEBUGconsole.log(error)
       });
     }
   }
@@ -52,8 +52,8 @@ export class ProfileService {
 
   //update aktuellen User
   updateUser(u: CustomUser) {
-    console.log("updating: ")
-    console.log(u)
+    //DEBUGconsole.log("updating: ")
+    //DEBUGconsole.log(u)
     return this.http.put<CustomUser>(api.url + 'user/update', u);
   }
 

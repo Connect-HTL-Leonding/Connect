@@ -186,7 +186,7 @@ export class HomePage implements OnInit {
         });
 
 
-        //console.log(this.skinService);
+        ////DEBUGconsole.log(this.skinService);
       }
     )
   }
@@ -219,13 +219,13 @@ export class HomePage implements OnInit {
     await loading.present();
 
     const { role, data } = await loading.onDidDismiss();
-    console.log('Loading dismissed!');
+    //DEBUGconsole.log('Loading dismissed!');
   }
 
 
   ionViewDidEnter() {
     this.loadMap();
-    console.log("LOADDDD")
+    //DEBUGconsole.log("LOADDDD")
   }
 
   //Funktion zum User Marker erstellen
@@ -280,7 +280,7 @@ export class HomePage implements OnInit {
       compositeImage = canvas.toDataURL("image/png");
 
       canvas.remove();
-      //console.log(compositeImage)
+      ////DEBUGconsole.log(compositeImage)
 
       var marker = new google.maps.Marker({
         position: user.custom.position,
@@ -310,7 +310,7 @@ export class HomePage implements OnInit {
       }
     });
     modal.onDidDismiss().then((data => {
-      console.log("dismissed")
+      //DEBUGconsole.log("dismissed")
     }))
     return await modal.present();
   }
@@ -366,7 +366,7 @@ export class HomePage implements OnInit {
               compositeImage = canvas.toDataURL("image/png");
 
               canvas.remove();
-              console.log(compositeImage)
+              //DEBUGconsole.log(compositeImage)
 
               var marker = new google.maps.Marker({
                 position: m.position,
@@ -471,7 +471,7 @@ export class HomePage implements OnInit {
     compositeImage = canvas.toDataURL("image/png");
 
     canvas.remove();
-    console.log(compositeImage)
+    //DEBUGconsole.log(compositeImage)
 
     if (this.meetupPreviewMarker != undefined) {
       this.meetupPreviewMarker.setMap(null);
@@ -543,7 +543,7 @@ export class HomePage implements OnInit {
           text: 'OK',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //DEBUGconsole.log('Cancel clicked');
           }
         }, {
           text: u.username,
@@ -556,12 +556,12 @@ export class HomePage implements OnInit {
         this.meetupService.getMeetupUser(m.id).subscribe(data => {
           let count = 0;
           data.forEach((mu, idx, array) => {
-            console.log(mu.user_id)
+            //DEBUGconsole.log(mu.user_id)
             this.ps.findFriendUser(mu.user_id).subscribe(data => {
               let u = data;
               this.ps.friendCustomData(mu.user_id).subscribe(custom => {
                 u.custom = custom;
-                console.log(custom)
+                //DEBUGconsole.log(custom)
 
                 this.cs.getKeyUser(u.custom).subscribe(data => {
                   u.id = data["id"];
@@ -569,7 +569,7 @@ export class HomePage implements OnInit {
                   u.firstname = data["firstName"];
                   u.lastname = data["lastName"];
                   u.email = data["email"];
-                  console.log(mu.status)
+                  //DEBUGconsole.log(mu.status)
                   let iconname;
                   switch (mu.status) {
                     case "accepted": {
@@ -602,7 +602,7 @@ export class HomePage implements OnInit {
                     this.presentMeetupPopover(ev, m, u, buttonArray);
                   }
 
-                  console.log(buttonArray)
+                  //DEBUGconsole.log(buttonArray)
                 })
 
               });
@@ -620,18 +620,18 @@ export class HomePage implements OnInit {
         text: 'OK',
         role: 'cancel',
         handler: () => {
-          console.log('Cancel clicked');
+          //DEBUGconsole.log('Cancel clicked');
         }
       }];
       this.meetupService.getMeetupUser(m.id).subscribe(data => {
         let count = 0;
         data.forEach((mu, idx, array) => {
-          console.log(mu.user_id)
+          //DEBUGconsole.log(mu.user_id)
           this.ps.findFriendUser(mu.user_id).subscribe(data => {
             let u = data;
             this.ps.friendCustomData(mu.user_id).subscribe(custom => {
               u.custom = custom;
-              console.log(custom)
+              //DEBUGconsole.log(custom)
 
               this.cs.getKeyUser(u.custom).subscribe(data => {
                 u.id = data["id"];
@@ -639,7 +639,7 @@ export class HomePage implements OnInit {
                 u.firstname = data["firstName"];
                 u.lastname = data["lastName"];
                 u.email = data["email"];
-                console.log(mu.status)
+                //DEBUGconsole.log(mu.status)
                 let iconname;
                 switch (mu.status) {
                   case "accepted": {
@@ -669,13 +669,13 @@ export class HomePage implements OnInit {
                 }
 
                 count++;
-                console.log(count)
-                console.log(array.length)
+                //DEBUGconsole.log(count)
+                //DEBUGconsole.log(array.length)
                 if (count === array.length) {
                   this.presentMeetupPopover(ev, m, u, buttonArray);
                 }
 
-                console.log(buttonArray)
+                //DEBUGconsole.log(buttonArray)
               })
 
             });
@@ -699,7 +699,7 @@ export class HomePage implements OnInit {
       translucent: true
     });
     popover.onDidDismiss().then(() => { this.profileService.updateUser(this.profileService.user.custom).subscribe(()=>{
-      console.log("updated wuhu")
+      //DEBUGconsole.log("updated wuhu")
     }); });
     
     return await popover.present();
@@ -828,7 +828,7 @@ export class HomePage implements OnInit {
             existingCircle.setRadius(myskin.radius * 1000);
             existingCircle.setCenter(this.ps.user.custom.position);
           } else {
-            console.log("seas" + this.ps.user.custom.tutorialStage)
+            //DEBUGconsole.log("seas" + this.ps.user.custom.tutorialStage)
             var newCircle = new google.maps.Circle({
               title: myskin.skin.id,
               strokeColor: "#0eb19b",
@@ -859,7 +859,7 @@ export class HomePage implements OnInit {
     for (var i = 0; i < str.length; i++) {
       hash = str.charCodeAt(i) + ((hash << 5) - hash);
     }
-    //console.log(hash)
+    ////DEBUGconsole.log(hash)
     return hash;
   }
 
@@ -871,7 +871,7 @@ export class HomePage implements OnInit {
   }
 
   centerMap() {
-    console.log(this.ps.user.custom.position);
+    //DEBUGconsole.log(this.ps.user.custom.position);
     this.map.panTo(this.ps.user.custom.position);
     this.map.setZoom(18);
 
@@ -964,7 +964,7 @@ export class HomePage implements OnInit {
         })
       });
     }).catch((error) => {
-      console.log('Error getting location', error);
+      //DEBUGconsole.log('Error getting location', error);
     });
 
 
@@ -997,9 +997,9 @@ export class HomePage implements OnInit {
           role: 'cancel',
           cssClass: 'secondary',
           handler: (blah) => {
-            console.log('Confirm Cancel: blah');
+            //DEBUGconsole.log('Confirm Cancel: blah');
             this.ps.skipTutorial(this.ps.user.custom).subscribe(data => {
-              console.log("Tutorial has been skipped")
+              //DEBUGconsole.log("Tutorial has been skipped")
               this.router.navigate(["home"])
             });
           }
@@ -1007,8 +1007,8 @@ export class HomePage implements OnInit {
           text: 'Okay',
           handler: () => {
             this.ps.getUser().add(() => {
-              console.log('Confirm Okay');
-              console.log(this.ps.user.custom.tutorialStage + "sdlflsajlf")
+              //DEBUGconsole.log('Confirm Okay');
+              //DEBUGconsole.log(this.ps.user.custom.tutorialStage + "sdlflsajlf")
               if (this.ps.user.custom.tutorialStage == 0) {
                 Showcaser.showcase("Das ist die Home Seite. Das Herzstück von Connect. Doch starten wir doch einmal mit den Basics.", null, {
                   buttonText: "OK!",
@@ -1019,7 +1019,7 @@ export class HomePage implements OnInit {
                   allowSkip: false,
                   close: () => {
                     this.ps.startTutorial(this.ps.user.custom).subscribe(data => {
-                      console.log("Tutorial has been started")
+                      //DEBUGconsole.log("Tutorial has been started")
                       this.router.navigate(["profile"])
                     });
                   }
@@ -1132,7 +1132,7 @@ export class HomePage implements OnInit {
           })
 
         } else {
-          console.log(data)
+          //DEBUGconsole.log(data)
           this.presentToastWithOptions(data, "Zurzeit niemand in der Nähe");
         }
 
@@ -1145,7 +1145,7 @@ export class HomePage implements OnInit {
     var buttonText = "Einstellungen ändern!"
     var header = "'Tschuldigung!"
     if (data != null) {
-      console.log("yes");
+      //DEBUGconsole.log("yes");
       header = "Gratulation!"
       buttonText = "Schreib " + data["username"] + " an"
       username = data["username"];
@@ -1229,10 +1229,10 @@ class ClickEventHandler {
   }
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
-    console.log('you clicked on: ' + event.latLng.toString());
+    //DEBUGconsole.log('you clicked on: ' + event.latLng.toString());
     /*
     var distance = this.hp.calcDistance(this.ps.user.custom.position, new Position(event.latLng.lng(), event.latLng.lat()));
-    console.log(distance);
+    //DEBUGconsole.log(distance);
     if(distance > 50) {
       this.ps.user.custom.position.lat = event.latLng.lat();
       this.ps.user.custom.position.lng = event.latLng.lng();
@@ -1248,7 +1248,7 @@ class ClickEventHandler {
 
     // If the event has a placeId, use it.
     if (this.isIconMouseEvent(event)) {
-      console.log("You clicked on place:" + event.placeId);
+      //DEBUGconsole.log("You clicked on place:" + event.placeId);
 
       // Calling e.stop() on the event prevents the default info window from
       // showing.

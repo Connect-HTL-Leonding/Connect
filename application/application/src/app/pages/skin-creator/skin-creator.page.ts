@@ -21,7 +21,7 @@ export class SkinCreatorPage implements OnInit {
     this.image = "";
    }
    ngOnInit() {
-    console.log(this.skinsService);
+    //DEBUGconsole.log(this.skinsService);
 
     this.cs.getCategories().subscribe(
       data => {
@@ -29,7 +29,7 @@ export class SkinCreatorPage implements OnInit {
       
       },
       error1 => {
-        console.log('Error');
+        //DEBUGconsole.log('Error');
       }
     )
     
@@ -63,7 +63,7 @@ export class SkinCreatorPage implements OnInit {
       message: 'Sorry, there was an Error. Try again later.',
       duration: 4000
     });
-    console.log("fjdlsjdlkdf")
+    //DEBUGconsole.log("fjdlsjdlkdf")
     toast.present();
   }
 
@@ -72,11 +72,11 @@ export class SkinCreatorPage implements OnInit {
     if(this.image=='' || this.skin.title=='' || this.skin.description==''){
       this.presentToast();
     }else{
-      console.log("creating skin")
-      console.log(this.skin.id + "AMOGUS")
+      //DEBUGconsole.log("creating skin")
+      //DEBUGconsole.log(this.skin.id + "AMOGUS")
       this.skinsService.createSkin(this.skin).subscribe(value => {
-        console.log("done creating")
-        console.log(this.image)
+        //DEBUGconsole.log("done creating")
+        //DEBUGconsole.log(this.image)
         this.image="";
         this.skin = new Skin();
         this.router.navigate(["my-skins"]);

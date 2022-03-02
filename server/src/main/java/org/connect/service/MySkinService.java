@@ -33,7 +33,7 @@ public class MySkinService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<MySkin> findAll() {
-        System.out.println(identity.getPrincipal().getName());
+        //DEBUGSystem.out.println(identity.getPrincipal().getName());
 
         return dbRepo.findAll(jwt.claim("sub"));
     }
@@ -43,7 +43,7 @@ public class MySkinService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<MySkin> findSelected() {
-        System.out.println(identity.getPrincipal().getName());
+        //DEBUGSystem.out.println(identity.getPrincipal().getName());
 
         return dbRepo.findSelected(jwt.claim("sub"));
     }
@@ -61,7 +61,7 @@ public class MySkinService {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<MySkin> findMapSkins() {
-        System.out.println(identity.getPrincipal().getName());
+        //DEBUGSystem.out.println(identity.getPrincipal().getName());
 
         return dbRepo.findMapSkin(jwt.claim("sub"));
     }
@@ -72,7 +72,7 @@ public class MySkinService {
     @Produces(MediaType.APPLICATION_JSON)
     public MySkin findAll(@PathParam("id") long id) {
         MySkin ms = dbRepo.find(id);
-        System.out.println(ms);
+        //DEBUGSystem.out.println(ms);
         return ms;
     }
 
