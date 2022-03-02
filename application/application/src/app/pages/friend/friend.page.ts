@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { PhotogalleryPage } from '../profile/photogallery/photogallery.page';
 import { FriendshipService } from 'src/app/api/friendship.service';
 import { ContactlistService } from 'src/app/api/contactlist.service';
+import { Friendship } from 'src/app/model/friendship';
 
 @Component({
   selector: 'app-friend',
@@ -19,6 +20,7 @@ import { ContactlistService } from 'src/app/api/contactlist.service';
 export class FriendPage implements OnInit {
 
   user;
+  friendship:Friendship = null;
   profilePictureReady;
 
   // Button
@@ -36,7 +38,8 @@ export class FriendPage implements OnInit {
     public photoService: PhotoService,
     public alertController: AlertController,
     public friendshipService: FriendshipService,
-    public cs:ContactlistService) {
+    public cs:ContactlistService,
+    public fs:FriendshipService) {
 
   }
 
@@ -53,6 +56,13 @@ export class FriendPage implements OnInit {
       this.photoService.loadFriendGalleryImages(data.id);
       this.profilePictureReady = "data:image/png;base64," + atob(data.profilePicture);
       this.user.custom = data;
+
+      this.ps.getUser().add(() => {
+        this.fs.getFriendshipsWithUsers(this.ps.user.id, this.user.id).subscribe((data: Friendship) => {
+          console.log(data)
+          this.friendship = data
+        })
+      })
     })
 
   }

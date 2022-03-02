@@ -103,12 +103,6 @@ export class DetailContactlistComponent implements OnInit {
           this.user.email = data["email"];
         })
 
-        this.profileService.getUser().add(() => {
-          this.friendService.getFriendshipsWithUsers(this.profileService.user.id, this.user.id).subscribe((data: Friendship) => {
-            console.log(data)
-          })
-        })
-
 
         /*
         //DEBUGconsole.log(atob(this.user.custom.profilePicture));

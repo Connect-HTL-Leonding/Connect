@@ -51,8 +51,26 @@ body {
     text-align: center;
     position: relative;
     font-weight: bold;
-    padding: 6px 0 36px;
+    padding: 6px 0 5px;
     font-size: 1.7em;
+}
+
+#connect_skin_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 31px;
+
+    #connect_skin_text {
+        font-weight: normal;
+        font-size: 16px;
+        margin: 0 5px 0 0;
+    }
+    #connect_skin_image {
+        width: 25px;
+        height: 25px;
+    }
+
 }
 
 .desc-label {

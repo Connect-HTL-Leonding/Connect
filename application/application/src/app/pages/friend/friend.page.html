@@ -13,14 +13,23 @@
     <div class="container">
       <div class="mid" id="profile_pic" #profile_pic>
         <div class="pfpBox">
-          <img *ngIf="this.user.custom && this.user.custom.profilePicture" class="pfp" src="{{this.profilePictureReady}}">
+          <img *ngIf="this.user.custom && this.user.custom.profilePicture" class="pfp"
+            src="{{this.profilePictureReady}}">
         </div>
       </div>
       <ion-label *ngIf="this.user" class="name">{{this.user.username}}</ion-label>
+      <div id="connect_skin_container">
+        <p id="connect_skin_text" *ngIf="this.friendship && this.friendship.skin && this.friendship.skin[0]">Connected
+          through <i>{{this.friendship.skin[0].title}}</i></p>
+        <ion-avatar id="connect_skin_image" *ngIf="this.friendship && this.friendship.skin && this.friendship.skin[0]">
+          <img [src]="this.friendship.skin.image">
+        </ion-avatar>
+      </div>
       <div class="wrap">
         <ion-label color="primary" class="desc-label">Bio</ion-label>
         <div *ngIf="this.ps.user.custom">
-          <ion-input readonly *ngIf="this.user.custom && this.user.custom.description; else noDesc">{{this.user.custom.description}}
+          <ion-input readonly *ngIf="this.user.custom && this.user.custom.description; else noDesc">
+            {{this.user.custom.description}}
           </ion-input>
         </div>
 
