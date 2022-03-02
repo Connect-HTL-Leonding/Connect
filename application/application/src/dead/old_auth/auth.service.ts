@@ -79,8 +79,8 @@ export class AuthService {
     this.oauthService.events
       .pipe(filter(e => ['token_received'].includes(e.type)))
       .subscribe(e => {
-        console.log(this.oauthService.getRefreshToken());
-        console.log(this.getUserInfo());
+        //DEBUGconsole.log(this.oauthService.getRefreshToken());
+        //DEBUGconsole.log(this.getUserInfo());
       });
 
     this.oauthService.events
@@ -95,7 +95,7 @@ export class AuthService {
 
   public runInitialLoginSequence(): Promise<void> {
     if (location.hash) {
-      console.log('Encountered hash fragment, plotting as table...');
+      //DEBUGconsole.log('Encountered hash fragment, plotting as table...');
       console.table(location.hash.substr(1).split('&').map(kvp => kvp.split('=')));
     }
 
@@ -164,20 +164,20 @@ export class AuthService {
         // initImplicitFlow(undefined | null) this could happen.
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
           let stateUrl = this.oauthService.state;
-          console.log(stateUrl)
+          //DEBUGconsole.log(stateUrl)
           if (stateUrl.startsWith('/') === false) {
             stateUrl = decodeURIComponent(stateUrl);
           }
-          console.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
+          //DEBUGconsole.log(`There was state of ${this.oauthService.state}, so we are sending you to: ${stateUrl}`);
           this.router.navigateByUrl(stateUrl);
-          console.log("jsjlslfdfd")
+          //DEBUGconsole.log("jsjlslfdfd")
 
           const reqHeader = new HttpHeaders({
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + this.oauthService.getAccessToken()
           });
           this.http.get<any>(api.url + 'user/login', { headers: reqHeader }).subscribe(data => {
-            console.log(data);
+            //DEBUGconsole.log(data);
           })
         }
       })
@@ -188,15 +188,15 @@ export class AuthService {
     // Note: before version 9.1.0 of the library you needed to
     // call encodeURIComponent on the argument to the method.
     /*
-    console.log("sdkljfdafsdjlkfdsljk")
+    //DEBUGconsole.log("sdkljfdafsdjlkfdsljk")
     this.oauthService.tryLoginImplicitFlow().then(()=> {
-      console.log("sfkljdfjdlkj")
+      //DEBUGconsole.log("sfkljdfjdlkj")
     })
 
     this.oauthService.tryLoginCodeFlow().then()
     */
-    console.log(targetUrl)
-    console.log(this.router.url)
+    //DEBUGconsole.log(targetUrl)
+    //DEBUGconsole.log(this.router.url)
     this.oauthService.initLoginFlow(targetUrl || this.router.url);
   }
 

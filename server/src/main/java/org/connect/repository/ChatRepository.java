@@ -41,8 +41,8 @@ public class ChatRepository {
                 for (Room r : roomList) {
                     for (User u : r.getUsers()) {
                         try {
-                            System.out.println(em.find(User.class, user_id.get().toString()));
-                            System.out.println(u);
+                            //DEBUGSystem.out.println(em.find(User.class, user_id.get().toString()));
+                            //DEBUGSystem.out.println(u);
                             if (!Objects.equals(u.getId(), user_id.get().toString())) {
                                 tq2.setParameter("user_1", em.find(User.class, user_id.get().toString()));
                                 tq2.setParameter("user_2", u);
@@ -51,21 +51,21 @@ public class ChatRepository {
 
                         } catch (Exception e) {
                             roomList.remove(r);
-                            System.out.println(e.getMessage() + "ahhhhhhh h eeeeellp");
+                            //DEBUGSystem.out.println(e.getMessage() + "ahhhhhhh h eeeeellp");
                         }
                     }
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                //DEBUGSystem.out.println(e.getMessage());
             }
         } else {
             try {
                 roomList = tq.getResultList();
             }catch (Exception ex) {
-                System.out.println(ex.getMessage());
+                //DEBUGSystem.out.println(ex.getMessage());
             }
         }
-        System.out.println(roomList);
+        //DEBUGSystem.out.println(roomList);
         return roomList;
     }
 }

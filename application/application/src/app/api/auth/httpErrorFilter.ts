@@ -49,7 +49,7 @@ export class HttpErrorFilter implements HttpInterceptor {
 
             //pipe und switchmap, damit original subscribe nochmals aufgerufen wird
             return this.keycloak.refresh().pipe(switchMap(token => {
-                console.log("TOKEN REFRESH")
+                //DEBUGconsole.log("TOKEN REFRESH")
 
                 //einloggen
                 this.keycloak.authenticated = true;

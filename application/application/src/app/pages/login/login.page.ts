@@ -35,19 +35,19 @@ export class LoginPage {
 
   login() {
     if (this.username && this.password) {
-      console.log("LOGIN VERSUCH")
+      //DEBUGconsole.log("LOGIN VERSUCH")
       this.keycloak.login(this.username, this.password).subscribe((data) => {
         try {
           let tokenInfo = jwt_decode(data["access_token"])
         }
         catch (error) {
-          console.log(error);
+          //DEBUGconsole.log(error);
         }
         this.keycloak.uma(data["access_token"]).add(() => {
           this.username = "";
           this.password = "";
           this.http.get<any>(api.url + 'user/login').subscribe(data => {
-            console.log("LOGIN: " + data);
+            //DEBUGconsole.log("LOGIN: " + data);
             this.router.navigate(["home"]).then(() => {
               //window.location.reload();
               this.app.ngOnInit();
@@ -61,7 +61,7 @@ export class LoginPage {
   }
 
   regis(ngForm: NgForm) {
-    console.log(ngForm.value)
+    //DEBUGconsole.log(ngForm.value)
     //http://localhost:8010/auth/admin/realms/connect/users
     this.keycloak.getAdminToken().subscribe(data => {
       var body = {
@@ -77,19 +77,19 @@ export class LoginPage {
         }]
       }
 
-      console.log(body)
+      //DEBUGconsole.log(body)
 
       this.keycloak.createUser(body, data["access_token"]).subscribe(data => {
-        console.log(data)
-        console.log(body.username)
+        //DEBUGconsole.log(data)
+        //DEBUGconsole.log(body.username)
         this.username = ngForm.value["reg_username"]
         this.password = ngForm.value["reg_password"]
         ngForm.reset()
         this.login()
 
       }, error => {
-        console.log(error)
-        console.log(error.error.errorMessage)
+        //DEBUGconsole.log(error)
+        //DEBUGconsole.log(error.error.errorMessage)
         if (error.status == 409) {
           this.presentToast(error.error.errorMessage)
         }
@@ -114,7 +114,7 @@ export class LoginPage {
   //info modal
   //Modal öffnen
   async presentModal() {
-    console.log("Modal openeing")
+    //DEBUGconsole.log("Modal openeing")
     const modal = await this.modalController.create({
       component: DevinfosPage,
     });

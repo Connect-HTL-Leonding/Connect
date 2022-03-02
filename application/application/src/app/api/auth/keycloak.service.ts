@@ -80,7 +80,7 @@ export class KeycloakService {
         this.authenticated = true;
 
         try {
-          console.log("LOGGED IN" + this.authenticated)
+          //DEBUGconsole.log("LOGGED IN" + this.authenticated)
           let tokenInfo = jwt_decode(data["access_token"])
 
           this.userid = tokenInfo["sub"];
@@ -140,7 +140,7 @@ export class KeycloakService {
       "value": password
     }
 
-    //console.log(accessToken)
+    ////DEBUGconsole.log(accessToken)
 
     let optionss = {
       headers: new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', `Bearer ${accessToken}`)
@@ -163,7 +163,7 @@ export class KeycloakService {
   //Access + Refresh Token setzen
   //+ Exipre-Date
   setSession(authResult) {
-    console.log("TOKEN SET")
+    //DEBUGconsole.log("TOKEN SET")
     const expires_in = moment().add(authResult.expires_in, 'second');
 
     localStorage.setItem('access_token', authResult.access_token);

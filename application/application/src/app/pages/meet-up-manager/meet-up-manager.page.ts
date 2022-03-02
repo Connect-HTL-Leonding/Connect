@@ -52,13 +52,13 @@ export class MeetUpManagerPage implements OnInit {
 
   endMeetup(r: Room) {
     this.ms.endMeetup(r).subscribe(data=> {
-      console.log("meetup terminated");
+      //DEBUGconsole.log("meetup terminated");
     })
   }
 
    // for ending meetup
    async presentEndAlert(r) {
-     console.log(r);
+     //DEBUGconsole.log(r);
     const alert = await this.alertController.create({
       header: 'End this Meet-Up?',
       message: 'You are about to end this Meet-Up. Are you sure?',
@@ -74,7 +74,7 @@ export class MeetUpManagerPage implements OnInit {
           text: 'End Meet-Up',
           handler: () => {
             //this.endMeetup(r);
-            console.log(r);
+            //DEBUGconsole.log(r);
             this.dismissModal();
           }
         }

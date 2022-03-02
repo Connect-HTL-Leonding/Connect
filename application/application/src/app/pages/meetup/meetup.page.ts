@@ -49,12 +49,12 @@ export class MeetupPage implements OnInit {
 
     new ClickEventHandler(this.map, location, this.ps, this);
 
-    console.log(this.map);
+    //DEBUGconsole.log(this.map);
   }
 
   centerMap() {
-    console.log("centermap");
-    console.log(this.ps.user.custom.position);
+    //DEBUGconsole.log("centermap");
+    //DEBUGconsole.log(this.ps.user.custom.position);
     this.map.panTo(this.ps.user.custom.position);
     this.map.setZoom(18);
 
@@ -107,7 +107,7 @@ export class MeetupPage implements OnInit {
     compositeImage = canvas.toDataURL("image/png");
 
     canvas.remove();
-    console.log(compositeImage)
+    //DEBUGconsole.log(compositeImage)
 
     this.meetupMarker = new google.maps.Marker({
       position: origin,
@@ -181,7 +181,7 @@ class ClickEventHandler {
     this.infowindowContent.append(this.eb);
     this.infowindowContent.append(this.e3);
     */
-    console.log(this.infowindowContent);
+    //DEBUGconsole.log(this.infowindowContent);
     this.infowindow.setContent(this.infowindowContent);
 
     // Listen for clicks on the map.
@@ -189,7 +189,7 @@ class ClickEventHandler {
   }
 
   handleClick(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
-    console.log('you clicked on: ' + event.latLng.toString());
+    //DEBUGconsole.log('you clicked on: ' + event.latLng.toString());
     this.mp.updateMarker(event.latLng);
 
     
@@ -197,7 +197,7 @@ class ClickEventHandler {
 
     // If the event has a placeId, use it.
     if (this.isIconMouseEvent(event)) {
-      console.log("You clicked on place:" + event.placeId);
+      //DEBUGconsole.log("You clicked on place:" + event.placeId);
 
       // Calling e.stop() on the event prevents the default info window from
       // showing.

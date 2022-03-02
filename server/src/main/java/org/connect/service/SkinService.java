@@ -83,8 +83,8 @@ public class SkinService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Skin createPerson(Skin skin) {
        // skin.setImage(skin.getImage().toString().getBytes());
-        System.out.println("hi");
-        System.out.println(skin);
+        //DEBUGSystem.out.println("hi");
+        //DEBUGSystem.out.println(skin);
         return dbRepo.create(skin);
     }
 

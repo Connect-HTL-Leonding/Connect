@@ -66,7 +66,7 @@ public class MessageService {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Message createMessage(Message message, @PathParam("id") long id) {
-        System.out.println(java.time.LocalDateTime.now());
+        //DEBUGSystem.out.println(java.time.LocalDateTime.now());
         message.setCreated(java.time.LocalDateTime.now());
         message.setUpdated(java.time.LocalDateTime.now());
         Room room = dbRepo.findRoom(id);

@@ -24,7 +24,7 @@ imageReady = "";
  this.imageReady='data:image/png;base64,'+this.myskin.skin.image;
     }
     
-    console.log(this.current)
+    //DEBUGconsole.log(this.current)
   }
 
 }

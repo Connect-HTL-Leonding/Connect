@@ -28,7 +28,7 @@ export class SelectedSkinsPage implements OnInit {
 
   //User will, dass Skin auf der Map angezeigt wird, oder eben nicht mehr
   toggle(mySkin) {
-    console.log(mySkin.showInMap)
+    //DEBUGconsole.log(mySkin.showInMap)
     this.mySkinsService.updateSkin(mySkin).subscribe(data => {
       //nach unpdate erneutes getAll
       this.mySkinsService.getMySkins().subscribe(
@@ -44,7 +44,7 @@ export class SelectedSkinsPage implements OnInit {
             });
         },
         error1 => {
-          console.log('Error');
+          //DEBUGconsole.log('Error');
         }
       )
     });
