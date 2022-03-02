@@ -51,9 +51,9 @@ public class ImageService {
     @PUT
     @Path("setPfp")
     //@Consumes(MediaType.APPLICATION_JSON)
-    public void saveImageToDatabase(String base64string) throws Exception {
+    public void saveImageToDatabase(byte[] blob) throws Exception {
         try {
-            profilePicture = base64string.getBytes();
+            profilePicture = blob;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,11 +66,11 @@ public class ImageService {
 
     @GET
     @Path("getPfp")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getPfp() throws UnsupportedEncodingException {
+    /*@Produces(MediaType.TEXT_PLAIN)*/
+    public byte[] getPfp() throws UnsupportedEncodingException {
         User u = getUser();
 
-            return new String(u.getProfilePicture());
+            return u.getProfilePicture();
 
 
     }
