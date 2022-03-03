@@ -136,7 +136,6 @@ INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('07
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7fb41cd2-5f47-4478-8f8d-b265e4481f3b', 48.204866, 'lat');
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7fb41cd2-5f47-4478-8f8d-b265e4481f3b', 14.056990, 'lng');
 
-INSERT INTO connect.Room (id, created, type, updated) VALUES (1004, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (1005, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (1006, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (1007, null, 'DM', null);
@@ -157,7 +156,6 @@ INSERT INTO connect.Room (id, created, type, updated) VALUES (10020, null, 'DM',
 INSERT INTO connect.Room (id, created, type, updated) VALUES (10021, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (10022, null, 'DM', null);
 
-INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1004, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1005, '88db121c-4f49-42c2-8f96-5db7d3cbe75a');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1005, '8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1006, 'ec4b5ad7-d282-4970-b3e4-3342e16a82f5');
