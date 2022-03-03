@@ -21,7 +21,7 @@
 
         <div class="pfpBox">
           <div class="rounded">
-            <img *ngIf="ps.user" class="pfp" [src]="this.imgURL" >
+            <img *ngIf="ps.user" class="pfp" [src]="this.photoService.PFP" >
           </div>
           <ion-badge class="new-photo" color="primary">
             <ion-icon name="camera"></ion-icon>
