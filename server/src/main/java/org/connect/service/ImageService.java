@@ -1,34 +1,19 @@
 package org.connect.service;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.image.Image;
-import org.connect.model.skin.MySkin;
 import org.connect.model.user.User;
-import org.connect.repository.CategoryRepository;
 import org.connect.repository.ImageRepository;
 import org.connect.repository.UserRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.jboss.resteasy.annotations.cache.NoCache;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.representations.IDToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.TypedQuery;
-import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @ApplicationScoped
 @Path("/api/image")
@@ -47,6 +32,7 @@ public class ImageService {
 
     @Inject
     ImageRepository iRepo;
+
 
     @PUT
     @Path("setPfp")
