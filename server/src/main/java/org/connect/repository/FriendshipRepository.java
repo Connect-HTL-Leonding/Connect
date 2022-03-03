@@ -237,6 +237,7 @@ public class FriendshipRepository {
             //DEBUGSystem.out.println(sameSkin);
             create(curUser, newFriend, sameSkin);
 
+            System.out.println("SUS");
             Room room = new Room();
             room.getUsers().add(curUser);
             room.getUsers().add(newFriend);

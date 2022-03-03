@@ -42,7 +42,6 @@ INSERT INTO connect.User (id, birthday, description, gender, hideLocation, block
 INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('d7be2af6-5fe9-4f53-a788-6a25a1580258', null, null, 'm',false, false, null, 0);
 INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('06f1a6d6-a5dc-4a2e-bd46-0f0734bf61e3', null, null, 'm',false, false, null, 0);
 INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('6096ea87-37fc-4bfb-8bf3-8b16816d6349', null, null, 'm',false, false, null, 0);
-INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('7dfd00ec-436f-4d97-a72b-e9e82a7af50a', null, null, 'm',false, false, null, 0);
 INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('7e375e76-dc48-4c84-94ad-ce512effc6d9', null, null, 'm',false, false, null, 0);
 INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('85d71aa5-aae8-48c1-8145-9cb3163d41bd', null, null, 'm',false, false, null, 0);
 INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('88db121c-4f49-42c2-8f96-5db7d3cbe75a', null, null, 'm',false, false, null, 0);
@@ -66,18 +65,13 @@ INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockC
 INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('7fb41cd2-5f47-4478-8f8d-b265e4481f3b', null, null, 'm',false, false, null, 0);
 
 
-INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10018, 30, 1, 5, true, false, 10011, '7dfd00ec-436f-4d97-a72b-e9e82a7af50a');
 INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10019, 30, 1, 5, false, false, 10011, 'cf0f860a-8a18-4967-b010-233a7cef9bc3');
 INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10020, 30, 1, 5, false, false, 10011, '6096ea87-37fc-4bfb-8bf3-8b16816d6349');
 INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10021, 30, 1, 5, false, false, 10011, '3481f55b-5440-4984-b888-b983a8879f07');
-INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10031, 20, 1, 1, false, false, 10012, '7dfd00ec-436f-4d97-a72b-e9e82a7af50a');
-INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10032, 20, 1, 1, false, false, 10013, '7dfd00ec-436f-4d97-a72b-e9e82a7af50a');
-INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10033, 20, 1, 1, false, false, 10014, '7dfd00ec-436f-4d97-a72b-e9e82a7af50a');
 INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10035, 20, 1, 1, true, false, 10011, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
 INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10036, 20, 1, 1, false, false, 10012, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
 
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10022, '2021-10-16 11:07:51.962261', 'cool', '06f1a6d6-a5dc-4a2e-bd46-0f0734bf61e3', '306b6e8e-b11a-4059-b91b-689c59026702');
-INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10069, '2021-10-16 11:07:51.962261', 'cool', '7dfd00ec-436f-4d97-a72b-e9e82a7af50a', '306b6e8e-b11a-4059-b91b-689c59026702');
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10023, '2021-10-16 11:07:51.962380', 'cool', 'e8da2bad-ec77-4814-ac53-a57bd4571d7c', 'd7be2af6-5fe9-4f53-a788-6a25a1580258');
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10024, '2021-10-16 11:07:51.962392', 'cool', 'ec4b5ad7-d282-4970-b3e4-3342e16a82f5', '0f95e11b-5ac0-4f59-883a-4e6aadd6fc65');
 INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10025, '2021-10-16 11:07:51.962408', 'cool', '6096ea87-37fc-4bfb-8bf3-8b16816d6349', 'ec4b5ad7-d282-4970-b3e4-3342e16a82f5');
@@ -113,8 +107,6 @@ INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('d7
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('d7be2af6-5fe9-4f53-a788-6a25a1580258', 0.3, 'lng');
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('6096ea87-37fc-4bfb-8bf3-8b16816d6349', 48.307293, 'lat');
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('6096ea87-37fc-4bfb-8bf3-8b16816d6349', 14.286994, 'lng');
-INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7dfd00ec-436f-4d97-a72b-e9e82a7af50a', 48.2054022, 'lat');
-INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7dfd00ec-436f-4d97-a72b-e9e82a7af50a', 14.0580657, 'lng');
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7e375e76-dc48-4c84-94ad-ce512effc6d9', -156.34, 'lat');
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7e375e76-dc48-4c84-94ad-ce512effc6d9', -103.39, 'lng');
 INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('85d71aa5-aae8-48c1-8145-9cb3163d41bd', 48.2054013, 'lat');
@@ -165,7 +157,6 @@ INSERT INTO connect.Room (id, created, type, updated) VALUES (10020, null, 'DM',
 INSERT INTO connect.Room (id, created, type, updated) VALUES (10021, null, 'DM', null);
 INSERT INTO connect.Room (id, created, type, updated) VALUES (10022, null, 'DM', null);
 
-INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1004, '7dfd00ec-436f-4d97-a72b-e9e82a7af50a');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1004, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1005, '88db121c-4f49-42c2-8f96-5db7d3cbe75a');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1005, '8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3');
