@@ -53,11 +53,21 @@ export class FriendPage implements OnInit {
   ngOnInit() {
     //DEBUGconsole.log(this.user)
     this.ps.friendCustomData(this.user.id).subscribe(data => {
-      this.photoService.loadFriendGalleryImages(data.id);
-      this.profilePictureReady = "data:image/png;base64," + atob(data.profilePicture);
+      //this.photoService.loadFriendGalleryImages(data.id);
+      console.log(data);
+      
+    
+
       this.user.custom = data;
 
       this.ps.getUser().add(() => {
+        if(data.profilePicture!=undefined) {
+          this.profilePictureReady = this.photoService.DOMSanitizer(this.user.custom.profilePicture);;
+        } else {
+          this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+            this.profilePictureReady = this.photoService.DOMSanitizer(defaultPfp);
+          })
+        }
         this.fs.getFriendshipsWithUsers(this.ps.user.id, this.user.id).subscribe((data: Friendship) => {
           console.log(data)
           this.friendship = data

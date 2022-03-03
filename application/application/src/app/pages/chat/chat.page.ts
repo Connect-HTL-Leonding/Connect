@@ -24,6 +24,7 @@ import { concatAll, finalize, mergeAll, publish } from 'rxjs/operators';
 import { DateService } from 'src/app/api/date.service';
 import { AlertController } from '@ionic/angular';
 import { MeetupOverviewPage } from '../meetup-overview/meetup-overview.page';
+import { PhotoService } from 'src/app/api/photo.service';
 
 
 declare var google: any;
@@ -85,7 +86,7 @@ export class ChatPage implements OnInit {
     public popoverController: PopoverController, public toastController: ToastController,
     public router: Router, public dateService: DateService, public meetupService: MeetupService,
     public alertController: AlertController, public contactService: ContactlistService,
-    public _zone: NgZone) {
+    public _zone: NgZone, public photoService : PhotoService) {
 
     this.contactlist = cl;
     this.chatservice = cs;
@@ -245,7 +246,13 @@ export class ChatPage implements OnInit {
           })
         })
 
-        this.pfp = "data:image/png;base64," + atob(this.otherUser.custom.profilePicture);
+        if(this.otherUser.custom.profilePicture!=undefined) {
+          this.pfp = this.photoService.DOMSanitizer(this.otherUser.custom.profilePicture);
+        } else {
+          this.photoService.getDefaultPfp().subscribe(data=> {
+            this.pfp = this.photoService.DOMSanitizer(data);
+          })
+        }
         this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
           this.otherUser.id = data["id"];
           this.otherUser.userName = data["username"];

@@ -10,6 +10,7 @@ import { FriendshipService } from 'src/app/api/friendship.service';
 import { ProfileService } from 'src/app/api/profile.service';
 import { Friendship } from 'src/app/model/friendship';
 import { Skin } from 'src/app/model/skin';
+import { PhotoService } from 'src/app/api/photo.service';
 
 @Component({
   selector: 'app-detail-contactlist',
@@ -40,7 +41,7 @@ export class DetailContactlistComponent implements OnInit {
 
 
   constructor(public cs: ContactlistService, datePipe: DatePipe, ms: MeetupService, private friendService: FriendshipService,
-    private profileService: ProfileService) {
+    private profileService: ProfileService, public photoService: PhotoService) {
     this.contactlist = cs;
     this.datePipe = datePipe;
     this.ms = ms;
@@ -49,19 +50,22 @@ export class DetailContactlistComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.getLatestMessage(this.room);
-      this.calcUnseenMessages(this.room);
-    }, 10);
 
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
 
       this.user.custom = data;
       if (this.user.custom) {
+        this.getLatestMessage(this.room);
+        this.calcUnseenMessages(this.room);
 
 
-      console.log(this.user.custom.profilePicture);
-        this.pfp = "data:image/png;base64," + atob(this.user.custom.profilePicture);
+        if(this.user.custom.profilePicture!=undefined) {
+          this.pfp = this.photoService.DOMSanitizer(this.user.custom.profilePicture);
+        } else {
+          this.photoService.getDefaultPfp().subscribe(data=> {
+            this.pfp = this.photoService.DOMSanitizer(data);
+          })
+        }
 
         this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
           if (data.length != 0) {

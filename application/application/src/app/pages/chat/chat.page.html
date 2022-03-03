@@ -4,7 +4,7 @@
       <ion-back-button defaultHref="contactlist" (click)="dismissModal()"></ion-back-button>
       <div *ngIf="otherUser.custom" id="profile" (click)="profileFriend(otherUser)">
         <ion-avatar>
-          <img  id="profilepicture" src="{{pfp}}">
+          <img  id="profilepicture" [src]="pfp">
         </ion-avatar>
         <ion-label>
           {{otherUser.userName}}
