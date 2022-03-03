@@ -22,7 +22,7 @@ export class PhotoService {
   public photos: Photo[] = [];
   public galleryPhotos: Photo[] = [];
   public profilePicture: Photo;
-  public imgURL;
+  public PFP;
   http : HttpClient;
 
   constructor(private ps: ProfileService, http: HttpClient, private sanitizer: DomSanitizer) {
@@ -57,6 +57,7 @@ export class PhotoService {
 
  
   public loadPfp() {
+    let imgURL;
   /*  const httpOptions = {
       responseType: 'text' as const
     }; */
@@ -65,7 +66,17 @@ export class PhotoService {
      // this.blobToBase64String(data);
     }) */
 
-    return this.http.get(api.url + 'image/getPfp', {responseType: 'blob'})
+    this.http.get(api.url + 'image/getPfp', {responseType: 'blob'}).subscribe(data=> {
+        if(data!=undefined) {
+          console.log(this.DOMSanitizer(data));
+          this.PFP = this.DOMSanitizer(data);
+        } else {
+          this.getDefaultPfp().subscribe(data=> {
+            console.log(this.DOMSanitizer(data));
+            this.PFP =  this.DOMSanitizer(data);
+          })
+        }
+    })
   };
 
   DOMSanitizer(blob) {
@@ -191,7 +202,7 @@ export class PhotoService {
   reader.onloadend = (e:any) => {
     // result includes identifier 'data:image/png;base64,' plus the base64 data
     mySrc = reader.result;
-    this.imgURL = mySrc
+   // this.imgURL = mySrc
   } 
   }
 

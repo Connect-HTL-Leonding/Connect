@@ -34,16 +34,7 @@ export class ProfilePage implements OnInit {
   }
 
   loadPfp() {
-    this.photoService.loadPfp().subscribe(blob=> {
-      if(blob!=undefined) {
-        this.imgURL = this.photoService.DOMSanitizer(blob);
-      } else {
-        this.imgURL = this.photoService.getDefaultPfp().subscribe(data=> {
-          this.imgURL = this.photoService.DOMSanitizer(data);
-        })
-      }
-      
-    })
+    this.photoService.loadPfp();
   }
 
   slideOpts = {
