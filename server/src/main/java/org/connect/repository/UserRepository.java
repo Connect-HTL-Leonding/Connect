@@ -7,7 +7,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.transaction.SystemException;
 import javax.transaction.Transactional;
+import javax.transaction.UserTransaction;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -17,6 +19,9 @@ UserRepository {
     // Entitymanager erzeugen
     @Inject
     protected EntityManager em;
+
+    @Inject
+    protected UserTransaction ut;
 
     @Transactional
     public User create(JsonWebToken jwt) {
@@ -77,8 +82,24 @@ UserRepository {
     }
 
     // Ändern oder Einfügen einer Person mit id
-    @Transactional
-    public User update(User user) {
-        return em.merge(user);
+    //@Transactional
+    public User update(User user)  {
+
+        User updated_user = null;
+
+        try {
+            ut.begin();
+            updated_user= em.merge(user);
+            ut.commit();
+        }
+        catch(Exception e) {
+            try {
+                ut.rollback();
+            } catch (SystemException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        return updated_user;
     }
 }
