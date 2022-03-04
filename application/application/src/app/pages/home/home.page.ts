@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { ActionSheetController, AlertController, LoadingController, MenuController, ModalController, PopoverController, ToastController } from '@ionic/angular';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
@@ -26,6 +26,8 @@ import Showcaser from 'showcaser'
 import { DateService } from 'src/app/api/date.service';
 import { FriendPageRoutingModule } from '../friend/friend-routing.module';
 import { GhostmodePage } from './ghostmode/ghostmode.page';
+import { PhotoService } from 'src/app/api/photo.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 /*
 import {
@@ -95,7 +97,9 @@ export class HomePage implements OnInit {
     public alertController: AlertController,
     public actionSheetController: ActionSheetController,
     public profileService : ProfileService,
-    public ds: DateService) {
+    public ds: DateService,
+    public photoService: PhotoService,
+    public sanitizer: DomSanitizer) {
     this.dateService = ds;
   }
 
@@ -244,11 +248,19 @@ export class HomePage implements OnInit {
       canvas.width = 35;
       canvas.height = 62;
       var ctx = canvas.getContext('2d');
-      var image1 = "data:image/png;base64," + atob(user.custom.profilePicture);
       var image = new Image();
       var compositeImage;
+      var url;
 
-      image.src = image1;
+      if(user.custom.profilePicture!=undefined) {
+        url = this.photoService.DOMSanitizer(user.custom.profilePicture);;
+      } else {
+        this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+          url = this.photoService.DOMSanitizer(defaultPfp);
+        })
+      }
+
+      image.src = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.sanitizer.bypassSecurityTrustResourceUrl(url));
 
       ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
 

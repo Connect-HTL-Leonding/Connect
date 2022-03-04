@@ -54,10 +54,6 @@ export class FriendPage implements OnInit {
     //DEBUGconsole.log(this.user)
     this.ps.friendCustomData(this.user.id).subscribe(data => {
       //this.photoService.loadFriendGalleryImages(data.id);
-      console.log(data);
-      
-    
-
       this.user.custom = data;
 
       this.ps.getUser().add(() => {

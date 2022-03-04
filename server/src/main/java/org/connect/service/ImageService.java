@@ -45,8 +45,11 @@ public class ImageService {
         }
 
       User u = getUser();
-       u.setProfilePicture(profilePicture);
-       uRepo.update(u);
+        if(profilePicture!=null && profilePicture.length>0) {
+            u.setProfilePicture(profilePicture);
+            uRepo.update(u);
+        }
+
 
     }
 
