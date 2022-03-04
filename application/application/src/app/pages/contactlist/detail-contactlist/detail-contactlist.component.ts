@@ -59,13 +59,15 @@ export class DetailContactlistComponent implements OnInit {
         this.calcUnseenMessages(this.room);
 
 
-        if(this.user.custom.profilePicture!=undefined) {
-          this.pfp = this.photoService.DOMSanitizer(this.user.custom.profilePicture);
-        } else {
-          this.photoService.getDefaultPfp().subscribe(data=> {
+        this.photoService.getFriendPfp(this.user.custom.id).subscribe(data=> {
+          if(data!=undefined) {
             this.pfp = this.photoService.DOMSanitizer(data);
-          })
-        }
+          } else {
+            this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+              this.pfp = this.photoService.DOMSanitizer(defaultPfp);
+            })
+          }
+        })
 
         this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
           if (data.length != 0) {

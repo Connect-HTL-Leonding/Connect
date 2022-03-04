@@ -232,6 +232,10 @@ export class HomePage implements OnInit {
     //DEBUGconsole.log("LOADDDD")
   }
 
+  createMarkerWithImage(image) {
+        
+  }
+
   //Funktion zum User Marker erstellen
   createUserMarker(user: User) {
 
@@ -256,11 +260,14 @@ export class HomePage implements OnInit {
         url = this.photoService.DOMSanitizer(user.custom.profilePicture);;
       } else {
         this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+          console.log(defaultPfp);
           url = this.photoService.DOMSanitizer(defaultPfp);
         })
       }
 
-      image.src = this.sanitizer.sanitize(SecurityContext.RESOURCE_URL, this.sanitizer.bypassSecurityTrustResourceUrl(url));
+     
+
+      image.src = url;
 
       ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
 

@@ -68,16 +68,18 @@ export class PhotoService {
 
     this.http.get(api.url + 'image/getPfp', {responseType: 'blob'}).subscribe(data=> {
         if(data!=undefined) {
-          console.log(this.DOMSanitizer(data));
           this.PFP = this.DOMSanitizer(data);
         } else {
           this.getDefaultPfp().subscribe(data=> {
-            console.log(this.DOMSanitizer(data));
             this.PFP =  this.DOMSanitizer(data);
           })
         }
     })
   };
+
+  getFriendPfp(userId) {
+    return this.http.post(api.url + 'image/getFriendPfp',userId, {responseType: 'blob'});
+  }
 
   DOMSanitizer(blob) {
     var urlCreator = window.URL;

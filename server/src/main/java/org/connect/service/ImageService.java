@@ -53,6 +53,15 @@ public class ImageService {
 
     }
 
+    @POST
+    @Path("getFriendPfp")
+    /*@Produces(MediaType.TEXT_PLAIN)*/
+    public byte[] getFriendPfp(String id){
+       return iRepo.getFriendPfp(id);
+    }
+
+
+
     @GET
     @Path("getPfp")
     /*@Produces(MediaType.TEXT_PLAIN)*/
@@ -60,7 +69,6 @@ public class ImageService {
         User u = getUser();
 
             return u.getProfilePicture();
-
 
     }
 

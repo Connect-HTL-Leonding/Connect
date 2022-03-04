@@ -71,6 +71,11 @@ public class ImageRepository {
     return i.getImg();
     }
 
+    public byte[] getFriendPfp(String id) {
+         User u = em.find(User.class,id);
+         return u.getProfilePicture();
+    }
+
     public List<Image> getFriendImgURLs(String id) {
          TypedQuery<Image> tq = this.em.createNamedQuery(Image.FINDWITHID, Image.class);
          tq.setParameter("user_id", id);

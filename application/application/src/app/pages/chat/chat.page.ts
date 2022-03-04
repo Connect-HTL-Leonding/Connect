@@ -246,13 +246,15 @@ export class ChatPage implements OnInit {
           })
         })
 
-        if(this.otherUser.custom.profilePicture!=undefined) {
-          this.pfp = this.photoService.DOMSanitizer(this.otherUser.custom.profilePicture);
-        } else {
-          this.photoService.getDefaultPfp().subscribe(data=> {
+        this.photoService.getFriendPfp(this.otherUser.custom.id).subscribe(data=> {
+          if(data!=undefined) {
             this.pfp = this.photoService.DOMSanitizer(data);
-          })
-        }
+          } else {
+            this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+              this.pfp = this.photoService.DOMSanitizer(defaultPfp);
+            })
+          }
+        })
         this.contactlist.getKeyUser(this.otherUser.custom).subscribe(data => {
           this.otherUser.id = data["id"];
           this.otherUser.userName = data["username"];

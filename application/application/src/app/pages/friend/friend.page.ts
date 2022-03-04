@@ -57,15 +57,18 @@ export class FriendPage implements OnInit {
       this.user.custom = data;
 
       this.ps.getUser().add(() => {
-        if(data.profilePicture!=undefined) {
-          this.profilePictureReady = this.photoService.DOMSanitizer(this.user.custom.profilePicture);;
-        } else {
-          this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
-            this.profilePictureReady = this.photoService.DOMSanitizer(defaultPfp);
-          })
-        }
+        this.photoService.getFriendPfp(this.user.custom.id).subscribe(data=> {
+          if(data!=undefined) {
+            this.profilePictureReady = this.photoService.DOMSanitizer(data);
+          } else {
+            this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+              this.profilePictureReady = this.photoService.DOMSanitizer(defaultPfp);
+  
+            })
+          }
+        })
+        
         this.fs.getFriendshipsWithUsers(this.ps.user.id, this.user.id).subscribe((data: Friendship) => {
-          console.log(data)
           this.friendship = data
         })
       })
