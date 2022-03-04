@@ -22,7 +22,10 @@ public class ImageRepository {
 
     @Transactional
     public Image create(Image i) {
-        em.persist(i);
+        if(i.getImg()!= null && i.getImg().length>0) {
+            em.persist(i);
+        }
+
         return i;
     }
 
