@@ -20,6 +20,7 @@ import { Friendship } from 'src/app/model/friendship';
 export class FriendPage implements OnInit {
 
   user;
+  blocked = false;
   friendship:Friendship = null;
   profilePictureReady;
 
@@ -77,7 +78,12 @@ export class FriendPage implements OnInit {
   }
 
   dismissModal() {
-    this.modalController.dismiss();
+    this.modalController.dismiss().then(() => {
+      if(this.blocked){
+        this.blocked = false;
+        this.dismissModal()
+      }
+    });
   }
 
   async presentAlertConfirm() {
@@ -102,6 +108,7 @@ export class FriendPage implements OnInit {
             this.friendshipService.blockFriendship(this.user.custom).subscribe(data => {
               this.friendshipService.blockedObservable.next('blocked:' + this.ps.user.id + ':' + this.user.id)
               this.cs.contactlistObservable.next('contactListUpdate');
+              this.blocked = true;
               this.dismissModal();
             })
 

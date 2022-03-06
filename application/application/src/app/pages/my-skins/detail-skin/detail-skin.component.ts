@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import Showcaser from 'showcaser';
 import { ProfileService } from 'src/app/api/profile.service';
 import { SkinsService } from 'src/app/api/skins.service';
+import { tutorial } from 'src/app/app.component';
 import { MySkin } from 'src/app/model/myskin';
 import { Skin } from 'src/app/model/skin';
 
@@ -99,7 +100,7 @@ export class DetailSkinComponent implements OnInit {
   }
   showTutorial() {
     //DEBUGconsole.log(this.ps.user.custom.tutorialStage)
-    if (this.ps.user.custom.tutorialStage == 5) {
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 5) {
       //DEBUGconsole.log("Bruhhh")
       Showcaser.showcase("Klick auf einen Skin und mach ihn dann mit dem Herz zum Favoriten", this.selectedRef.nativeElement, {
         shape: "circle",

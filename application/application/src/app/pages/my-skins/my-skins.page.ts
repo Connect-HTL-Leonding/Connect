@@ -10,6 +10,7 @@ import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/api/profile.service';
 import { Observable } from 'rxjs';
+import { tutorial } from 'src/app/app.component';
 
 @Component({
   selector: 'app-my-skins',
@@ -65,7 +66,7 @@ export class MySkinsPage implements OnInit {
 
   showTutorial() {
     //DEBUGconsole.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
-    if (this.ps.user.custom.tutorialStage == 2) {
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 2) {
       Showcaser.showcase("Hier siehst du deine ausgewählten Skins. Skins sind wichtig, um andere Menschen zu finden.", null, {
         shape: "circle",
         buttonText: "Ok!",
@@ -81,7 +82,7 @@ export class MySkinsPage implements OnInit {
         }
       });
     }
-    if (this.ps.user.custom.tutorialStage == 3) {
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 3) {
       Showcaser.showcase("Füge gleich einen <br>neuen Skin zu <br>deiner Sammlung hinzu!", this.addSkinButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
@@ -176,7 +177,7 @@ export class MySkinsPage implements OnInit {
               this.mySkinService.mySkinObserveable.next(data);
               //DEBUGconsole.log(this.ps.user.custom.tutorialStage)
               this.ps.getUser().add(() => {
-                if(this.ps.user.custom.tutorialStage == 6){
+                if(tutorial.active && this.ps.user.custom.tutorialStage == 6){
                   this.router.navigate(["home"])
                 }
               })

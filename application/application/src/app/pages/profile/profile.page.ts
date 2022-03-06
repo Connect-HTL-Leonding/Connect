@@ -9,6 +9,7 @@ import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { tutorial } from 'src/app/app.component';
 
 
 @Component({
@@ -95,7 +96,7 @@ export class ProfilePage implements OnInit {
 
   showTutorial() {
     //DEBUGconsole.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
-    if (this.ps.user.custom.tutorialStage == 1) {
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 1) {
       //DEBUGconsole.log("Bruhhhhh" + this.profilePicRef.nativeElement);
       Showcaser.showcase("Das hier ist dein Profil. Zurzeit noch ein bisschen leer. Du kannst etwas über dich erzählen oder Bilder hochladen. Aber wirklich nur so viel wie du willst!", this.profilePicRef.nativeElement, {
         buttonText: "Ok!",

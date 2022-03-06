@@ -10,6 +10,7 @@ import { MySkin } from '../../model/myskin';
 import { Skin } from '../../model/skin';
 import { Router } from '@angular/router';
 import { SkinsettingsPage } from '../skin-creator/skinsettings/skinsettings.page';
+import { tutorial } from 'src/app/app.component';
 
 
 @Component({
@@ -104,7 +105,7 @@ export class SkinselectionPage implements OnInit {
 
   showTutorial() {
     //DEBUGconsole.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
-    if (this.ps.user.custom.tutorialStage == 4) {
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 4) {
       Showcaser.showcase("Hier findest du alle verfügbaren Skins. Wähl am besten gleich mal einen aus der zu dir passt!", null, {
         shape: "rectangle",
         buttonText: "Ok!",

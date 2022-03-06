@@ -279,7 +279,15 @@ public class FriendshipRepository {
         tq.setParameter("userid_1", userid1);
         tq.setParameter("userid_2", userid2);
 
-        return tq.getSingleResult();
+        Friendship friendship = null;
+
+        try {
+            friendship = tq.getSingleResult();
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+
+        return friendship;
     }
 
 }
