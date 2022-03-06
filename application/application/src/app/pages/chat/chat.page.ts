@@ -445,9 +445,10 @@ export class ChatPage implements OnInit {
     if (olderMessage == undefined) {
       return true;
     }
-    if (message.created[2] != olderMessage.created[2]) {
+    if (((new Date(message.created).getDate() > new Date(olderMessage.created).getDate()) &&  (new Date(message.created).getMonth() == new Date(olderMessage.created).getMonth()) && (new Date(message.created).getFullYear() == new Date(olderMessage.created).getFullYear())) || ( (new Date(message.created).getMonth() > new Date(olderMessage.created).getMonth()) && (new Date(message.created).getFullYear() == new Date(olderMessage.created).getFullYear()))|| ( (new Date(message.created).getFullYear() > new Date(olderMessage.created).getFullYear()))) {
       newDay = true;
     }
+   
     return newDay;
   }
 
