@@ -1,19 +1,19 @@
 package org.connect.repository;
 
 import org.connect.model.chat.Room;
-import org.connect.model.skin.MySkin;
 import org.connect.model.user.Friendship;
 import org.connect.model.user.User;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class ChatRepository {
@@ -34,6 +34,8 @@ public class ChatRepository {
 
 
         List<Room> roomList = null;
+        //Liste an Räumen, die gelöscht werden müssen
+        List<Room> roomListToBeRemoved = new LinkedList<>();
         // Blocked users wont be shown (obviously :D)
         if(type.equals("DM")) {
             try {
@@ -50,7 +52,9 @@ public class ChatRepository {
                             }
 
                         } catch (Exception e) {
-                            roomList.remove(r);
+                            //DEBUGSystem.out.println("SUS: " + e.getMessage());
+                            //roomList.remove(r);
+                            roomListToBeRemoved.add(r);
                             //DEBUGSystem.out.println(e.getMessage() + "ahhhhhhh h eeeeellp");
                         }
                     }
@@ -65,7 +69,14 @@ public class ChatRepository {
                 //DEBUGSystem.out.println(ex.getMessage());
             }
         }
-        //DEBUGSystem.out.println(roomList);
+
+        //Räume mit blockierten Usern löschen
+        assert roomList != null;
+        roomList = roomList.stream().filter(room ->
+            !roomListToBeRemoved.contains(room)
+        ).collect(Collectors.toList());
+
+        //DEBUGSystem.out.println(roomList.size());
         return roomList;
     }
 }

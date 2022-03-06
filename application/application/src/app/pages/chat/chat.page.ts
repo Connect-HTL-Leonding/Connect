@@ -86,7 +86,7 @@ export class ChatPage implements OnInit {
     public popoverController: PopoverController, public toastController: ToastController,
     public router: Router, public dateService: DateService, public meetupService: MeetupService,
     public alertController: AlertController, public contactService: ContactlistService,
-    public _zone: NgZone, public photoService : PhotoService) {
+    public _zone: NgZone, public photoService: PhotoService) {
 
     this.contactlist = cl;
     this.chatservice = cs;
@@ -187,7 +187,7 @@ export class ChatPage implements OnInit {
   }
 
   openMeetup(meetupid) {
-   this.presentMeetupModal();
+    this.presentMeetupModal();
   }
 
   async presentFriend(friendKeycloak) {
@@ -199,11 +199,7 @@ export class ChatPage implements OnInit {
         user: friend
       }
     });
-    modal.onDidDismiss().then((data => {
-      setTimeout(() => {
-        this.dismissModal();
-      }, 50);
-    }))
+    modal.onDidDismiss();
     return await modal.present();
   }
 
@@ -246,11 +242,11 @@ export class ChatPage implements OnInit {
           })
         })
 
-        this.photoService.getFriendPfp(this.otherUser.custom.id).subscribe(data=> {
-          if(data!=undefined) {
+        this.photoService.getFriendPfp(this.otherUser.custom.id).subscribe(data => {
+          if (data != undefined) {
             this.pfp = this.photoService.DOMSanitizer(data);
           } else {
-            this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+            this.photoService.getDefaultPfp().subscribe(defaultPfp => {
               this.pfp = this.photoService.DOMSanitizer(defaultPfp);
             })
           }
@@ -280,11 +276,11 @@ export class ChatPage implements OnInit {
   }
 
   showLocation(m: Meeting, isInMeetupChat) {
-    
+
     this.dismissModal();
     this.router.navigate(["home"]);
     this.ms.meetupPreviewObserveable.next({ "meetup": m, "originRoom": this.contactlist.selectedRoom, "meetupChat": isInMeetupChat });
-    
+
     //this.presentMeetupModal();
   }
 
