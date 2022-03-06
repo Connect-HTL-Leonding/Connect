@@ -22,7 +22,7 @@ export class PhotoService {
   public photos: Photo[] = [];
   public galleryPhotos: Photo[] = [];
   public profilePicture: Photo;
-  public imgURL;
+  public PFP;
   http : HttpClient;
 
   constructor(private ps: ProfileService, http: HttpClient, private sanitizer: DomSanitizer) {
@@ -57,13 +57,33 @@ export class PhotoService {
 
  
   public loadPfp() {
-    const httpOptions = {
+    let imgURL;
+  /*  const httpOptions = {
       responseType: 'text' as const
-    };
+    }; */
 
-    this.http.get(api.url + 'image/getPfp', httpOptions).subscribe(data => {
-      this.imgURL = "data:image/png;base64," + data;
+   /* this.http.get(api.url + 'image/getPfp').subscribe(data => {
+     // this.blobToBase64String(data);
+    }) */
+
+    this.http.get(api.url + 'image/getPfp', {responseType: 'blob'}).subscribe(data=> {
+        if(data!=undefined) {
+          this.PFP = this.DOMSanitizer(data);
+        } else {
+          this.getDefaultPfp().subscribe(data=> {
+            this.PFP =  this.DOMSanitizer(data);
+          })
+        }
     })
+  };
+
+  getFriendPfp(userId) {
+    return this.http.post(api.url + 'image/getFriendPfp',userId, {responseType: 'blob'});
+  }
+
+  DOMSanitizer(blob) {
+    var urlCreator = window.URL;
+    return this.sanitizer.bypassSecurityTrustUrl(urlCreator.createObjectURL(blob));
   }
 
 
@@ -82,9 +102,9 @@ export class PhotoService {
       } else {
        
       }
-      console.log(images);
+      //DEBUGconsole.log(images);
       //for(let photo of this.photos) {
-        //console.log(photo.id);
+        ////DEBUGconsole.log(photo.id);
       //}
     }
     }) 
@@ -105,9 +125,9 @@ export class PhotoService {
       } else {
        
       }
-      console.log(images);
+      //DEBUGconsole.log(images);
       //for(let photo of this.photos) {
-        //console.log(photo.id);
+        ////DEBUGconsole.log(photo.id);
       //}
     }
     }) 
@@ -136,52 +156,56 @@ export class PhotoService {
 
 
 
-  
+  public getDefaultPfp() {
+   return this.http.get(api.url + "image/getDefaultPfp",{responseType: 'blob'});
+  }
 
   public async updatePfp() {
+    var blob;
     try {
       var base64data;
       const image = await Camera.getPhoto({
-        quality: 100,
-        allowEditing: true,
+        quality: 10,
+        width: 50,
+        height: 50,
+       // allowEditing: true,
         resultType: CameraResultType.Base64
       })
       
 
       // base64string into blob
-     /* const rawData = atob(image.base64String);
+      const rawData = atob(image.base64String);
       const bytes = new Array(rawData.length);
       for (var x = 0; x < rawData.length; x++) {
         bytes[x] = rawData.charCodeAt(x);
       }
       const arr = new Uint8Array(bytes);
-      const blob = new Blob([arr], { type: 'image/png' });
-      const formData = new FormData();
-      formData.append('file',blob)
-      console.log(image.base64String);
-    */
+      blob = new Blob([arr], { type: 'image/png' });
+      //const formData = new FormData();
+      //formData.append('file',blob)
+    
 
 
-      // blob into base64string
-   /*   let mySrc;
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = (e:any) => {
-        // result includes identifier 'data:image/png;base64,' plus the base64 data
-        mySrc = reader.result;
-        this.imgURL = mySrc
-      } */
+    
 
-      this.http.put(api.url + 'image/setPfp', image.base64String.toString()).subscribe(data => {
-        this.ps.getUser().add(data => {
-          this.loadPfp();
-        })
-
-      })
 
     } catch (e) {
     }
+    return this.http.put(api.url + 'image/setPfp', blob);
 
+
+  }
+
+  public blobToBase64String(blob) {
+  // blob into base64string
+  let mySrc;
+  const reader = new FileReader();
+  reader.readAsDataURL(blob);
+  reader.onloadend = (e:any) => {
+    // result includes identifier 'data:image/png;base64,' plus the base64 data
+    mySrc = reader.result;
+   // this.imgURL = mySrc
+  } 
   }
 
 

@@ -18,7 +18,7 @@
     <div class="container">
       <div class="mid" id="profile_pic" #profile_pic>
         <div class="pfpBox">
-          <img class="pfp" src={{this.photoService.imgURL}}>
+          <img class="pfp" [src]="this.photoService.PFP">
         </div>
       </div>
       <ion-label *ngIf="this.ps.user" class="name">{{this.ps.user.userName}}</ion-label>

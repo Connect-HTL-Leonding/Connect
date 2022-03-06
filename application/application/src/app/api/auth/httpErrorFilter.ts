@@ -2,7 +2,6 @@ import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { catchError, filter, finalize, switchMap, take } from 'rxjs/operators';
 
-
 import { Injectable } from '@angular/core';
 import { KeycloakService } from './keycloak.service';
 
@@ -18,11 +17,16 @@ export class HttpErrorFilter implements HttpInterceptor {
 
     constructor(private keycloak: KeycloakService) { }
 
+    //Request wird unterbrochen
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+        //Pipe erstellen
         return next.handle(request).pipe(
             catchError((error: any) => {
+                // Token refreshen bei 401 und 0 Error-Codes
                 // status code 0 kann bei keycloak vorkommen (Cors Error wird ausgelöst --> code 0; ka wieso)
                 if (error.status === 401 || (error.status === 0 && (request.url.includes("/auth/admin/realms/connect/users/") || request.url.includes("auth/realms/connect/account/")))) {
+                    //Token refreshen
                     return this.handle401Error(request, next);
                 }
                 return throwError(error);
@@ -37,6 +41,7 @@ export class HttpErrorFilter implements HttpInterceptor {
             this.isRefreshingToken = false;
             return of(<any>this.keycloak.logout());
         }
+        
         //Token-Refresh
         if (!this.isRefreshingToken) {
             this.isRefreshingToken = true;
@@ -44,7 +49,7 @@ export class HttpErrorFilter implements HttpInterceptor {
 
             //pipe und switchmap, damit original subscribe nochmals aufgerufen wird
             return this.keycloak.refresh().pipe(switchMap(token => {
-                console.log("TOKEN REFRESH")
+                //DEBUGconsole.log("TOKEN REFRESH")
 
                 //einloggen
                 this.keycloak.authenticated = true;

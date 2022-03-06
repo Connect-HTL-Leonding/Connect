@@ -16,6 +16,8 @@ export class ProfileService {
   user: User = new User();
   friendUser: boolean = false
 
+
+
   //Konstruktor
   constructor(http: HttpClient, private keycloak: KeycloakService) {
     this.http = http
@@ -34,7 +36,7 @@ export class ProfileService {
       return this.http.get<CustomUser>(api.url + 'user/customData').subscribe(data => {
         this.user.custom = data;
       }, error => {
-        console.log(error)
+        //DEBUGconsole.log(error)
       });
     }
   }
@@ -50,6 +52,8 @@ export class ProfileService {
 
   //update aktuellen User
   updateUser(u: CustomUser) {
+    //DEBUGconsole.log("updating: ")
+    //DEBUGconsole.log(u)
     return this.http.put<CustomUser>(api.url + 'user/update', u);
   }
 

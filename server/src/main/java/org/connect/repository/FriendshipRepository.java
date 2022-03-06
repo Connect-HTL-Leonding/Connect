@@ -1,7 +1,6 @@
 package org.connect.repository;
 
 import org.connect.model.chat.Room;
-import org.connect.model.meetup.Meeting;
 import org.connect.model.skin.MySkin;
 import org.connect.model.skin.Skin;
 import org.connect.model.user.Friendship;
@@ -24,16 +23,13 @@ public class FriendshipRepository {
     @Inject
     protected EntityManager em;
 
-    public static double distance(double lat1, double lat2, double lon1,
-                                  double lon2, double el1, double el2) {
+    public static double distance(double lat1, double lat2, double lon1, double lon2, double el1, double el2) {
 
         final int R = 6371; // Radius of the earth
 
         double latDistance = Math.toRadians(lat2 - lat1);
         double lonDistance = Math.toRadians(lon2 - lon1);
-        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
-                + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2))
-                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2) + Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double distance = R * c * 1000; // convert to meters
 
@@ -67,12 +63,12 @@ public class FriendshipRepository {
         Friendship f = null;
         try {
             f = tq.getSingleResult();
-            System.out.println(f);
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(f);
+        } catch (Exception e) {
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        if(f != null){
+        if (f != null) {
             em.remove(f);
         }
 
@@ -88,12 +84,12 @@ public class FriendshipRepository {
         Friendship f = null;
         try {
             f = tq.getSingleResult();
-            System.out.println(f);
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(f);
+        } catch (Exception e) {
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        if(f != null){
+        if (f != null) {
             f.setStatus("blocked");
             em.persist(f);
         }
@@ -109,12 +105,12 @@ public class FriendshipRepository {
         Friendship f = null;
         try {
             f = tq.getSingleResult();
-            System.out.println(f);
-        }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(f);
+        } catch (Exception e) {
+            //DEBUGSystem.out.println(e.getMessage());
         }
 
-        if(f != null){
+        if (f != null) {
             f.setStatus("cool");
             em.persist(f);
         }
@@ -130,9 +126,9 @@ public class FriendshipRepository {
         int tolerance = 50;
         List<User> userList = new LinkedList<>();
         List<User> deleteList = new LinkedList<>();
-        for (MySkin mySkin: mySkins) {
-            System.out.println("Myskin from list");
-            System.out.println(mySkin.getSkin().getTitle());
+        for (MySkin mySkin : mySkins) {
+            //DEBUGSystem.out.println("Myskin from list");
+            //DEBUGSystem.out.println(mySkin.getSkin().getTitle());
             TypedQuery<User> tq = this.em.createNamedQuery(Friendship.FINDRANDOM, User.class);
             tq.setParameter("niveau", mySkin.getNiveau());
             tq.setParameter("age", mySkin.getAge());
@@ -142,32 +138,32 @@ public class FriendshipRepository {
             //tq.setParameter("radius", mySkin.getRadius());
 
             try {
-                List<User> users= tq.getResultList();
-                System.out.println("1. Query");
-                System.out.println(tq);
+                List<User> users = tq.getResultList();
+                //DEBUGSystem.out.println("1. Query");
+                //DEBUGSystem.out.println(tq);
                 userList.addAll(users);
-                for(User user : userList){
+                for (User user : userList) {
 
-                    Double distance = distance(user.getPosition().get("lat"),curUser.getPosition().get("lat"),user.getPosition().get("lng"),curUser.getPosition().get("lng"),0,0);
+                    Double distance = distance(user.getPosition().get("lat"), curUser.getPosition().get("lat"), user.getPosition().get("lng"), curUser.getPosition().get("lng"), 0, 0);
                     TypedQuery<MySkin> tms = this.em.createNamedQuery(MySkin.FINDSPECIFIC, MySkin.class);
-                    tms.setParameter("u",user);
-                    tms.setParameter("skin",mySkin.getSkin().getId());
+                    tms.setParameter("u", user);
+                    tms.setParameter("skin", mySkin.getSkin().getId());
 
                     MySkin ms2 = tms.getSingleResult();
                     int radius;
-                    if(mySkin.getRadius() >= ms2.getRadius()){
+                    if (mySkin.getRadius() >= ms2.getRadius()) {
                         radius = ms2.getRadius();
-                    }else{
+                    } else {
                         radius = mySkin.getRadius();
                     }
-                    System.out.println("Distance und Radius"+ user.getId()+" & "+curUser.getId());
-                    System.out.println(distance);
-                    System.out.println(radius*1000);
+                    //DEBUGSystem.out.println("Distance und Radius"+ user.getId()+" & "+curUser.getId());
+                    //DEBUGSystem.out.println(distance);
+                    //DEBUGSystem.out.println(radius*1000);
 
 
-                    if(distance >= radius * 1000 + tolerance){
+                    if (distance >= radius * 1000 + tolerance) {
                         deleteList.add(user);
-                    }else {
+                    } else {
                         userSkin.put(user, mySkin.getSkin());
                     }
                 }
@@ -186,19 +182,19 @@ public class FriendshipRepository {
                     }
                 }
                  */
-            }catch (Exception e) {
-                System.out.println("Yeet");
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                //DEBUGSystem.out.println("Yeet");
+                //DEBUGSystem.out.println(e.getMessage());
             }
 
-            System.out.println("userList nach 1. Query");
-            System.out.println(deleteList);
+            //DEBUGSystem.out.println("userList nach 1. Query");
+            //DEBUGSystem.out.println(deleteList);
         }
 
-        if(!userList.isEmpty()){
-            System.out.println("Größe der UserList");
-            System.out.println(userList.size());
-            for (User user: userList) {
+        if (!userList.isEmpty()) {
+            //DEBUGSystem.out.println("Größe der UserList");
+            //DEBUGSystem.out.println(userList.size());
+            for (User user : userList) {
 
 
                 TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FIND, Friendship.class);
@@ -210,37 +206,38 @@ public class FriendshipRepository {
 
                     Friendship dummy = tq.getSingleResult();
 
-                    System.out.println(dummy + "Schritt 1");
-                    if(dummy != null && !deleteList.contains(user)){
+                    //DEBUGSystem.out.println(dummy + "Schritt 1");
+                    if (dummy != null && !deleteList.contains(user)) {
 
 
-                            deleteList.add(user);
+                        deleteList.add(user);
 
                     }
 
                 } catch (Exception e) {
-                    System.out.println("yoink");
-                    System.out.println(e.getMessage());
+                    //DEBUGSystem.out.println("yoink");
+                    //DEBUGSystem.out.println(e.getMessage());
                 }
             }
 
 
             userList.removeAll(deleteList);
-            if(!userList.isEmpty()){
+            if (!userList.isEmpty()) {
                 randomNumber = ThreadLocalRandom.current().nextInt(0, userList.size());
             }
 
-            System.out.println("finale Userlist");
-            System.out.println(userList);
+            //DEBUGSystem.out.println("finale Userlist");
+            //DEBUGSystem.out.println(userList);
         }
 
-        if(randomNumber != null){
+        if (randomNumber != null) {
 
             User newFriend = userList.get(randomNumber);
-            //Skin sameSkin = userSkin.get(newFriend);
+            Skin sameSkin = userSkin.get(newFriend);
+            //DEBUGSystem.out.println(sameSkin);
+            create(curUser, newFriend, sameSkin);
 
-            create(curUser, newFriend, null);
-
+            System.out.println("SUS");
             Room room = new Room();
             room.getUsers().add(curUser);
             room.getUsers().add(newFriend);
@@ -254,11 +251,8 @@ public class FriendshipRepository {
     }
 
 
-
     public List<Friendship> findAll() {
-        return this.em
-                .createNamedQuery(Friendship.FINDALL, Friendship.class)
-                .getResultList();
+        return this.em.createNamedQuery(Friendship.FINDALL, Friendship.class).getResultList();
     }
 
     public List<Friendship> findBlocked(String id) {
@@ -275,9 +269,25 @@ public class FriendshipRepository {
     }
 
     public List<Friendship> findFriendshipsOfUser(User u) {
-        return this.em
-                .createNamedQuery(Friendship.FINDFRIENDSHIPSOFUSER, Friendship.class).setParameter("user",u)
-                .getResultList();
+        return this.em.createNamedQuery(Friendship.FINDFRIENDSHIPSOFUSER, Friendship.class).setParameter("user", u).getResultList();
+    }
+
+    @Transactional
+    public Friendship findWithUsers(String userid1, String userid2) {
+
+        TypedQuery<Friendship> tq = this.em.createNamedQuery(Friendship.FINDWITHID, Friendship.class);
+        tq.setParameter("userid_1", userid1);
+        tq.setParameter("userid_2", userid2);
+
+        Friendship friendship = null;
+
+        try {
+            friendship = tq.getSingleResult();
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+        }
+
+        return friendship;
     }
 
 }

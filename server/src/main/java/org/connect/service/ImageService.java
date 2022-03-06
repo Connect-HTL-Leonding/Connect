@@ -1,34 +1,19 @@
 package org.connect.service;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import io.quarkus.security.identity.SecurityIdentity;
 import org.connect.model.image.Image;
-import org.connect.model.skin.MySkin;
 import org.connect.model.user.User;
-import org.connect.repository.CategoryRepository;
 import org.connect.repository.ImageRepository;
 import org.connect.repository.UserRepository;
 import org.eclipse.microprofile.jwt.JsonWebToken;
-import org.jboss.resteasy.annotations.cache.NoCache;
-import org.keycloak.KeycloakPrincipal;
-import org.keycloak.representations.IDToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
-import javax.persistence.TypedQuery;
-import javax.sql.rowset.serial.SerialBlob;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.Base64;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @ApplicationScoped
 @Path("/api/image")
@@ -48,30 +33,42 @@ public class ImageService {
     @Inject
     ImageRepository iRepo;
 
+
     @PUT
     @Path("setPfp")
     //@Consumes(MediaType.APPLICATION_JSON)
-    public void saveImageToDatabase(String base64string) throws Exception {
+    public void saveImageToDatabase(byte[] blob) throws Exception {
         try {
-            profilePicture = base64string.getBytes();
+            profilePicture = blob;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
       User u = getUser();
-       u.setProfilePicture(profilePicture);
-       uRepo.update(u);
+        if(profilePicture!=null && profilePicture.length>0) {
+            u.setProfilePicture(profilePicture);
+            uRepo.update(u);
+        }
+
 
     }
 
+    @POST
+    @Path("getFriendPfp")
+    /*@Produces(MediaType.TEXT_PLAIN)*/
+    public byte[] getFriendPfp(String id){
+       return iRepo.getFriendPfp(id);
+    }
+
+
+
     @GET
     @Path("getPfp")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getPfp() throws UnsupportedEncodingException {
+    /*@Produces(MediaType.TEXT_PLAIN)*/
+    public byte[] getPfp(){
         User u = getUser();
 
-            return new String(u.getProfilePicture());
-
+            return u.getProfilePicture();
 
     }
 
@@ -99,6 +96,12 @@ public class ImageService {
     public List<Image> getImages() {
         List<Image> images = iRepo.getImgURLs(jwt);
         return images;
+    }
+
+    @GET
+    @Path("getDefaultPfp")
+    public byte[] getDefaultPfp() {
+        return iRepo.getDefaultPfp();
     }
 
     @GET

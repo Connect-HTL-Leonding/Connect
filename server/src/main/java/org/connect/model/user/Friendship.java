@@ -15,6 +15,7 @@ import java.util.List;
 @NamedQuery(name = Friendship.USERSOFBLOCKEDFRIENDSHIPS, query = "SELECT f.user1.id, f.user2.id FROM Friendship f where (f.user1 = :user or f.user2 = :user) and f.status like 'blocked'")
 @NamedQuery(name = Friendship.USERSOFFRIENDSHIPS, query = "SELECT f.user1.id, f.user2.id FROM Friendship f where (f.user1 = :user or f.user2 = :user) and f.status not like 'blocked'")
 @NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where ((f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)) and f.status not like 'blocked'")
+@NamedQuery(name = Friendship.FINDWITHID, query = "SELECT f FROM Friendship f where ((f.user1.id = :userid_1 and f.user2.id = :userid_2) or (f.user1.id = :userid_2 and f.user2.id = :userid_1)) and f.status not like 'blocked'")
 @NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1 and f.status not like 'blocked'")
 @NamedQuery(name = Friendship.FINDBLOCKED, query = "SELECT f FROM Friendship f where (f.user1.id = :user_id or f.user2.id = :user_id) and f.status like 'blocked'")
 @NamedQuery(name = Friendship.FINDBLOCKED1, query = "SELECT f FROM Friendship f where ((f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)) and f.status like 'blocked'")
@@ -35,7 +36,7 @@ import java.util.List;
 @NamedQuery(name = Friendship.FINDRANDOM, query = "SELECT distinct u FROM User u join MySkin ms on(ms.user.id = u.id) " +
         "where ms.skin.id = :mySkinSkin_id " +
         "and ms.age <= :age and ms.niveau <= :niveau " +
-        "and u <> :user_1")
+        "and u <> :user_1 and u.blockConnect = false")
 public class Friendship implements Serializable {
 
     public static final String FINDALL = "Friendship.findAll";
@@ -44,6 +45,7 @@ public class Friendship implements Serializable {
     public static final String USERSOFFRIENDSHIPS = "Friendship.usersOfFriendship";
     public static final String FINDRANDOM = "Friendship.findRandom";
     public static final String FIND = "Friendship.find";
+    public static final String FINDWITHID = "Friendship.findwithid";
     public static final String FIND2 = "Friendship.find2";
     public static final String FINDBLOCKED = "Friendship.findBlocked";
     public static final String FINDBLOCKED1 = "Friendship.findBlocked1";
@@ -61,7 +63,7 @@ public class Friendship implements Serializable {
     @JoinColumn(name = "user2")
     private User user2;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "skin")
     private List<Skin> skins = new LinkedList<>();
 

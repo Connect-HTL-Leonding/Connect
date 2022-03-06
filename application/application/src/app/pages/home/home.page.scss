@@ -84,5 +84,22 @@ ion-footer {
   #center_map_button:active {
     color: black;
   }
+
+  #ghost_mode_button {
+    position: absolute;
+    bottom: 15px;
+    left: 15px;
+    width: 40px;
+    height: 40px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: lightslategray;
+  }
+
+  #ghost_mode_button:active {
+    color: black;
+  }
 }
 

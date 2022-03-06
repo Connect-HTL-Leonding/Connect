@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { PhotogalleryPage } from '../profile/photogallery/photogallery.page';
 import { FriendshipService } from 'src/app/api/friendship.service';
 import { ContactlistService } from 'src/app/api/contactlist.service';
+import { Friendship } from 'src/app/model/friendship';
 
 @Component({
   selector: 'app-friend',
@@ -19,6 +20,8 @@ import { ContactlistService } from 'src/app/api/contactlist.service';
 export class FriendPage implements OnInit {
 
   user;
+  blocked = false;
+  friendship:Friendship = null;
   profilePictureReady;
 
   // Button
@@ -36,7 +39,8 @@ export class FriendPage implements OnInit {
     public photoService: PhotoService,
     public alertController: AlertController,
     public friendshipService: FriendshipService,
-    public cs:ContactlistService) {
+    public cs:ContactlistService,
+    public fs:FriendshipService) {
 
   }
 
@@ -48,17 +52,38 @@ export class FriendPage implements OnInit {
   };
 
   ngOnInit() {
-    console.log(this.user)
+    //DEBUGconsole.log(this.user)
     this.ps.friendCustomData(this.user.id).subscribe(data => {
-      this.photoService.loadFriendGalleryImages(data.id);
-      this.profilePictureReady = "data:image/png;base64," + atob(data.profilePicture);
+      //this.photoService.loadFriendGalleryImages(data.id);
       this.user.custom = data;
+
+      this.ps.getUser().add(() => {
+        this.photoService.getFriendPfp(this.user.custom.id).subscribe(data=> {
+          if(data!=undefined) {
+            this.profilePictureReady = this.photoService.DOMSanitizer(data);
+          } else {
+            this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+              this.profilePictureReady = this.photoService.DOMSanitizer(defaultPfp);
+  
+            })
+          }
+        })
+        
+        this.fs.getFriendshipsWithUsers(this.ps.user.id, this.user.id).subscribe((data: Friendship) => {
+          this.friendship = data
+        })
+      })
     })
 
   }
 
   dismissModal() {
-    this.modalController.dismiss();
+    this.modalController.dismiss().then(() => {
+      if(this.blocked){
+        this.blocked = false;
+        this.dismissModal()
+      }
+    });
   }
 
   async presentAlertConfirm() {
@@ -72,17 +97,18 @@ export class FriendPage implements OnInit {
           role: 'cancel',
           cssClass: 'primary',
           handler: (blah) => {
-            console.log('Confirm Cancel: yes');
+            //DEBUGconsole.log('Confirm Cancel: yes');
           }
         }, {
           text: 'Blockieren',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Delete Okay');
+            //DEBUGconsole.log('Delete Okay');
             //blockieren Funktion ...
             this.friendshipService.blockFriendship(this.user.custom).subscribe(data => {
               this.friendshipService.blockedObservable.next('blocked:' + this.ps.user.id + ':' + this.user.id)
               this.cs.contactlistObservable.next('contactListUpdate');
+              this.blocked = true;
               this.dismissModal();
             })
 

@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import Showcaser from 'showcaser';
 import { ProfileService } from 'src/app/api/profile.service';
 import { SkinsService } from 'src/app/api/skins.service';
+import { tutorial } from 'src/app/app.component';
 import { MySkin } from 'src/app/model/myskin';
 import { Skin } from 'src/app/model/skin';
 
@@ -35,8 +36,8 @@ export class DetailSkinComponent implements OnInit {
 
     this.ps.getUser().add(
       () => {
-        console.log("westrzutqjhkgizfutetdzuz")
-        console.log(this.ps.user.custom.id)
+        //DEBUGconsole.log("westrzutqjhkgizfutetdzuz")
+        //DEBUGconsole.log(this.ps.user)
         this.showTutorial();
       }
     )
@@ -46,7 +47,7 @@ export class DetailSkinComponent implements OnInit {
     // only run when property "data" changed
     if (changes['skin']) {
     
-      console.log("fjldsj")
+      //DEBUGconsole.log("fjldsj")
     }
   }
 
@@ -65,13 +66,13 @@ export class DetailSkinComponent implements OnInit {
           role: 'cancel',
           cssClass: 'primary',
           handler: (blah) => {
-            console.log('Confirm Cancel: yes');
+            //DEBUGconsole.log('Confirm Cancel: yes');
           }
         }, {
           text: 'Delete',
           cssClass: 'secondary',
           handler: () => {
-            console.log('Delete Okay');
+            //DEBUGconsole.log('Delete Okay');
             this.deleted.emit();
           }
         }
@@ -88,7 +89,7 @@ export class DetailSkinComponent implements OnInit {
 
   //Change-Event
   change(e) {
-    //console.log(this.skin)
+    ////DEBUGconsole.log(this.skin)
     this.updated.emit();
   }
 
@@ -98,9 +99,9 @@ export class DetailSkinComponent implements OnInit {
     this.updated.emit();
   }
   showTutorial() {
-    console.log(this.ps.user.custom.tutorialStage)
-    if (this.ps.user.custom.tutorialStage == 5) {
-      console.log("Bruhhh")
+    //DEBUGconsole.log(this.ps.user.custom.tutorialStage)
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 5) {
+      //DEBUGconsole.log("Bruhhh")
       Showcaser.showcase("Klick auf einen Skin und mach ihn dann mit dem Herz zum Favoriten", this.selectedRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
@@ -111,7 +112,7 @@ export class DetailSkinComponent implements OnInit {
         allowSkip: false,
         close: () => {
           this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
-            console.log("finished")
+            //DEBUGconsole.log("finished")
           });
         }
       });

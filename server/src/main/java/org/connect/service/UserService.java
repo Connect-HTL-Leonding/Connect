@@ -41,7 +41,7 @@ public class UserService {
     public User login() {
 
         //user-id
-        System.out.println(jwt.claim("sub"));
+        //DEBUGSystem.out.println(jwt.claim("sub"));
 
         //return dbRepo.create(new User(jwt));
         return dbRepo.create(jwt);
@@ -54,7 +54,7 @@ public class UserService {
     public User getData() {
 
         //user-id
-        System.out.println(jwt.claim("sub"));
+        //DEBUGSystem.out.println(jwt.claim("sub"));
 
 
         return dbRepo.find(jwt.claim("sub"));
@@ -114,7 +114,8 @@ public class UserService {
     public User update(User user) {
 
         //user-id
-        System.out.println(user);
+        //DEBUGSystem.out.println("Updating:");
+        //DEBUGSystem.out.println(user);
 
         return dbRepo.update(user);
     }
@@ -126,7 +127,7 @@ public class UserService {
     public User updateTutorial() {
 
         //user-id
-        System.out.println(jwt.claim("sub") + "XDDD");
+        //DEBUGSystem.out.println(jwt.claim("sub") + "XDDD");
         User u = dbRepo.find(jwt.claim("sub"));
         u.setTutorialStage(u.getTutorialStage() + 1);
         return dbRepo.update(u);
@@ -138,10 +139,10 @@ public class UserService {
     @Consumes(MediaType.APPLICATION_JSON)
     public User skipTutorial(){
 
-        System.out.println(jwt.claim("sub") + "BRUH123Bruh123");
+        //DEBUGSystem.out.println(jwt.claim("sub") + "BRUH123Bruh123");
         User u = dbRepo.find(jwt.claim("sub"));
         u.setTutorialStage(10);
-        System.out.println("TEST");
+        //DEBUGSystem.out.println("TEST");
         return dbRepo.update(u);
     }
     @PUT
@@ -149,10 +150,10 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public User startTutorial(){
-        System.out.println(jwt.claim("sub") + "KEKW");
+        //DEBUGSystem.out.println(jwt.claim("sub") + "KEKW");
         User u = dbRepo.find(jwt.claim("sub"));
         u.setTutorialStage(1);
-        System.out.println("TEST22");
+        //DEBUGSystem.out.println("TEST22");
         return dbRepo.update(u);
     }
 
@@ -161,7 +162,7 @@ public class UserService {
     @Produces(MediaType.TEXT_PLAIN)
     public String resetTutorial() {
 
-        System.out.println(jwt.claim("sub") + "Swwaaaag");
+        //DEBUGSystem.out.println(jwt.claim("sub") + "Swwaaaag");
         User u = dbRepo.find(jwt.claim("sub"));
         u.setTutorialStage(0);
         dbRepo.update(u);
@@ -176,7 +177,7 @@ public class UserService {
     @NoCache
     public void logout() {
         //user-id
-        System.out.println(jwt.claim("sub"));
+        //DEBUGSystem.out.println(jwt.claim("sub"));
         jwt = null;
         //return dbRepo.create(new User(jwt));
     }

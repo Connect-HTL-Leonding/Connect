@@ -31,7 +31,7 @@ export class MyskinsService {
   //ausgewählter Skin ändern - dynamisch
   selectSkin() {
     if (this.current == null) {
-      console.log("jsaldfja")
+      //DEBUGconsole.log("jsaldfja")
       if (this.myskins) {
         this.myskins.forEach(element => {
           this.current = element;
@@ -41,13 +41,13 @@ export class MyskinsService {
       }
     }
 
-    console.log(this.current)
+    //DEBUGconsole.log(this.current)
   }
 
   //Getter Aktuell Ausgewählten Skin
   getCurrentSkin() {
     return new Promise((resolve) => {
-      console.log(this.current + " jsdlfasjdflsj")
+      //DEBUGconsole.log(this.current + " jsdlfasjdflsj")
       if (this.current == null) {
         this.getMySkins().subscribe(
           data => {
@@ -58,7 +58,7 @@ export class MyskinsService {
             resolve(this.current);
           },
           error1 => {
-            console.log('Error');
+            //DEBUGconsole.log('Error');
           }
         )
       } else {
@@ -91,9 +91,9 @@ export class MyskinsService {
   addToMySkins(skin) {
     var ms: MySkin = new MySkin();
     ms.skin = skin;
-    console.log(ms);
+    //DEBUGconsole.log(ms);
     let body = JSON.stringify(ms);
-    console.log(body)
+    //DEBUGconsole.log(body)
     return this.http.post(api.url + 'myskin/create', ms);
 
   }

@@ -8,6 +8,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.Transient;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
@@ -21,7 +22,10 @@ public class ImageRepository {
 
     @Transactional
     public Image create(Image i) {
-        em.persist(i);
+        if(i.getImg()!= null && i.getImg().length>0) {
+            em.persist(i);
+        }
+
         return i;
     }
 
@@ -40,7 +44,7 @@ public class ImageRepository {
             }
 
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return URLs;
     } */
@@ -52,13 +56,24 @@ public class ImageRepository {
         List<Image> tail = null;
         try {
             images = tq.getResultList();
-            System.out.println(images);
+            //DEBUGSystem.out.println(images);
             tail = images.subList(Math.max(images.size() - 4, 0), images.size());
-            System.out.println(tail);
+            //DEBUGSystem.out.println(tail);
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return tail;
+    }
+
+    public byte[] getDefaultPfp() {
+    TypedQuery<Image> q = em.createNamedQuery(Image.GETDEFAULTPFP,Image.class);
+    Image i = q.getSingleResult();
+    return i.getImg();
+    }
+
+    public byte[] getFriendPfp(String id) {
+         User u = em.find(User.class,id);
+         return u.getProfilePicture();
     }
 
     public List<Image> getFriendImgURLs(String id) {
@@ -68,11 +83,11 @@ public class ImageRepository {
         List<Image> tail = null;
         try {
             images = tq.getResultList();
-            System.out.println(images);
+            //DEBUGSystem.out.println(images);
             tail = images.subList(Math.max(images.size() - 4, 0), images.size());
-            System.out.println(tail);
+            //DEBUGSystem.out.println(tail);
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return tail;
     }
@@ -84,7 +99,7 @@ public class ImageRepository {
         try {
             images = tq.getResultList();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return images;
     }
@@ -96,7 +111,7 @@ public class ImageRepository {
         try {
             images = tq.getResultList();
         }catch (Exception e) {
-            System.out.println(e.getMessage());
+            //DEBUGSystem.out.println(e.getMessage());
         }
         return images;
     }

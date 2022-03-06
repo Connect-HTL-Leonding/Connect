@@ -6,6 +6,11 @@ import { User } from 'src/app/model/user';
 import { Room } from '../../../model/room';
 import { formatDate } from '@angular/common';
 import { DatePipe } from '@angular/common';
+import { FriendshipService } from 'src/app/api/friendship.service';
+import { ProfileService } from 'src/app/api/profile.service';
+import { Friendship } from 'src/app/model/friendship';
+import { Skin } from 'src/app/model/skin';
+import { PhotoService } from 'src/app/api/photo.service';
 
 @Component({
   selector: 'app-detail-contactlist',
@@ -28,14 +33,15 @@ export class DetailContactlistComponent implements OnInit {
   public array = [];
   timeDisplayArr = [];
   timeDisplay: string = "";
-  public newMeetUp : boolean = false;
+  public newMeetUp: boolean = false;
   public ms;
-  public myMeetUp : boolean = false;
+  public myMeetUp: boolean = false;
   public myMeetUpStatus;
   public meetUpAccepted;
 
 
-  constructor(public cs: ContactlistService, datePipe: DatePipe, ms: MeetupService) {
+  constructor(public cs: ContactlistService, datePipe: DatePipe, ms: MeetupService, private friendService: FriendshipService,
+    private profileService: ProfileService, public photoService: PhotoService) {
     this.contactlist = cs;
     this.datePipe = datePipe;
     this.ms = ms;
@@ -44,37 +50,43 @@ export class DetailContactlistComponent implements OnInit {
   }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.getLatestMessage(this.room);
-      this.calcUnseenMessages(this.room);
-    }, 10);
 
     this.contactlist.getOtherUser(this.room.id).subscribe(data => {
 
       this.user.custom = data;
-      if(this.user.custom) {
+      if (this.user.custom) {
+        this.getLatestMessage(this.room);
+        this.calcUnseenMessages(this.room);
 
-      
-        this.pfp = "data:image/png;base64," + atob(this.user.custom.profilePicture);
-    
-      this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
-        if(data.length != 0) {
-          this.newMeetUp = true;
-        }
-      })
 
-      this.ms.getMeetupsFromMeA(this.user.custom.id).subscribe(data=> {
-        this.meetUpAccepted=data;
-        if(this.meetUpAccepted.length!=0) {
-          this.myMeetUp= true;
-          this.myMeetUpStatus = 'akzeptiert';
-        }
-        this.ms.getMeetupsFromMeD(this.user.custom.id).subscribe(data=> {
-          
-          if(data.length!=0) {
-            
-              if(this.meetUpAccepted[this.meetUpAccepted.length-1]!==undefined) {
-                if(data[data.length-1].id>this.meetUpAccepted[this.meetUpAccepted.length-1].id) {
+        this.photoService.getFriendPfp(this.user.custom.id).subscribe(data=> {
+          if(data!=undefined) {
+            this.pfp = this.photoService.DOMSanitizer(data);
+          } else {
+            this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+              this.pfp = this.photoService.DOMSanitizer(defaultPfp);
+            })
+          }
+        })
+
+        this.ms.getMeetupsWithMe(this.user.custom.id).subscribe(data => {
+          if (data.length != 0) {
+            this.newMeetUp = true;
+          }
+        })
+
+        this.ms.getMeetupsFromMeA(this.user.custom.id).subscribe(data => {
+          this.meetUpAccepted = data;
+          if (this.meetUpAccepted.length != 0) {
+            this.myMeetUp = true;
+            this.myMeetUpStatus = 'akzeptiert';
+          }
+          this.ms.getMeetupsFromMeD(this.user.custom.id).subscribe(data => {
+
+            if (data.length != 0) {
+
+              if (this.meetUpAccepted[this.meetUpAccepted.length - 1] !== undefined) {
+                if (data[data.length - 1].id > this.meetUpAccepted[this.meetUpAccepted.length - 1].id) {
                   this.myMeetUp = true;
                   this.myMeetUpStatus = "abgelehnt";
                 }
@@ -82,28 +94,31 @@ export class DetailContactlistComponent implements OnInit {
                 this.myMeetUp = true;
                 this.myMeetUpStatus = "abgelehnt";
               }
-          
-   
-          }
-          
+
+
+            }
+
+          })
         })
-      })
 
-      this.contactlist.getKeyUser(this.user.custom).subscribe(data => {
-        this.user.id = data["id"];
-        this.user.userName = data["username"];
-        this.user.firstname = data["firstName"];
-        this.user.lastname = data["lastName"];
-        this.user.email = data["email"];
-      })
+        this.contactlist.getKeyUser(this.user.custom).subscribe(data => {
+          this.user.id = data["id"];
+          this.user.userName = data["username"];
+          this.user.firstname = data["firstName"];
+          this.user.lastname = data["lastName"];
+          this.user.email = data["email"];
+        })
 
-      /*
-      console.log(atob(this.user.custom.profilePicture));
-      this.contactlist.getOtherPfp(this.room.id).subscribe(data => {
-        this.user.custom.profilePicture = "data:image/png;base64," + data;
-      });
-      */
-    }
+
+        /*
+        //DEBUGconsole.log(atob(this.user.custom.profilePicture));
+        this.contactlist.getOtherPfp(this.room.id).subscribe(data => {
+          this.user.custom.profilePicture = "data:image/png;base64," + data;
+        });
+        */
+
+
+      }
     })
   }
 
@@ -118,32 +133,32 @@ export class DetailContactlistComponent implements OnInit {
     })
   }
 
-  calcTimeDisplayed(messageDate:Date) {
+  calcTimeDisplayed(messageDate: Date) {
     // time right now
     let dateNow = new Date();
     // get time difference in ms, convert it to minutes, round it off 
     let minDiff = Math.floor(((dateNow.getTime() - messageDate.getTime()) / 1000) / 60);
-    if(minDiff<1) {
+    if (minDiff < 1) {
       this.timeDisplay = "Just now";
     }
-    if(minDiff<60 && minDiff >= 1) {
-      if(minDiff == 1) {
+    if (minDiff < 60 && minDiff >= 1) {
+      if (minDiff == 1) {
         this.timeDisplay = minDiff + " minute ago";
       } else {
         this.timeDisplay = minDiff + " minutes ago";
       }
     }
-    if(minDiff>=60) {
+    if (minDiff >= 60) {
       let hourDiff = Math.floor(minDiff / 60);
-      if(hourDiff == 1) {
+      if (hourDiff == 1) {
         this.timeDisplay = hourDiff + " hour ago";
       } else {
         this.timeDisplay = hourDiff + " hours ago";
       }
     }
-    if(minDiff>=1440) {
+    if (minDiff >= 1440) {
       let dayDiff = Math.floor(minDiff / 1440);
-      if(dayDiff == 1) {
+      if (dayDiff == 1) {
         this.timeDisplay = dayDiff + " day ago";
       } else {
         this.timeDisplay = dayDiff + " days ago";

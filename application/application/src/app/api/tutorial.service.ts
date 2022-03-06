@@ -19,7 +19,7 @@ export class TutorialService {
   }
   updateUserTutorial(u: User) {
       let body = JSON.stringify(u);
-      console.log(body);
+      //DEBUGconsole.log(body);
       return this.http.put(api.url + 'user/updateTutorial', u);
   }
 }

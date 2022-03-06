@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package htl.leonding.connect;
 
 import android.os.Bundle;
 

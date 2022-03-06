@@ -10,6 +10,7 @@ import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/api/profile.service';
 import { Observable } from 'rxjs';
+import { tutorial } from 'src/app/app.component';
 
 @Component({
   selector: 'app-my-skins',
@@ -36,19 +37,19 @@ export class MySkinsPage implements OnInit {
     this.mySkinService.getMySkins().subscribe(
       data => {
 
-        console.log(data);
+        //DEBUGconsole.log(data);
         this.mySkinService.myskins = data;
 
-        console.log(this.mySkinService.current)
+        //DEBUGconsole.log(this.mySkinService.current)
         //Skin wird selektiert
         this.mySkinService.getCurrentSkin();
-        console.log(this.mySkinService.current)
+        //DEBUGconsole.log(this.mySkinService.current)
 
 
-        //console.log(this.skinService);
+        ////DEBUGconsole.log(this.skinService);
       },
       error1 => {
-        console.log('Error');
+        //DEBUGconsole.log('Error');
       }
     )
 
@@ -64,8 +65,8 @@ export class MySkinsPage implements OnInit {
   }*/
 
   showTutorial() {
-    console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
-    if (this.ps.user.custom.tutorialStage == 2) {
+    //DEBUGconsole.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 2) {
       Showcaser.showcase("Hier siehst du deine ausgewählten Skins. Skins sind wichtig, um andere Menschen zu finden.", null, {
         shape: "circle",
         buttonText: "Ok!",
@@ -81,7 +82,7 @@ export class MySkinsPage implements OnInit {
         }
       });
     }
-    if (this.ps.user.custom.tutorialStage == 3) {
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 3) {
       Showcaser.showcase("Füge gleich einen <br>neuen Skin zu <br>deiner Sammlung hinzu!", this.addSkinButRef.nativeElement, {
         shape: "circle",
         buttonText: "Ok!",
@@ -106,22 +107,22 @@ export class MySkinsPage implements OnInit {
   //ausgewählter Skin änder bei klick
   changeSelection(ms: MySkin) {
     this.mySkinService.current = ms;
-    console.log(this.mySkinService.current.id + " jladsflsjkdflkj");
+    //DEBUGconsole.log(this.mySkinService.current.id + " jladsflsjkdflkj");
 
   }
 
   //Modal öffnen
   async presentModal() {
-    console.log("Modal openeing")
+    //DEBUGconsole.log("Modal openeing")
     const modal = await this.modalController.create({
       component: SkinselectionPage,
     });
     //Event bei Modal schließen
     modal.onDidDismiss().then((data) => {
       if (data.data) {
-        console.log(data);
+        //DEBUGconsole.log(data);
         var newMySkin = data.data as MySkin;
-        console.log(newMySkin);
+        //DEBUGconsole.log(newMySkin);
         this.ngOnInit();
         //this.presentToast();
 
@@ -137,7 +138,7 @@ export class MySkinsPage implements OnInit {
       message: 'Your settings have been saved.',
       duration: 2000
     });
-    console.log("fjdlsjdlkdf")
+    //DEBUGconsole.log("fjdlsjdlkdf")
     toast.present();
   }
 
@@ -151,7 +152,7 @@ export class MySkinsPage implements OnInit {
           text: 'Close',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
+            //DEBUGconsole.log('Cancel clicked');
           }
         }
       ]
@@ -168,15 +169,15 @@ export class MySkinsPage implements OnInit {
         data => {
           this.mySkinService.myskins = data;
           this.mySkinService.getCurrentSkin();
-          console.log(this.mySkinService.current)
+          //DEBUGconsole.log(this.mySkinService.current)
           this.mySkinService.getSelectedSkins().subscribe(data => {
             this.mySkinService.selectedMySkins = data;
             this.mySkinService.getMapSkins().subscribe(data => {
               this.mySkinService.mapSkins = data;
               this.mySkinService.mySkinObserveable.next(data);
-              console.log(this.ps.user.custom.tutorialStage)
+              //DEBUGconsole.log(this.ps.user.custom.tutorialStage)
               this.ps.getUser().add(() => {
-                if(this.ps.user.custom.tutorialStage == 6){
+                if(tutorial.active && this.ps.user.custom.tutorialStage == 6){
                   this.router.navigate(["home"])
                 }
               })
@@ -185,7 +186,7 @@ export class MySkinsPage implements OnInit {
           })
         },
         error1 => {
-          console.log('Error');
+          //DEBUGconsole.log('Error');
         }
       )
     });
@@ -195,7 +196,7 @@ export class MySkinsPage implements OnInit {
   deleteSkin(s: MySkin) {
     this.mySkinService.deleteSkin(s.id).subscribe(data => {
       //nach unpdate erneutes getAll
-      console.log(data);
+      //DEBUGconsole.log(data);
       var deletedSkin = data as MySkin;
       this.mySkinService.getMySkins().subscribe(
         data => {
@@ -205,7 +206,7 @@ export class MySkinsPage implements OnInit {
           this.presentToastWithOptions(deletedSkin, "gelöscht");
         },
         error1 => {
-          console.log('Error');
+          //DEBUGconsole.log('Error');
         }
       )
     });;

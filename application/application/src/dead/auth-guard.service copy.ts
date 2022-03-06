@@ -12,7 +12,7 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
-    console.log("jklasdkjaslkjfl")
+    //DEBUGconsole.log("jklasdkjaslkjfl")
     if (!this.hasValidToken()) {
       this.navigateToLoginPage();
     }
@@ -94,7 +94,7 @@ export class AuthGuard implements CanActivate {
 
   public runInitialLoginSequence(): Promise<void> {
     if (location.hash) {
-      console.log('Encountered hash fragment, plotting as table...');
+      //DEBUGconsole.log('Encountered hash fragment, plotting as table...');
       console.table(location.hash.substr(1).split('&').map(kvp => kvp.split('=')));
     }
 
@@ -163,7 +163,7 @@ export class AuthGuard implements CanActivate {
         // login(...) should never have this, but in case someone ever calls
         // initImplicitFlow(undefined | null) this could happen.
         if (this.oauthService.state && this.oauthService.state !== 'undefined' && this.oauthService.state !== 'null') {
-          console.log('There was state, so we are sending you to: ' + this.oauthService.state);
+          //DEBUGconsole.log('There was state, so we are sending you to: ' + this.oauthService.state);
           this.router.navigateByUrl(this.oauthService.state);
         }
       })

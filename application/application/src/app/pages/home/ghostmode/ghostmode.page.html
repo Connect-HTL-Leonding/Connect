@@ -1,0 +1,9 @@
+<div class="wrap">
+  <ion-label color="primary" name="hide_position"  ngDefaultControl>Hide Position</ion-label>
+<br>
+  <ion-toggle [(ngModel)]="this.profileservice.user.custom.hideLocation" (click)="hidePosition()"></ion-toggle>
+  <br>
+  <ion-label color="primary" name="stop_connects"   ngDefaultControl>Stop Connects</ion-label>
+  <br>
+    <ion-toggle [(ngModel)]="this.profileservice.user.custom.blockConnect" (click)="blockConnect()"></ion-toggle>
+</div>

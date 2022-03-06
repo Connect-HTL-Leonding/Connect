@@ -6,6 +6,8 @@ import { MenuController, ModalController } from '@ionic/angular';
 import { PhotogalleryPage } from '../photogallery/photogallery.page';
 //import { Camera } from '@ionic-native/camera';
 //import { CameraOptions } from '@ionic-native/camera';
+import { DomSanitizer } from '@angular/platform-browser';
+
 
 
 @Component({
@@ -20,7 +22,8 @@ export class EditProfilePage implements OnInit {
 
   noImgs: boolean;
 
-  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService) { }
+  constructor(public ps: ProfileService, public modalController: ModalController, public photoService: PhotoService,
+    private sanitizer: DomSanitizer) { }
 
 
 
@@ -32,7 +35,7 @@ export class EditProfilePage implements OnInit {
   };
 
   colorButton(){
-    console.log(this.changes)
+    //DEBUGconsole.log(this.changes)
     this.changes = false;
   }
 
@@ -44,8 +47,14 @@ export class EditProfilePage implements OnInit {
     }
   }
 
-  loadFromStorage() {
-    this.photoService.updatePfp();
+  async updatePfp() {
+    (await this.photoService.updatePfp()).subscribe(data=>{
+      this.loadPfp();
+    });
+  }
+
+  loadPfp() {
+    this.photoService.loadPfp();
   }
 
 
@@ -55,12 +64,12 @@ export class EditProfilePage implements OnInit {
 
     this.ps.getUser().add(
       () => {
-        this.photoService.loadPfp();
+        this.loadPfp();
         this.photoService.loadGalleryImages();
-        console.log("Images loaded.")
+        //DEBUGconsole.log("Images loaded.")
 
-        console.log(this.ps.user.custom.id)
-        //console.log(this.skinService);
+        //DEBUGconsole.log(this.ps.user)
+        ////DEBUGconsole.log(this.skinService);
       }
     )
   }
@@ -68,9 +77,9 @@ export class EditProfilePage implements OnInit {
 
   updateUser(u: User) {
     //u.username = document.getElementById("username").innerText;
-    //console.log(u.desc)
+    ////DEBUGconsole.log(u.desc)
     //u.desc = document.getElementById("desc").innerText;
-    console.log(u.custom.description)
+    //DEBUGconsole.log(u.custom.description)
     this.ps.updateUser(u.custom).subscribe(data => {
       //nach unpdate erneutes getAll
       this.ngOnInit();

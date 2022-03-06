@@ -33,7 +33,7 @@ export class MeetupDataShowPage implements OnInit {
     this.ms.getMeetupUser(this.meetup.id).subscribe(data => {
   
       data.forEach(mu =>{
-        console.log(mu.user_id)
+        //DEBUGconsole.log(mu.user_id)
        this.pushPersonInArray(mu.user_id)
       
       })
@@ -48,9 +48,9 @@ export class MeetupDataShowPage implements OnInit {
     let u = data;
     this.ps.friendCustomData(muid).subscribe(custom => {
       u.custom=custom;
-      console.log(custom)
+      //DEBUGconsole.log(custom)
        this.users.push(u);
-       console.log(this.users)
+       //DEBUGconsole.log(this.users)
      });
    });
    

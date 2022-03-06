@@ -10,6 +10,7 @@ import { MySkin } from '../../model/myskin';
 import { Skin } from '../../model/skin';
 import { Router } from '@angular/router';
 import { SkinsettingsPage } from '../skin-creator/skinsettings/skinsettings.page';
+import { tutorial } from 'src/app/app.component';
 
 
 @Component({
@@ -73,7 +74,7 @@ export class SkinselectionPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.skinsService);
+    //DEBUGconsole.log(this.skinsService);
 
     this.categoryService.getCategories().subscribe(
       data => {
@@ -81,30 +82,30 @@ export class SkinselectionPage implements OnInit {
         this.skinsService.getSkins().subscribe(
           data => {
             this.skinsService.skins = data;
-            console.log(this.skinsService.skins);
+            //DEBUGconsole.log(this.skinsService.skins);
             this.setCurrCat(this.categoryService.findCategory("All"));
           },
           error1 => {
-            console.log('Error');
+            //DEBUGconsole.log('Error');
           }
         )
       },
       error1 => {
-        console.log('Error');
+        //DEBUGconsole.log('Error');
       }
     )
     this.ps.getUser().add(
       () => {
-        console.log("westrzutqjhkgizfutetdzuz")
-        console.log(this.ps.user.custom.id)
+        //DEBUGconsole.log("westrzutqjhkgizfutetdzuz")
+        //DEBUGconsole.log(this.ps.user)
         this.showTutorial();
       }
     )
   }
 
   showTutorial() {
-    console.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
-    if (this.ps.user.custom.tutorialStage == 4) {
+    //DEBUGconsole.log("123111111111111111111111111111111111111111111111" + this.ps.user.custom.tutorialStage);
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 4) {
       Showcaser.showcase("Hier findest du alle verfügbaren Skins. Wähl am besten gleich mal einen aus der zu dir passt!", null, {
         shape: "rectangle",
         buttonText: "Ok!",
@@ -115,7 +116,7 @@ export class SkinselectionPage implements OnInit {
         allowSkip: false,
         close: () => {
           this.ps.updateUserTutorial(this.ps.user.custom).subscribe(data => {
-            console.log("MySKINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
+            //DEBUGconsole.log("MySKINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
           });
         }
       });
@@ -125,7 +126,7 @@ export class SkinselectionPage implements OnInit {
   
 
   setCurrCat(c: Category) {
-    console.log("Cat: " + c)
+    //DEBUGconsole.log("Cat: " + c)
     this.currCat = c;
   }
 
@@ -141,7 +142,7 @@ export class SkinselectionPage implements OnInit {
           this.skinsService.skins = data;
         },
         error1 => {
-          console.log('Error');
+          //DEBUGconsole.log('Error');
         }
       )
     });;
@@ -149,7 +150,7 @@ export class SkinselectionPage implements OnInit {
 
   addToMySkin(skin) {
     this.mySkinService.addToMySkins(skin).subscribe(data => {
-      //console.log(data);
+      ////DEBUGconsole.log(data);
       var newSkin = data as MySkin;
 
       this.skinsService.getSkins().subscribe(
@@ -158,7 +159,7 @@ export class SkinselectionPage implements OnInit {
           this.dismissModal(newSkin);
         },
         error1 => {
-          console.log('Error');
+          //DEBUGconsole.log('Error');
         }
       )
     })

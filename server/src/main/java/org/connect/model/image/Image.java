@@ -6,12 +6,13 @@ import javax.persistence.*;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Image.FINDWITHID, query = "SELECT i FROM Image i where i.userId = :user_id")
-
+        @NamedQuery(name = Image.FINDWITHID, query = "SELECT i FROM Image i where i.userId = :user_id"),
+        @NamedQuery(name=Image.GETDEFAULTPFP,query = "select i from Image i where i.userId='ADMIN'")
 })
 public class Image {
 
     public static final String FINDWITHID = "image.findwithid";
+    public static final String GETDEFAULTPFP = "image.getdefaultpfp";
 
     @Id
     @GeneratedValue

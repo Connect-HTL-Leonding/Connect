@@ -3,7 +3,7 @@
 <div *ngIf="userExists(user)" class="chat-user">
   
   <ion-avatar *ngIf="user.custom" slot="start">
-    <img  src={{pfp}}>
+    <img  [src]="pfp">
     
   </ion-avatar>
   <ion-icon id="icon" color="primary" slot="start" *ngIf="!user.custom" name="location-sharp"></ion-icon>

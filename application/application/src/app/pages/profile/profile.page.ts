@@ -8,6 +8,8 @@ import Showcaser from 'showcaser'
 import { TutorialService } from 'src/app/api/tutorial.service';
 import { Router } from '@angular/router';
 import { KeycloakService } from 'src/app/api/auth/keycloak.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { tutorial } from 'src/app/app.component';
 
 
 @Component({
@@ -18,6 +20,7 @@ import { KeycloakService } from 'src/app/api/auth/keycloak.service';
 export class ProfilePage implements OnInit {
 
   user;
+  public imgURL;
 
   // Button
   @ViewChild('change_button', { static: false }) changeButRef: ElementRef;
@@ -26,8 +29,13 @@ export class ProfilePage implements OnInit {
   @ViewChild('profile_pic', { static: false }) profilePicRef: ElementRef;
 
 
-  constructor(public router: Router, public ts: TutorialService, public ps: ProfileService, private keyCloakService: KeycloakService, public modalController: ModalController, public photoService: PhotoService) {
+  constructor(public router: Router, public ts: TutorialService, public ps: ProfileService, private keyCloakService: KeycloakService, public modalController: ModalController, public photoService: PhotoService
+    , private sanitizer: DomSanitizer) {
 
+  }
+
+  loadPfp() {
+    this.photoService.loadPfp();
   }
 
   slideOpts = {
@@ -37,19 +45,25 @@ export class ProfilePage implements OnInit {
     speed: 400
   };
 
+  ionViewWillEnter(){
+    this.loadPfp();
+    this.photoService.loadGalleryImages();
+   }
+
+
   ngOnInit() {
-    this.photoService.loadPfp();
+    this.loadPfp();
     this.photoService.loadGalleryImages();
     this.user = this.keyCloakService.user;
 
     this.ps.getUser().add(
       () => {
 
-        console.log(this.ps.user.custom.id)
+        //DEBUGconsole.log(this.ps.user)
         this.showTutorial();
 
 
-        //console.log(this.skinService);
+        ////DEBUGconsole.log(this.skinService);
       }
     )
 
@@ -64,13 +78,13 @@ export class ProfilePage implements OnInit {
       () => {
 
 
-        console.log("westrzutqjhkgizfutetdzuz")
+        //DEBUGconsole.log("westrzutqjhkgizfutetdzuz")
 
-        console.log(this.ps.user.custom.id)
+        //DEBUGconsole.log(this.ps.user)
 
 
 
-        //console.log(this.skinService);
+        ////DEBUGconsole.log(this.skinService);
       }
     )
 
@@ -81,9 +95,9 @@ export class ProfilePage implements OnInit {
   //}
 
   showTutorial() {
-    console.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
-    if (this.ps.user.custom.tutorialStage == 1) {
-      console.log("Bruhhhhh" + this.profilePicRef.nativeElement);
+    //DEBUGconsole.log("Profileeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + this.ps.user);
+    if (tutorial.active && this.ps.user.custom.tutorialStage == 1) {
+      //DEBUGconsole.log("Bruhhhhh" + this.profilePicRef.nativeElement);
       Showcaser.showcase("Das hier ist dein Profil. Zurzeit noch ein bisschen leer. Du kannst etwas über dich erzählen oder Bilder hochladen. Aber wirklich nur so viel wie du willst!", this.profilePicRef.nativeElement, {
         buttonText: "Ok!",
         position: {

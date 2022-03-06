@@ -94,7 +94,12 @@ const routes: Routes = [
   {
     path: 'meetup-overview',
     loadChildren: () => import('./pages/meetup-overview/meetup-overview.module').then( m => m.MeetupOverviewPageModule)
+  },
+  {
+    path: 'ghostmode',
+    loadChildren: () => import('./pages/home/ghostmode/ghostmode.module').then( m => m.GhostmodePageModule)
   }
+
 
 ];
 
