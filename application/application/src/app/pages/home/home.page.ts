@@ -28,6 +28,7 @@ import { FriendPageRoutingModule } from '../friend/friend-routing.module';
 import { GhostmodePage } from './ghostmode/ghostmode.page';
 import { PhotoService } from 'src/app/api/photo.service';
 import { DomSanitizer } from '@angular/platform-browser';
+import { tutorial } from 'src/app/app.component';
 
 /*
 import {
@@ -1028,7 +1029,7 @@ export class HomePage implements OnInit {
             this.ps.getUser().add(() => {
               //DEBUGconsole.log('Confirm Okay');
               //DEBUGconsole.log(this.ps.user.custom.tutorialStage + "sdlflsajlf")
-              if (this.ps.user.custom.tutorialStage == 0) {
+              if (tutorial.active && this.ps.user.custom.tutorialStage == 0) {
                 Showcaser.showcase("Das ist die Home Seite. Das Herzstück von Connect. Doch starten wir doch einmal mit den Basics.", null, {
                   buttonText: "OK!",
                   position: {
@@ -1058,11 +1059,11 @@ export class HomePage implements OnInit {
     this.ps.getUser().add(
       () => {
 
-        if (this.ps.user.custom.tutorialStage == 0) {
+        if (tutorial.active && this.ps.user.custom.tutorialStage == 0) {
           this.presentAlertConfirm();
         }
 
-        if (this.ps.user.custom.tutorialStage == 6) {
+        if (tutorial.active && this.ps.user.custom.tutorialStage == 6) {
           Showcaser.showcase("Aktiviere oben rechts den Skin!", null, {
             shape: "circle",
             buttonText: "Ok!",
@@ -1078,7 +1079,7 @@ export class HomePage implements OnInit {
 
           });
         }
-        if (this.ps.user.custom.id == this.keyCloakService.userid && this.ps.user.custom.tutorialStage == 7) {
+        if (tutorial.active && this.ps.user.custom.id == this.keyCloakService.userid && this.ps.user.custom.tutorialStage == 7) {
           Showcaser.showcase("Drück auf den Connect Button um dich zu connecten", this.connectButRef.nativeElement, {
             shape: "circle",
             buttonText: "Ok!",

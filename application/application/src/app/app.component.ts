@@ -270,6 +270,10 @@ export const api = {
   ws: "ws://localhost:8080"
 }
 
+export const tutorial = {
+  active: false
+}
+
 
 
 //Zentrale Variablen prod
