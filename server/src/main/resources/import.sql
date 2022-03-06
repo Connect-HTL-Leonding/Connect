@@ -187,6 +187,8 @@ INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10018, '8b64f104-f75
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10019, '97717d5e-46d8-4139-b3f8-369927b8ae0b');
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10019, '8b64f104-f757-48c1-b2b4-92f2c1643a0e');
 
+INSERT INTO connect.Message (id, created, image, message, updated, room_id, user_id) VALUES (68, STR_TO_DATE('1-01-2012-7', '%d-%m-%Y-%h'), null, 'schreib ma wennst zeit hast', null, 10018,'8b64f104-f757-48c1-b2b4-92f2c1643a0e');
+
 /* SOFORT*/
 
 INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10020, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');

@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = Message.FINDALL, query = "SELECT ms FROM Message ms where room_id = :u"),
+        @NamedQuery(name = Message.FINDALL, query = "SELECT ms FROM Message ms where room_id = :u order by ms.created"),
         @NamedQuery(name = Message.GETCOUNT, query = "SELECT count(m) FROM Message m where room_id = :r AND user_id NOT LIKE :u")
 })
 public class Message implements Serializable {
