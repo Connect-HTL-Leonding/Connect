@@ -29,21 +29,6 @@ jobs:
         java-version: '15'
 
     - uses: actions/checkout@v2
-
-    - name: cache maven repository
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.m2
-        key: ${{ runner.os }}-build-m2-${{ hashFiles('**/pom.xml') }}
-        restore-keys: |
-          ${{ runner.os }}-build-m2-
-          
-    - name: cache node_modules (application/application)
-      uses: actions/cache@v2
-      with:
-        path: './application/application/node_modules'
-        key: ${{ runner.os }}-www-node-modules-v0.0.2-${{ hashFiles('./application/application/package.json') }}
         
     - name: install nodejs
       uses: actions/setup-node@v2
