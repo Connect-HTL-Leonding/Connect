@@ -95,6 +95,8 @@ public class WebSocket {
             case("blocked"): broadcast("blocked");
             break;
             case("unhideLocation"): broadcastPosition("unhideLocation", id);
+            break;
+            case("hideLocation"): broadcastPosition("hideLocation", id);
         }
 
     }

@@ -91,6 +91,7 @@ public class FriendshipRepository {
 
         if (f != null) {
             f.setStatus("blocked");
+            f.setBlockedBy(em.find(User.class, jwt.claim("sub").get().toString()));
             em.persist(f);
         }
 
@@ -112,6 +113,7 @@ public class FriendshipRepository {
 
         if (f != null) {
             f.setStatus("cool");
+            f.setBlockedBy(null);
             em.persist(f);
         }
 

@@ -17,7 +17,7 @@ export class GhostmodePage implements OnInit {
 
   hidePosition(){
     if(!this.profileservice.user.custom.hideLocation) {
-      this.meetupService.positionObservable.next("positionUpdate:" + this.profileservice.user.custom.id);
+      this.meetupService.positionObservable.next("hideLocation:" + this.profileservice.user.custom.id);
     }
     else {
       this.meetupService.positionObservable.next("unhideLocation:" + this.profileservice.user.custom.id);

@@ -177,6 +177,8 @@ export class AppComponent implements OnInit {
           break;
           case("unhideLocation"): this.ms.showPositionObservable.next("unhideLocation:" + message[1]);
           break;
+          case("hideLocation"): this.ms.showPositionObservable.next("hideLocation:" + message[1]);
+          break;
 
         case ("newMeetup"): this.ms.showMeetupObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {

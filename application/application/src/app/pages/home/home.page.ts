@@ -112,6 +112,7 @@ export class HomePage implements OnInit {
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
       var val:string = value;
       var string = val.split(":");
+      console.log(string[0])
       if(string[0] == "unhideLocation" && string[1] != this.ps.user.custom.id) {
         this.ps.findFriendUser(string[1]).subscribe(data => {
           let user = data;
@@ -121,14 +122,15 @@ export class HomePage implements OnInit {
           })
         });
       }
-      else if (this.ps.user.custom.id != string[0]) {
-        this.friendMarkers.forEach((friend: google.maps.Marker) => {
-          if (friend.getTitle() == value) {
+      else if (string[0] == "hideLocation" && string[1] != this.ps.user.custom.id) {
+        this.friendMarkers.forEach((friend: google.maps.Marker, index) => {
+          if (friend.getTitle() == string[1]) {
             friend.setMap(null);
-            const index = this.friendMarkers.indexOf(friend, 0)
             this.friendMarkers.splice(index,1);
           }
         })
+      }
+      else if (this.ps.user.custom.id != string[0]) {
         this.displayFriends();
       }
     });
