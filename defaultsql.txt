@@ -1,0 +1,201 @@
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10011, 'You like Football? Cool! This is the Football Skin. Check it out!', 100, '../assets/connect_img/square/fussball_square.png', 'Football',false,false);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10012, 'You like Prties? Cool! This is the Party Skin. Check it out!', 100, '../assets/connect_img/square/schwimmen_square.png', 'Party',true,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10013, 'You like Basketball? Cool! This is the Basketball Skin. Check it out!', 100, 'Basketball',false,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10014, 'You like Swimming? Cool! This is the Swimming Skin. Check it out!', 100, '../assets/connect_img/square/schwimmen_square.png', 'Swimming',false,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10015, 'You like Golf? Cool! This is the Golf Skin. Check it out!', 100, '../assets/connect_img/square/golf_square.png', 'Golf',false,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10016, 'You like Volleyball? Cool! This is the Volleyball Skin. Check it out!', 100, '../assets/connect_img/square/volleyball_square.png', 'Volleyball',false,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10017, 'You like Tennis? Cool! This is the Tennis Skin. Check it out!', 100, '../assets/connect_img/square/tennis_square.png', 'Tennis',false,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10018, 'You like Movie Theaters? Cool! This is the Movie Theater Skin. Check it out!', 100, '../assets/connect_img/square/movieTheater_square.jpg', 'MovieTheater',false,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10019, 'You like Restaurants? Cool! This is the Restaurant Skin. Check it out!', 100, '../assets/connect_img/square/restaurant_square.jpg', 'Restaurant',false,true);
+INSERT INTO connect.Skin (id, description, follower, image, title, mature, verified) VALUES (10020, 'You like Gaming? Cool! This is the Gaming Skin. Check it out!', 100, '../assets/connect_img/square/gaming_square.jpg', 'Gaming',false,true);
+
+INSERT INTO connect.Category (id, title) VALUES (1002, 'Sport');
+INSERT INTO connect.Category (id, title) VALUES (1003, 'Outdoors');
+INSERT INTO connect.Category (id, title) VALUES (1004, 'Indoors');
+INSERT INTO connect.Category (id, title) VALUES (1005, 'Food');
+INSERT INTO connect.Category (id, title) VALUES (1006, 'Music');
+
+
+
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10011, 1002);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10012, 1006);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10013, 1002);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10014, 1002);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10015, 1002);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10016, 1002);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10017, 1002);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10018, 1004);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10019, 1004);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10020, 1004);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10011, 1003);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10012, 1003);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10013, 1003);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10014, 1003);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10015, 1003);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10016, 1003);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10017, 1003);
+INSERT INTO connect.Skin_Category (skins_id, categories_id) VALUES (10019, 1005);
+
+
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('0f95e11b-5ac0-4f59-883a-4e6aadd6fc65', null, null, 'm',false, false,null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('306b6e8e-b11a-4059-b91b-689c59026702', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('d7be2af6-5fe9-4f53-a788-6a25a1580258', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('06f1a6d6-a5dc-4a2e-bd46-0f0734bf61e3', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('6096ea87-37fc-4bfb-8bf3-8b16816d6349', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('7e375e76-dc48-4c84-94ad-ce512effc6d9', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('85d71aa5-aae8-48c1-8145-9cb3163d41bd', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('88db121c-4f49-42c2-8f96-5db7d3cbe75a', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('3481f55b-5440-4984-b888-b983a8879f07', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('e8da2bad-ec77-4814-ac53-a57bd4571d7c', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('b03251fb-abda-4045-838f-7808bea46601', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('cf0f860a-8a18-4967-b010-233a7cef9bc3', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('ec4b5ad7-d282-4970-b3e4-3342e16a82f5', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('0d3dcf03-9d38-4c12-af82-a9467c786db5', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('2ad6f082-f92c-4934-9ef2-57feab03dfd6', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('ceadee37-07d9-444c-817d-b7d2d6d21a0a', null, null, 'm',false, false, null, 0);
+
+INSERT INTO connect.User (id, birthday, description, gender, hideLocation, blockConnect,profilePicture, tutorialStage) VALUES ('cbe5669f-1de9-4b8c-aef3-416435538001', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('97717d5e-46d8-4139-b3f8-369927b8ae0b', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('8b64f104-f757-48c1-b2b4-92f2c1643a0e', null, null, 'm',false, false, null, 0);
+
+/* Jan änder ID SOFORT */
+INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('0cfb2459-a0fb-47ba-804f-08305d7cec31', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('07e79142-5d4a-4fed-ac27-8388c68c89fe', null, null, 'm',false, false, null, 0);
+INSERT INTO connect.User (id, birthday, description, gender,hideLocation, blockConnect, profilePicture, tutorialStage) VALUES ('7fb41cd2-5f47-4478-8f8d-b265e4481f3b', null, null, 'm',false, false, null, 0);
+
+
+INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10019, 30, 1, 5, false, false, 10011, 'cf0f860a-8a18-4967-b010-233a7cef9bc3');
+INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10020, 30, 1, 5, false, false, 10011, '6096ea87-37fc-4bfb-8bf3-8b16816d6349');
+INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10021, 30, 1, 5, false, false, 10011, '3481f55b-5440-4984-b888-b983a8879f07');
+INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10035, 20, 1, 1, true, false, 10011, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+INSERT INTO connect.MySkin (id, age, niveau, radius, selected, showInMap, skin_id, user_id) VALUES (10036, 20, 1, 1, false, false, 10012, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10022, '2021-10-16 11:07:51.962261', 'cool', '06f1a6d6-a5dc-4a2e-bd46-0f0734bf61e3', '306b6e8e-b11a-4059-b91b-689c59026702');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10023, '2021-10-16 11:07:51.962380', 'cool', 'e8da2bad-ec77-4814-ac53-a57bd4571d7c', 'd7be2af6-5fe9-4f53-a788-6a25a1580258');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10024, '2021-10-16 11:07:51.962392', 'cool', 'ec4b5ad7-d282-4970-b3e4-3342e16a82f5', '0f95e11b-5ac0-4f59-883a-4e6aadd6fc65');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10025, '2021-10-16 11:07:51.962408', 'cool', '6096ea87-37fc-4bfb-8bf3-8b16816d6349', 'ec4b5ad7-d282-4970-b3e4-3342e16a82f5');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10026, '2021-10-16 11:07:51.962417', 'cool', '6096ea87-37fc-4bfb-8bf3-8b16816d6349', '0f95e11b-5ac0-4f59-883a-4e6aadd6fc65');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10027, '2021-10-16 11:07:51.962424', 'cool', '88db121c-4f49-42c2-8f96-5db7d3cbe75a', '8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10028, '2021-10-16 11:07:51.962431', 'cool', '88db121c-4f49-42c2-8f96-5db7d3cbe75a', '7e375e76-dc48-4c84-94ad-ce512effc6d9');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10029, '2021-10-16 11:07:51.962431', 'cool', '0d3dcf03-9d38-4c12-af82-a9467c786db5', '2ad6f082-f92c-4934-9ef2-57feab03dfd6');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10030, '2021-10-16 11:07:51.962431', 'cool', '0d3dcf03-9d38-4c12-af82-a9467c786db5', 'ceadee37-07d9-444c-817d-b7d2d6d21a0a');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10031, '2021-10-16 11:07:51.962431', 'cool', 'e8da2bad-ec77-4814-ac53-a57bd4571d7c', 'b03251fb-abda-4045-838f-7808bea46601');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10032, '2021-10-16 11:07:51.962431', 'cool', '3481f55b-5440-4984-b888-b983a8879f07', '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+/*INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (100111, '2021-10-16 11:07:51.962431', 'cool', 'cbe5669f-1de9-4b8c-aef3-416435538001', '97717d5e-46d8-4139-b3f8-369927b8ae0b');*/
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (100112, '2021-10-16 11:07:51.962431', 'cool', 'cbe5669f-1de9-4b8c-aef3-416435538001', '8b64f104-f757-48c1-b2b4-92f2c1643a0e');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (100113, '2021-10-16 11:07:51.962431', 'cool', '8b64f104-f757-48c1-b2b4-92f2c1643a0e', '97717d5e-46d8-4139-b3f8-369927b8ae0b');
+
+/* Jan änderijivnrevd c SOFORT*/
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10050, '2021-10-16 11:07:51.962261', 'cool', '85d71aa5-aae8-48c1-8145-9cb3163d41bd', '0cfb2459-a0fb-47ba-804f-08305d7cec31');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10051, '2021-10-16 11:07:51.962261', 'cool', '85d71aa5-aae8-48c1-8145-9cb3163d41bd', '07e79142-5d4a-4fed-ac27-8388c68c89fe');
+INSERT INTO connect.Friendship (id, created, status, user1, user2) VALUES (10052, '2021-10-16 11:07:51.962380', 'cool', '85d71aa5-aae8-48c1-8145-9cb3163d41bd', '7fb41cd2-5f47-4478-8f8d-b265e4481f3b');
+
+INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (10022, 10011);
+INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (10023, 10011);
+INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (10024, 10011);
+INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (10025, 10012);
+INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (10026, 10012);
+INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (10027, 10012);
+INSERT INTO connect.Friendship_Skin (Friendship_id, skins_id) VALUES (10028, 10012);
+
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('0f95e11b-5ac0-4f59-883a-4e6aadd6fc65', 48.305394, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('306b6e8e-b11a-4059-b91b-689c59026702', 24.305394, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('0f95e11b-5ac0-4f59-883a-4e6aadd6fc65', 14.287337, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('306b6e8e-b11a-4059-b91b-689c59026702', 7.287337, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('d7be2af6-5fe9-4f53-a788-6a25a1580258', 81.007, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('d7be2af6-5fe9-4f53-a788-6a25a1580258', 0.3, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('6096ea87-37fc-4bfb-8bf3-8b16816d6349', 48.307293, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('6096ea87-37fc-4bfb-8bf3-8b16816d6349', 14.286994, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7e375e76-dc48-4c84-94ad-ce512effc6d9', -156.34, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7e375e76-dc48-4c84-94ad-ce512effc6d9', -103.39, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('85d71aa5-aae8-48c1-8145-9cb3163d41bd', 48.2054013, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('85d71aa5-aae8-48c1-8145-9cb3163d41bd', 14.0580656, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('88db121c-4f49-42c2-8f96-5db7d3cbe75a', -74.543, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('88db121c-4f49-42c2-8f96-5db7d3cbe75a', 9.33, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3', -12.9, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3', -120, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('3481f55b-5440-4984-b888-b983a8879f07', 48.205414999999995, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('3481f55b-5440-4984-b888-b983a8879f07', 14.058034399999999, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('e8da2bad-ec77-4814-ac53-a57bd4571d7c', 12.9, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('e8da2bad-ec77-4814-ac53-a57bd4571d7c', 120, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('b03251fb-abda-4045-838f-7808bea46601', 48.27776187468075, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('b03251fb-abda-4045-838f-7808bea46601', 14.307813528905484, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('cf0f860a-8a18-4967-b010-233a7cef9bc3', 48.26854300052356, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('cf0f860a-8a18-4967-b010-233a7cef9bc3', 14.244409970317164, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('ec4b5ad7-d282-4970-b3e4-3342e16a82f5', 40, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('ec4b5ad7-d282-4970-b3e4-3342e16a82f5', 14, 'lng');
+
+/* id SOFORT*/
+
+
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('0cfb2459-a0fb-47ba-804f-08305d7cec31', 48.205946, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('0cfb2459-a0fb-47ba-804f-08305d7cec31', 14.055512, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('07e79142-5d4a-4fed-ac27-8388c68c89fe', 48.205817, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('07e79142-5d4a-4fed-ac27-8388c68c89fe', 14.060232, 'lng');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7fb41cd2-5f47-4478-8f8d-b265e4481f3b', 48.204866, 'lat');
+INSERT INTO connect.user_position_mapping (user_id, degrees, latlng) VALUES ('7fb41cd2-5f47-4478-8f8d-b265e4481f3b', 14.056990, 'lng');
+
+INSERT INTO connect.Room (id, created, type, updated) VALUES (1005, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (1006, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (1007, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (1008, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10010, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10011, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10012, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10013, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10014, null, 'MU', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10015, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10016, null, 'DM', null);
+
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10017, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10018, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10019, null, 'DM', null);
+
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10020, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10021, null, 'DM', null);
+INSERT INTO connect.Room (id, created, type, updated) VALUES (10022, null, 'DM', null);
+
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1005, '88db121c-4f49-42c2-8f96-5db7d3cbe75a');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1005, '8ba5c9b4-47a1-445e-bc2b-689d7dcf44d3');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1006, 'ec4b5ad7-d282-4970-b3e4-3342e16a82f5');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1006, '0f95e11b-5ac0-4f59-883a-4e6aadd6fc65');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1007, 'ec4b5ad7-d282-4970-b3e4-3342e16a82f5');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1007, '6096ea87-37fc-4bfb-8bf3-8b16816d6349');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1008, 'e8da2bad-ec77-4814-ac53-a57bd4571d7c');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (1008, 'd7be2af6-5fe9-4f53-a788-6a25a1580258');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10010, '7e375e76-dc48-4c84-94ad-ce512effc6d9');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10010, '88db121c-4f49-42c2-8f96-5db7d3cbe75a');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10012, '0d3dcf03-9d38-4c12-af82-a9467c786db5');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10012, '2ad6f082-f92c-4934-9ef2-57feab03dfd6');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10011, '0d3dcf03-9d38-4c12-af82-a9467c786db5');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10011, 'ceadee37-07d9-444c-817d-b7d2d6d21a0a');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10013, 'e8da2bad-ec77-4814-ac53-a57bd4571d7c');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10013, 'b03251fb-abda-4045-838f-7808bea46601');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10014, 'e8da2bad-ec77-4814-ac53-a57bd4571d7c');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10014, 'b03251fb-abda-4045-838f-7808bea46601');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10014, 'd7be2af6-5fe9-4f53-a788-6a25a1580258');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10015, '3481f55b-5440-4984-b888-b983a8879f07');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10015, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10016, '06f1a6d6-a5dc-4a2e-bd46-0f0734bf61e3');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10016, '306b6e8e-b11a-4059-b91b-689c59026702');
+
+/*INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10017, 'cbe5669f-1de9-4b8c-aef3-416435538001');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10017, '97717d5e-46d8-4139-b3f8-369927b8ae0b');*/
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10018, 'cbe5669f-1de9-4b8c-aef3-416435538001');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10018, '8b64f104-f757-48c1-b2b4-92f2c1643a0e');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10019, '97717d5e-46d8-4139-b3f8-369927b8ae0b');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10019, '8b64f104-f757-48c1-b2b4-92f2c1643a0e');
+
+INSERT INTO connect.Message (id, created, image, message, updated, room_id, user_id) VALUES (68, STR_TO_DATE('1-01-2012-7', '%d-%m-%Y-%h'), null, 'schreib ma wennst zeit hast', null, 10018,'8b64f104-f757-48c1-b2b4-92f2c1643a0e');
+
+/* SOFORT*/
+
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10020, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10020, '0cfb2459-a0fb-47ba-804f-08305d7cec31');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10021, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10021, '07e79142-5d4a-4fed-ac27-8388c68c89fe');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10022, '85d71aa5-aae8-48c1-8145-9cb3163d41bd');
+INSERT INTO connect.Room_Members (room_id, user_id) VALUES (10022, '7fb41cd2-5f47-4478-8f8d-b265e4481f3b');
+
+INSERT INTO connect.Image(Id, img, userId)  values (1000,,'ADMIN');
