@@ -21,8 +21,8 @@
       <div id="connect_skin_container">
         <p id="connect_skin_text" *ngIf="this.friendship && this.friendship.skin && this.friendship.skin[0]">Connected
           through <i>{{this.friendship.skin[0].title}}</i></p>
-        <ion-avatar id="connect_skin_image" *ngIf="this.friendship && this.friendship.skin && this.friendship.skin[0]">
-          <img [src]="this.friendship.skin.image">
+        <ion-avatar id="connect_skin_image" *ngIf="this.friendship && this.friendship.skin && this.friendship.skin[0] && this.image">
+          <img [src]="this.image">
         </ion-avatar>
       </div>
       <div class="wrap">

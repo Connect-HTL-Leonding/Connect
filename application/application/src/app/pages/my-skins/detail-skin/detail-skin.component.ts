@@ -19,7 +19,7 @@ export class DetailSkinComponent implements OnInit {
   @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
   @Output() deleted: EventEmitter<Skin> = new EventEmitter<Skin>();
 
-  imageReady="";
+  imageReady = "";
 
   // Button
   @ViewChild('selectedBut', { static: false }) selectedRef: ElementRef;
@@ -28,10 +28,10 @@ export class DetailSkinComponent implements OnInit {
 
   ngOnInit() {
 
-    if(this.myskin.skin.image.startsWith("Li4")){
-  this.imageReady=atob(this.myskin.skin.image);
-    }else{
- this.imageReady='data:image/png;base64,'+this.myskin.skin.image;
+    if (this.myskin.skin.image.startsWith("Li4")) {
+      this.imageReady = atob(this.myskin.skin.image);
+    } else {
+      this.imageReady = 'data:image/png;base64,' + this.myskin.skin.image;
     }
 
     this.ps.getUser().add(
@@ -46,16 +46,16 @@ export class DetailSkinComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges) {
     // only run when property "data" changed
     if (changes['skin']) {
-    
+
       //DEBUGconsole.log("fjldsj")
     }
   }
 
-  myAtob(string){
+  myAtob(string) {
     return atob(string);
   }
 
-  async presentAlertConfirm(myskin : MySkin) {
+  async presentAlertConfirm(myskin: MySkin) {
     const alert = await this.alertController.create({
       cssClass: 'confirm-delete',
       header: 'Achtung!',
