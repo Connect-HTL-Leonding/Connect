@@ -111,6 +111,11 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
       if (this.ps.user.custom.id != value) {
+        this.friendMarkers.forEach((friend: google.maps.Marker) => {
+          if (friend.getTitle() == value) {
+            friend.setMap(null);
+          }
+        })
         this.displayFriends();
       }
     });

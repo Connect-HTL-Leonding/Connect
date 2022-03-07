@@ -172,10 +172,11 @@ export class AppComponent implements OnInit {
           }
           break;
 
-        case ("positionUpdate"): //DEBUGconsole.log(message[1]); this.ms.showPositionObservable.next(message[1]);
+        case ("positionUpdate"): console.log(message[1])
+        this.ms.showPositionObservable.next(message[1]);
           break;
 
-        case ("newMeetup"): //DEBUGconsole.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
+        case ("newMeetup"): this.ms.showMeetupObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
               this.ps.findFriendUser(data.id).subscribe(data => {

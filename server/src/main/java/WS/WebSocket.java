@@ -92,13 +92,13 @@ public class WebSocket {
             break;
             case("newConnect"): broadcastNewConnect(s[1], s[2]);
             break;
-            case("blocked"): broadcastBlocked("blocked");
-
+            case("blocked"): broadcast("blocked");
+            break;
         }
 
     }
 
-    private void broadcastBlocked(String message) {
+    private void broadcast(String message) {
         sessions.values().forEach(s -> {
             s.getAsyncRemote().sendObject(message, result -> {
                 if (result.getException() != null) {
