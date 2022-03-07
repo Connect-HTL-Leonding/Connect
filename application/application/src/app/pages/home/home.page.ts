@@ -299,8 +299,6 @@ export class HomePage implements OnInit {
         compositeImage = canvas.toDataURL("image/png");
 
         canvas.remove();
-
-        console.log(compositeImage);
         var marker = new google.maps.Marker({
           position: user.custom.position,
           title: user.id,
