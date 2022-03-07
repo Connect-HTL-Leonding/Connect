@@ -17,7 +17,7 @@ import java.util.List;
 @NamedQuery(name = Friendship.FIND, query = "SELECT f FROM Friendship f where ((f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)) and f.status not like 'blocked'")
 @NamedQuery(name = Friendship.FINDWITHID, query = "SELECT f FROM Friendship f where ((f.user1.id = :userid_1 and f.user2.id = :userid_2) or (f.user1.id = :userid_2 and f.user2.id = :userid_1)) and f.status not like 'blocked'")
 @NamedQuery(name = Friendship.FIND2, query = "SELECT f FROM Friendship f where f.user1 = :user_2 and f.user2 = :user_1 and f.status not like 'blocked'")
-@NamedQuery(name = Friendship.FINDBLOCKED, query = "SELECT f FROM Friendship f where (f.user1.id = :user_id or f.user2.id = :user_id) and f.status like 'blocked'")
+@NamedQuery(name = Friendship.FINDBLOCKED, query = "SELECT f FROM Friendship f where (f.user1.id = :user_id or f.user2.id = :user_id) and f.status like 'blocked' and f.blockedBy = :user_id")
 @NamedQuery(name = Friendship.FINDBLOCKED1, query = "SELECT f FROM Friendship f where ((f.user1 = :user_1 and f.user2 = :user_2) or (f.user1 = :user_2 and f.user2 = :user_1)) and f.status like 'blocked'")
 
 //CONNECT
@@ -62,10 +62,13 @@ public class Friendship implements Serializable {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user2")
     private User user2;
-
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "skin")
     private List<Skin> skins = new LinkedList<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "blockedBy")
+    private User blockedBy;
 
     private LocalDateTime created;
 
@@ -129,5 +132,13 @@ public class Friendship implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public User getBlockedBy() {
+        return blockedBy;
+    }
+
+    public void setBlockedBy(User blockedBy) {
+        this.blockedBy = blockedBy;
     }
 }

@@ -110,7 +110,27 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
-      if (this.ps.user.custom.id != value) {
+      var val:string = value;
+      var string = val.split(":");
+      console.log(string[0])
+      if(string[0] == "unhideLocation" && string[1] != this.ps.user.custom.id) {
+        this.ps.findFriendUser(string[1]).subscribe(data => {
+          let user = data;
+          this.ps.friendCustomData(string[1]).subscribe(data => {
+            user.custom = data;
+            this.createUserMarker(user);
+          })
+        });
+      }
+      else if (string[0] == "hideLocation" && string[1] != this.ps.user.custom.id) {
+        this.friendMarkers.forEach((friend: google.maps.Marker, index) => {
+          if (friend.getTitle() == string[1]) {
+            friend.setMap(null);
+            this.friendMarkers.splice(index,1);
+          }
+        })
+      }
+      else if (this.ps.user.custom.id != string[0]) {
         this.displayFriends();
       }
     });
