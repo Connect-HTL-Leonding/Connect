@@ -74,12 +74,13 @@ export class FriendPage implements OnInit {
           this.friendship = data
 
           console.log(this.friendship);
-          
 
-          if (this.friendship.skin[0].image.startsWith("Li4")) {
-            this.image = atob(this.friendship.skin[0].image);
-          } else {
-            this.image = 'data:image/png;base64,' + this.friendship.skin[0].image;
+          if (this.friendship.skin[0]) {
+            if (this.friendship.skin[0].image.startsWith("Li4")) {
+              this.image = atob(this.friendship.skin[0].image);
+            } else {
+              this.image = 'data:image/png;base64,' + this.friendship.skin[0].image;
+            }
           }
         })
       })

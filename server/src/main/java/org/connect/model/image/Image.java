@@ -1,13 +1,11 @@
 package org.connect.model.image;
 
-import org.connect.model.user.User;
-
 import javax.persistence.*;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = Image.FINDWITHID, query = "SELECT i FROM Image i where i.userId = :user_id"),
-        @NamedQuery(name=Image.GETDEFAULTPFP,query = "select i from Image i where i.Id=1000")
+        @NamedQuery(name=Image.GETDEFAULTPFP,query = "select i from Image i where i.Id=9999")
 })
 public class Image {
 
