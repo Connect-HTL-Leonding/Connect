@@ -112,7 +112,7 @@ export class HomePage implements OnInit {
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
       var val:string = value;
       var string = val.split(":");
-      console.log(string[0])
+      //DEBUGconsole.log(string[0])
       if(string[0] == "unhideLocation" && string[1] != this.ps.user.custom.id) {
         this.ps.findFriendUser(string[1]).subscribe(data => {
           let user = data;

@@ -73,6 +73,9 @@ export class FriendPage implements OnInit {
         this.fs.getFriendshipsWithUsers(this.ps.user.id, this.user.id).subscribe((data: Friendship) => {
           this.friendship = data
 
+          console.log(this.friendship);
+          
+
           if (this.friendship.skin[0].image.startsWith("Li4")) {
             this.image = atob(this.friendship.skin[0].image);
           } else {

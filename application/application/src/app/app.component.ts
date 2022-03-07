@@ -172,7 +172,7 @@ export class AppComponent implements OnInit {
           }
           break;
 
-        case ("positionUpdate"): console.log(message[1])
+        case ("positionUpdate"): //DEBUGconsole.log(message[1])
         this.ms.showPositionObservable.next(message[1]);
           break;
           case("unhideLocation"): this.ms.showPositionObservable.next("unhideLocation:" + message[1]);
