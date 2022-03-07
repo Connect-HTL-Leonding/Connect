@@ -80,7 +80,7 @@ public class WebSocket {
             break;
             case("chatMessage"):broadcastMessage(s[1], "chatMessage:");
             break;
-            case("positionUpdate"):broadcastPosition(id);
+            case("positionUpdate"):broadcastPosition("positionUpdate", id);
             break;
             case("newMeetup"):broadcastMessage(s[1], "newMeetup:");
             break;
@@ -94,6 +94,7 @@ public class WebSocket {
             break;
             case("blocked"): broadcast("blocked");
             break;
+            case("unhideLocation"): broadcastPosition("unhideLocation", id);
         }
 
     }
@@ -109,14 +110,14 @@ public class WebSocket {
         });
     }
 
-    private void broadcastPosition(String id) {
+    private void broadcastPosition(String type, String id) {
         TypedQuery tq = em.createNamedQuery(Friendship.USERSOFFRIENDSHIPS, Object[].class);
         tq.setParameter("user", em.find(User.class, id));
         List<Object[]> list = tq.getResultList();
         list.forEach(l -> {
             sessions.values().forEach(s -> {
                 if(users.get(s).equals(l[0]) || users.get(s).equals(l[1])) {
-                    String message = "positionUpdate:" + id;
+                    String message = type + ":" + id;
                     s.getAsyncRemote().sendObject(message, result -> {
                         if (result.getException() != null) {
                             //DEBUGSystem.out.println("Unable to send message: " + result.getException());
