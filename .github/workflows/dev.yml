@@ -125,18 +125,18 @@ jobs:
     - name: Deploy to Staging server
       uses: easingthemes/ssh-deploy@main
       env:
-        SSH_PRIVATE_KEY: ${{ secrets.SERVER_SSH_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.SSH_SERVER_PRIVATE_KEY }}
         ARGS: "-rltgoDzvO --delete"
         SOURCE: "./html"
         REMOTE_HOST: ${{ secrets.SERVER }}
         REMOTE_USER: ${{ secrets.SERVER_USER }}
         TARGET: ~/dist
 
+#       ssh server "rm -rf ~/dist && mkdir -p ~/dist"
+#       scp -r ./html server:~/dist/
     - name: deploy to server  
       working-directory: docker
       run: |
-        # ssh server "rm -rf ~/dist && mkdir -p ~/dist"
-        # scp -r ./html server:~/dist/
         ssh server "sudo rm -rf /usr/share/nginx/html/* && sudo mv -v ~/dist/html/* /usr/share/nginx/html/"
         scp -r *.sh server/ server:~/dist/
         scp docker-compose-production.yml server:~/dist
