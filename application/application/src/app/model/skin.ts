@@ -10,6 +10,7 @@ export class Skin {
         public age = 0,
         public niveau = 0,
         public mature = false,
-        public verified = false
+        public verified = false,
+        public withPath = false
     ) { }
 }

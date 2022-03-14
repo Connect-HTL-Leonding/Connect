@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PhotoService } from 'src/app/api/photo.service';
 import { SkinsService } from '../../../api/skins.service';
 import { MySkin } from '../../../model/myskin';
 import { Skin } from '../../../model/skin';
@@ -13,18 +14,24 @@ export class SkinselectionCardComponent implements OnInit {
   following: boolean;
   @Output() added: EventEmitter<Skin> = new EventEmitter<Skin>();
 
-  imageReady="";
+  imageReady;
 
-  constructor(public s: SkinsService) {
+  constructor(public s: SkinsService, public photoService : PhotoService) {
     
    }
 
+   loadSkinImage() {
+    this.s.getSkinImage(this.skin.id).subscribe(data=> {
+      if(this.skin.withPath) {
+        this.imageReady=atob(this.skin.image);
+      } else {
+        this.imageReady = this.photoService.DOMSanitizer(data);
+      }
+    })
+   }
+
   ngOnInit() { 
-    if(this.skin.image.startsWith("Li4")){
-  this.imageReady=atob(this.skin.image);
-    }else{
- this.imageReady='data:image/png;base64,'+this.skin.image;
-    }
+    this.loadSkinImage();
    
     //DEBUGconsole.log(this.imageReady);
     this.checkFollowing();
