@@ -74,6 +74,7 @@ export class PhotoService {
             this.PFP =  this.DOMSanitizer(data);
           })
         }
+        this.ps.getUser();
     })
   };
 
