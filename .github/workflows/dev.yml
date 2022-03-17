@@ -66,7 +66,7 @@ jobs:
         SOURCE: "./connext/public"
         REMOTE_HOST: ${{ secrets.HUGO_SERVER }}
         REMOTE_USER: ${{ secrets.HUGO_USER }}
-        TARGET: ~/home/opc/www
+        TARGET: /home/opc/www
         
     - name: install nodejs
       uses: actions/setup-node@v2
