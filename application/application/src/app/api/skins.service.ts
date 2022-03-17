@@ -41,6 +41,10 @@ export class SkinsService {
     return this.http.get<MySkin>(api.url + 'skin/check/' + id)
   }
 
+  getSkinImage(id) {
+    return this.http.post(api.url + "skin/getImage", id,  {responseType: 'blob'});
+  }
+
   //update
   updateSkin(s: Skin) {
     return this.http.put(api.url + 'skin/update', s);

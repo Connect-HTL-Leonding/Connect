@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "application",
+  "appId": "htl.leonding.connect",
+  "appName": "Connect",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
@@ -11,6 +11,6 @@
   },
   "cordova": {},
   "server": {
-    "url": "http://192.168.1.26:8100"
+    "url": "https://oracle.connecttheapp.com"
   }
 }

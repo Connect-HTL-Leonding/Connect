@@ -36,6 +36,7 @@ public class MySkinRepository {
         return myskin;
     }
 
+
     // Lesen aller Personen
     @Transactional
     public List<MySkin> findAll(Optional id) {

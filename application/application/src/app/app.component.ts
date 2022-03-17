@@ -172,10 +172,15 @@ export class AppComponent implements OnInit {
           }
           break;
 
-        case ("positionUpdate"): //DEBUGconsole.log(message[1]); this.ms.showPositionObservable.next(message[1]);
+        case ("positionUpdate"): //DEBUGconsole.log(message[1])
+        this.ms.showPositionObservable.next(message[1]);
+          break;
+          case("unhideLocation"): this.ms.showPositionObservable.next("unhideLocation:" + message[1]);
+          break;
+          case("hideLocation"): this.ms.showPositionObservable.next("hideLocation:" + message[1]);
           break;
 
-        case ("newMeetup"): //DEBUGconsole.log(message[1]); this.ms.showMeetupObservable.next(message[1]);
+        case ("newMeetup"): this.ms.showMeetupObservable.next(message[1]);
           if (!this.cs.inRoom || this.cs.currentRoom != message[1]) {
             this.contactlistService.getOtherUser(message[1]).subscribe(data => {
               this.ps.findFriendUser(data.id).subscribe(data => {
@@ -217,7 +222,6 @@ export class AppComponent implements OnInit {
 
         case ("blocked"): this.fs.blockedUpdateObservable.next("blocked");
       }
-
     }
 
     //Websocket-onerror
@@ -262,7 +266,13 @@ export class AppComponent implements OnInit {
 
 }
 
-//Zentrale Variablen lokal
+//Zentrale Tutorial Variable
+export const tutorial = {
+  active: false
+}
+
+//Zentrale URL Variablen lokal
+
 export const api = {
   url: "http://localhost:8080/api/",
   short: "http://localhost:8080/",
@@ -270,13 +280,7 @@ export const api = {
   ws: "ws://localhost:8080"
 }
 
-export const tutorial = {
-  active: false
-}
-
-
-
-//Zentrale Variablen prod
+//Zentrale URL Variablen prod
 /*
 export const api = {
   url: "https://oracle.connecttheapp.com/api/",

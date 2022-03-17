@@ -74,6 +74,7 @@ export class PhotoService {
             this.PFP =  this.DOMSanitizer(data);
           })
         }
+        this.ps.getUser();
     })
   };
 
@@ -198,12 +199,13 @@ export class PhotoService {
 
   public blobToBase64String(blob) {
   // blob into base64string
-  let mySrc;
+  let result;
   const reader = new FileReader();
   reader.readAsDataURL(blob);
   reader.onloadend = (e:any) => {
     // result includes identifier 'data:image/png;base64,' plus the base64 data
-    mySrc = reader.result;
+    result = reader.result;
+    return result;
    // this.imgURL = mySrc
   } 
   }

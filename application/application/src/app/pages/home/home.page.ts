@@ -97,7 +97,7 @@ export class HomePage implements OnInit {
     public meetupService: MeetupService,
     public alertController: AlertController,
     public actionSheetController: ActionSheetController,
-    public profileService : ProfileService,
+    public profileService: ProfileService,
     public ds: DateService,
     public photoService: PhotoService,
     public sanitizer: DomSanitizer) {
@@ -110,7 +110,27 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.positionUpdate = this.meetupService.showPositionNotify.subscribe(value => {
-      if (this.ps.user.custom.id != value) {
+      var val:string = value;
+      var string = val.split(":");
+      //DEBUGconsole.log(string[0])
+      if(string[0] == "unhideLocation" && string[1] != this.ps.user.custom.id) {
+        this.ps.findFriendUser(string[1]).subscribe(data => {
+          let user = data;
+          this.ps.friendCustomData(string[1]).subscribe(data => {
+            user.custom = data;
+            this.createUserMarker(user);
+          })
+        });
+      }
+      else if (string[0] == "hideLocation" && string[1] != this.ps.user.custom.id) {
+        this.friendMarkers.forEach((friend: google.maps.Marker, index) => {
+          if (friend.getTitle() == string[1]) {
+            friend.setMap(null);
+            this.friendMarkers.splice(index,1);
+          }
+        })
+      }
+      else if (this.ps.user.custom.id != string[0]) {
         this.displayFriends();
       }
     });
@@ -233,8 +253,82 @@ export class HomePage implements OnInit {
     //DEBUGconsole.log("LOADDDD")
   }
 
-  createMarkerWithImage(image) {
-        
+  // https://www.codingwithjesse.com/blog/image-onload-isnt-being-called/
+  createMarkerWithImage(defaultPfp, user) {
+    const reader = new FileReader();
+    reader.readAsDataURL(defaultPfp);
+    reader.onloadend = (e: any) => {
+      var canvas = document.createElement('canvas');
+      canvas.width = 35;
+      canvas.height = 62;
+      var ctx = canvas.getContext('2d');
+      var image = new Image();
+
+      var compositeImage;
+      var url;
+      // result includes identifier 'data:image/png;base64,' plus the base64 data
+      url = reader.result;
+
+      image.onload = (event) => {
+        ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
+        // only draw image where mask is
+        ctx.globalCompositeOperation = 'destination-in';
+
+        // draw our circle mask
+        ctx.fillStyle = '#000';
+        ctx.beginPath();
+        ctx.arc(
+          14.8 + 2.4725,          // x
+          14.8 + 2.9421,          // y
+          14.8,          // radius
+          0,                  // start angle
+          2 * Math.PI         // end angle
+        );
+        ctx.fill();
+
+        // restore to default composite operation (is draw over current image)
+        ctx.globalCompositeOperation = 'source-over';
+
+
+        var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
+
+
+        ctx.fillStyle = '#0eb19b';
+        ctx.fill(path);
+
+        compositeImage = canvas.toDataURL("image/png");
+
+        canvas.remove();
+        var marker = new google.maps.Marker({
+          position: user.custom.position,
+          title: user.id,
+          map: this.map,
+          icon: compositeImage
+        });
+  
+        marker.addListener("click", () => {
+          this.ps.findFriendUser(marker.title).subscribe(data => {
+            this.presentModal(data);
+          });
+        });
+  
+        this.friendMarkers.push(marker);
+      };
+      image.src = url;
+    }
+  }
+
+  public blobToBase64String(blob) {
+    // blob into base64string
+    let result;
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = (e: any) => {
+      // result includes identifier 'data:image/png;base64,' plus the base64 data
+      result = reader.result;
+      return result;
+      // this.imgURL = mySrc
+    }
   }
 
   //Funktion zum User Marker erstellen
@@ -249,73 +343,17 @@ export class HomePage implements OnInit {
     })
 
     if (!exists) {
-      var canvas = document.createElement('canvas');
-      canvas.width = 35;
-      canvas.height = 62;
-      var ctx = canvas.getContext('2d');
-      var image = new Image();
-      var compositeImage;
-      var url;
 
-      if(user.custom.profilePicture!=undefined) {
-        url = this.photoService.DOMSanitizer(user.custom.profilePicture);;
-      } else {
-        this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
-          console.log(defaultPfp);
-          url = this.photoService.DOMSanitizer(defaultPfp);
-        })
-      }
+      this.photoService.getFriendPfp(user.custom.id).subscribe(data => {
+        if (data != undefined) {
+          this.createMarkerWithImage(data, user);
+        } else {
+          this.photoService.getDefaultPfp().subscribe(defaultPfp => {
+            this.createMarkerWithImage(defaultPfp, user);
+          })
+        }
+      })
 
-     
-
-      image.src = url;
-
-      ctx.drawImage(image, 2.4725, 2.9421, 29.6, 29.6);
-
-      // only draw image where mask is
-      ctx.globalCompositeOperation = 'destination-in';
-
-      // draw our circle mask
-      ctx.fillStyle = '#000';
-      ctx.beginPath();
-      ctx.arc(
-        14.8 + 2.4725,          // x
-        14.8 + 2.9421,          // y
-        14.8,          // radius
-        0,                  // start angle
-        2 * Math.PI         // end angle
-      );
-      ctx.fill();
-
-      // restore to default composite operation (is draw over current image)
-      ctx.globalCompositeOperation = 'source-over';
-
-
-      var path = new Path2D('M17.3,0C4.9,0-3.5,13.4,1.4,25.5l14.2,35.2c0.4,0.9,1.4,1.4,2.3,1c0.5-0.2,0.8-0.5,1-1l14.2-35.2C38,13.4,29.7,0,17.3,0z M17.3,32.5c-8.2,0-14.8-6.6-14.8-14.8c0-8.2,6.6-14.8,14.8-14.8s14.8,6.6,14.8,14.8C32.1,25.9,25.4,32.5,17.3,32.5z');
-
-
-      ctx.fillStyle = '#0eb19b';
-      ctx.fill(path);
-
-      compositeImage = canvas.toDataURL("image/png");
-
-      canvas.remove();
-      ////DEBUGconsole.log(compositeImage)
-
-      var marker = new google.maps.Marker({
-        position: user.custom.position,
-        title: user.id,
-        map: this.map,
-        icon: compositeImage
-      });
-
-      marker.addListener("click", () => {
-        this.ps.findFriendUser(marker.title).subscribe(data => {
-          this.presentModal(data);
-        });
-      });
-
-      this.friendMarkers.push(marker);
     }
 
   }
@@ -536,10 +574,10 @@ export class HomePage implements OnInit {
     time = this.dateService.returnDateWithoutTime(m) + ' at ' + this.dateService.returnTimeString(m);
 
 
-    let name = ""+ m.name;
-    if(!m.name) {
-     name = 'Meetup ' + m.id;
-    } 
+    let name = "" + m.name;
+    if (!m.name) {
+      name = 'Meetup ' + m.id;
+    }
 
     const popover = await this.actionSheetController.create({
       header: name,
@@ -718,10 +756,12 @@ export class HomePage implements OnInit {
       event: ev,
       translucent: true
     });
-    popover.onDidDismiss().then(() => { this.profileService.updateUser(this.profileService.user.custom).subscribe(()=>{
-      //DEBUGconsole.log("updated wuhu")
-    }); });
-    
+    popover.onDidDismiss().then(() => {
+      this.profileService.updateUser(this.profileService.user.custom).subscribe(() => {
+        //DEBUGconsole.log("updated wuhu")
+      });
+    });
+
     return await popover.present();
   }
 
@@ -776,7 +816,7 @@ export class HomePage implements OnInit {
 
 
         if (f.user1.id == this.ps.user.id) {
-          if(!f.user2.hideLocation){
+          if (!f.user2.hideLocation) {
             this.cs.getKeyUser(f.user2).subscribe(data => {
               u.id = data["id"];
               u.userName = data["username"];
@@ -784,26 +824,26 @@ export class HomePage implements OnInit {
               u.lastname = data["lastName"];
               u.email = data["email"];
               u.custom = f.user2
-  
+
               this.createUserMarker(u);
             })
           }
 
-        
+
 
         } else {
-          if(!f.user1.hideLocation){
-          this.cs.getKeyUser(f.user1).subscribe(data => {
-            u.id = data["id"];
-            u.userName = data["username"];
-            u.firstname = data["firstName"];
-            u.lastname = data["lastName"];
-            u.email = data["email"];
-            u.custom = f.user1
+          if (!f.user1.hideLocation) {
+            this.cs.getKeyUser(f.user1).subscribe(data => {
+              u.id = data["id"];
+              u.userName = data["username"];
+              u.firstname = data["firstName"];
+              u.lastname = data["lastName"];
+              u.email = data["email"];
+              u.custom = f.user1
 
-            this.createUserMarker(u);
-          })
-        }
+              this.createUserMarker(u);
+            })
+          }
         }
 
 

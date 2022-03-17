@@ -20,8 +20,9 @@ import { Friendship } from 'src/app/model/friendship';
 export class FriendPage implements OnInit {
 
   user;
+  image;
   blocked = false;
-  friendship:Friendship = null;
+  friendship: Friendship = null;
   profilePictureReady;
 
   // Button
@@ -39,8 +40,8 @@ export class FriendPage implements OnInit {
     public photoService: PhotoService,
     public alertController: AlertController,
     public friendshipService: FriendshipService,
-    public cs:ContactlistService,
-    public fs:FriendshipService) {
+    public cs: ContactlistService,
+    public fs: FriendshipService) {
 
   }
 
@@ -58,19 +59,29 @@ export class FriendPage implements OnInit {
       this.user.custom = data;
 
       this.ps.getUser().add(() => {
-        this.photoService.getFriendPfp(this.user.custom.id).subscribe(data=> {
-          if(data!=undefined) {
+        this.photoService.getFriendPfp(this.user.custom.id).subscribe(data => {
+          if (data != undefined) {
             this.profilePictureReady = this.photoService.DOMSanitizer(data);
           } else {
-            this.photoService.getDefaultPfp().subscribe(defaultPfp=> {
+            this.photoService.getDefaultPfp().subscribe(defaultPfp => {
               this.profilePictureReady = this.photoService.DOMSanitizer(defaultPfp);
-  
+
             })
           }
         })
-        
+
         this.fs.getFriendshipsWithUsers(this.ps.user.id, this.user.id).subscribe((data: Friendship) => {
           this.friendship = data
+
+          console.log(this.friendship);
+
+          if (this.friendship.skin[0]) {
+            if (this.friendship.skin[0].image.startsWith("Li4")) {
+              this.image = atob(this.friendship.skin[0].image);
+            } else {
+              this.image = 'data:image/png;base64,' + this.friendship.skin[0].image;
+            }
+          }
         })
       })
     })
@@ -79,7 +90,7 @@ export class FriendPage implements OnInit {
 
   dismissModal() {
     this.modalController.dismiss().then(() => {
-      if(this.blocked){
+      if (this.blocked) {
         this.blocked = false;
         this.dismissModal()
       }

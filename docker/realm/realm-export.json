@@ -1831,7 +1831,8 @@
       "realmRoles": [],
       "clientRoles": {
         "realm-management": [
-          "view-users"
+          "view-users",
+          "manage-users"
         ]
       },
       "subGroups": []
