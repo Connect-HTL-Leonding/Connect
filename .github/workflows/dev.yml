@@ -29,6 +29,9 @@ jobs:
         java-version: '15'
 
     - uses: actions/checkout@v2
+      with:
+        submodules: true # Fetch Hugo themes (true OR recursive)
+        fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
     
     - name: cache maven repository
       uses: actions/cache@v2
@@ -44,6 +47,26 @@ jobs:
       with:
         path: './application/application/node_modules'
         key: ${{ runner.os }}-www-node-modules-v0.0.2-${{ hashFiles('./application/application/package.json') }}
+        
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v2
+      with:
+        hugo-version: '0.93.0'
+        extended: true
+        
+    - name: Build
+      run: hugo --minify
+      working-directory: connext
+      
+    - name: Deploy to Hugo server
+      uses: easingthemes/ssh-deploy@main
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.HUGO_SSH_KEY }}
+        ARGS: "-rltgoDzvO --delete"
+        SOURCE: "./connext/public"
+        REMOTE_HOST: ${{ secrets.HUGO_SERVER }}
+        REMOTE_USER: ${{ secrets.HUGO_USER }}
+        TARGET: ~/home/opc/www
         
     - name: install nodejs
       uses: actions/setup-node@v2
