@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChang
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import Showcaser from 'showcaser';
+import { PhotoService } from 'src/app/api/photo.service';
 import { ProfileService } from 'src/app/api/profile.service';
 import { SkinsService } from 'src/app/api/skins.service';
 import { tutorial } from 'src/app/app.component';
@@ -19,21 +20,23 @@ export class DetailSkinComponent implements OnInit {
   @Output() updated: EventEmitter<Skin> = new EventEmitter<Skin>();
   @Output() deleted: EventEmitter<Skin> = new EventEmitter<Skin>();
 
-  imageReady = "";
+  imageReady;
 
   // Button
   @ViewChild('selectedBut', { static: false }) selectedRef: ElementRef;
 
-  constructor(public router: Router, public ps: ProfileService, public alertController: AlertController) { }
+  constructor(public router: Router, public ps: ProfileService, public alertController: AlertController,
+    public skinService : SkinsService, public photoService : PhotoService) { }
 
   ngOnInit() {
 
-    if (this.myskin.skin.image.startsWith("Li4")) {
+   /* if (this.myskin.skin.image.startsWith("Li4")) {
       this.imageReady = atob(this.myskin.skin.image);
     } else {
       this.imageReady = 'data:image/png;base64,' + this.myskin.skin.image;
-    }
+    } */
 
+    this.loadSkinImage();
     this.ps.getUser().add(
       () => {
         //DEBUGconsole.log("westrzutqjhkgizfutetdzuz")
@@ -44,6 +47,7 @@ export class DetailSkinComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+   this.loadSkinImage();
     // only run when property "data" changed
     if (changes['skin']) {
 
@@ -53,6 +57,16 @@ export class DetailSkinComponent implements OnInit {
 
   myAtob(string) {
     return atob(string);
+  }
+
+  loadSkinImage() {
+    this.skinService.getSkinImage(this.myskin.skin.id).subscribe(data=> {
+      if(this.myskin.skin.withPath) {
+        this.imageReady=atob(this.myskin.skin.image);
+      } else {
+        this.imageReady = this.photoService.DOMSanitizer(data);
+      }
+    })
   }
 
   async presentAlertConfirm(myskin: MySkin) {

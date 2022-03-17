@@ -32,7 +32,7 @@ public class Skin implements Serializable {
     private int follower;
     private boolean mature;
     private boolean verified;
-
+    private boolean withPath;
     //https://www.baeldung.com/hibernate-initialize-proxy-exception
     @ManyToMany(fetch = FetchType.EAGER)
     List<Category> categories = new LinkedList<>();
@@ -113,6 +113,13 @@ public class Skin implements Serializable {
         this.verified = verified;
     }
 
+    public void setWithPath(boolean withPath) {
+        this.withPath = withPath;
+    }
+
+    public boolean isWithPath() {
+        return withPath;
+    }
 
     @Override
     public String toString() {

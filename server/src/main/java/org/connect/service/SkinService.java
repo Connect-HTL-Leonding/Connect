@@ -8,6 +8,7 @@ import org.eclipse.microprofile.jwt.JsonWebToken;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -19,6 +20,9 @@ public class SkinService {
 
     @Inject
     SkinRepository dbRepo;
+
+    @Inject
+    EntityManager em;
 
     @Inject
     JsonWebToken jwt;
@@ -34,6 +38,13 @@ public class SkinService {
     public String init() {
         //dbRepo.initDB();
         return "DB initialize moved to import.sql";
+    }
+
+    @Path("getImage")
+    @POST
+    public byte[] getImage(Long id) {
+       Skin s = em.find(Skin.class,id);
+       return s.getImage();
     }
 
     // Initialisieren der DB

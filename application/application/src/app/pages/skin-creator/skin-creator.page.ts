@@ -74,6 +74,7 @@ export class SkinCreatorPage implements OnInit {
     }else{
       //DEBUGconsole.log("creating skin")
       //DEBUGconsole.log(this.skin.id + "AMOGUS")
+      this.skin.withPath = false;
       this.skinsService.createSkin(this.skin).subscribe(value => {
         //DEBUGconsole.log("done creating")
         //DEBUGconsole.log(this.image)

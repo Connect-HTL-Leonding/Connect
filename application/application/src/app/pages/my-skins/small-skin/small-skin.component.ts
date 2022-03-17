@@ -1,4 +1,6 @@
 import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { PhotoService } from 'src/app/api/photo.service';
+import { SkinsService } from 'src/app/api/skins.service';
 import { MySkin } from 'src/app/model/myskin';
 import { Skin } from 'src/app/model/skin';
 
@@ -13,17 +15,19 @@ export class SmallSkinComponent implements OnInit {
   @Input() current: MySkin;
   @Input() selected: MySkin;
 
-imageReady = "";
+imageReady;
 
-  constructor() { }
+  constructor(public skinService : SkinsService, public photoService : PhotoService) { }
 
   ngOnInit() {
-    if(this.myskin.skin.image.startsWith("Li4")){
-  this.imageReady=atob(this.myskin.skin.image);
-    }else{
- this.imageReady='data:image/png;base64,'+this.myskin.skin.image;
-    }
     
+    this.skinService.getSkinImage(this.myskin.skin.id).subscribe(data=> {
+      if(this.myskin.skin.withPath) {
+        this.imageReady=atob(this.myskin.skin.image);
+      } else {
+        this.imageReady = this.photoService.DOMSanitizer(data);
+      }
+    })
     //DEBUGconsole.log(this.current)
   }
 
