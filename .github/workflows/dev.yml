@@ -56,14 +56,14 @@ jobs:
         
     - name: Build
       run: hugo --minify
-      working-directory: connext
+      working-directory: connext/Connect
       
     - name: Deploy to Hugo server
       uses: easingthemes/ssh-deploy@main
       env:
         SSH_PRIVATE_KEY: ${{ secrets.HUGO_SSH_KEY }}
         ARGS: "-rltgoDzvO --delete"
-        SOURCE: "./connext/public"
+        SOURCE: "./connext/Connect/public"
         REMOTE_HOST: ${{ secrets.HUGO_SERVER }}
         REMOTE_USER: ${{ secrets.HUGO_USER }}
         TARGET: /home/opc/www
