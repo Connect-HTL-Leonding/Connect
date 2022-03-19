@@ -31,13 +31,13 @@ theme = "raditian-free-hugo-theme"
   weight = 2
 
   [[menu.header]]
-  name = "Portfolio"
-  URL = "#client-and-work"
+  name = "Technologien"
+  URL = "#technologien"
   weight = 3
 
   [[menu.header]]
-  name = "Contact"
-  URL = "#contact"
+  name = "Kundenerfahrungen"
+  URL = "#kundenerfahrungen"
   weight = 4
 
 
@@ -47,13 +47,13 @@ theme = "raditian-free-hugo-theme"
   weight = 2
 
   [[menu.footer]]
-  name = "Portfolio"
-  URL = "#portfolio"
+  name = "Technologien"
+  URL = "#technologien"
   weight = 3
 
   [[menu.footer]]
-  name = "Contact"
-  URL = "#contact"
+  name = "Kundenerfahrungen"
+  URL = "#kundenerfahrungen"
   weight = 4
 
 
@@ -64,6 +64,5 @@ theme = "raditian-free-hugo-theme"
   googleTagManagerID = "GTM-000000" # Google Analytics works with Google Tag Manager
 
   [params.logo]
-    text1 = "Bruh"
-    text2 = "ify"
+    src = "img/clients/Connect_Logo.png"
 

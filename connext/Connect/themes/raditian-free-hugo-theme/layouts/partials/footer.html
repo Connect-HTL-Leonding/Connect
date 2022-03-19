@@ -12,7 +12,7 @@
         </li>
         {{ range .Site.Menus.footer }}
         <li class="nav-item">
-          <a class="nav-link" href="{{ .URL | absURL }}">{{ .Name | upper }}</a>
+          <a data-scroll class="nav-link" href="{{ .URL }}">{{ .Name | upper }}</a>
         </li>
         {{ end }}
       </ul>

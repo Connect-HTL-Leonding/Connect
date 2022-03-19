@@ -5,8 +5,8 @@ showcase:
   subtitle: "verbindet"
   description: "Connect ist eine App, die Leute schnell und einfach zusammenbringt. Anhand von bestimmten Aktivitäten (Sport, Freizeit, Hobbies, …) kann man Menschen in seiner Nähe finden, mit denen man etwas unternehmen kann. So kann man ganz leicht einen Mitspieler für die nächste Golfpartie finden oder sich gegenseitig beim Mittagessen Gesellschaft leisten. Connecte dich in unserer Demo!"
   image:
-    x: "img/clients/connectify.png"
-    _2x: "img/clients/connectify.png"
+    x: "img/clients/connect_mockup.png"
+    _2x: "img/clients/connect_mockup.png"
   imageMobile:
     x: "img/clients/connectify.png"
 
@@ -38,8 +38,8 @@ about:
     btnText: "Unsere Ausbildungsstätte"
     URL: "https://www.htl-leonding.at/"
   image:
-    x: "img/who-am-i/user-picture.png"
-    _2x: "img/who-am-i/user-picture@2x.png"
+    x: "img/clients/DieConnectos.JPG"
+    _2x: "img/clients/DieConnectos.JPG"
 
 # education
 education:
@@ -145,7 +145,7 @@ testimonial:
         _2x: "img/clients/Konsti.png"
 
     - name: "Bruce Gräml"
-      position: "Professioneller Chad"
+      position: "Student"
       content: "Durch Connect habe ich so viele neue Menschen kennengelernt! Durch das fetzige Design und einfache Handling fällt es einem so einfach sich zu connecten ;)"
       image:
         x: "img/clients/Bruce.png"
