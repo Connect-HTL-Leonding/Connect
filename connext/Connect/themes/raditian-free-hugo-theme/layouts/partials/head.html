@@ -211,7 +211,7 @@
         }
     }
 </style>
-
+<link rel="icon" href="{{ .Site.Data.homepage.head.favicon }}" type="image/x-icon">
 {{ range .Site.Params.plugins.css }}
 <link rel="stylesheet" href="{{ .URL | absURL }}"/>
 {{ end }}

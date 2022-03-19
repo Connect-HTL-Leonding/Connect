@@ -1,3 +1,7 @@
+# head
+head:
+  title: "Connect"
+  favicon: "img/icon/favicon.png"
 # showcase
 showcase:
   enable: true
@@ -15,13 +19,11 @@ showcase:
     URL: "https://oracle.connecttheapp.com"
 
   socialLinks:
-   
     - icon: "github"
       URL: "https://github.com/Connect-HTL-Leonding/Connect"
 
     - icon: "youtube"
       URL: "https://www.youtube.com/watch?v=vmS5DupWf0M"
-
 
 # about
 about:
@@ -32,7 +34,7 @@ about:
     Unser Team besteht aus Jan Donnerbauer, Tristan Hill, Simon Ibrahim, Tobias Rafetseder und Ben Weinzierl.
     </p>
     <p class="lead">
-    
+
     </p>'
   button:
     btnText: "Unsere Ausbildungsstätte"
@@ -122,8 +124,6 @@ client_and_work:
         _2x: "img/clients/mysql.png"
         URL: "https://mysql.com"
       alt: "Mysql"
-
-  
 
 # testimonial
 testimonial:
