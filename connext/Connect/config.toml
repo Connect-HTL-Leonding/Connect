@@ -1,4 +1,4 @@
-baseURL = "https://raditian-hugo.radity.com/"
+baseURL = "https://www.connecttheapp.com"
 languageCode = "en-us"
 theme = "raditian-free-hugo-theme"
 
@@ -32,7 +32,7 @@ theme = "raditian-free-hugo-theme"
 
   [[menu.header]]
   name = "Portfolio"
-  URL = "#portfolio"
+  URL = "#client-and-work"
   weight = 3
 
   [[menu.header]]
@@ -64,12 +64,6 @@ theme = "raditian-free-hugo-theme"
   googleTagManagerID = "GTM-000000" # Google Analytics works with Google Tag Manager
 
   [params.logo]
-    text1 = "Andreas"
-    text2 = "Ellure"
+    text1 = "Bruh"
+    text2 = "ify"
 
-  [params.footer]
-      copyright = "© Raditian. All rights reserved."
-      [params.footer.radity_logo]
-        x = "img/general/design-and-code-radity.png"
-        _2x = "img/general/design-and-code-radity@2x.png"
-        alt = "Design & Code - Radity"
