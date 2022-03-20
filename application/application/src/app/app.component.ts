@@ -272,20 +272,20 @@ export const tutorial = {
 }
 
 //Zentrale URL Variablen lokal
-/*
+
 export const api = {
   url: "http://localhost:8080/api/",
   short: "http://localhost:8080/",
   ip: "http://localhost:8010",
   ws: "ws://localhost:8080"
 }
-*/
-//Zentrale URL Variablen prod
 
+//Zentrale URL Variablen prod
+/*
 export const api = {
   url: "https://oracle.connecttheapp.com/api/",
   short: "http://localhost:8080/",
   ip: "https://oracle.connecttheapp.com",
   ws: "wss://oracle.connecttheapp.com"
 }
-
+*/
