@@ -3,15 +3,15 @@ showcase:
   enable: true
   title: "Connect"
   subtitle: "verbindet"
-  description: "Connect ist eine App, die Leute schnell und einfach zusammenbringt. Anhand von bestimmten Aktivitäten (Sport, Freizeit, Hobbies, …) kann man Menschen in seiner Nähe finden, mit denen man etwas unternehmen kann. So kann man ganz leicht einen Mitspieler für die nächste Golfpartie finden oder sich gegenseitig beim Mittagessen Gesellschaft leisten. Connecte dich in unserer Demo!"
+  description: "Connect ist eine App, die Leute schnell und einfach zusammenbringt. Anhand von bestimmten Aktivitäten (Sport, Freizeit, Hobbies, …) kann man Menschen in seiner Nähe finden, mit denen man etwas unternehmen kann. So kann man ganz leicht einen Mitspieler für die nächste Golfpartie finden oder sich gegenseitig beim Mittagessen Gesellschaft leisten. Connecte dich in unserer LIVE Demo!"
   image:
     x: "img/clients/connect_mockup.png"
     _2x: "img/clients/connect_mockup.png"
   imageMobile:
-    x: "img/clients/connectify.png"
+    x: "img/clients/connect_mockup.png"
 
   button:
-    btnText: "Demo"
+    btnText: "LIVE Demo"
     URL: "https://oracle.connecttheapp.com"
 
   socialLinks:
