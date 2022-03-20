@@ -26,7 +26,7 @@ Connect ist keine Dating-App. Ihr könnt euch ohne Druck und Erwartungen treffen
 Connect verbindet Leute, die etwas gemeinsam unternehmen wollen. Wir glauben, dass jeder Mensch das Recht auf Gesellschaft hat. Darum verzichten wir auf oberflächliche Auswahlmethoden wie Profilbilder oder ähnliches und setzten auf das Zufallsprinzip. 
 Damit das auch funktioniert, wünschen wir uns von unseren Usern eine offene und tolerante Einstellung.
 
-<img src="design/readme_src/mockup.png" width="30%">
+<img src="design/readme_src/connect_mockup2.png" width="100%">
 
 ### Technologien
 Es wird eine Client-Server-Architektur entwickelt. Der Server wird mithilfe des Java Framework Quarkus erstellt. Die Kommunikation zwischen Server und Client wird mit dem REST-WebService gelöst. Die Benutzerverwaltung, Authentifizierung und Rechteverwaltung wird mit dem Open Source Identity and Access Management Tool Keycloak gelöst. 
