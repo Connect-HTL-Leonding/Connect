@@ -1,4 +1,4 @@
-baseURL = "https://www.connecttheapp.com"
+baseURL = "https://connecttheapp.com"
 languageCode = "en-us"
 theme = "raditian-free-hugo-theme"
 
