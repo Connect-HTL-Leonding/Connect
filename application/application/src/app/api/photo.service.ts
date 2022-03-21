@@ -35,7 +35,7 @@ export class PhotoService {
     try {
       const capturedPhoto = await Camera.getPhoto({
         resultType: CameraResultType.Base64,
-        quality: 100,
+        quality: 70,
         allowEditing: true
       })
 
@@ -166,9 +166,9 @@ export class PhotoService {
     try {
       var base64data;
       const image = await Camera.getPhoto({
-        quality: 10,
-        width: 50,
-        height: 50,
+        quality: 70,
+        width: 400,
+        height: 400,
        // allowEditing: true,
         resultType: CameraResultType.Base64
       })
