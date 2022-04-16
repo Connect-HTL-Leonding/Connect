@@ -2,6 +2,7 @@ version: '3.5'
 
 services:
   db_keycloak:
+    platform: linux/x86_64
     image: mysql:5.7
     restart: always
     volumes:
@@ -18,6 +19,7 @@ services:
       - 3306
 
   db_connect:
+    platform: linux/x86_64
     image: mysql:5.7
     restart: always
     command: --max_allowed_packet=32505856
